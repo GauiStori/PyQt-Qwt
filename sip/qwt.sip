@@ -59,12 +59,15 @@ typedef unsigned long size_t;
 %Include qwt_plot_picker.sip
 %Include qwt_plot_zoomer.sip
 
-/* It works until here */
 %Include qwt_text_engine.sip
 %Include qwt_text.sip
 %Include qwt_text_label.sip
 %Include qwt_plot_marker.sip
 
+%Include qwt_panner.sip
+%Include qwt_plot_panner.sip
+
+/* It works until here */
 /*
 %Include QwtArrayDouble.sip
 %Include qwt_color_map.sip
