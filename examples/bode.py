@@ -285,6 +285,7 @@ class MainWindow( QMainWindow ):
         self.btnZoom.setCheckable( True )
         self.btnZoom.setToolButtonStyle( Qt.ToolButtonTextUnderIcon )
         self.toolBar.addWidget( self.btnZoom )
+
         self.btnZoom.toggled.connect(self.enableZoomMode)
         #connect( btnZoom, SIGNAL( toggled( bool ) ), SLOT( enableZoomMode( bool ) ) )
 
@@ -294,6 +295,7 @@ class MainWindow( QMainWindow ):
         self.btnPrint.setToolButtonStyle( Qt.ToolButtonTextUnderIcon )
         self.toolBar.addWidget( self.btnPrint )
         
+        self.btnPrint.clicked.connect(self.print)
         #connect( btnPrint, SIGNAL( clicked() ), SLOT( print() ) )
 
         self.btnExport = QToolButton( self.toolBar )
@@ -301,6 +303,8 @@ class MainWindow( QMainWindow ):
         self.btnExport.setIcon( QIcon(QPixmap( print_xpm ) ) )
         self.btnExport.setToolButtonStyle( Qt.ToolButtonTextUnderIcon )
         self.toolBar.addWidget( self.btnExport )
+        
+        self.btnExport.clicked.connect(self.exportDocument)
         #connect( btnExport, SIGNAL( clicked() ), SLOT( exportDocument() ) )
 
         self.toolBar.addSeparator()
@@ -335,10 +339,11 @@ class MainWindow( QMainWindow ):
 
     def print(self):
         printer = QPrinter( QPrinter.HighResolution )
-        docName = self.d_plot.title().text()
-        if ( not docName.isEmpty() ):
-            #docName.replace ( QRegExp ( QString.fromLatin1 ( "\n" ) ), tr ( " -- " ) )
-            printer.setDocName ( docName )
+        docName = "Humm" #self.d_plot.title().text()
+        #if ( not docName.isEmpty() ):
+        #docName.replace ( QRegExp ( QString.fromLatin1 ( "\n" ) ), tr ( " -- " ) )
+        printer.setDocName ( docName )
+
         printer.setCreator( "Bode example" )
         printer.setOrientation( QPrinter.Landscape )
 
@@ -353,8 +358,9 @@ class MainWindow( QMainWindow ):
             renderer.renderTo( self.d_plot, printer )
 
     def exportDocument(self):
-        renderer = Qwt.QwtPlotRenderer()
-        renderer.exportTo( self.d_plot, "bode.pdf" )
+        print("Not implemented")
+        #renderer = Qwt.QwtPlotRenderer()
+        #renderer.exportTo( self.d_plot, "bode.pdf" )
 
     def enableZoomMode( self, on ):
         self.d_panner.setEnabled( on )
