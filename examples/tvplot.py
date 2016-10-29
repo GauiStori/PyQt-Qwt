@@ -12,7 +12,7 @@ if (len(sys.argv) > 1 and sys.argv[1] == '4'):
     from PyQt4.QtGui import QApplication, QColor,  QTransform, QPolygonF
 else:
     from PyQt5.QtCore import Qt,  QSize
-    from PyQt5.QtGui import QColor,  QPixmap, QFont
+    from PyQt5.QtGui import QColor,  QPixmap, QFont, QBrush
     from PyQt5.QtWidgets import QMainWindow,  QWidget,  QToolBar,  QToolButton,  QHBoxLayout,  QLabel,  QApplication
 
 class Histogram(Qwt.QwtPlotHistogram):
@@ -22,17 +22,18 @@ class Histogram(Qwt.QwtPlotHistogram):
         #self.setColor( symbolColor )
 
     def setValues(self, values ):
-        self.setData( values )
+        pass
+        #self.setData( values )
         """QVector<QwtIntervalSample> samples( numValues )
         for i in range(numValues):
             QwtInterval interval( double( i ), i + 1.0 )
             interval.setBorderFlags( Qwt.QwtInterval.ExcludeMaximum )
             samples[i] = QwtIntervalSample( values[i], interval )"""
 
-    #def setColor(self, color ):
-    #    c = color;
-    #    c.setAlpha( 180 )
-    #    self.setBrush( QtGui.QBrush( c ) )
+    def setColor(self, color ):
+        c = color;
+        c.setAlpha( 180 )
+        self.setBrush( QBrush( c ) )
 
 
 
@@ -60,7 +61,7 @@ class TVPlot( Qwt.QwtPlot):
 
         self.replot() # creating the legend items
 
-        items = QwtPlotItemList.itemList( QwtPlotItem.Rtti_PlotHistogram )
+        items = Qwt.QwtPlotItemList.itemList( Qwt.QwtPlotItem.Rtti_PlotHistogram )
         for i in range(len(items)):
             if ( i == 0 ):
                 #const QVariant 

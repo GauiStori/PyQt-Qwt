@@ -68,5 +68,8 @@ typedef unsigned long size_t;
 %Include qwt_plot_panner.sip
 
 %Include qwt_counter.sip
+
 /* It works until here */
+%Include qwt_plot_dict.sip
+%Include qwt_point_data.sip
 

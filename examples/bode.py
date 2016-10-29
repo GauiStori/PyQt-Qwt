@@ -1,7 +1,7 @@
 #!/usr/bin/python
 
 # python simpleplot.py <qtversion (4 or 5)>
-# Tested for python3 Qt5. Crashes if mose is over plot canvas
+# Tested for python3 Qt5. Crashes if mouse is over plot canvas
 
 import sys
 sys.path.append('../sip/')

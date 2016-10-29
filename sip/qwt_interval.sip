@@ -14,22 +14,11 @@ class QwtInterval
 #include <qwt_interval.h>
 %End
 public:
-    /*!
-      Flag indicating if a border is included or excluded 
-      \sa setBorderFlags(), borderFlags()
-    */
     enum BorderFlag
     {
-        //! Min/Max values are inside the interval
         IncludeBorders = 0x00,
-
-        //! Min value is not included in the interval
         ExcludeMinimum = 0x01,
-
-        //! Max value is not included in the interval
         ExcludeMaximum = 0x02,
-
-        //! Min/Max values are not included in the interval
         ExcludeBorders = 0x03 //ExcludeMinimum | ExcludeMaximum
     };
 
