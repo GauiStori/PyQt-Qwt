@@ -180,10 +180,10 @@ class Plot( Qwt.QwtPlot):
         self.d_marker2.setLineStyle( Qwt.QwtPlotMarker.HLine )
         self.d_marker2.setLabelAlignment( Qt.AlignRight | Qt.AlignBottom )
         self.d_marker2.setLinePen( QColor( 200, 150, 0 ), 0, Qt.DashDotLine )
-        self.d_marker2.setSymbol( Qwt.QwtSymbol( Qwt.QwtSymbol.Diamond,QColor( Qt.yellow ), QColor( Qt.green ), QSize( 8, 8 ) ) ) #FIXME, Segfaults
+        self.d_marker2.setSymbol( Qwt.QwtSymbol( Qwt.QwtSymbol.Diamond,QColor( Qt.yellow ), QColor( Qt.green ), QSize( 8, 8 ) ) )
         self.d_marker2.attach( self )
 
-        self.setDamp( 0.1 )
+        self.setDamp( 0 )
 
         self.setAutoReplot( True )
 
@@ -236,7 +236,7 @@ class Plot( Qwt.QwtPlot):
         self.show3dB( f3 )
         self.showData( frequency, amplitude, phase, ArraySize )
         self.setAutoReplot( doReplot )
-        #self.replot()
+        self.replot()
 
 class Zoomer(Qwt.QwtPlotZoomer):
     def __init__(self, xAxis, yAxis, canvas ):
@@ -285,27 +285,21 @@ class MainWindow( QMainWindow ):
         self.btnZoom.setCheckable( True )
         self.btnZoom.setToolButtonStyle( Qt.ToolButtonTextUnderIcon )
         self.toolBar.addWidget( self.btnZoom )
-
         self.btnZoom.toggled.connect(self.enableZoomMode)
-        #connect( btnZoom, SIGNAL( toggled( bool ) ), SLOT( enableZoomMode( bool ) ) )
 
         self.btnPrint = QToolButton( self.toolBar )
         self.btnPrint.setText( "Print" )
         self.btnPrint.setIcon( QIcon(QPixmap( print_xpm ) ) )
         self.btnPrint.setToolButtonStyle( Qt.ToolButtonTextUnderIcon )
-        self.toolBar.addWidget( self.btnPrint )
-        
+        self.toolBar.addWidget( self.btnPrint )        
         self.btnPrint.clicked.connect(self.print)
-        #connect( btnPrint, SIGNAL( clicked() ), SLOT( print() ) )
 
         self.btnExport = QToolButton( self.toolBar )
         self.btnExport.setText( "Export" )
         self.btnExport.setIcon( QIcon(QPixmap( print_xpm ) ) )
         self.btnExport.setToolButtonStyle( Qt.ToolButtonTextUnderIcon )
-        self.toolBar.addWidget( self.btnExport )
-        
+        self.toolBar.addWidget( self.btnExport )        
         self.btnExport.clicked.connect(self.exportDocument)
-        #connect( btnExport, SIGNAL( clicked() ), SLOT( exportDocument() ) )
 
         self.toolBar.addSeparator()
 
@@ -317,12 +311,12 @@ class MainWindow( QMainWindow ):
         self.layout.addWidget( QLabel( "Damping Factor", hBox ), 0 )
         self.layout.addSpacing( 10 )
 
-        #self.cntDamp = Qwt.QwtCounter( hBox )
-        #self.cntDamp.setRange( 0.0, 5.0 )
-        #self.cntDamp.setSingleStep( 0.01 )
-        #self.cntDamp.setValue( 0.0 )
+        self.cntDamp = Qwt.QwtCounter( hBox )
+        self.cntDamp.setRange( 0.0, 5.0 )
+        self.cntDamp.setSingleStep( 0.01 )
+        self.cntDamp.setValue( 0.0 )
 
-        #self.layout.addWidget( self.cntDamp, 0 )
+        self.layout.addWidget( self.cntDamp, 0 )
 
         self.toolBar.addWidget( hBox )
 
@@ -331,9 +325,8 @@ class MainWindow( QMainWindow ):
         self.enableZoomMode( False )
         self.showInfo("humm")
 
-        #self.cntDamp.valueChanged.connect(self.d_plot.setDamp)
+        self.cntDamp.valueChanged['double'].connect(self.d_plot.setDamp)
         self.d_picker.moved.connect(self.moved)
-        #connect( cntDamp, SIGNAL( valueChanged( double ) ), d_plot, SLOT( setDamp( double ) ) )
         #connect( d_picker, SIGNAL( moved( const QPoint & ) ), SLOT( moved( const QPoint & ) ) )
         #connect( d_picker, SIGNAL( selected( const QPolygon & ) ), SLOT( selected( const QPolygon & ) ) )
 

@@ -67,17 +67,6 @@ typedef unsigned long size_t;
 %Include qwt_panner.sip
 %Include qwt_plot_panner.sip
 
+%Include qwt_counter.sip
 /* It works until here */
-/*
-%Include QwtArrayDouble.sip
-%Include qwt_color_map.sip
-%Include QwtList.sip
-%Include qwt_scale_engine.sip
-%Include qwt_text_label.sip
-%Include qwt_text_engine.sip
-%Include qwt_text.sip
-%Include qwt_plot_dict.sip
-*/
 
-//%Include qwt_legend_itemmanager.sip
-//%Include qwt_legend_item.sip
