@@ -14,7 +14,7 @@ if (len(sys.argv) > 1 and sys.argv[1] == '4'):
     from PyQt4.QtGui import QApplication, QColor,  QTransform, QPolygonF
 else:
     from PyQt5.QtCore import Qt,  QSize
-    from PyQt5.QtGui import QColor,  QPixmap, QFont
+    from PyQt5.QtGui import QColor,  QPixmap, QFont,  QIcon
     from PyQt5.QtWidgets import QMainWindow,  QWidget,  QToolBar,  QToolButton,  QHBoxLayout,  QLabel,  QApplication
     from PyQt5.QtPrintSupport import QPrintDialog, QPrinter
  
@@ -180,7 +180,7 @@ class Plot( Qwt.QwtPlot):
         self.d_marker2.setLineStyle( Qwt.QwtPlotMarker.HLine )
         self.d_marker2.setLabelAlignment( Qt.AlignRight | Qt.AlignBottom )
         self.d_marker2.setLinePen( QColor( 200, 150, 0 ), 0, Qt.DashDotLine )
-        #self.d_marker2.setSymbol( Qwt.QwtSymbol( Qwt.QwtSymbol.Diamond,QColor( Qt.yellow ), QColor( Qt.green ), QSize( 8, 8 ) ) ) #FIXME, Segfaults
+        self.d_marker2.setSymbol( Qwt.QwtSymbol( Qwt.QwtSymbol.Diamond,QColor( Qt.yellow ), QColor( Qt.green ), QSize( 8, 8 ) ) ) #FIXME, Segfaults
         self.d_marker2.attach( self )
 
         self.setDamp( 0.1 )
@@ -196,7 +196,7 @@ class Plot( Qwt.QwtPlot):
         text = Qwt.QwtText( label )
         text.setFont( QFont( "Helvetica", 10, QFont.Bold ) )
         text.setColor( QColor( 200, 150, 0 ) )
-        self.d_marker2.setValue( freq, 0.0)#amplitude )
+        self.d_marker2.setValue( freq, amplitude )
         self.d_marker2.setLabel( text )
 
     def show3dB( self, freq ):
@@ -222,7 +222,6 @@ class Plot( Qwt.QwtPlot):
         amax = -1000.0
         for i in range(ArraySize):
             f = frequency[i];
-            #g = ComplexNumber( 1.0 ) / ComplexNumber( 1.0 - f * f, 2.0 * damping * f )
             g = complex( 1.0 ) / complex( 1.0 - f * f, 2.0 * damping * f )
             amplitude[i] = 20.0 * math.log10( math.sqrt( g.real * g.real + g.imag * g.imag ) )
             phase[i] = math.atan2( g.imag, g.real ) * ( 180.0 / 3.14159)#M_PI )
@@ -266,8 +265,8 @@ class MainWindow( QMainWindow ):
         self.d_zoomer[0].setTrackerPen( QColor( Qt.white ) )
 
         self.d_zoomer[1] = Zoomer( Qwt.QwtPlot.xTop, Qwt.QwtPlot.yRight, self.d_plot.canvas() )
-        #self.d_panner = Qwt.QwtPlotPanner( self.d_plot.canvas() )
-        #self.d_panner.setMouseButton( Qt.MidButton )
+        self.d_panner = Qwt.QwtPlotPanner( self.d_plot.canvas() )
+        self.d_panner.setMouseButton( Qt.MidButton )
 
         self.d_picker = Qwt.QwtPlotPicker( Qwt.QwtPlot.xBottom, Qwt.QwtPlot.yLeft,
             Qwt.QwtPlotPicker.CrossRubberBand, Qwt.QwtPicker.AlwaysOn, self.d_plot.canvas() )
@@ -282,7 +281,7 @@ class MainWindow( QMainWindow ):
 
         self.btnZoom = QToolButton( self.toolBar )
         self.btnZoom.setText( "Zoom" )
-        #self.btnZoom.setIcon( QPixmap( zoom_xpm ) )
+        self.btnZoom.setIcon( QIcon(QPixmap( zoom_xpm ) ))
         self.btnZoom.setCheckable( True )
         self.btnZoom.setToolButtonStyle( Qt.ToolButtonTextUnderIcon )
         self.toolBar.addWidget( self.btnZoom )
@@ -291,7 +290,7 @@ class MainWindow( QMainWindow ):
 
         self.btnPrint = QToolButton( self.toolBar )
         self.btnPrint.setText( "Print" )
-        #self.btnPrint.setIcon( QPixmap( print_xpm ) )
+        self.btnPrint.setIcon( QIcon(QPixmap( print_xpm ) ) )
         self.btnPrint.setToolButtonStyle( Qt.ToolButtonTextUnderIcon )
         self.toolBar.addWidget( self.btnPrint )
         
@@ -299,7 +298,7 @@ class MainWindow( QMainWindow ):
 
         self.btnExport = QToolButton( self.toolBar )
         self.btnExport.setText( "Export" )
-        #self.btnExport.setIcon( QPixmap( print_xpm ) )
+        self.btnExport.setIcon( QIcon(QPixmap( print_xpm ) ) )
         self.btnExport.setToolButtonStyle( Qt.ToolButtonTextUnderIcon )
         self.toolBar.addWidget( self.btnExport )
         #connect( btnExport, SIGNAL( clicked() ), SLOT( exportDocument() ) )
@@ -324,7 +323,7 @@ class MainWindow( QMainWindow ):
         self.toolBar.addWidget( hBox )
 
         self.addToolBar( self.toolBar )
-        #self.statusBar()
+        self.statusBar()
         self.enableZoomMode( False )
         self.showInfo("humm")
 
@@ -358,13 +357,12 @@ class MainWindow( QMainWindow ):
         renderer.exportTo( self.d_plot, "bode.pdf" )
 
     def enableZoomMode( self, on ):
-        pass
-        #self.d_panner.setEnabled( on )
-        #self.d_zoomer[0].setEnabled( on )
-        #self.d_zoomer[0].zoom( 0 )
-        #self.d_zoomer[1].setEnabled( on )
-        #self.d_zoomer[1].zoom( 0 )
-        #self.d_picker.setEnabled(  not on )
+        self.d_panner.setEnabled( on )
+        self.d_zoomer[0].setEnabled( on )
+        self.d_zoomer[0].zoom( 0 )
+        self.d_zoomer[1].setEnabled( on )
+        self.d_zoomer[1].zoom( 0 )
+        self.d_picker.setEnabled(  not on )
         #self.showInfo()
 
     def showInfo( self, text ):
