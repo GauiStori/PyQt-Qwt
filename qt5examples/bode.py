@@ -9,14 +9,10 @@ import math
 import Qwt
 import numpy as np
 
-if (len(sys.argv) > 1 and sys.argv[1] == '4'):
-    from PyQt4.QtCore import Qt, QSize
-    from PyQt4.QtGui import QApplication, QColor,  QTransform, QPolygonF
-else:
-    from PyQt5.QtCore import Qt,  QSize
-    from PyQt5.QtGui import QColor,  QPixmap, QFont,  QIcon
-    from PyQt5.QtWidgets import QMainWindow,  QWidget,  QToolBar,  QToolButton,  QHBoxLayout,  QLabel,  QApplication
-    from PyQt5.QtPrintSupport import QPrintDialog, QPrinter
+from PyQt5.QtCore import Qt,  QSize
+from PyQt5.QtGui import QColor,  QPixmap, QFont,  QIcon
+from PyQt5.QtWidgets import QMainWindow,  QWidget,  QToolBar,  QToolButton,  QHBoxLayout,  QLabel,  QApplication
+from PyQt5.QtPrintSupport import QPrintDialog, QPrinter
  
 
 def logSpace(size, xmin, xmax ):

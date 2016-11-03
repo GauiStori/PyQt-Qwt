@@ -11,14 +11,8 @@ import math
 import Qwt
 import numpy as np
 
-if (len(sys.argv) > 1 and sys.argv[1] == '4'):
-    from PyQt4.QtCore import Qt, QSize
-    from PyQt4.QtGui import QApplication, QColor,  QTransform, QPolygonF
-else:
-    from PyQt5.QtCore import Qt,  QSize, qrand, QPointF
-    from PyQt5.QtGui import QColor,  QPixmap, QFont,  QIcon, QPen, QPolygonF
-    from PyQt5.QtWidgets import QMainWindow,  QWidget,  QToolBar,  QToolButton,  QHBoxLayout,  QLabel,  QApplication
-    #from PyQt5.QtPrintSupport import QPrintDialog, QPrinter
+from PyQt4.QtCore import Qt, QSize, qrand, QPointF
+from PyQt4.QtGui import QMainWindow, QApplication, QColor,  QTransform, QPolygonF,  QWidget,  QToolBar,  QToolButton,  QHBoxLayout,  QLabel,  QApplication, QPen, QPolygonF
 
 def randomValue():
     #a number between [ 0.0, 1.0 ]

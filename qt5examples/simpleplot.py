@@ -7,14 +7,9 @@ import sys
 sys.path.append("../sip")
 import Qwt
 import numpy as np
-
-if (len(sys.argv) > 1 and sys.argv[1] == '4'):
-    from PyQt4.QtCore import Qt, QSize
-    from PyQt4.QtGui import QApplication, QBrush
-else:
-    from PyQt5.QtCore import Qt,  QSize
-    from PyQt5.QtGui import QBrush, QPen
-    from PyQt5.QtWidgets import QApplication
+from PyQt5.QtCore import Qt,  QSize
+from PyQt5.QtGui import QBrush, QPen
+from PyQt5.QtWidgets import QApplication
 
 a = QApplication(sys.argv)
 

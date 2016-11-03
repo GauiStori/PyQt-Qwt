@@ -23,12 +23,12 @@ public:
     };
 
     //! Border flags
-    //typedef QFlags<BorderFlag> BorderFlags;
+    typedef QFlags<QwtInterval::BorderFlag> BorderFlags;
 
     QwtInterval();
-    //QwtInterval( double minValue, double maxValue, BorderFlags = IncludeBorders );
+    QwtInterval( double minValue, double maxValue, BorderFlags = IncludeBorders );
 
-    //void setInterval( double minValue, double maxValue, BorderFlags = IncludeBorders );
+    void setInterval( double minValue, double maxValue, BorderFlags = IncludeBorders );
 
     QwtInterval normalized() const;
     QwtInterval inverted() const;
@@ -37,8 +37,8 @@ public:
     bool operator==( const QwtInterval & ) const;
     bool operator!=( const QwtInterval & ) const;
 
-    //void setBorderFlags( BorderFlags );
-    //BorderFlags borderFlags() const;
+    void setBorderFlags( QwtInterval::BorderFlags );
+    QwtInterval::BorderFlags borderFlags() const;
 
     double minValue() const;
     double maxValue() const;

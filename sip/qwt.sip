@@ -72,4 +72,7 @@ typedef unsigned long size_t;
 /* It works until here */
 %Include qwt_plot_dict.sip
 %Include qwt_point_data.sip
-
+%Include qwt_raster_data.sip
+%Include qwt_color_map.sip
+%Include qwt_plot_spectrogram.sip
+%Include qwt_plot_rasteritem.sip

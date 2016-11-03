@@ -1,20 +1,14 @@
 #!/usr/bin/python
 
-# python simpleplot.py <qtversion (4 or 5)>
+# python simpleplot.py
 # Tested for python3, Qt5
 
 import sys
 sys.path.append('../sip/')
 import math
 import Qwt
-if (len(sys.argv) > 1 and sys.argv[1] == '4'):
-    from PyQt4.QtCore import Qt, QTime,  QPointF,  QSize
-    from PyQt4.QtGui import QApplication, QColor,  QTransform, QPolygonF
-else:
-    from PyQt5.QtCore import Qt, QTime,  QPointF,  QSize
-    from PyQt5.QtGui import QColor,  QTransform
-    from PyQt5.QtWidgets import QApplication, QFrame
-    from PyQt5.QtGui import QPolygonF
+from PyQt4.QtCore import Qt, QTime,  QPointF,  QSize
+from PyQt4.QtGui import QApplication, QColor,  QTransform, QPolygonF
 
 class Curve(Qwt.QwtPlotCurve):
     def __init__(self):
@@ -207,4 +201,4 @@ if __name__ == '__main__':
     plot.resize( 400, 400 )
     plot.show()
 
-    sys.exit(a.exec())
+    sys.exit(a.exec_())

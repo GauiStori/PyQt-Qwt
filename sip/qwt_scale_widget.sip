@@ -73,7 +73,7 @@ public:
     void setColorBarWidth( int );
     int colorBarWidth() const;
 
-    //void setColorMap( const QwtInterval &, QwtColorMap * );
+    void setColorMap( const QwtInterval &, QwtColorMap * );
 
     QwtInterval colorBarInterval() const;
     //const QwtColorMap *colorMap() const;

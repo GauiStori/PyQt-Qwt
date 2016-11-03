@@ -105,8 +105,8 @@ public:
     virtual ~QwtPicker();
 
     void setStateMachine( QwtPickerMachine * );
-    const QwtPickerMachine *stateMachine() const;
-    //QwtPickerMachine *stateMachine(); FIXME
+    //const QwtPickerMachine *stateMachine() const; FIXME
+    QwtPickerMachine *stateMachine();
 
     void setRubberBand( RubberBand );
     RubberBand rubberBand() const;
