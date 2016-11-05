@@ -49,7 +49,7 @@ class LinearColorMapRGB(Qwt.QwtLinearColorMap):
 
 class LinearColorMapIndexed(Qwt.QwtLinearColorMap):
     def __init__(self):
-        Qwt.QwtLinearColorMap.__init__( Qt.darkCyan, Qt.red, Qwt.QwtColorMap.Indexed )
+        Qwt.QwtLinearColorMap.__init__( self, Qt.darkCyan, Qt.red, Qwt.QwtColorMap.Indexed )
         self.addColorStop( 0.1, Qt.cyan )
         self.addColorStop( 0.6, Qt.green )
         self.addColorStop( 0.95, Qt.yellow )

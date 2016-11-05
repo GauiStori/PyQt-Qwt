@@ -69,10 +69,26 @@ typedef unsigned long size_t;
 
 %Include qwt_counter.sip
 
-/* It works until here */
+// The following includes do miss method code to work
 %Include qwt_plot_dict.sip
 %Include qwt_point_data.sip
 %Include qwt_raster_data.sip
 %Include qwt_color_map.sip
 %Include qwt_plot_spectrogram.sip
 %Include qwt_plot_rasteritem.sip
+/* It works until here */
+
+%Include qwt_abstract_scale.sip
+%Include qwt_abstract_slider.sip
+%Include qwt_slider.sip
+
+%Include qwt_thermo.sip
+
+%Include qwt_wheel.sip
+
+%Include qwt_round_scale_draw.sip
+%Include qwt_knob.sip
+
+
+
+

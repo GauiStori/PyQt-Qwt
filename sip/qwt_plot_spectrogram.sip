@@ -37,11 +37,11 @@ public:
     void setDisplayMode( QwtPlotSpectrogram::DisplayMode, bool on = true );
     bool testDisplayMode( QwtPlotSpectrogram::DisplayMode ) const;
 
-    void setData( QwtRasterData *data );
+    void setData( QwtRasterData *data /Transfer/);
     //const QwtRasterData *data() const;
     QwtRasterData *data();
 
-    void setColorMap( QwtColorMap * );
+    void setColorMap( QwtColorMap * /Transfer/);
     //const QwtColorMap *colorMap() const;
 
     virtual QwtInterval interval(Qt::Axis) const;
@@ -77,9 +77,9 @@ protected:
     //virtual QwtRasterData::ContourLines renderContourLines(
     //    const QRectF &rect, const QSize &raster ) const; FIXME
 
-    /*virtual void drawContourLines( QPainter *p,
-        const QwtScaleMap &xMap, const QwtScaleMap &yMap,
-        const QwtRasterData::ContourLines& lines ) const;FIXME*/
+    //virtual void drawContourLines( QPainter *p,
+    //    const QwtScaleMap &xMap, const QwtScaleMap &yMap,
+    //    const QwtRasterData::ContourLines& lines ) const;FIXME
 
     void renderTile( const QwtScaleMap &xMap, const QwtScaleMap &yMap,
         const QRect &imageRect, QImage *image ) const;
