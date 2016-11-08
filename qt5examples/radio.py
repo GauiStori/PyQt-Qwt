@@ -9,7 +9,7 @@ import math
 import Qwt
 import numpy as np
 
-from PyQt5.QtCore import Qt,  QSize
+from PyQt5.QtCore import pyqtSignal, Qt,  QSize
 from PyQt5.QtGui import QColor,  QPixmap, QFont,  QIcon,  QPalette, QLinearGradient
 from PyQt5.QtWidgets import (QMainWindow,  QWidget,  QToolBar,  QToolButton,  QHBoxLayout,  QLabel,  QApplication,  QSizePolicy, 
     QVBoxLayout,  QFrame )
@@ -141,12 +141,12 @@ class AmpFrame( QFrame ):
             sig_r *= ( 1.0 + balance )
 
         if ( sig_l > 0.01 ):
-            sig_l = 20.0 * self.log10( sig_l )
+            sig_l = 20.0 * math.log10( sig_l )
         else:
             sig_l = -40.0
 
         if ( sig_r > 0.01 ):
-            sig_r = 20.0 * self.log10( sig_r )
+            sig_r = 20.0 * math.log10( sig_r )
         else:
             sig_r = - 40.0
 
@@ -183,6 +183,7 @@ class TuningThermo(QWidget):
         self.d_thermo.setValue( value )
 
 class TunerFrame( QWidget ):
+    fieldChanged = pyqtSignal(float)
     def __init__(self, parent):
         QWidget.__init__(self, parent )
         self.freqMin = 87.5
@@ -213,7 +214,7 @@ class TunerFrame( QWidget ):
 
 
         self.d_wheelFrequency.valueChanged['double'].connect(self.adjustFreq )
-        #self.d_sliderFrequency.valueChanged['double'].connect(self.adjustFreq )
+        self.d_sliderFrequency.valueChanged['double'].connect(self.adjustFreq )
 
         self.mainLayout = QVBoxLayout( self )
         #self.mainLayout.setMargin( 10 )
@@ -227,7 +228,7 @@ class TunerFrame( QWidget ):
         self.hLayout.addWidget( self.d_wheelFrequency, 2 )
 
         self.mainLayout.addLayout( self.hLayout )
-
+    
     def adjustFreq( self, frq ):
         factor = 13.0 / ( 108 - 87.5 )
         x = ( frq - 87.5 ) * factor
@@ -237,7 +238,7 @@ class TunerFrame( QWidget ):
             self.d_sliderFrequency.setValue( frq )
         if ( self.d_wheelFrequency.value() != frq ):
             self.d_wheelFrequency.setValue( frq )
-        #self.fieldChanged.emit( field )
+        self.fieldChanged.emit( field )
 
     def setFreq( self, frq ):
         self.d_wheelFrequency.setValue( frq )
@@ -257,7 +258,7 @@ class MainWindow(QWidget):
         self.layout.addWidget( self.frmTuner )
         self.layout.addWidget( self.frmAmp )
 
-        #self.frmTuner.fieldChanged['double'].connect(self.frmAmp.setMaster)
+        self.frmTuner.fieldChanged['double'].connect(self.frmAmp.setMaster)
 
         self.frmTuner.setFreq( 90.0 )
 

@@ -64,7 +64,7 @@ public:
 public Q_SLOTS:
     void setValue( double val );
 
-//Q_SIGNALS:
+Q_SIGNALS:
     void valueChanged( double value );
     void sliderPressed();
     void sliderReleased();
