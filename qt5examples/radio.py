@@ -9,7 +9,7 @@ import math
 import Qwt
 import numpy as np
 
-from PyQt5.QtCore import pyqtSignal, Qt,  QSize
+from PyQt5.QtCore import pyqtSignal, Qt,  QSize, QBasicTimer
 from PyQt5.QtGui import QColor,  QPixmap, QFont,  QIcon,  QPalette, QLinearGradient
 from PyQt5.QtWidgets import (QMainWindow,  QWidget,  QToolBar,  QToolButton,  QHBoxLayout,  QLabel,  QApplication,  QSizePolicy, 
     QVBoxLayout,  QFrame )
@@ -97,6 +97,7 @@ class Thermo(QWidget):
 class AmpFrame( QFrame ):
     def __init__(self, p):
         QFrame.__init__( self, p )
+        self.phs = 0
         self.d_knbVolume  = Knob( "Volume", 0.0, 10.0, self )
         self.d_knbBalance = Knob( "Balance", -10.0, 10.0, self )
         self.d_knbTreble  = Knob( "Treble", -10.0, 10.0, self )
@@ -123,13 +124,13 @@ class AmpFrame( QFrame ):
         self.d_master = 0
 
     def timerEvent( self, event ):
-        phs = 0.0
+        #self.phs = 0.0
         #  This amplifier generates its own input signal...
-        sig_bass = ( 1.0 + 0.1 * self.d_knbBass.value() ) * math.sin( 13.0 * phs )
-        sig_mid_l = math.sin( 17.0 * phs )
-        sig_mid_r = math.cos( 17.5 * phs )
-        sig_trbl_l = 0.5 * ( 1.0 + 0.1 * self.d_knbTreble.value() ) * math.sin( 35.0 * phs )
-        sig_trbl_r = 0.5 * ( 1.0 + 0.1 * self.d_knbTreble.value() ) * math.sin( 34.0 * phs )
+        sig_bass = ( 1.0 + 0.1 * self.d_knbBass.value() ) * math.sin( 13.0 * self.phs )
+        sig_mid_l = math.sin( 17.0 * self.phs )
+        sig_mid_r = math.cos( 17.5 * self.phs )
+        sig_trbl_l = 0.5 * ( 1.0 + 0.1 * self.d_knbTreble.value() ) * math.sin( 35.0 * self.phs )
+        sig_trbl_r = 0.5 * ( 1.0 + 0.1 * self.d_knbTreble.value() ) * math.sin( 34.0 * self.phs )
 
         sig_l = 0.05 * self.d_master * self.d_knbVolume.value() * ( sig_bass + sig_mid_l + sig_trbl_l )*( sig_bass + sig_mid_l + sig_trbl_l )
         sig_r = 0.05 * self.d_master * self.d_knbVolume.value() * ( sig_bass + sig_mid_r + sig_trbl_r )*( sig_bass + sig_mid_r + sig_trbl_r )
@@ -153,9 +154,9 @@ class AmpFrame( QFrame ):
         self.d_thmLeft.setValue( sig_l )
         self.d_thmRight.setValue( sig_r )
 
-        phs += M_PI / 100
-        if ( phs > M_PI ):
-            phs = 0
+        self.phs += M_PI / 100
+        if ( self.phs > M_PI ):
+            self.phs = 0
 
     def setMaster( self,  v ):
         self.d_master = v
