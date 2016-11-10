@@ -8,7 +8,7 @@ sys.path.append('../sip/')
 import Qwt
 from PyQt5.QtCore import Qt,  QSize
 from PyQt5.QtGui import QColor,  QPixmap, QFont, QBrush
-from PyQt5.QtWidgets import QMainWindow,  QWidget,  QToolBar,  QToolButton,  QHBoxLayout,  QLabel,  QApplication
+from PyQt5.QtWidgets import (QMainWindow,  QWidget,  QToolBar,  QToolButton,  QHBoxLayout,  QLabel,  QApplication, QComboBox, QSizePolicy)
 
 class Histogram(Qwt.QwtPlotHistogram):
     def __init__(self,title, symbolColor ):
@@ -36,7 +36,7 @@ class TVPlot( Qwt.QwtPlot):
     def __init__(self, parent=None):
         Qwt.QwtPlot.__init__(self, parent )
         self.grid=None
-        #setTitle( "Watching TV during a weekend" )
+        self.setTitle( "Watching TV during a weekend" )
         canvas = Qwt.QwtPlotCanvas()
         #canvas.setPalette( Qt.gray )
         canvas.setBorderRadius( 10 )
@@ -55,8 +55,8 @@ class TVPlot( Qwt.QwtPlot):
         #connect( legend, SIGNAL( checked( const QVariant &, bool, int ) ), SLOT( showItem( const QVariant &, bool ) ) )
 
         self.replot() # creating the legend items
-
-        items = Qwt.QwtPlotItemList.itemList( Qwt.QwtPlotItem.Rtti_PlotHistogram )
+        print(Qwt.QwtPlotItem.Rtti_PlotHistogram)
+        """items = Qwt.QwtPlotDict.itemList( Qwt.QwtPlotItem.Rtti_PlotHistogram )
         for i in range(len(items)):
             if ( i == 0 ):
                 #const QVariant 
@@ -67,8 +67,8 @@ class TVPlot( Qwt.QwtPlot):
                     legendLabel.setChecked( True )
                 items[i].setVisible( True )
             else:
-                items[i].setVisible( False )
-        setAutoReplot( True )
+                items[i].setVisible( False )"""
+        self.setAutoReplot( True )
 
     def populate(self):
         self.grid = Qwt.QwtPlotGrid()
@@ -123,7 +123,7 @@ class MainWindow(QMainWindow):
     def __init__(self):
         QMainWindow.__init__(self)
         self.d_plot = TVPlot(self)        
-        setCentralWidget( self.d_plot )
+        self.setCentralWidget( self.d_plot )
         self.toolBar = QToolBar( self )
         self.typeBox = QComboBox( self.toolBar )
         self.typeBox.addItem( "Outline" )

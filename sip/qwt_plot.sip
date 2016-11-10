@@ -74,19 +74,19 @@ public:
     // Title
 
     void setTitle( const QString & );
-    //void setTitle( const QwtText &t );
-    //QwtText title() const;
+    void setTitle( const QwtText &t );
+    QwtText title() const;
 
-    //QwtTextLabel *titleLabel();
+    QwtTextLabel *titleLabel();
     //const QwtTextLabel *titleLabel() const;
 
     // Footer
 
     void setFooter( const QString & );
-    //void setFooter( const QwtText &t );
-    //QwtText footer() const;
+    void setFooter( const QwtText &t );
+    QwtText footer() const;
 
-    //QwtTextLabel *footerLabel();
+    QwtTextLabel *footerLabel();
     //const QwtTextLabel *footerLabel() const;
 
     // Canvas
@@ -138,8 +138,8 @@ public:
     void setAxisLabelRotation( int axisId, double rotation );
 
     void setAxisTitle( int axisId, const QString & );
-    //void setAxisTitle( int axisId, const QwtText & );
-    //QwtText axisTitle( int axisId ) const;
+    void setAxisTitle( int axisId, const QwtText & );
+    QwtText axisTitle( int axisId ) const;
 
     void setAxisMaxMinor( int axisId, int maxMinor );
     int axisMaxMinor( int axisId ) const;
