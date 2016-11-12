@@ -13,19 +13,20 @@ from PyQt5.QtGui import QColor,  QTransform
 from PyQt5.QtWidgets import QApplication, QMainWindow, QFrame, QWidget
 from PyQt5.QtGui import QPolygonF
 
-class BarChart( QWidget ):
+class BarChart( Qwt.QwtPlot ):
     def __init__(self, parent):
+        Qwt.QwtPlot.__init__(self, parent)
         self.setAutoFillBackground( True )
-        self.setPalette( Qt.white )
-        self.canvas().setPalette( QColor( "LemonChiffon" ) )
+        #self.setPalette( Qt.white ) FIXME
+        #self.canvas.setPalette( QColor( "LemonChiffon" ) ) FIXME
 
         self.setTitle( "Bar Chart" )
 
-        self.setAxisTitle( QwtPlot.yLeft, "Whatever" )
-        self.setAxisTitle( QwtPlot.xBottom, "Whatever" )
+        self.setAxisTitle( Qwt.QwtPlot.yLeft, "Whatever" )
+        self.setAxisTitle( Qwt.QwtPlot.xBottom, "Whatever" )
 
-        self.d_barChartItem = QwtPlotMultiBarChart( "Bar Chart " )
-        self.d_barChartItem.setLayoutPolicy( QwtPlotMultiBarChart.AutoAdjustSamples )
+        self.d_barChartItem = Qwt.QwtPlotMultiBarChart( "Bar Chart " )
+        self.d_barChartItem.setLayoutPolicy( Qwt.QwtPlotMultiBarChart.AutoAdjustSamples )
         self.d_barChartItem.setSpacing( 20 )
         self.d_barChartItem.setMargin( 3 )
 
@@ -55,7 +56,7 @@ class BarChart( QWidget ):
             symbol = Qwt.QwtColumnSymbol( Qwt.QwtColumnSymbol.Box )
             symbol.setLineWidth( 2 )
             symbol.setFrameStyle( QwtColumnSymbol.Raised )
-            symbol.setPalette( QPalette( colors[i] ) )
+            #symbol.setPalette( QPalette( colors[i] ) ) FIXME
             self.d_barChartItem.setSymbol( i, symbol )
         
         series = np.array([])
@@ -110,7 +111,6 @@ class BarChart( QWidget ):
 class MainWindow(QMainWindow):
     def __init__(self, parent=None):
         QMainWindow.__init__(self, parent)
-        self.d_chart = BarChart()
         self.d_chart = BarChart( self )
         self.setCentralWidget( self.d_chart )
 
