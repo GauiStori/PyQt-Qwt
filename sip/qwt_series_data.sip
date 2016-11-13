@@ -41,6 +41,25 @@ private:
     QwtSeriesDataQPointF &operator=( const QwtSeriesDataQPointF& );
 };
 
+class QwtSeriesDataQwtSetSample
+{
+%TypeHeaderCode
+#include "qwt_series_data.h"
+typedef QwtSeriesData<QwtSetSample> QwtSeriesDataQwtSetSample;
+%End
+public:
+    QwtSeriesDataQwtSetSample();
+    virtual ~QwtSeriesDataQwtSetSample();
+    virtual size_t size() const;
+    virtual QwtSetSample sample( size_t i ) const;
+    virtual QRectF boundingRect() const;
+    virtual void setRectOfInterest( const QRectF &rect );
+//protected:
+//    mutable QRectF d_boundingRect;
+private:
+    QwtSeriesDataQPointF &operator=( const QwtSeriesDataQPointF& );
+};
+
 class QwtSeriesDataQwtIntervalSample
 {
 %TypeHeaderCode

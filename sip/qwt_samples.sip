@@ -27,9 +27,12 @@ public:
     //! Interval
     QwtInterval interval;
 };
-/*
+
 class QwtSetSample
 {
+%TypeHeaderCode
+#include "qwt_samples.h"
+%End
 public:
     QwtSetSample();
     QwtSetSample( double, const QVector<double> & = QVector<double>() );
@@ -38,14 +41,10 @@ public:
     bool operator!=( const QwtSetSample &other ) const;
 
     double added() const;
-
-    //! value
     double value;
-
-    //! Vector of values associated to value
     QVector<double> set;
 };
-
+/*
 class QwtOHLCSample
 {
 public:

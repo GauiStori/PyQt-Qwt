@@ -35,6 +35,7 @@ typedef unsigned long size_t;
 %Include qwt_scale_widget.sip
 
 
+%Include qwt_samples.sip
 %Include qwt_series_data.sip
 %Include qwt_plot_seriesitem.sip
 %Include qwt_series_store.sip
@@ -45,7 +46,6 @@ typedef unsigned long size_t;
 %Include qwt_symbol.sip
 
 %Include qwt_column_symbol.sip
-%Include qwt_samples.sip
 %Include qwt_plot_histogram.sip
 
 %Include qwt_plot_canvas.sip
@@ -88,6 +88,14 @@ typedef unsigned long size_t;
 
 %Include qwt_round_scale_draw.sip
 %Include qwt_knob.sip
+
+%Include qwt_null_paintdevice.sip
+%Include qwt_graphic.sip
+%Include qwt_plot_abstract_barchart.sip
+%Include qwt_plot_barchart.sip
+%Include qwt_plot_multi_barchart.sip
+
+ 
 
 
 

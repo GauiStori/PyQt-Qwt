@@ -32,7 +32,7 @@ class BarChart( Qwt.QwtPlot ):
 
         self.d_barChartItem.attach( self )
 
-        self.insertLegend( QwtLegend() )
+        self.insertLegend( Qwt.QwtLegend() )
 
         self.populate()
         self.setOrientation( 0 )
@@ -47,7 +47,7 @@ class BarChart( Qwt.QwtPlot ):
 
         titles = []
         for i in range(numBars):
-            titles += "Bar %d"%i
+            titles.append(Qwt.QwtText("Bar %d"%i))
 
         self.d_barChartItem.setBarTitles( titles )
         self.d_barChartItem.setLegendIconSize( QSize( 10, 14 ) )
@@ -55,7 +55,7 @@ class BarChart( Qwt.QwtPlot ):
         for i in range(numBars):
             symbol = Qwt.QwtColumnSymbol( Qwt.QwtColumnSymbol.Box )
             symbol.setLineWidth( 2 )
-            symbol.setFrameStyle( QwtColumnSymbol.Raised )
+            symbol.setFrameStyle( Qwt.QwtColumnSymbol.Raised )
             #symbol.setPalette( QPalette( colors[i] ) ) FIXME
             self.d_barChartItem.setSymbol( i, symbol )
         
