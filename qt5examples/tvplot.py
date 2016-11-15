@@ -17,13 +17,15 @@ class Histogram(Qwt.QwtPlotHistogram):
         #self.setColor( symbolColor )
 
     def setValues(self, values ):
-        pass
-        #self.setData( values )
-        """QVector<QwtIntervalSample> samples( numValues )
+        numValues = len(values)
+        #QVector<QwtIntervalSample> samples( numValues )
+        samples = []
         for i in range(numValues):
-            QwtInterval interval( double( i ), i + 1.0 )
+            interval = Qwt.QwtInterval( i , i + 1.0 )
             interval.setBorderFlags( Qwt.QwtInterval.ExcludeMaximum )
-            samples[i] = QwtIntervalSample( values[i], interval )"""
+            samples.append(Qwt.QwtIntervalSample( values[i], interval ))
+        #self.setData( Qwt.QwtIntervalSeriesData(values) )
+        
 
     def setColor(self, color ):
         c = color;
@@ -42,10 +44,10 @@ class TVPlot( Qwt.QwtPlot):
         canvas.setBorderRadius( 10 )
         self.setCanvas( canvas )
 
-        #self.plotLayout().setAlignCanvasToScales( True )
+        self.plotLayout().setAlignCanvasToScales( True )
 
-        #setAxisTitle( Qwt.QwtPlot.yLeft, "Number of People" )
-        #setAxisTitle( Qwt.QwtPlot.xBottom, "Number of Hours" )
+        self.setAxisTitle( Qwt.QwtPlot.yLeft, "Number of People" )
+        self.setAxisTitle( Qwt.QwtPlot.xBottom, "Number of Hours" )
 
         legend = Qwt.QwtLegend()
         legend.setDefaultItemMode( Qwt.QwtLegendData.Checkable )
@@ -90,12 +92,14 @@ class TVPlot( Qwt.QwtPlot):
         histogramNovember.attach( self )
 
     def exportPlot(self):
-        renderer = QwtPlotRenderer()
-        renderer.exportTo( self, "tvplot.pdf" )
+        print("Export Plot")
+        #renderer = Qwt.QwtPlotRenderer()
+        #renderer.exportTo( self, "tvplot.pdf" )
 
     def setMode( self, mode):
         #QwtPlotItemList
-        items = QwtPlotItemList.itemList( Qwt.QwtPlotItem.Rtti_PlotHistogram )
+        print("Set mode %d"%mode)
+        """items = QwtPlotItemList.itemList( Qwt.QwtPlotItem.Rtti_PlotHistogram )
         for i in range(len(items)):
             histogram = items[i]
             if ( mode < 3 ):
@@ -111,7 +115,7 @@ class TVPlot( Qwt.QwtPlot):
                 symbol.setFrameStyle( Qwt.QwtColumnSymbol.Raised )
                 symbol.setLineWidth( 2 )
                 symbol.setPalette( QPalette( histogram.brush().color() ) )
-                histogram.setSymbol( symbol )
+                histogram.setSymbol( symbol )"""
 
     def showItem( itemInfo,on ):
         #QwtPlotItem 
@@ -134,13 +138,15 @@ class MainWindow(QMainWindow):
         self.typeBox.setSizePolicy( QSizePolicy.Fixed, QSizePolicy.Fixed )
         self.btnExport = QToolButton( self.toolBar )
         self.btnExport.setText( "Export" )
-        #btnExport.setToolButtonStyle( QtCore.ToolButtonTextUnderIcon )
+        self.btnExport.setToolButtonStyle( Qt.ToolButtonTextUnderIcon )
         #connect( btnExport, SIGNAL( clicked() ), d_plot, SLOT( exportPlot() ) )
+        self.btnExport.clicked.connect(self.d_plot.exportPlot)
         self.toolBar.addWidget( self.typeBox )
         self.toolBar.addWidget( self.btnExport )
         self.addToolBar( self.toolBar )
-        #d_plot->setMode( typeBox->currentIndex() )
+        self.d_plot.setMode( self.typeBox.currentIndex() )
         #connect( typeBox, SIGNAL( curr entIndexChanged( int ) ), d_plot, SLOT( setMode( int ) ) )
+        self.typeBox.currentIndexChanged['int'].connect(self.d_plot.setMode)
 
 a = QApplication(sys.argv)
 mainWindow = MainWindow()
