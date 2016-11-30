@@ -10,7 +10,7 @@ import Qwt
 import numpy as np
 from PyQt5.QtCore import Qt, QTime,  QPointF,  QSize
 from PyQt5.QtGui import QColor,  QTransform
-from PyQt5.QtWidgets import QApplication, QMainWindow, QFrame, QWidget
+from PyQt5.QtWidgets import QApplication, QMainWindow, QFrame, QWidget,  QToolBar,  QComboBox,  QSizePolicy,  QToolButton
 from PyQt5.QtGui import QPolygonF
 
 class BarChart( Qwt.QwtPlot ):
@@ -50,23 +50,23 @@ class BarChart( Qwt.QwtPlot ):
             titles.append(Qwt.QwtText("Bar %d"%i))
 
         self.d_barChartItem.setBarTitles( titles )
-        self.d_barChartItem.setLegendIconSize( QSize( 10, 14 ) )
+        #self.d_barChartItem.setLegendIconSize( QSize( 10, 14 ) ) # Crashes, FIXME
 
         for i in range(numBars):
             symbol = Qwt.QwtColumnSymbol( Qwt.QwtColumnSymbol.Box )
             symbol.setLineWidth( 2 )
             symbol.setFrameStyle( Qwt.QwtColumnSymbol.Raised )
             #symbol.setPalette( QPalette( colors[i] ) ) FIXME
-            self.d_barChartItem.setSymbol( i, symbol )
+            #self.d_barChartItem.setSymbol( i, symbol )
         
-        series = np.array([])
+        self.series = []
         for i in range(numSamples):
-            values = np.array([])
+            values = []
             for j in range(numBars):
-                values = np.append(values, ( 2 + random.randint() % 8 ))
-            series = np.append(series,values)
+                values.append( 2 + random.randint(0, 8) % 8 )
+            self.series.append(values)
 
-        self.d_barChartItem.setSamples( series )
+        self.d_barChartItem.setSamples( self.series )
 
     def setMode( self, mode ):
         if ( mode == 0 ):
@@ -80,22 +80,22 @@ class BarChart( Qwt.QwtPlot ):
         if ( orientation == 0 ):
             axis1 = Qwt.QwtPlot.xBottom
             axis2 = Qwt.QwtPlot.yLeft
-            d_barChartItem.setOrientation( Qt.Vertical )
+            self.d_barChartItem.setOrientation( Qt.Vertical )
         else:
             axis1 = Qwt.QwtPlot.yLeft
             axis2 = Qwt.QwtPlot.xBottom
-            d_barChartItem.setOrientation( Qt.Horizontal )
+            self.d_barChartItem.setOrientation( Qt.Horizontal )
 
-        self.setAxisScale( axis1, 0, d_barChartItem.dataSize() - 1, 1.0 )
+        self.setAxisScale( axis1, 0, self.d_barChartItem.dataSize() - 1, 1.0 )
         self.setAxisAutoScale( axis2 )
 
-        self.scaleDraw1 = Qwt.QwtScaleDraw.axisScaleDraw( axis1 )
-        self.scaleDraw1.enableComponent( Qwt.QwtScaleDraw.Backbone, False )
-        self.scaleDraw1.enableComponent( Qwt.QwtScaleDraw.Ticks, False )
+        #self.scaleDraw1 = Qwt.QwtScaleDraw.axisScaleDraw( axis1 )
+        #self.scaleDraw1.enableComponent( Qwt.QwtScaleDraw.Backbone, False )
+        #self.scaleDraw1.enableComponent( Qwt.QwtScaleDraw.Ticks, False )
 
-        self.scaleDraw2 = Qwt.QwtScaleDraw.axisScaleDraw( axis2 )
-        self.scaleDraw2.enableComponent( Qwt.QwtScaleDraw.Backbone, True )
-        self.scaleDraw2.enableComponent( Qwt.QwtScaleDraw.Ticks, True )
+        #self.scaleDraw2 = Qwt.QwtScaleDraw.axisScaleDraw( axis2 )
+        #self.scaleDraw2.enableComponent( Qwt.QwtScaleDraw.Backbone, True )
+        #self.scaleDraw2.enableComponent( Qwt.QwtScaleDraw.Ticks, True )
 
         self.plotLayout().setAlignCanvasToScale( axis1, True )
         self.plotLayout().setAlignCanvasToScale( axis2, False )
@@ -126,7 +126,7 @@ class MainWindow(QMainWindow):
         self.orientationBox.addItem( "Horizontal" )
         self.orientationBox.setSizePolicy( QSizePolicy.Fixed, QSizePolicy.Fixed )
 
-        self.btnExport = QToolButton( toolBar )
+        self.btnExport = QToolButton(self.toolBar )
         self.btnExport.setText( "Export" )
         self.btnExport.setToolButtonStyle( Qt.ToolButtonTextUnderIcon )
         self.btnExport.clicked.connect(self.d_chart.exportChart)
@@ -136,9 +136,9 @@ class MainWindow(QMainWindow):
         self.toolBar.addWidget( self.btnExport )
         self.addToolBar( self.toolBar )
 
-        self.d_chart.setMode( typeBox.currentIndex() )
+        self.d_chart.setMode( self.typeBox.currentIndex() )
         self.typeBox.currentIndexChanged['int'].connect(self.d_chart.setMode )
-        self.d_chart.setOrientation( orientationBox.currentIndex() )
+        self.d_chart.setOrientation( self.orientationBox.currentIndex() )
         self.orientationBox.currentIndexChanged['int'].connect(self.d_chart.setOrientation)
 
 a = QApplication(sys.argv)
