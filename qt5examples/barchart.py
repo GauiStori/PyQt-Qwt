@@ -57,15 +57,15 @@ class BarChart( Qwt.QwtPlot ):
             symbol.setLineWidth( 2 )
             symbol.setFrameStyle( Qwt.QwtColumnSymbol.Raised )
             #symbol.setPalette( QPalette( colors[i] ) ) FIXME
-            #self.d_barChartItem.setSymbol( i, symbol )
+            #self.d_barChartItem.setSymbol( i, symbol ) #FIXME Segfaults
         
         self.series = []
         for i in range(numSamples):
             values = []
             for j in range(numBars):
-                values.append( 2 + random.randint(0, 8) % 8 )
+                values.append( 2.0 + random.randint(0, 8) % 8 )
             self.series.append(values)
-
+        print(self.series)
         self.d_barChartItem.setSamples( self.series )
 
     def setMode( self, mode ):
@@ -89,13 +89,13 @@ class BarChart( Qwt.QwtPlot ):
         self.setAxisScale( axis1, 0, self.d_barChartItem.dataSize() - 1, 1.0 )
         self.setAxisAutoScale( axis2 )
 
-        #self.scaleDraw1 = Qwt.QwtScaleDraw.axisScaleDraw( axis1 )
-        #self.scaleDraw1.enableComponent( Qwt.QwtScaleDraw.Backbone, False )
-        #self.scaleDraw1.enableComponent( Qwt.QwtScaleDraw.Ticks, False )
+        self.scaleDraw1 = self.axisScaleDraw( axis1 )
+        self.scaleDraw1.enableComponent( Qwt.QwtScaleDraw.Backbone, False )
+        self.scaleDraw1.enableComponent( Qwt.QwtScaleDraw.Ticks, False )
 
-        #self.scaleDraw2 = Qwt.QwtScaleDraw.axisScaleDraw( axis2 )
-        #self.scaleDraw2.enableComponent( Qwt.QwtScaleDraw.Backbone, True )
-        #self.scaleDraw2.enableComponent( Qwt.QwtScaleDraw.Ticks, True )
+        self.scaleDraw2 = self.axisScaleDraw( axis2 )
+        self.scaleDraw2.enableComponent( Qwt.QwtScaleDraw.Backbone, True )
+        self.scaleDraw2.enableComponent( Qwt.QwtScaleDraw.Ticks, True )
 
         self.plotLayout().setAlignCanvasToScale( axis1, True )
         self.plotLayout().setAlignCanvasToScale( axis2, False )

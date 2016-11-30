@@ -31,8 +31,8 @@ public:
     void setBarTitles( const QList<QwtText> & );
     QList<QwtText> barTitles() const;
 
-    void setSamples( const QVector<QwtSetSample> & );
-    //void setSamples( const QVector< QVector<double> > & ); FIXME
+    //void setSamples( const QVector<QwtSetSample> & ); //FIXME. Don't know if this is needed.
+    void setSamples( const QVector< QVector<double> > & );
     void setSamples( QwtSeriesDataQwtSetSample * );
 
     void setStyle( ChartStyle style );

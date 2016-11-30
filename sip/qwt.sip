@@ -10,15 +10,14 @@
 %Module(name=Qwt, keyword_arguments="Optional")
 
 %Import QtCore/QtCoremod.sip
-//%DefaultSupertype sip.simplewrapper
-//%Module Qwt
 typedef unsigned long size_t;
-
 %Import QtGui/QtGuimod.sip
 
 %If (Qt_5_0_0 -)
 %Import QtWidgets/QtWidgetsmod.sip
 %End
+
+%Include conversions.sip
 
 %Include qwt_legend.sip
 %Include qwt_legend_data.sip
