@@ -9,7 +9,7 @@ import math, random
 import Qwt
 import numpy as np
 from PyQt5.QtCore import Qt, QTime,  QPointF,  QSize
-from PyQt5.QtGui import QColor,  QTransform
+from PyQt5.QtGui import QColor,  QTransform,  QPalette
 from PyQt5.QtWidgets import QApplication, QMainWindow, QFrame, QWidget,  QToolBar,  QComboBox,  QSizePolicy,  QToolButton
 from PyQt5.QtGui import QPolygonF
 
@@ -40,7 +40,8 @@ class BarChart( Qwt.QwtPlot ):
         self.setAutoReplot( True )
 
     def populate(self):
-        colors = ["DarkOrchid", "SteelBlue", "Gold"]
+        #colors = ["DarkOrchid", "SteelBlue", "Gold"]
+        colors = [Qt.magenta, Qt.blue, Qt.yellow]
 
         numSamples = 5
         numBars = len(colors )
@@ -56,7 +57,7 @@ class BarChart( Qwt.QwtPlot ):
             symbol = Qwt.QwtColumnSymbol( Qwt.QwtColumnSymbol.Box )
             symbol.setLineWidth( 2 )
             symbol.setFrameStyle( Qwt.QwtColumnSymbol.Raised )
-            #symbol.setPalette( QPalette( colors[i] ) ) FIXME
+            symbol.setPalette( QPalette( colors[i] ) ) #FIXME
             #self.d_barChartItem.setSymbol( i, symbol ) #FIXME Segfaults
         
         self.series = []
@@ -86,7 +87,8 @@ class BarChart( Qwt.QwtPlot ):
             axis2 = Qwt.QwtPlot.xBottom
             self.d_barChartItem.setOrientation( Qt.Horizontal )
 
-        self.setAxisScale( axis1, 0, self.d_barChartItem.dataSize() - 1, 1.0 )
+        self.setAxisScale( axis1, 0, len(self.series) -1, 1.0 )
+        #self.setAxisScale( axis1, 0, self.d_barChartItem.dataSize() - 1, 1.0 )
         self.setAxisAutoScale( axis2 )
 
         self.scaleDraw1 = self.axisScaleDraw( axis1 )
