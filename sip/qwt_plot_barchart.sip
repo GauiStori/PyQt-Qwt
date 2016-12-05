@@ -51,7 +51,7 @@ public:
     void setSamples( const QVector<double> & );
     void setSamples( QwtSeriesDataQPointF *series );
 
-    void setSymbol( QwtColumnSymbol * );
+    void setSymbol( QwtColumnSymbol * /Transfer/);
     const QwtColumnSymbol *symbol() const;
 
     void setLegendMode( QwtPlotBarChart::LegendMode );

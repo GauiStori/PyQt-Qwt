@@ -33,12 +33,12 @@ public:
 
     //void setSamples( const QVector<QwtSetSample> & ); //FIXME. Don't know if this is needed.
     void setSamples( const QVector< QVector<double> > & );
-    void setSamples( QwtSeriesDataQwtSetSample * );
+    void setSamples( QwtSeriesDataQwtSetSample * /Transfer/);
 
     void setStyle( ChartStyle style );
     ChartStyle style() const;
 
-    void setSymbol( int barIndex, QwtColumnSymbol *symbol );
+    void setSymbol( int barIndex, QwtColumnSymbol *symbol /TransferThis/);
     const QwtColumnSymbol *symbol( int barIndex ) const;
 
     void resetSymbolMap();

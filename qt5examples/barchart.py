@@ -11,14 +11,14 @@ import numpy as np
 from PyQt5.QtCore import Qt, QTime,  QPointF,  QSize
 from PyQt5.QtGui import QColor,  QTransform,  QPalette
 from PyQt5.QtWidgets import QApplication, QMainWindow, QFrame, QWidget,  QToolBar,  QComboBox,  QSizePolicy,  QToolButton
-from PyQt5.QtGui import QPolygonF
 
 class BarChart( Qwt.QwtPlot ):
     def __init__(self, parent):
         Qwt.QwtPlot.__init__(self, parent)
         self.setAutoFillBackground( True )
-        #self.setPalette( Qt.white ) FIXME
-        #self.canvas.setPalette( QColor( "LemonChiffon" ) ) FIXME
+        self.setPalette( QPalette(Qt.white) )
+        #self.canvas.setPalette( QColor( "LemonChiffon" ) ) #FIXME
+        #self.canvas.setPalette( QColor( "LemonChiffon" ) ) #FIXME
 
         self.setTitle( "Bar Chart" )
 
@@ -51,13 +51,13 @@ class BarChart( Qwt.QwtPlot ):
             titles.append(Qwt.QwtText("Bar %d"%i))
 
         self.d_barChartItem.setBarTitles( titles )
-        #self.d_barChartItem.setLegendIconSize( QSize( 10, 14 ) ) # Crashes, FIXME
+        self.d_barChartItem.setLegendIconSize( QSize( 10, 14 ) )
 
         for i in range(numBars):
             symbol = Qwt.QwtColumnSymbol( Qwt.QwtColumnSymbol.Box )
             symbol.setLineWidth( 2 )
             symbol.setFrameStyle( Qwt.QwtColumnSymbol.Raised )
-            symbol.setPalette( QPalette( colors[i] ) ) #FIXME
+            symbol.setPalette( QPalette( colors[i] ) ) 
             #self.d_barChartItem.setSymbol( i, symbol ) #FIXME Segfaults
         
         self.series = []
