@@ -195,7 +195,7 @@ class TunerFrame( QWidget ):
         self.d_sliderFrequency.setScalePosition( Qwt.QwtSlider.TrailingScale )
         self.d_sliderFrequency.setScale( self.freqMin, self.freqMax )
         #self.d_sliderFrequency.setTotalSteps( math.round( ( self.freqMax - self.freqMin ) / 0.01 ) ) FIXME
-        self.d_sliderFrequency.setTotalSteps( math.ceil( ( self.freqMax - self.freqMin ) / 0.01 ) )
+        self.d_sliderFrequency.setTotalSteps( int(math.ceil( ( self.freqMax - self.freqMin ) / 0.01 ) ) )
         self.d_sliderFrequency.setSingleSteps( 1 )
         self.d_sliderFrequency.setPageSteps( 10 )
         self.d_sliderFrequency.setScaleMaxMinor( 5 )

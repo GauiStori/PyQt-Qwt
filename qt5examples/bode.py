@@ -288,7 +288,7 @@ class MainWindow( QMainWindow ):
         self.btnPrint.setIcon( QIcon(QPixmap( print_xpm ) ) )
         self.btnPrint.setToolButtonStyle( Qt.ToolButtonTextUnderIcon )
         self.toolBar.addWidget( self.btnPrint )        
-        self.btnPrint.clicked.connect(self.print)
+        self.btnPrint.clicked.connect(self.mprint)
 
         self.btnExport = QToolButton( self.toolBar )
         self.btnExport.setText( "Export" )
@@ -326,7 +326,7 @@ class MainWindow( QMainWindow ):
         #connect( d_picker, SIGNAL( moved( const QPoint & ) ), SLOT( moved( const QPoint & ) ) )
         #connect( d_picker, SIGNAL( selected( const QPolygon & ) ), SLOT( selected( const QPolygon & ) ) )
 
-    def print(self):
+    def mprint(self):
         printer = QPrinter( QPrinter.HighResolution )
         docName = "Humm" #self.d_plot.title().text()
         #if ( not docName.isEmpty() ):
