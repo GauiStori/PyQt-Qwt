@@ -29,11 +29,11 @@ symbol = Qwt.QwtSymbol( Qwt.QwtSymbol.Ellipse, QBrush( Qt.yellow ), QPen( Qt.red
 curve.setSymbol( symbol )
 
 #x=np.arange(0,10,0.1)
-x = range(101)
+x = []
 y = []
-for i in range(len(x)):
-    x[i]=0.1*x[i]
-    y.append(math.sin(x[i]))
+for i in range(101):
+    x.append(0.1*i)
+    y.append(math.sin(0.1*i))
 #y=np.sin(x)
 curve.setSamples(x,y)
 curve.attach(plot)
