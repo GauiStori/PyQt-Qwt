@@ -9,10 +9,9 @@ import sys
 sys.path.append('../sip/')
 import math
 import Qwt
-import numpy as np
-
-from PyQt4.QtCore import Qt, QSize, qrand, QPointF
-from PyQt4.QtGui import QMainWindow, QApplication, QColor,  QTransform, QPolygonF,  QWidget,  QToolBar,  QToolButton,  QHBoxLayout,  QLabel,  QApplication, QPen, QPolygonF
+#import numpy as np
+from PyQt4.QtCore import Qt,  QSize, qrand, QPointF
+from PyQt4.QtGui import QColor,  QPixmap, QFont,  QIcon, QPen, QPolygonF, QMainWindow,  QWidget,  QToolBar,  QToolButton,  QHBoxLayout,  QLabel,  QApplication
 
 def randomValue():
     #a number between [ 0.0, 1.0 ]
@@ -101,4 +100,4 @@ m = MainWindow()
 m.resize( 800, 600 )
 m.show()
 
-sys.exit(a.exec())
+sys.exit(a.exec_())

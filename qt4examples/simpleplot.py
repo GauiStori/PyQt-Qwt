@@ -6,9 +6,10 @@
 import sys
 sys.path.append("../sip")
 import Qwt
-import numpy as np
-from PyQt4.QtCore import Qt, QSize
-from PyQt4.QtGui import QApplication, QBrush, QPen
+import math
+#import numpy as np
+from PyQt4.QtCore import Qt,  QSize
+from PyQt4.QtGui import QBrush, QPen, QApplication
 
 a = QApplication(sys.argv)
 
@@ -27,8 +28,13 @@ curve.setRenderHint( Qwt.QwtPlotItem.RenderAntialiased, True );
 symbol = Qwt.QwtSymbol( Qwt.QwtSymbol.Ellipse, QBrush( Qt.yellow ), QPen( Qt.red, 2 ), QSize( 8, 8 ) );
 curve.setSymbol( symbol )
 
-x=np.arange(0,10,0.1)
-y=np.sin(x)
+#x=np.arange(0,10,0.1)
+x = range(101)
+y = []
+for i in range(len(x)):
+    x[i]=0.1*x[i]
+    y.append(math.sin(x[i]))
+#y=np.sin(x)
 curve.setSamples(x,y)
 curve.attach(plot)
 

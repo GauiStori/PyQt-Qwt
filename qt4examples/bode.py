@@ -7,18 +7,19 @@ import sys
 sys.path.append('../sip/')
 import math
 import Qwt
-import numpy as np
+#import numpy as np
 
-from PyQt4.QtCore import Qt, QSize
-from PyQt4.QtGui import QApplication, QColor,  QTransform, QPolygonF, QMainWindow,  QWidget,  QToolBar,  QToolButton,  QHBoxLayout,  QLabel,  QApplication, QFont
-#from PyQt5.QtPrintSupport import QPrintDialog, QPrinter
+from PyQt4.QtCore import Qt,  QSize
+from PyQt4.QtGui import QColor,  QPixmap, QFont,  QIcon, QMainWindow,  QWidget,  QToolBar,  QToolButton,  QHBoxLayout,  QLabel,  QApplication
+#from PyQt4.QtPrintSupport import QPrintDialog, QPrinter
  
 
 def logSpace(size, xmin, xmax ):
+    array = []#np.zeros(0,float)
+    for i in range(size):
+        array.append(0.0)
     if ( ( xmin <= 0.0 ) or ( xmax <= 0.0 ) or ( size <= 0 ) ):
-        array = np.zeros(0,float)
         return array;
-    array = np.zeros(size,float)
     imax = size - 1;
     array[0] = xmin;
     array[imax] = xmax;
@@ -207,9 +208,15 @@ class Plot( Qwt.QwtPlot):
         doReplot = self.autoReplot()
         self.setAutoReplot( False )
         ArraySize = 200;
-        amplitude = np.zeros(ArraySize, float)
-        phase = np.zeros(ArraySize, float)
-
+        #amplitude = np.zeros(ArraySize, float)
+        amplitude = []
+        for i in range(ArraySize):
+            amplitude.append(0.0)
+        #phase = np.zeros(ArraySize, float)
+        phase = []
+        for i in range(ArraySize):
+            phase.append(0.0)
+        
         # build frequency vector with logarithmic division
         frequency = logSpace( ArraySize, 0.01, 100 )
         i3 = 1
@@ -287,7 +294,7 @@ class MainWindow( QMainWindow ):
         self.btnPrint.setIcon( QIcon(QPixmap( print_xpm ) ) )
         self.btnPrint.setToolButtonStyle( Qt.ToolButtonTextUnderIcon )
         self.toolBar.addWidget( self.btnPrint )        
-        self.btnPrint.clicked.connect(self.print)
+        self.btnPrint.clicked.connect(self.mprint)
 
         self.btnExport = QToolButton( self.toolBar )
         self.btnExport.setText( "Export" )
@@ -325,7 +332,7 @@ class MainWindow( QMainWindow ):
         #connect( d_picker, SIGNAL( moved( const QPoint & ) ), SLOT( moved( const QPoint & ) ) )
         #connect( d_picker, SIGNAL( selected( const QPolygon & ) ), SLOT( selected( const QPolygon & ) ) )
 
-    def print(self):
+    def mprint(self):
         printer = QPrinter( QPrinter.HighResolution )
         docName = "Humm" #self.d_plot.title().text()
         #if ( not docName.isEmpty() ):

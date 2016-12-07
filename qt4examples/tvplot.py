@@ -7,13 +7,8 @@ import sys
 sys.path.append('../sip/')
 import Qwt
 
-if (len(sys.argv) > 1 and sys.argv[1] == '4'):
-    from PyQt4.QtCore import Qt, QSize
-    from PyQt4.QtGui import QApplication, QColor,  QTransform, QPolygonF
-else:
-    from PyQt5.QtCore import Qt,  QSize
-    from PyQt5.QtGui import QColor,  QPixmap, QFont, QBrush
-    from PyQt5.QtWidgets import QMainWindow,  QWidget,  QToolBar,  QToolButton,  QHBoxLayout,  QLabel,  QApplication
+from PyQt4.QtCore import Qt,  QSize
+from PyQt4.QtGui import QColor,  QPixmap, QFont, QBrush, QMainWindow,  QWidget,  QToolBar,  QToolButton,  QHBoxLayout,  QLabel,  QApplication
 
 class Histogram(Qwt.QwtPlotHistogram):
     def __init__(self,title, symbolColor ):

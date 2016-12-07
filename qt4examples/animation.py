@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-# python simpleplot.py
+# python simpleplot.py <qtversion (4 or 5)>
 # Tested for python3, Qt5
 
 import sys
@@ -8,7 +8,7 @@ sys.path.append('../sip/')
 import math
 import Qwt
 from PyQt4.QtCore import Qt, QTime,  QPointF,  QSize
-from PyQt4.QtGui import QApplication, QColor,  QTransform, QPolygonF
+from PyQt4.QtGui import QColor,  QTransform, QApplication, QFrame, QPolygonF
 
 class Curve(Qwt.QwtPlotCurve):
     def __init__(self):
@@ -43,12 +43,12 @@ class Curve1(Curve):
         self.setTransformation( self.transform )
 
     def points(self, phase ):
-        points = QPolygonF()
+        pnts = QPolygonF()
         numSamples = 15;
         for i in range(numSamples):
             v = 6.28 * i / ( numSamples - 1 )
-            points += QPointF( math.sin( v - phase ), v )
-        return points
+            pnts += QPointF( math.sin( v - phase ), v )
+        return pnts
 
     def updateSamples( self, phase ):
         self.setSamples( self.d_transform.map( self.points( phase )))
