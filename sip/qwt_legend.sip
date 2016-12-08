@@ -14,7 +14,7 @@ class QwtLegend : QwtAbstractLegend
 #include <qwt_legend.h>
 %End
 public:
-    explicit QwtLegend( QWidget *parent = NULL );
+    explicit QwtLegend( QWidget *parent /TransferThis/ = NULL );
     virtual ~QwtLegend();
 
     void setMaxColumns( uint numColums );

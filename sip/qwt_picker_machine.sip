@@ -38,7 +38,7 @@ public:
     virtual ~QwtPickerMachine();
 
     //! Transition
-    virtual QList<QwtPickerMachine::Command> transition( const QwtEventPattern &, const QEvent * ) = 0;
+    virtual QList<QwtPickerMachine::Command> transition( const QwtEventPattern &, const QEvent * /Transfer/) = 0;
     void reset();
 
     int state() const;
@@ -68,7 +68,7 @@ public:
     QwtPickerTrackerMachine();
 
     virtual QList<QwtPickerMachine::Command> transition(
-        const QwtEventPattern &, const QEvent * );
+        const QwtEventPattern &, const QEvent * /Transfer/);
 };
 
 /*!
@@ -88,7 +88,7 @@ class QwtPickerClickPointMachine: QwtPickerMachine
 public:
     QwtPickerClickPointMachine();
 
-    virtual QList<QwtPickerMachine::Command> transition( const QwtEventPattern &, const QEvent * );
+    virtual QList<QwtPickerMachine::Command> transition( const QwtEventPattern &, const QEvent * /Transfer/);
 };
 
 /*!
@@ -107,7 +107,7 @@ class QwtPickerDragPointMachine: QwtPickerMachine
 public:
     QwtPickerDragPointMachine();
 
-    virtual QList<QwtPickerMachine::Command> transition(const QwtEventPattern &, const QEvent * );
+    virtual QList<QwtPickerMachine::Command> transition(const QwtEventPattern &, const QEvent *  /Transfer/);
 };
 
 /*!
@@ -133,7 +133,7 @@ public:
     QwtPickerClickRectMachine();
 
     virtual QList<QwtPickerMachine::Command> transition(
-        const QwtEventPattern &, const QEvent * );
+        const QwtEventPattern &, const QEvent *  /Transfer/);
 };
 
 /*!
@@ -157,7 +157,7 @@ class QwtPickerDragRectMachine: QwtPickerMachine
 public:
     QwtPickerDragRectMachine();
 
-    virtual QList<QwtPickerMachine::Command> transition( const QwtEventPattern &, const QEvent * );
+    virtual QList<QwtPickerMachine::Command> transition( const QwtEventPattern &, const QEvent *  /Transfer/);
 };
 
 /*!
@@ -184,7 +184,7 @@ class QwtPickerDragLineMachine: QwtPickerMachine
 public:
     QwtPickerDragLineMachine();
 
-    virtual QList<QwtPickerMachine::Command> transition(const QwtEventPattern &, const QEvent * );
+    virtual QList<QwtPickerMachine::Command> transition(const QwtEventPattern &, const QEvent *  /Transfer/);
 };
 
 /*!
@@ -207,6 +207,6 @@ class QwtPickerPolygonMachine: QwtPickerMachine
 public:
     QwtPickerPolygonMachine();
 
-    virtual QList<QwtPickerMachine::Command> transition( const QwtEventPattern &, const QEvent * );
+    virtual QList<QwtPickerMachine::Command> transition( const QwtEventPattern &, const QEvent *  /Transfer/);
 };
 

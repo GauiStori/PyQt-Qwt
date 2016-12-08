@@ -53,7 +53,7 @@ public:
         TopLegend
     };
 
-    explicit QwtPlot( QWidget * = NULL );
+    explicit QwtPlot( QWidget * /Transfer/ = NULL );
     //explicit QwtPlot( const QwtText &title, QWidget * = NULL );
 
     virtual ~QwtPlot();
@@ -173,7 +173,7 @@ public:
         double &left, double &top, double &right, double &bottom) const;*/
 
     virtual bool event( QEvent * );
-    virtual bool eventFilter( QObject *, QEvent * );
+    virtual bool eventFilter( QObject * /Transfer/, QEvent * /Transfer/);
 
     /*virtual void drawItems( QPainter *, const QRectF &,
         const QwtScaleMap maps[axisCnt] ) const;*/

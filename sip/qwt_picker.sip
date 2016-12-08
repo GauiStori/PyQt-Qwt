@@ -98,13 +98,13 @@ public:
         KeepSize
     };
 
-    explicit QwtPicker( QWidget *parent );
+    explicit QwtPicker( QWidget *parent  /TransferThis/);
     explicit QwtPicker( RubberBand rubberBand,
-                        DisplayMode trackerMode, QWidget * );
+                        DisplayMode trackerMode, QWidget * /Transfer/);
 
     virtual ~QwtPicker();
 
-    void setStateMachine( QwtPickerMachine * );
+    void setStateMachine( QwtPickerMachine * /Transfer/);
     //const QwtPickerMachine *stateMachine() const; FIXME
     QwtPickerMachine *stateMachine();
 
@@ -129,7 +129,7 @@ public:
     bool isEnabled() const;
     bool isActive() const;
 
-    virtual bool eventFilter( QObject *, QEvent * );
+    virtual bool eventFilter( QObject * /Transfer/, QEvent * /Transfer/);
 
     QWidget *parentWidget();
     //const QWidget *parentWidget() const; FIXME
@@ -205,7 +205,7 @@ Q_SIGNALS:
 protected:
     virtual QPolygon adjustedPoints( const QPolygon & ) const;
 
-    virtual void transition( const QEvent * );
+    virtual void transition( const QEvent * /Transfer/);
 
     virtual void begin();
     virtual void append( const QPoint & );
@@ -216,15 +216,15 @@ protected:
     virtual bool accept( QPolygon & ) const;
     virtual void reset();
 
-    virtual void widgetMousePressEvent( QMouseEvent * );
-    virtual void widgetMouseReleaseEvent( QMouseEvent * );
-    virtual void widgetMouseDoubleClickEvent( QMouseEvent * );
-    virtual void widgetMouseMoveEvent( QMouseEvent * );
-    virtual void widgetWheelEvent( QWheelEvent * );
-    virtual void widgetKeyPressEvent( QKeyEvent * );
-    virtual void widgetKeyReleaseEvent( QKeyEvent * );
-    virtual void widgetEnterEvent( QEvent * );
-    virtual void widgetLeaveEvent( QEvent * );
+    virtual void widgetMousePressEvent( QMouseEvent * /Transfer/);
+    virtual void widgetMouseReleaseEvent( QMouseEvent * /Transfer/);
+    virtual void widgetMouseDoubleClickEvent( QMouseEvent * /Transfer/);
+    virtual void widgetMouseMoveEvent( QMouseEvent * /Transfer/);
+    virtual void widgetWheelEvent( QWheelEvent * /Transfer/);
+    virtual void widgetKeyPressEvent( QKeyEvent * /Transfer/);
+    virtual void widgetKeyReleaseEvent( QKeyEvent * /Transfer/);
+    virtual void widgetEnterEvent( QEvent * /Transfer/);
+    virtual void widgetLeaveEvent( QEvent * /Transfer/);
 
     virtual void stretchSelection( const QSize &oldSize,
                                    const QSize &newSize );
