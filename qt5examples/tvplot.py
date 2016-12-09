@@ -1,6 +1,5 @@
 #!/usr/bin/python
 
-# python simpleplot.py <qtversion (4 or 5)>
 # Doesn't work
 
 import sys
@@ -24,7 +23,7 @@ class Histogram(Qwt.QwtPlotHistogram):
             interval = Qwt.QwtInterval( i , i + 1.0 )
             interval.setBorderFlags( Qwt.QwtInterval.ExcludeMaximum )
             samples.append(Qwt.QwtIntervalSample( values[i], interval ))
-        #self.setData( Qwt.QwtIntervalSeriesData(values) )
+        self.setSamples( samples )
         
 
     def setColor(self, color ):
@@ -40,7 +39,7 @@ class TVPlot( Qwt.QwtPlot):
         self.grid=None
         self.setTitle( "Watching TV during a weekend" )
         canvas = Qwt.QwtPlotCanvas()
-        #canvas.setPalette( Qt.gray )
+        canvas.setPalette( QColor(Qt.gray) )
         canvas.setBorderRadius( 10 )
         self.setCanvas( canvas )
 

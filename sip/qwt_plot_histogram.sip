@@ -35,7 +35,7 @@ public:
     void setBrush( const QBrush & );
     const QBrush &brush() const;
 
-    //void setSamples( const QVector<QwtIntervalSample> & ); XXX Method code needed
+    void setSamples( const QVector<QwtIntervalSample> & ); //XXX Method code needed
     //void setSamples( QwtSeriesData<QwtIntervalSample> * ); XXX Method code needed
 
     void setBaseline( double reference );
