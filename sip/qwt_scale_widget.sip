@@ -26,8 +26,8 @@ public:
     //! Layout flags of the title
     //typedef QFlags<LayoutFlag> LayoutFlags;
 
-    explicit QwtScaleWidget( QWidget *parent = NULL );
-    explicit QwtScaleWidget( QwtScaleDraw::Alignment, QWidget *parent = NULL );
+    explicit QwtScaleWidget( QWidget *parent /TransferThis/ = NULL );
+    explicit QwtScaleWidget( QwtScaleDraw::Alignment, QWidget *parent /TransferThis/ = NULL );
     virtual ~QwtScaleWidget();
 
 signals:
@@ -60,7 +60,7 @@ public:
     void setScaleDiv( const QwtScaleDiv &sd );
     //void setTransformation( QwtTransform * );
 
-    void setScaleDraw( QwtScaleDraw * );
+    void setScaleDraw( QwtScaleDraw * /Transfer/);
     //const QwtScaleDraw *scaleDraw() const;
     QwtScaleDraw *scaleDraw();
 
@@ -73,7 +73,7 @@ public:
     void setColorBarWidth( int );
     int colorBarWidth() const;
 
-    void setColorMap( const QwtInterval &, QwtColorMap * );
+    void setColorMap( const QwtInterval &, QwtColorMap * /Transfer/);
 
     QwtInterval colorBarInterval() const;
     //const QwtColorMap *colorMap() const;
@@ -84,8 +84,8 @@ public:
     int titleHeightForWidth( int width ) const;
     int dimForLength( int length, const QFont &scaleFont ) const;
 
-    void drawColorBar( QPainter *painter, const QRectF & ) const;
-    void drawTitle( QPainter *painter, QwtScaleDraw::Alignment,
+    void drawColorBar( QPainter *painter /TransferThis/, const QRectF & ) const;
+    void drawTitle( QPainter *painter /TransferThis/, QwtScaleDraw::Alignment,
         const QRectF &rect ) const;
 
     void setAlignment( QwtScaleDraw::Alignment );
@@ -94,10 +94,10 @@ public:
     QRectF colorBarRect( const QRectF& ) const;
 
 protected:
-    virtual void paintEvent( QPaintEvent * );
-    virtual void resizeEvent( QResizeEvent * );
+    virtual void paintEvent( QPaintEvent * /Transfer/);
+    virtual void resizeEvent( QResizeEvent * /Transfer/);
 
-    void draw( QPainter *p ) const;
+    void draw( QPainter *p /TransferThis/) const;
 
     void scaleChange();
     void layoutScale( bool update = true );

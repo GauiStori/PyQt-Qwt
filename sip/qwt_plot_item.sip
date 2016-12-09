@@ -110,7 +110,7 @@ public:
     };
 
     //! Plot Item Attributes
-    //typedef QFlags<ItemAttribute> ItemAttributes;
+    typedef QFlags<QwtPlotItem::ItemAttribute> ItemAttributes;
 
     /*!
        \brief Plot Item Interests
@@ -144,7 +144,7 @@ public:
     };
 
     //! Plot Item Interests
-    //typedef QFlags<ItemInterest> ItemInterests;
+    typedef QFlags<QwtPlotItem::ItemInterest> ItemInterests;
 
     //! Render hints
     enum RenderHint
@@ -154,9 +154,9 @@ public:
     };
 
     //! Render hints
-    //typedef QFlags<RenderHint> RenderHints;
+    typedef QFlags<QwtPlotItem::RenderHint> RenderHints;
 
-    //explicit QwtPlotItem( const QwtText &title = QwtText() );
+    explicit QwtPlotItem( const QwtText &title = QwtText() );
     virtual ~QwtPlotItem();
 
     void attach( QwtPlot *plot /TransferThis/);
@@ -165,8 +165,8 @@ public:
     QwtPlot *plot() const;
 
     void setTitle( const QString &title );
-    //void setTitle( const QwtText &title );
-    //const QwtText &title() const;
+    void setTitle( const QwtText &title );
+    const QwtText &title() const;
 
     virtual int rtti() const;
 

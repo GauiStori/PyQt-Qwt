@@ -6,7 +6,7 @@ import sys
 sys.path.append('../sip/')
 import Qwt
 from PyQt5.QtCore import Qt,  QSize
-from PyQt5.QtGui import QColor,  QPixmap, QFont, QBrush
+from PyQt5.QtGui import QColor,  QPixmap, QFont, QBrush, QPalette
 from PyQt5.QtWidgets import (QMainWindow,  QWidget,  QToolBar,  QToolButton,  QHBoxLayout,  QLabel,  QApplication, QComboBox, QSizePolicy)
 
 class Histogram(Qwt.QwtPlotHistogram):
@@ -39,7 +39,7 @@ class TVPlot( Qwt.QwtPlot):
         self.grid=None
         self.setTitle( "Watching TV during a weekend" )
         canvas = Qwt.QwtPlotCanvas()
-        canvas.setPalette( QColor(Qt.gray) )
+        canvas.setPalette( QPalette(Qt.gray) )
         canvas.setBorderRadius( 10 )
         self.setCanvas( canvas )
 
@@ -56,19 +56,18 @@ class TVPlot( Qwt.QwtPlot):
         #connect( legend, SIGNAL( checked( const QVariant &, bool, int ) ), SLOT( showItem( const QVariant &, bool ) ) )
 
         self.replot() # creating the legend items
-        print(Qwt.QwtPlotItem.Rtti_PlotHistogram)
-        """items = Qwt.QwtPlotDict.itemList( Qwt.QwtPlotItem.Rtti_PlotHistogram )
-        for i in range(len(items)):
+        """self.items = Qwt.QwtPlotDict.itemList( Qwt.QwtPlotItem.Rtti_PlotHistogram )
+        for i in range(len(self.items)):
             if ( i == 0 ):
                 #const QVariant 
-                itemInfo = itemToInfo( items[i] )
+                itemInfo = itemToInfo( self.items[i] )
                 #QwtLegendLabel *
                 legendLabel = legend.legendWidget( itemInfo )
                 if ( legendLabel ):
                     legendLabel.setChecked( True )
-                items[i].setVisible( True )
+                self.items[i].setVisible( True )
             else:
-                items[i].setVisible( False )"""
+                self.items[i].setVisible( False )"""
         self.setAutoReplot( True )
 
     def populate(self):
@@ -98,7 +97,7 @@ class TVPlot( Qwt.QwtPlot):
     def setMode( self, mode):
         #QwtPlotItemList
         print("Set mode %d"%mode)
-        """items = QwtPlotItemList.itemList( Qwt.QwtPlotItem.Rtti_PlotHistogram )
+        """items = self.itemList( Qwt.QwtPlotItem.Rtti_PlotHistogram )
         for i in range(len(items)):
             histogram = items[i]
             if ( mode < 3 ):
