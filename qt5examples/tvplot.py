@@ -13,7 +13,7 @@ class Histogram(Qwt.QwtPlotHistogram):
     def __init__(self,title, symbolColor ):
         Qwt.QwtPlotHistogram.__init__(self,title)
         self.setStyle( Qwt.QwtPlotHistogram.Columns )
-        #self.setColor( symbolColor )
+        self.setColor( symbolColor )
 
     def setValues(self, values ):
         numValues = len(values)

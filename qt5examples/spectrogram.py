@@ -8,9 +8,7 @@ sys.path.append('../sip/')
 #import math
 import Qwt
 from PyQt5.QtCore import Qt,  qIsNaN,  qRound
-#, QTime,  QPointF,  QSize
 from PyQt5.QtGui import QColor, QPen, QBrush, qRgb,  QFontMetrics
-#from PyQt5.QtGui import QColor,  QPixmap, QFont,  QIcon, QPen, QPolygonF,  QBrush
 from PyQt5.QtWidgets import QApplication, QWidget,  QCheckBox,  QToolBar,  QToolButton,  QLabel,  QComboBox,  QSlider,  QSizePolicy, QMainWindow
 from PyQt5.QtPrintSupport import QPrintDialog, QPrinter
 
@@ -101,6 +99,7 @@ class HueColorMap(Qwt.QwtColorMap):
 
 class AlphaColorMap(Qwt.QwtAlphaColorMap):
     def __init__(self):
+        Qwt.QwtAlphaColorMap.__init__(self)
         #setColor( QColor("DarkSalmon") )
         self.setColor( QColor("SteelBlue") )
 
@@ -256,7 +255,7 @@ class MainWindow( QMainWindow ):
 
         self.btnContour = QCheckBox( "Contour", self.toolBar )
         self.toolBar.addWidget( self.btnContour )
-        #self.btnContour.toggled['bool'](self.d_plot.showContour )
+        self.btnContour.toggled['bool'].connect(self.d_plot.showContour )
 
         self.addToolBar( self.toolBar )
 
