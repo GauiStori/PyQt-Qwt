@@ -27,7 +27,7 @@ class Histogram(Qwt.QwtPlotHistogram):
         
 
     def setColor(self, color ):
-        c = color;
+        c = QColor(color)
         c.setAlpha( 180 )
         self.setBrush( QBrush( c ) )
 
@@ -48,12 +48,12 @@ class TVPlot( Qwt.QwtPlot):
         self.setAxisTitle( Qwt.QwtPlot.yLeft, "Number of People" )
         self.setAxisTitle( Qwt.QwtPlot.xBottom, "Number of Hours" )
 
-        legend = Qwt.QwtLegend()
-        legend.setDefaultItemMode( Qwt.QwtLegendData.Checkable )
-        self.insertLegend( legend, Qwt.QwtPlot.RightLegend )
+        self.legend = Qwt.QwtLegend()
+        self.legend.setDefaultItemMode( Qwt.QwtLegendData.Checkable )
+        self.insertLegend( self.legend, Qwt.QwtPlot.RightLegend )
         self.populate()
 
-        #connect( legend, SIGNAL( checked( const QVariant &, bool, int ) ), SLOT( showItem( const QVariant &, bool ) ) )
+        self.legend.checked['QVariant','bool','int'].connect(self.showItem )
 
         self.replot() # creating the legend items
         """self.items = Qwt.QwtPlotDict.itemList( Qwt.QwtPlotItem.Rtti_PlotHistogram )
@@ -115,10 +115,10 @@ class TVPlot( Qwt.QwtPlot):
                 symbol.setPalette( QPalette( histogram.brush().color() ) )
                 histogram.setSymbol( symbol )"""
 
-    def showItem( itemInfo,on ):
-        #QwtPlotItem 
-        plotItem = infoToItem( itemInfo )
-        if ( plotItem ):
+    def showItem( self, itemInfo, on ):
+        print("Doesn't work yet.") 
+        plotItem = self.infoToItem( itemInfo )
+        if ( plotItem):
             plotItem.setVisible( on )
 
 class MainWindow(QMainWindow):
@@ -143,7 +143,6 @@ class MainWindow(QMainWindow):
         self.toolBar.addWidget( self.btnExport )
         self.addToolBar( self.toolBar )
         self.d_plot.setMode( self.typeBox.currentIndex() )
-        #connect( typeBox, SIGNAL( curr entIndexChanged( int ) ), d_plot, SLOT( setMode( int ) ) )
         self.typeBox.currentIndexChanged['int'].connect(self.d_plot.setMode)
 
 a = QApplication(sys.argv)

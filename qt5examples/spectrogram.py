@@ -54,13 +54,12 @@ class LinearColorMapIndexed(Qwt.QwtLinearColorMap):
 
 class HueColorMap(Qwt.QwtColorMap):
     def __init__(self):
+        Qwt.QwtColorMap.__init__(self)
         self.d_hue1 = 0
         self.d_hue2 = 359
         self.d_saturation = 150
         self.d_value = 200 
-        self.d_rgbMin = qRgb()
-        self.d_rgbMax = 0
-        self.d_rgbTable[360]
+        self.d_rgbTable = []
         self.updateTable()
 
     def rgb(self, interval, value ):
@@ -93,7 +92,7 @@ class HueColorMap(Qwt.QwtColorMap):
 
     def updateTable(self):
         for i in range(360):
-            self.d_rgbTable[i] = QColor.fromHsv( i, self.d_saturation, self.d_value ).rgb()
+            self.d_rgbTable.append(QColor.fromHsv( i, self.d_saturation, self.d_value ).rgb())
         self.d_rgbMin = self.d_rgbTable[ self.d_hue1 % 360 ]
         self.d_rgbMax = self.d_rgbTable[ self.d_hue2 % 360 ]
 
