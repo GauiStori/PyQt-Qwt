@@ -6,7 +6,7 @@ import math
 import Qwt
 #import numpy as np
 
-from PyQt5.QtCore import Qt,  QSize,  QObject,  QEvent,  QPointF
+from PyQt5.QtCore import Qt,  QSize,  QObject,  QEvent,  QPointF,  QMutex,  QReadWriteLock,  QRectF
 from PyQt5.QtGui import QColor, QFont,   QPalette,  QLinearGradient,  QBrush,  QGradient,  QWheelEvent
 #QIcon, QPixmap
 from PyQt5.QtWidgets import QWidget, QHBoxLayout,  QLabel,  QApplication,  QLCDNumber,  QVBoxLayout,  QSizePolicy
@@ -15,6 +15,50 @@ from PyQt5.QtWidgets import QWidget, QHBoxLayout,  QLabel,  QApplication,  QLCDN
 
 M_PI = 3.14157
 
+"""class Canvas(Qwt.QwtPlotCanvas):
+    def __init__(self,  plot = None):
+        Qwt.QwtPlotCanvas.__init__( self,  plot)
+        # The backing store is important, when working with widget
+        # overlays ( f.e rubberbands for zooming ).
+        # Here we don't have them and the internal
+        # backing store of QWidget is good enough.
+        self.setPaintAttribute( Qwt.QwtPlotCanvas.BackingStore, False )
+        self.setBorderRadius( 10 )
+
+        if ( Qwt.QwtPainter.isX11GraphicsSystem() ):
+            #if QT_VERSION < 0x050000
+            # Even if not liked by the Qt development, Qt.WA_PaintOutsidePaintEvent
+            # works on X11. This has a nice effect on the performance.
+            #self.setAttribute( Qt.WA_PaintOutsidePaintEvent, true );
+            #endif
+            # Disabling the backing store of Qt improves the performance
+            # for the direct painter even more, but the canvas becomes
+            # a native window of the window system, receiving paint events
+            # for resize and expose operations. Those might be expensive
+            # when there are many points and the backing store of
+            # the canvas is disabled. So in this application
+            # we better don't disable both backing stores.
+
+            if ( self.testPaintAttribute( Qwt.QwtPlotCanvas.BackingStore ) ):
+                self.setAttribute( Qt.WA_PaintOnScreen, True )
+                self.setAttribute( Qt.WA_NoSystemBackground, True )
+        self.setupPalette()
+
+    def setupPalette(self):
+        pal = QPalette()
+        #if QT_VERSION >= 0x040400
+        gradient = QLinearGradient()
+        gradient.setCoordinateMode( QGradient.StretchToDeviceMode )
+        gradient.setColorAt( 0.0, QColor( 0, 49, 110 ) )
+        gradient.setColorAt( 1.0, QColor( 0, 87, 174 ) )
+        pal.setBrush( QPalette.Window, QBrush( gradient ) )
+        #else
+        #pal.setBrush( QPalette.Window, QBrush( color ) )
+        #endif
+        # QPalette.WindowText is used for the curve color
+        pal.setColor( QPalette.WindowText, Qt.green )
+        self.setPalette( pal )
+"""
 class SamplingThread( QObject ):
     def __init__(self, parent):
         Qwt.QwtSamplingThread(self, parent )
@@ -44,9 +88,33 @@ class SamplingThread( QObject ):
         v = self.d_amplitude * math.sin( x / period * 2 * M_PI )
         return v
 
-class SignalData():
-    def values( self ):
-        return self.instance()
+class PrivateData():
+        def __init__(self):
+            self.boundingRect = QRectF( 1.0, 1.0, -2.0, -2.0 ) # invalid
+            self.values.reserve( 1000 )
+            
+        def append( self,  sample ):
+            self.values.append( sample )
+            # adjust the bounding rectangle
+            if ( self.boundingRect.width() < 0 or self.boundingRect.height() < 0 ):
+                self.boundingRect.setRect( sample.x(), sample.y(), 0.0, 0.0 )
+            else:
+                self.boundingRect.setRight( sample.x() )
+                if ( sample.y() > self.boundingRect.bottom() ):
+                    self.boundingRect.setBottom( sample.y() )
+                if ( sample.y() < self.boundingRect.top() ):
+                    self.boundingRect.setTop( sample.y() )
+        lock = QReadWriteLock()
+        #self.values = QVector<QPointF>
+        #self.boundingRect = QRectF()
+        mutex = QMutex() # protecting pendingValues
+        #pendingValues = QVector<QPointF>
+
+
+class SignalData( PrivateData):
+    def __init__(self):
+        self.d_data = PrivateData()
+
 
     def values( self ):
         return self.instance()
@@ -58,41 +126,10 @@ class SignalData():
         return self.instance().size()
 
     def boundingRect(self):
-        return self.boundingRect()
-
-class PrivateData():
-        def __init__(self):
-            self.boundingRect( 1.0, 1.0, -2.0, -2.0 ) # invalid
-            self.values.reserve( 1000 )
-            
-        def append( self,  sample ):
-            self.values.append( sample )
-            # adjust the bounding rectangle
-            if ( self.boundingRect.width() < 0 or self.boundingRect.height() < 0 ):
-                boundingRect.setRect( sample.x(), sample.y(), 0.0, 0.0 )
-            else:
-                self.boundingRect.setRight( sample.x() )
-                if ( sample.y() > boundingRect.bottom() ):
-                    boundingRect.setBottom( sample.y() )
-                if ( sample.y() < boundingRect.top() ):
-                    boundingRect.setTop( sample.y() )
-        lock = QReadWriteLock()
-        #self.values = QVector<QPointF>
-        #self.boundingRect = QRectF()
-        mutex = QMutex() # protecting pendingValues
-        #pendingValues = QVector<QPointF>
-
-    def SignalData( self ):
-        self.d_data = new PrivateData()
-
-    def size(self):
-        return self.d_data.values.size()
+        return self.PrivateData.boundingRect()
 
     def value( self,  index ):
         return self.d_data.values[index]
-
-    def boundingRect(self):
-        return self.d_data.boundingRect
 
     def ock( self ):
         self.d_data.lock.lockForRead()
@@ -107,7 +144,7 @@ class PrivateData():
         if ( isLocked ):
             numValues = self.d_data.pendingValues.size()
             pendingValues = self.d_data.pendingValues.data()
-            for i in range(numValues)
+            for i in range(numValues):
                 self.d_data.append( pendingValues[i] )
             self.d_data.pendingValues.clear()
             self.d_data.lock.unlock()
@@ -125,7 +162,8 @@ class PrivateData():
             if ( values[index].x() < limit ):
                 break
         if ( index > 0 ):
-            self.d_data.append( values[index++] )
+            self.d_data.append( values[index] )
+            index += 1
 
         while ( index < values.size() - 1 ):
             self.d_data.append( values[index] )
@@ -133,7 +171,7 @@ class PrivateData():
         self.d_data.lock.unlock()
 
     def instance( self ):
-        static SignalData valueVector
+        valueVector = SignalData()
         return valueVector
 
 class Wheel(Qwt.QwtWheel):
@@ -311,9 +349,9 @@ class Canvas(Qwt.QwtPlotCanvas):
 class Plot( QWidget ):
     def __init__(self, parent):
         Qwt.QwtPlot.__init__( parent )
-        self.d_paintedPoints(0)
-        self.d_interval( 0.0, 10.0 )
-        self.d_timerId( -1 )
+        self.d_paintedPoints = 0
+        self.d_interval = Qwt.QwtInterval( 0.0, 10.0 )
+        self.d_timerId = -1
         self.d_directPainter = Qwt.QwtPlotDirectPainter()
         self.setAutoReplot( False )
         self.setCanvas( Canvas() )
@@ -430,7 +468,7 @@ class Plot( QWidget ):
         return Qwt.QwtPlot.eventFilter( object, event )
 
 class MainWindow( QWidget ):
-    def __init__(self, parent):
+    def __init__(self, parent=None):
         QWidget.__init__(self, parent)
         self.intervalLength = 10.0 # seconds
         self.d_plot = Plot( self )
@@ -476,7 +514,7 @@ class MainWindow( QWidget ):
 
 ### Main ##############################3
 app = QApplication( sys.argv )
-app.setPalette( Qt.darkGray )
+###app.setPalette(Qt.darkGray )
 
 window = MainWindow()
 window.resize( 800, 400 )
