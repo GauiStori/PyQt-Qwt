@@ -60,7 +60,7 @@ M_PI = 3.14157
         self.setPalette( pal )
 """
 class SamplingThread( QObject ):
-    def __init__(self, parent):
+    def __init__(self, parent = None):
         Qwt.QwtSamplingThread(self, parent )
         self.d_frequency = 5.0
         self.d_amplitude = 20.0
@@ -178,7 +178,7 @@ class Wheel(Qwt.QwtWheel):
     def __init__(self, parent):
         Qwt.QwtWheel.__init__(self, parent)
         self.setFocusPolicy( Qt.WheelFocus )
-        self.parent.installEventFilter( self )
+        parent.installEventFilter( self )
 
     def eventFilter(self, eobject, event ):
         if ( event.type() == QEvent.Wheel ):
@@ -186,11 +186,14 @@ class Wheel(Qwt.QwtWheel):
             wheelEvent = QWheelEvent( QPointF( 5, 5 ), we.delta(), we.buttons(), we.modifiers(), we.orientation() )
             QApplication.sendEvent( self, wheelEvent )
             return True
-        return Qwt.QwtWheel.eventFilter( eobject, event )
+        return Qwt.QwtWheel.eventFilter( self,  eobject, event )
+    
+    def valueChanged(self, value):
+        pass
 
 class WheelBox(QWidget):
     def __init__(self, title, min, max, stepSize, parent ):
-        QWidget( self, parent )
+        QWidget.__init__( self, parent )
         self.d_number = QLCDNumber( self )
         self.d_number.setSegmentStyle( QLCDNumber.Filled )
         self.d_number.setAutoFillBackground( True )
@@ -228,8 +231,8 @@ class WheelBox(QWidget):
 
         #connect( d_wheel, SIGNAL( valueChanged( double ) ), d_number, SLOT( display( double ) ) )
         #connect( d_wheel, SIGNAL( valueChanged( double ) ), self, SIGNAL( valueChanged( double ) ) )
-        self.d_wheel.valueChanged['double'].connect( self.d_number.display )
-        self.d_wheel.valueChanged['double'].connect( self.valueChanged )
+        #self.d_wheel.valueChanged['double'].connect( self.d_number.display ) #FIXME
+        # self.d_wheel.valueChanged['double'].connect( self.valueChanged ) FIXME
 
     def setTheme( self, color ):
         self.d_wheel.setPalette( color )
@@ -246,17 +249,17 @@ class WheelBox(QWidget):
 
 
 class Knob(QWidget):
-    def __init__( self, title, min, max, parent ):
-        QWidget.__init__( parent )
+    def __init__( self, title, min, max, parent = None):
+        QWidget.__init__( self,  parent )
         font = QFont( "Helvetica", 10 )
         self.d_knob = Qwt.QwtKnob( self )
         self.d_knob.setFont( font )
         scaleDiv = self.d_knob.scaleEngine().divideScale( min, max, 5, 3 )
         ticks = scaleDiv.ticks( Qwt.QwtScaleDiv.MajorTick )
-        if ( ticks.size() > 0 and ticks[0] > min ):
-            if ( ticks.first() > min ):
-                ticks.prepend( min )
-            if ( ticks.last() < max ):
+        if ( len(ticks) > 0 and ticks[0] > min ):
+            if ( ticks[0] > min ):
+                ticks = [min] + ticks
+            if ( ticks[len(ticks)-1] < max ):
                 ticks.append( max )
         scaleDiv.setTicks( Qwt.QwtScaleDiv.MajorTick, ticks )
         self.d_knob.setScale( scaleDiv )
@@ -277,6 +280,9 @@ class Knob(QWidget):
         off = math.ceil( self.d_knob.scaleDraw().extent( self.d_knob.font() ) )
         off -= 15 # spacing
         return QSize( w, h - off )
+
+    def valueChanged(self, value):
+        pass
 
     def setValue( self,  value ):
         self.d_knob.setValue( value )
@@ -346,9 +352,9 @@ class Canvas(Qwt.QwtPlotCanvas):
         pal.setColor( QPalette.WindowText, Qt.green )
         self.setPalette( pal )
 
-class Plot( QWidget ):
+class Plot( Qwt.QwtPlot ):
     def __init__(self, parent):
-        Qwt.QwtPlot.__init__( parent )
+        Qwt.QwtPlot.__init__(self, parent )
         self.d_paintedPoints = 0
         self.d_interval = Qwt.QwtInterval( 0.0, 10.0 )
         self.d_timerId = -1
@@ -378,9 +384,9 @@ class Plot( QWidget ):
         self.d_curve = Qwt.QwtPlotCurve()
         self.d_curve.setStyle( Qwt.QwtPlotCurve.Lines )
         self.d_curve.setPen( self.canvas().palette().color( QPalette.WindowText ) )
-        self.d_curve.setRenderHint( Qwt.dQwtPlotItem.RenderAntialiased,True )
+        self.d_curve.setRenderHint( Qwt.QwtPlotItem.RenderAntialiased,True )
         self.d_curve.setPaintAttribute( Qwt.QwtPlotCurve.ClipPolygons, False)
-        self.d_curve.setData( Qwt.CurveData() )
+        #self.d_curve.setData( Qwt.CurveData() ) #FIXME
         self.d_curve.attach( self )
 
         #Plot.~Plot()
@@ -465,7 +471,7 @@ class Plot( QWidget ):
     def eventFilter( self,  object, event ):
         if ( object == self.canvas() and event.type() == QEvent.PaletteChange ):
             self.d_curve.setPen( self.canvas().palette().color( QPalette.WindowText ) )
-        return Qwt.QwtPlot.eventFilter( object, event )
+        return Qwt.QwtPlot.eventFilter( self,  object, event )
 
 class MainWindow( QWidget ):
     def __init__(self, parent=None):
@@ -492,13 +498,13 @@ class MainWindow( QWidget ):
         self.layout.addLayout( self.vLayout1 )
 
         #connect( d_amplitudeKnob, SIGNAL( valueChanged( double ) ), SIGNAL( amplitudeChanged( double ) ) )
-        self.d_amplitudeKnob.valueChanged['double'].connect( window.amplitudeChanged )
+        #FIXME self.d_amplitudeKnob.valueChanged['double'].connect( window.amplitudeChanged )
         #connect( d_frequencyKnob, SIGNAL( valueChanged( double ) ), SIGNAL( frequencyChanged( double ) ) )
-        self.d_frequencyKnob.valueChanged['double'].connect( window.frequencyChanged )
+        #FIXME self.d_frequencyKnob.valueChanged['double'].connect( window.frequencyChanged )
         #connect( d_timerWheel, SIGNAL( valueChanged( double ) ), SIGNAL( signalIntervalChanged( double ) ) )
-        self.d_timerWheel.valueChanged['double'].connect( window.signalIntervalChanged )
+        #FIXME self.d_timerWheel.valueChanged['double'].connect( window.signalIntervalChanged )
         #connect( d_intervalWheel, SIGNAL( valueChanged( double ) ), d_plot, SLOT( setIntervalLength( double ) ) )
-        self.d_intervalWheel.valueChanged['double'].connect( self.d_plot.setIntervalLength )
+        #FIXME self.d_intervalWheel.valueChanged['double'].connect( self.d_plot.setIntervalLength )
 
     def start(self):
         self.d_plot.start()

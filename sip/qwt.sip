@@ -75,7 +75,6 @@ typedef unsigned long size_t;
 %Include qwt_color_map.sip
 %Include qwt_plot_spectrogram.sip
 %Include qwt_plot_rasteritem.sip
-/* It works until here */
 
 %Include qwt_abstract_scale.sip
 %Include qwt_abstract_slider.sip
@@ -94,7 +93,11 @@ typedef unsigned long size_t;
 %Include qwt_plot_barchart.sip
 %Include qwt_plot_multi_barchart.sip
 
- 
+/* It works until here */
+%Include qwt_plot_directpainter.sip
+%Include qwt_sampling_thread.sip
+
+
 
 
 
