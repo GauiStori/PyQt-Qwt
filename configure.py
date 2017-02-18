@@ -42,7 +42,7 @@ src_dir = os.path.dirname(os.path.abspath(__file__))
 
 # This must be kept in sync with Python/configure-old.py, qwt.pro,
 # example-Qt4Qt5/application.pro and designer-Qt4Qt5/designer.pro.
-QWT_API_MAJOR = 12
+QWT_API_MAJOR = 6
 
 
 class ModuleConfiguration(object):
@@ -54,7 +54,7 @@ class ModuleConfiguration(object):
     """
 
     # The name of the module as it would be used in an import statement.
-    name = 'Qsci'
+    name = 'Qwt'
 
     # The descriptive name of the module.  This is used in help text and error
     # messages.
@@ -62,7 +62,7 @@ class ModuleConfiguration(object):
 
     # The version of the module as a string.  Set it to None if you don't
     # provide version information.
-    version = '2.9.3'
+    version = None
 
     # Set if a configuration script is provided that handles versions of PyQt4
     # prior to v4.10 (i.e. versions where the pyqtconfig.py module is
@@ -94,7 +94,7 @@ class ModuleConfiguration(object):
 
     # Set if the PyQt5 support is the default.  It is ignored unless both
     # 'pyqt4_is_supported' and 'pyqt5_is_supported' are set.
-    pyqt5_is_default = False
+    pyqt5_is_default = True
 
     # The name (without the .api extension) of the name of the Qwt API
     # file to be generated.  If it is None or an empty string then an API file
@@ -200,21 +200,21 @@ class ModuleConfiguration(object):
         if inc_dir is None:
             inc_dir = target_configuration.qt_inc_dir
 
-        sciglobal = os.path.join(inc_dir, 'Qwt', 'qsciglobal.h')
-
-        if not os.access(sciglobal, os.F_OK):
+        qwtglobal = os.path.join(inc_dir, '../qwt', 'qwt_global.h')
+        print(inc_dir)
+        if not os.access(qwtglobal, os.F_OK):
             error(
-                    "Qwt/qsciglobal.h could not be found in %s. If "
+                    "qwt/qwt_global.h could not be found in %s. If "
                     "Qwt is installed then use the --qwt-incdir "
                     "argument to explicitly specify the correct "
                     "directory." % inc_dir)
 
         # Get the Qwt version string.
-        qwt_version = read_define(sciglobal, 'QSCINTILLA_VERSION_STR')
+        qwt_version = read_define(qwtglobal, 'QWT_VERSION_STR')
         if qwt_version is None:
             error(
                     "The Qwt version number could not be determined by "
-                    "reading %s." % sciglobal)
+                    "reading %s." % qwtglobal)
 
         return # Debian: do not check for the installed version, we're good this way.
 
@@ -291,7 +291,7 @@ class ModuleConfiguration(object):
         if target_configuration.qwt_sip_dir == '':
             return None
 
-        path = os.path.join(target_configuration.qwt_sip_dir, 'Qsci')
+        path = os.path.join(target_configuration.qwt_sip_dir, 'Qwt')
         files = glob.glob('../sip/*.sip')
 
         return path, files
@@ -1289,7 +1289,7 @@ def _generate_code(target_config, opts, module_config):
     argv.append('.')
 
     argv.append(module_config.get_sip_file(target_config))
-
+    print(module_config.name)
     check_file = 'sipAPI%s.h' % module_config.name
     _remove_file(check_file)
 
