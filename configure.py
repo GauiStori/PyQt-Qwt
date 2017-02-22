@@ -68,7 +68,7 @@ class ModuleConfiguration(object):
     # prior to v4.10 (i.e. versions where the pyqtconfig.py module is
     # available).  If provided the script must be called configure-old.py and
     # be in the same directory as this script.
-    legacy_configuration_script = True
+    legacy_configuration_script = False
 
     # The minimum version of SIP that is required.  This should be a
     # dot-separated string of two or three integers (e.g. '1.0', '4.10.3').  If
@@ -81,7 +81,7 @@ class ModuleConfiguration(object):
     # The name (without the .pyi extension) of the name of the PEP 484 stub
     # file to be generated.  If it is None or an empty string then a stub file
     # is not generated.
-    pep484_stub_file = 'Qsci'
+    pep484_stub_file = 'Qwt'
 
     # Set if the module supports redefining 'protected' as 'public'.
     protected_is_public_is_supported = True
@@ -139,7 +139,7 @@ class ModuleConfiguration(object):
         optparser.add_option('--qwt-incdir', '-n', dest='qwt_inc_dir',
                 type='string', default=None, action='callback',
                 callback=optparser_store_abspath_dir, metavar="DIR",
-                help="the directory containing the Qwt Qsci header "
+                help="the directory containing the Qwt header "
                         "file directory is DIR [default: QT_INSTALL_HEADERS]")
 
         optparser.add_option('--qwt-featuresdir', dest='qwt_features_dir',

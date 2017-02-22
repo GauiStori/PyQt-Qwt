@@ -9,3 +9,9 @@ The Qwt6 library must be patched with the patch
 Hopefully there is some error in the python wrapper
 that requires the patch.
 
+A proper configure.py file has been added. To use it on Debian
+which supports coexisting Qt libraries (4 and 5) you need to 
+add QT_SELECT ahead of the command line.
+
+QT_SELECT=qt5 python3 configure.py --qwt-incdir=/usr/include/qwt
+
