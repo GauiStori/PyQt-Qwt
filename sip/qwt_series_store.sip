@@ -10,7 +10,7 @@
 class QwtAbstractSeriesStore
 {
 %TypeHeaderCode
-#include "qwt_series_store.h"
+#include <qwt_series_store.h>
 %End
 protected:
     virtual ~QwtAbstractSeriesStore();
@@ -25,7 +25,7 @@ protected:
 class QwtSeriesStoreQwtIntervalSample: QwtAbstractSeriesStore
 {
 %TypeHeaderCode
-#include "qwt_series_store.h"
+#include <qwt_series_store.h>
 typedef QwtSeriesStore<QwtIntervalSample> QwtSeriesStoreQwtIntervalSample;
 %End
 public:
@@ -45,7 +45,7 @@ public:
 class QwtSeriesStoreQPointF: QwtAbstractSeriesStore
 {
 %TypeHeaderCode
-#include "qwt_series_store.h"
+#include <qwt_series_store.h>
 typedef QwtSeriesStore<QPointF> QwtSeriesStoreQPointF;
 %End
 public:
@@ -65,7 +65,7 @@ public:
 class QwtSeriesStoreQwtSetSample: QwtAbstractSeriesStore
 {
 %TypeHeaderCode
-#include "qwt_series_store.h"
+#include <qwt_series_store.h>
 typedef QwtSeriesStore<QwtSetSample> QwtSeriesStoreQwtSetSample;
 %End
 public:

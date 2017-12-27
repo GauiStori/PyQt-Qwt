@@ -10,7 +10,7 @@
 class QwtPlotSeriesItem: QwtPlotItem, QwtAbstractSeriesStore
 {
 %TypeHeaderCode
-#include "qwt_plot_seriesitem.h"
+#include <qwt_plot_seriesitem.h>
 %End
 public:
     explicit QwtPlotSeriesItem( const QString &title = QString::null );

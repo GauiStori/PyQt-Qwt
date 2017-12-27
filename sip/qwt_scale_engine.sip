@@ -24,7 +24,7 @@ public:
 class QwtScaleEngine
 {
 %TypeHeaderCode
-#include "qwt_scale_engine.h"
+#include <qwt_scale_engine.h>
 %End
 public:
     enum Attribute
@@ -126,7 +126,7 @@ protected:
 class QwtLinearScaleEngine: public QwtScaleEngine
 {
 %TypeHeaderCode
-#include "qwt_scale_engine.h"
+#include <qwt_scale_engine.h>
 %End
 public:
     QwtLinearScaleEngine( uint base = 10 );
@@ -169,7 +169,7 @@ protected:
 class QwtLogScaleEngine: public QwtScaleEngine
 {
 %TypeHeaderCode
-#include "qwt_scale_engine.h"
+#include <qwt_scale_engine.h>
 %End
 public:
     QwtLogScaleEngine( uint base = 10 );

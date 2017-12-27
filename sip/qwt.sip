@@ -32,35 +32,31 @@ typedef unsigned long size_t;
 %Include qwt_abstract_scale_draw.sip
 %Include qwt_interval.sip
 %Include qwt_scale_widget.sip
+%Include qwt_text.sip
+%Include qwt_text_label.sip
+%Include qwt_color_map.sip
+%Include qwt_text_engine.sip
 
 
-%Include qwt_samples.sip
-%Include qwt_series_data.sip
-%Include qwt_plot_seriesitem.sip
-%Include qwt_series_store.sip
-%Include qwt_plot_curve.sip
-
-%Include qwt_plot_grid.sip
-
-%Include qwt_symbol.sip
-
-%Include qwt_column_symbol.sip
-%Include qwt_plot_histogram.sip
-
-%Include qwt_plot_canvas.sip
-
-%Include qwt_spline.sip
-%Include qwt_curve_fitter.sip
-
-%Include qwt_event_pattern.sip
-%Include qwt_picker_machine.sip
 %Include qwt_picker.sip
 %Include qwt_plot_picker.sip
 %Include qwt_plot_zoomer.sip
+%Include qwt_event_pattern.sip
+%Include qwt_picker_machine.sip
 
-%Include qwt_text_engine.sip
-%Include qwt_text.sip
-%Include qwt_text_label.sip
+%Include qwt_plot_canvas.sip
+
+%Include qwt_plot_grid.sip
+
+%Include qwt_plot_curve.sip
+%Include qwt_plot_seriesitem.sip
+%Include qwt_series_store.sip
+%Include qwt_symbol.sip
+%Include qwt_curve_fitter.sip
+%Include qwt_samples.sip
+%Include qwt_series_data.sip
+%Include qwt_spline.sip
+
 %Include qwt_plot_marker.sip
 
 %Include qwt_panner.sip
@@ -68,13 +64,14 @@ typedef unsigned long size_t;
 
 %Include qwt_counter.sip
 
-// The following includes do miss method code to work
-%Include qwt_plot_dict.sip
-%Include qwt_point_data.sip
-%Include qwt_raster_data.sip
-%Include qwt_color_map.sip
-%Include qwt_plot_spectrogram.sip
-%Include qwt_plot_rasteritem.sip
+%Include qwt_column_symbol.sip
+%Include qwt_plot_histogram.sip
+
+%Include qwt_plot_barchart.sip
+%Include qwt_plot_abstract_barchart.sip
+%Include qwt_plot_multi_barchart.sip
+%Include qwt_null_paintdevice.sip
+%Include qwt_graphic.sip
 
 %Include qwt_abstract_scale.sip
 %Include qwt_abstract_slider.sip
@@ -87,17 +84,15 @@ typedef unsigned long size_t;
 %Include qwt_round_scale_draw.sip
 %Include qwt_knob.sip
 
-%Include qwt_null_paintdevice.sip
-%Include qwt_graphic.sip
-%Include qwt_plot_abstract_barchart.sip
-%Include qwt_plot_barchart.sip
-%Include qwt_plot_multi_barchart.sip
-
-/* It works until here */
 %Include qwt_plot_directpainter.sip
 %Include qwt_sampling_thread.sip
+%Include qwt_plot_dict.sip
 
+%Include qwt_plot_rasteritem.sip
+%Include qwt_plot_spectrogram.sip
+%Include qwt_raster_data.sip
 
+//%Include qwt_point_data.sip // Fails to compile
 
 
 

@@ -11,7 +11,7 @@
 class QwtPlot: QFrame //, QwtPlotDict XXX May need to be added
 {
 %TypeHeaderCode
-#include "qwt_plot_item.h"
+#include <qwt_plot_item.h>
 %End
 public:
     //! \brief Axis index

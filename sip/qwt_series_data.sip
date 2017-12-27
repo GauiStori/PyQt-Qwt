@@ -25,7 +25,7 @@ protected:
 class QwtSeriesDataQPointF
 {
 %TypeHeaderCode
-#include "qwt_series_data.h"
+#include <qwt_series_data.h>
 typedef QwtSeriesData<QPointF> QwtSeriesDataQPointF;
 %End
 public:
@@ -44,7 +44,7 @@ private:
 class QwtSeriesDataQwtSetSample
 {
 %TypeHeaderCode
-#include "qwt_series_data.h"
+#include <qwt_series_data.h>
 typedef QwtSeriesData<QwtSetSample> QwtSeriesDataQwtSetSample;
 %End
 public:
@@ -63,7 +63,7 @@ private:
 class QwtSeriesDataQwtIntervalSample
 {
 %TypeHeaderCode
-#include "qwt_series_data.h"
+#include <qwt_series_data.h>
 typedef QwtSeriesData<QwtIntervalSample> QwtSeriesDataQwtIntervalSample;
 %End
 public:
@@ -96,7 +96,7 @@ protected:
 class QwtArraySeriesDataQPointF: QwtSeriesDataQPointF
 {
 %TypeHeaderCode
-#include "qwt_series_data.h"
+#include <qwt_series_data.h>
 typedef QwtArraySeriesData<QPointF> QwtArraySeriesDataQPointF;
 typedef QwtSeriesData<QPointF> QwtSeriesDataQPointF;
 %End

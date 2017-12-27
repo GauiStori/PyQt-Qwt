@@ -11,7 +11,7 @@
 class QwtCounter: QWidget
 {
 %TypeHeaderCode
-#include "qwt_counter.h"
+#include <qwt_counter.h>
 %End
     //Q_OBJECT
 

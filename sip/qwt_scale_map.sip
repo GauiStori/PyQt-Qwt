@@ -11,7 +11,7 @@
 class QwtScaleMap
 {
 %TypeHeaderCode
-#include "qwt_scale_map.h"
+#include <qwt_scale_map.h>
 %End
 public:
     QwtScaleMap();

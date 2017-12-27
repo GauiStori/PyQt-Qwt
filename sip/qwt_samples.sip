@@ -11,7 +11,7 @@
 class QwtIntervalSample
 {
 %TypeHeaderCode
-#include "qwt_samples.h"
+#include <qwt_samples.h>
 %End
 public:
     QwtIntervalSample();
@@ -31,7 +31,7 @@ public:
 class QwtSetSample
 {
 %TypeHeaderCode
-#include "qwt_samples.h"
+#include <qwt_samples.h>
 %End
 public:
     QwtSetSample();

@@ -10,7 +10,7 @@
 class QwtScaleWidget : public QWidget
 {
 %TypeHeaderCode
-#include "qwt_scale_widget.h"
+#include <qwt_scale_widget.h>
 %End
 public:
     //! Layout flags of the title

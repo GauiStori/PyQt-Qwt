@@ -11,7 +11,7 @@
 class QwtPlotLayout
 {
 %TypeHeaderCode
-#include "qwt_plot_layout.h"
+#include <qwt_plot_layout.h>
 %End
 public:
     /*!

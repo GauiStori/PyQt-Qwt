@@ -11,7 +11,7 @@
 class QwtPlotDirectPainter: QObject
 {
 %TypeHeaderCode
-#include "qwt_plot_directpainter.h"
+#include <qwt_plot_directpainter.h>
 %End
 public:
     enum Attribute

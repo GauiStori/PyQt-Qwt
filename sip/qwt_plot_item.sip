@@ -11,7 +11,7 @@
 class QwtPlotItem
 {
 %TypeHeaderCode
-#include "qwt_plot_item.h"
+#include <qwt_plot_item.h>
 %End
 public:
     /*!

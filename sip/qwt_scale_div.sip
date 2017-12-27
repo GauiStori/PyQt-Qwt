@@ -10,7 +10,7 @@
 class QwtScaleDiv
 {
 %TypeHeaderCode
-#include "qwt_scale_div.h"
+#include <qwt_scale_div.h>
 %End
 public:
     //! Scale tick types
