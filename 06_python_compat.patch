@@ -53,15 +53,4 @@
  };
  
  /*!
---- a/src/qwt_picker_machine.h
-+++ b/src/qwt_picker_machine.h
-@@ -70,8 +70,8 @@
- 
-     SelectionType selectionType() const;
- 
-+    SelectionType d_selectionType;
- private:
--    const SelectionType d_selectionType;
-     int d_state;
- };
  

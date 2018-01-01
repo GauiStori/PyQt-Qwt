@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 
 import sys
-sys.path.append('../sip/')
+sys.path.append('../')
 import math
 import Qwt
 #import numpy as np
@@ -59,9 +59,9 @@ M_PI = 3.14157
         pal.setColor( QPalette.WindowText, Qt.green )
         self.setPalette( pal )
 """
-class SamplingThread( QObject ):
+class SamplingThread( Qwt.QwtSamplingThread ):
     def __init__(self, parent = None):
-        Qwt.QwtSamplingThread(self, parent )
+        Qwt.QwtSamplingThread.__init__(self, parent )
         self.d_frequency = 5.0
         self.d_amplitude = 20.0
 
@@ -80,7 +80,7 @@ class SamplingThread( QObject ):
     def sample( self, elapsed ):
         if ( self.d_frequency > 0.0 ):
             s = QPointF( elapsed, self.value( elapsed ) )
-            self.instance().append( s )
+            #self.instance().append( s )
 
     def value( self, timeStamp ):
         period = 1.0 / self.d_frequency
@@ -275,7 +275,7 @@ class Knob(QWidget):
     def sizeHint(self):
         sz1 = self.d_knob.sizeHint()
         sz2 = self.d_label.sizeHint()
-        w = math.max( sz1.width(), sz2.width() )
+        w = max( sz1.width(), sz2.width() )
         h = sz1.height() + sz2.height()
         off = math.ceil( self.d_knob.scaleDraw().extent( self.d_knob.font() ) )
         off -= 15 # spacing
@@ -395,11 +395,11 @@ class Plot( Qwt.QwtPlot ):
         #}
 
     def start(self):
-        self.d_clock.start()
+        #self.d_clock.start()
         self.d_timerId = self.startTimer( 10 )
 
     def replot(self):
-        data = Qwt.CurveData ( self.d_curve.data() )
+        data = Qwt.QwtSeriesDataQPointF ( self.d_curve.data() )
         data.values().lock()
         Qwt.QwtPlot.replot()
         self.d_paintedPoints = data.size()
@@ -463,10 +463,10 @@ class Plot( Qwt.QwtPlot ):
 
     def resizeEvent( self, event ):
         self.d_directPainter.reset()
-        Qwt.QwtPlot.resizeEvent( event )
+        #Qwt.QwtPlot.resizeEvent( event )
 
-    def showEvent( self ):
-        self.replot()
+    #def showEvent( self ):
+    #    self.replot()
 
     def eventFilter( self,  object, event ):
         if ( object == self.canvas() and event.type() == QEvent.PaletteChange ):
@@ -530,9 +530,9 @@ samplingThread.setFrequency( window.frequency() )
 samplingThread.setAmplitude( window.amplitude() )
 samplingThread.setInterval( window.signalInterval() )
 
-window.frequencyChanged['double'].connect( samplingThread.setFrequency )
-window.amplitudeChanged['double'].connect( samplingThread.setAmplitude )
-window.signalIntervalChanged['double'].connect( samplingThread.setInterval )
+#window.frequencyChanged['double'].connect( samplingThread.setFrequency )
+#window.amplitudeChanged['double'].connect( samplingThread.setAmplitude )
+#window.signalIntervalChanged['double'].connect( samplingThread.setInterval )
 window.show()
 samplingThread.start()
 window.start()

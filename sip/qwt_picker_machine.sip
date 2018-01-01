@@ -46,8 +46,9 @@ public:
 
     SelectionType selectionType() const;
 
-//private:
-    SelectionType d_selectionType;
+private:
+    QwtPickerMachine& operator=(const QwtPickerMachine&);
+    //SelectionType d_selectionType;
     //int d_state;
 };
 
