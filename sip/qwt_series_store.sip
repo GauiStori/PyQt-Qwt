@@ -36,9 +36,9 @@ public:
     QwtSeriesDataQwtIntervalSample *data();//XXXunsupported function argument type - provide %MethodCode and a C++ signature
     //const QwtSeriesData *data() const;
     QwtIntervalSample sample( int index ) const;
-    virtual size_t dataSize() const;
-    virtual QRectF dataRect() const;
-    virtual void setRectOfInterest( const QRectF &rect );
+    virtual size_t dataSize() const = 0;
+    virtual QRectF dataRect() const = 0;
+    virtual void setRectOfInterest( const QRectF &rect ) = 0;
     QwtSeriesDataQwtIntervalSample *swapData( QwtSeriesDataQwtIntervalSample *series );//XXXunsupported function argument type - provide %MethodCode and a C++ signature
 };
 
@@ -56,9 +56,9 @@ public:
     QwtSeriesDataQPointF *data();//XXXunsupported function argument type - provide %MethodCode and a C++ signature
     //const QwtSeriesData *data() const;
     QPointF sample( int index ) const;
-    virtual size_t dataSize() const;
-    virtual QRectF dataRect() const;
-    virtual void setRectOfInterest( const QRectF &rect );
+    virtual size_t dataSize() const = 0;
+    virtual QRectF dataRect() const = 0;
+    virtual void setRectOfInterest( const QRectF &rect ) = 0;
     QwtSeriesDataQPointF *swapData( QwtSeriesDataQPointF *series );//XXXunsupported function argument type - provide %MethodCode and a C++ signature
 };
 
@@ -76,8 +76,8 @@ public:
     QwtSeriesDataQwtSetSample *data();//XXXunsupported function argument type - provide %MethodCode and a C++ signature
     //const QwtSeriesData *data() const;
     QwtSetSample sample( int index ) const;
-    virtual size_t dataSize() const;
-    virtual QRectF dataRect() const;
-    virtual void setRectOfInterest( const QRectF &rect );
+    virtual size_t dataSize() const = 0;
+    virtual QRectF dataRect() const = 0;
+    virtual void setRectOfInterest( const QRectF &rect ) = 0;
     QwtSeriesDataQwtSetSample *swapData( QwtSeriesDataQwtSetSample *series );//XXXunsupported function argument type - provide %MethodCode and a C++ signature
 };
