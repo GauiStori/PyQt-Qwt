@@ -1,0 +1,30 @@
+#Patch to simplify python interface
+#This patch is only needed for the barchart example
+--- a/src/qwt_series_data.h
++++ b/src/qwt_series_data.h
+@@ -54,14 +54,14 @@
+     virtual ~QwtSeriesData();
+ 
+     //! \return Number of samples
+-    virtual size_t size() const = 0;
++    virtual size_t size() const {return 0;};
+ 
+     /*!
+       Return a sample
+       \param i Index
+       \return Sample at position i
+      */
+-    virtual T sample( size_t i ) const = 0;
++    virtual T sample( size_t i ) const {return T();};
+ 
+     /*!
+        Calculate the bounding rect of all samples
+@@ -75,7 +75,7 @@
+ 
+        \return Bounding rectangle
+      */
+-    virtual QRectF boundingRect() const = 0;
++    virtual QRectF boundingRect() const {return d_boundingRect;};
+ 
+     /*!
+        Set a the "rect of interest"
