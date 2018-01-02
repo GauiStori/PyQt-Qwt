@@ -15,3 +15,5 @@ add QT_SELECT ahead of the command line.
 
 QT_SELECT=qt5 python3 configure.py --qwt-incdir=/usr/include/qwt
 
+Dependencies in Debian:
+pyqt5-dev pyqt5-dev-tools python3-pyqt5
