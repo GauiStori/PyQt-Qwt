@@ -8,11 +8,12 @@
  * modify it under the terms of the Qwt License, Version 1.0
  *****************************************************************************/
 
-class QwtPlotCurve: QwtPlotSeriesItem//, QwtSeriesStoreQPointF
+class QwtPlotCurve: QwtPlotSeriesItem, QwtSeriesStoreQPointF
 {
 %TypeHeaderCode
 //class QwtSeriesStoreQPointF;
 #include <qwt_plot_curve.h>
+typedef QwtSeriesStore<QPointF> QwtSeriesStoreQPointF;
 %End
 
 public:
@@ -188,7 +189,7 @@ public:
     //void setSamples( const double *xData, const double *yData, int size );
     void setSamples( const QVector<double> &xData, const QVector<double> &yData );
     void setSamples( const QVector<QPointF> & );
-    //void setSamples( QwtSeriesDataQPointF * ); //XXXunsupported function argument type - provide %MethodCode and a C++ signature
+    void setSamples( QwtSeriesDataQPointF * ); //XXXunsupported function argument type - provide %MethodCode and a C++ signature
 
     int closestPoint( const QPoint &pos, double *dist = NULL ) const;
 

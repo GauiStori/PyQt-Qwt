@@ -28,7 +28,7 @@ public:
     virtual void updateScaleDiv( 
         const QwtScaleDiv &, const QwtScaleDiv & );
 //protected:
-    virtual void dataChanged();
+    virtual void dataChanged() = 0;
 /*private:
     class PrivateData;
     PrivateData *d_data;*/

@@ -8,7 +8,7 @@
  * modify it under the terms of the Qwt License, Version 1.0
  *****************************************************************************/
 
-class QwtPlot: QFrame //, QwtPlotDict XXX May need to be added
+class QwtPlot: QFrame , QwtPlotDict
 {
 %TypeHeaderCode
 #include <qwt_plot_item.h>

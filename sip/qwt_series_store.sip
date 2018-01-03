@@ -22,7 +22,7 @@ protected:
 //    QwtAbstractSeriesStore();
 };
 
-class QwtSeriesStoreQwtIntervalSample: QwtAbstractSeriesStore /Abstract/
+class QwtSeriesStoreQwtIntervalSample: QwtAbstractSeriesStore 
 {
 %TypeHeaderCode
 #include <qwt_series_store.h>
@@ -32,17 +32,17 @@ public:
     explicit QwtSeriesStoreQwtIntervalSample();
     //QwtSeriesStoreQwtIntervalSample();
     ~QwtSeriesStoreQwtIntervalSample();
-    void setData( QwtSeriesDataQwtIntervalSample *series );//XXXunsupported function argument type - provide %MethodCode and a C++ signature
-    QwtSeriesDataQwtIntervalSample *data();//XXXunsupported function argument type - provide %MethodCode and a C++ signature
+    void setData( QwtSeriesDataQwtIntervalSample *series );
+    QwtSeriesDataQwtIntervalSample *data();
     //const QwtSeriesData *data() const;
     QwtIntervalSample sample( int index ) const;
-    virtual size_t dataSize() const = 0;
+    virtual size_t dataSize() const;
     virtual QRectF dataRect() const = 0;
     virtual void setRectOfInterest( const QRectF &rect ) = 0;
-    QwtSeriesDataQwtIntervalSample *swapData( QwtSeriesDataQwtIntervalSample *series );//XXXunsupported function argument type - provide %MethodCode and a C++ signature
+    QwtSeriesDataQwtIntervalSample *swapData( QwtSeriesDataQwtIntervalSample *series );
 };
 
-class QwtSeriesStoreQPointF: QwtAbstractSeriesStore /Abstract/
+class QwtSeriesStoreQPointF: QwtAbstractSeriesStore
 {
 %TypeHeaderCode
 #include <qwt_series_store.h>
@@ -52,17 +52,17 @@ public:
     explicit QwtSeriesStoreQPointF();
     //QwtSeriesStoreQPointF();
     ~QwtSeriesStoreQPointF();
-    void setData( QwtSeriesDataQPointF *series );//XXXunsupported function argument type - provide %MethodCode and a C++ signature
-    QwtSeriesDataQPointF *data();//XXXunsupported function argument type - provide %MethodCode and a C++ signature
+    void setData( QwtSeriesDataQPointF *series );
+    QwtSeriesDataQPointF *data();
     //const QwtSeriesData *data() const;
     QPointF sample( int index ) const;
     virtual size_t dataSize() const = 0;
     virtual QRectF dataRect() const = 0;
     virtual void setRectOfInterest( const QRectF &rect ) = 0;
-    QwtSeriesDataQPointF *swapData( QwtSeriesDataQPointF *series );//XXXunsupported function argument type - provide %MethodCode and a C++ signature
+    QwtSeriesDataQPointF *swapData( QwtSeriesDataQPointF *series );
 };
 
-class QwtSeriesStoreQwtSetSample: QwtAbstractSeriesStore /Abstract/
+class QwtSeriesStoreQwtSetSample: QwtAbstractSeriesStore
 {
 %TypeHeaderCode
 #include <qwt_series_store.h>
@@ -72,12 +72,12 @@ public:
     explicit QwtSeriesStoreQwtSetSample();
     //QwtSeriesStoreQPointF();
     ~QwtSeriesStoreQwtSetSample();
-    void setData( QwtSeriesDataQwtSetSample *series );//XXXunsupported function argument type - provide %MethodCode and a C++ signature
-    QwtSeriesDataQwtSetSample *data();//XXXunsupported function argument type - provide %MethodCode and a C++ signature
+    void setData( QwtSeriesDataQwtSetSample *series );
+    QwtSeriesDataQwtSetSample *data();
     //const QwtSeriesData *data() const;
     QwtSetSample sample( int index ) const;
     virtual size_t dataSize() const = 0;
     virtual QRectF dataRect() const = 0;
     virtual void setRectOfInterest( const QRectF &rect ) = 0;
-    QwtSeriesDataQwtSetSample *swapData( QwtSeriesDataQwtSetSample *series );//XXXunsupported function argument type - provide %MethodCode and a C++ signature
+    QwtSeriesDataQwtSetSample *swapData( QwtSeriesDataQwtSetSample *series );
 };

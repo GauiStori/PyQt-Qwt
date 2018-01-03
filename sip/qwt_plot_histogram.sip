@@ -8,10 +8,11 @@
  * modify it under the terms of the Qwt License, Version 1.0
  *****************************************************************************/
 
-class QwtPlotHistogram: QwtPlotSeriesItem//, QwtSeriesStoreQwtIntervalSample
+class QwtPlotHistogram: QwtPlotSeriesItem , QwtSeriesStoreQwtIntervalSample
 {
 %TypeHeaderCode
 #include <qwt_plot_histogram.h>
+typedef QwtSeriesStore<QwtIntervalSample> QwtSeriesStoreQwtIntervalSample;
 %End
 public:
     enum HistogramStyle
