@@ -93,7 +93,7 @@ protected:
     QVector<T> d_samples;
 };*/
 
-class QwtArraySeriesDataQPointF: QwtSeriesDataQPointF
+class QwtArraySeriesDataQPointF: QwtSeriesDataQPointF /Abstract/
 {
 %TypeHeaderCode
 #include <qwt_series_data.h>
