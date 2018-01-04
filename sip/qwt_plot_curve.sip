@@ -186,10 +186,10 @@ public:
 
 //#ifndef QWT_NO_COMPAT
     void setRawSamples( const double *xData, const double *yData, int size );
-    //void setSamples( const double *xData, const double *yData, int size );
+    void setSamples( const double *xData, const double *yData, int size );
     void setSamples( const QVector<double> &xData, const QVector<double> &yData );
     void setSamples( const QVector<QPointF> & );
-    void setSamples( QwtSeriesDataQPointF * ); //XXXunsupported function argument type - provide %MethodCode and a C++ signature
+    void setSamples( QwtSeriesDataQPointF * );
 
     int closestPoint( const QPoint &pos, double *dist = NULL ) const;
 

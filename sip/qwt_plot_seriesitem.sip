@@ -27,7 +27,7 @@ public:
     virtual QRectF boundingRect() const;
     virtual void updateScaleDiv( 
         const QwtScaleDiv &, const QwtScaleDiv & );
-//protected:
+protected:
     virtual void dataChanged() = 0;
 /*private:
     class PrivateData;
