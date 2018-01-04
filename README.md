@@ -4,12 +4,8 @@ Python PyQt wrapper for Qwt6
 The code is only tested for python3 and Qt5 but it
 is written to work for python2/3 Qt4/5
 
-The Qwt6 library must be patched with the patch
-qwt_series_store_h.patch in order to compile the code.
-Hopefully there is some error in the python wrapper
-that requires the patch.
-The barchart.py script works if qwt_series_data_h.patch is applied 
-as well but I am trying to get rid of both of the patches.
+The qwt include files must be patched to build PyQt-Qwt.
+
 
 
 BUILD:
@@ -21,7 +17,11 @@ A proper configure.py file has been added. To use it on Debian
 which supports coexisting Qt libraries (4 and 5) you need to 
 add QT_SELECT ahead of the command line.
 
-QT_SELECT=qt5 python3 configure.py --qwt-incdir=/usr/include/qwt
+cp -a /usr/include/qwt .
+cd qwt
+patch -p2  < ../06_python_compat.patch
+cd ..
+QT_SELECT=qt5 python3 configure.py --qwt-incdir=qwt
 make
 cp Qwt.so  qt5examples/
 cd qt5examples
