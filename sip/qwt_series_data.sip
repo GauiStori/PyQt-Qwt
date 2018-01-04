@@ -31,10 +31,10 @@ typedef QwtSeriesData<QPointF> QwtSeriesDataQPointF;
 public:
     QwtSeriesDataQPointF();
     virtual ~QwtSeriesDataQPointF();
-    virtual size_t size() const = 0;
-    virtual QPointF sample( size_t i ) const = 0;
-    virtual QRectF boundingRect() const = 0;
-    virtual void setRectOfInterest( const QRectF &rect ) = 0;
+    virtual size_t size() const;
+    virtual QPointF sample( size_t i ) const;
+    virtual QRectF boundingRect() const;
+    virtual void setRectOfInterest( const QRectF &rect );
 //protected:
 //    mutable QRectF d_boundingRect;
 private:
@@ -50,10 +50,10 @@ typedef QwtSeriesData<QwtSetSample> QwtSeriesDataQwtSetSample;
 public:
     QwtSeriesDataQwtSetSample();
     virtual ~QwtSeriesDataQwtSetSample();
-    virtual size_t size() const = 0;
-    virtual QwtSetSample sample( size_t i ) const = 0;
-    virtual QRectF boundingRect() const = 0;
-    virtual void setRectOfInterest( const QRectF &rect ) = 0;
+    virtual size_t size() const;
+    virtual QwtSetSample sample( size_t i ) const;
+    virtual QRectF boundingRect() const;
+    virtual void setRectOfInterest( const QRectF &rect );
 //protected:
 //    mutable QRectF d_boundingRect;
 private:
@@ -69,10 +69,10 @@ typedef QwtSeriesData<QwtIntervalSample> QwtSeriesDataQwtIntervalSample;
 public:
     QwtSeriesDataQwtIntervalSample();
     virtual ~QwtSeriesDataQwtIntervalSample();
-    virtual size_t size() const = 0;
-    virtual QwtIntervalSample sample( size_t i ) const = 0;
-    virtual QRectF boundingRect() const = 0;
-    virtual void setRectOfInterest( const QRectF &rect ) = 0;
+    virtual size_t size() const;
+    virtual QwtIntervalSample sample( size_t i ) const;
+    virtual QRectF boundingRect() const;
+    virtual void setRectOfInterest( const QRectF &rect );
 //protected:
 //    mutable QRectF d_boundingRect;
 private:
@@ -105,8 +105,8 @@ public:
     QwtArraySeriesDataQPointF( const QVector<QPointF> &samples );
     void setSamples( const QVector<QPointF> &samples );
     const QVector<QPointF> samples() const;
-    virtual size_t size() const = 0;
-    virtual QPointF sample( size_t index ) const = 0;
+    virtual size_t size() const;
+    virtual QPointF sample( size_t index ) const;
 //protected:
 //    QVector<T> d_samples;
 };
