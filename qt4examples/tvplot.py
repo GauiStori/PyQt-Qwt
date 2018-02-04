@@ -1,6 +1,5 @@
 #!/usr/bin/python
 
-# python simpleplot.py <qtversion (4 or 5)>
 # Doesn't work
 
 import sys
@@ -8,25 +7,27 @@ sys.path.append('../sip/')
 import Qwt
 
 from PyQt4.QtCore import Qt,  QSize
-from PyQt4.QtGui import QColor,  QPixmap, QFont, QBrush, QMainWindow,  QWidget,  QToolBar,  QToolButton,  QHBoxLayout,  QLabel,  QApplication
+from PyQt4.QtGui import QColor,  QPixmap, QFont, QBrush, QMainWindow,  QWidget,  QToolBar,  QToolButton,  QHBoxLayout,  QLabel,  QApplication, QPalette, QComboBox, QSizePolicy
 
 class Histogram(Qwt.QwtPlotHistogram):
     def __init__(self,title, symbolColor ):
         Qwt.QwtPlotHistogram.__init__(self,title)
         self.setStyle( Qwt.QwtPlotHistogram.Columns )
-        #self.setColor( symbolColor )
+        self.setColor( symbolColor )
 
     def setValues(self, values ):
-        pass
-        #self.setData( values )
-        """QVector<QwtIntervalSample> samples( numValues )
+        numValues = len(values)
+        #QVector<QwtIntervalSample> samples( numValues )
+        samples = []
         for i in range(numValues):
-            QwtInterval interval( double( i ), i + 1.0 )
+            interval = Qwt.QwtInterval( i , i + 1.0 )
             interval.setBorderFlags( Qwt.QwtInterval.ExcludeMaximum )
-            samples[i] = QwtIntervalSample( values[i], interval )"""
+            samples.append(Qwt.QwtIntervalSample( values[i], interval ))
+        self.setSamples( samples )
+        
 
     def setColor(self, color ):
-        c = color;
+        c = QColor(color)
         c.setAlpha( 180 )
         self.setBrush( QBrush( c ) )
 
@@ -36,39 +37,38 @@ class TVPlot( Qwt.QwtPlot):
     def __init__(self, parent=None):
         Qwt.QwtPlot.__init__(self, parent )
         self.grid=None
-        #setTitle( "Watching TV during a weekend" )
+        self.setTitle( "Watching TV during a weekend" )
         canvas = Qwt.QwtPlotCanvas()
-        #canvas.setPalette( Qt.gray )
+        canvas.setPalette( QPalette(Qt.gray) )
         canvas.setBorderRadius( 10 )
         self.setCanvas( canvas )
 
-        #self.plotLayout().setAlignCanvasToScales( True )
+        self.plotLayout().setAlignCanvasToScales( True )
 
-        #setAxisTitle( Qwt.QwtPlot.yLeft, "Number of People" )
-        #setAxisTitle( Qwt.QwtPlot.xBottom, "Number of Hours" )
+        self.setAxisTitle( Qwt.QwtPlot.yLeft, "Number of People" )
+        self.setAxisTitle( Qwt.QwtPlot.xBottom, "Number of Hours" )
 
-        legend = Qwt.QwtLegend()
-        legend.setDefaultItemMode( Qwt.QwtLegendData.Checkable )
-        self.insertLegend( legend, Qwt.QwtPlot.RightLegend )
+        self.legend = Qwt.QwtLegend()
+        self.legend.setDefaultItemMode( Qwt.QwtLegendData.Checkable )
+        self.insertLegend( self.legend, Qwt.QwtPlot.RightLegend )
         self.populate()
 
-        #connect( legend, SIGNAL( checked( const QVariant &, bool, int ) ), SLOT( showItem( const QVariant &, bool ) ) )
+        self.legend.checked['QVariant','bool','int'].connect(self.showItem )
 
         self.replot() # creating the legend items
-
-        items = Qwt.QwtPlotItemList.itemList( Qwt.QwtPlotItem.Rtti_PlotHistogram )
-        for i in range(len(items)):
+        """self.items = Qwt.QwtPlotDict.itemList( Qwt.QwtPlotItem.Rtti_PlotHistogram )
+        for i in range(len(self.items)):
             if ( i == 0 ):
                 #const QVariant 
-                itemInfo = itemToInfo( items[i] )
+                itemInfo = itemToInfo( self.items[i] )
                 #QwtLegendLabel *
                 legendLabel = legend.legendWidget( itemInfo )
                 if ( legendLabel ):
                     legendLabel.setChecked( True )
-                items[i].setVisible( True )
+                self.items[i].setVisible( True )
             else:
-                items[i].setVisible( False )
-        setAutoReplot( True )
+                self.items[i].setVisible( False )"""
+        self.setAutoReplot( True )
 
     def populate(self):
         self.grid = Qwt.QwtPlotGrid()
@@ -90,12 +90,14 @@ class TVPlot( Qwt.QwtPlot):
         histogramNovember.attach( self )
 
     def exportPlot(self):
-        renderer = QwtPlotRenderer()
-        renderer.exportTo( self, "tvplot.pdf" )
+        print("Export Plot")
+        #renderer = Qwt.QwtPlotRenderer()
+        #renderer.exportTo( self, "tvplot.pdf" )
 
     def setMode( self, mode):
         #QwtPlotItemList
-        items = QwtPlotItemList.itemList( Qwt.QwtPlotItem.Rtti_PlotHistogram )
+        print("Set mode %d"%mode)
+        """items = self.itemList( Qwt.QwtPlotItem.Rtti_PlotHistogram )
         for i in range(len(items)):
             histogram = items[i]
             if ( mode < 3 ):
@@ -111,19 +113,19 @@ class TVPlot( Qwt.QwtPlot):
                 symbol.setFrameStyle( Qwt.QwtColumnSymbol.Raised )
                 symbol.setLineWidth( 2 )
                 symbol.setPalette( QPalette( histogram.brush().color() ) )
-                histogram.setSymbol( symbol )
+                histogram.setSymbol( symbol )"""
 
-    def showItem( itemInfo,on ):
-        #QwtPlotItem 
-        plotItem = infoToItem( itemInfo )
-        if ( plotItem ):
+    def showItem( self, itemInfo, on ):
+        print("Doesn't work yet.") 
+        plotItem = self.infoToItem( itemInfo )
+        if ( plotItem):
             plotItem.setVisible( on )
 
 class MainWindow(QMainWindow):
     def __init__(self):
         QMainWindow.__init__(self)
         self.d_plot = TVPlot(self)        
-        setCentralWidget( self.d_plot )
+        self.setCentralWidget( self.d_plot )
         self.toolBar = QToolBar( self )
         self.typeBox = QComboBox( self.toolBar )
         self.typeBox.addItem( "Outline" )
@@ -134,13 +136,14 @@ class MainWindow(QMainWindow):
         self.typeBox.setSizePolicy( QSizePolicy.Fixed, QSizePolicy.Fixed )
         self.btnExport = QToolButton( self.toolBar )
         self.btnExport.setText( "Export" )
-        #btnExport.setToolButtonStyle( QtCore.ToolButtonTextUnderIcon )
+        self.btnExport.setToolButtonStyle( Qt.ToolButtonTextUnderIcon )
         #connect( btnExport, SIGNAL( clicked() ), d_plot, SLOT( exportPlot() ) )
+        self.btnExport.clicked.connect(self.d_plot.exportPlot)
         self.toolBar.addWidget( self.typeBox )
         self.toolBar.addWidget( self.btnExport )
         self.addToolBar( self.toolBar )
-        #d_plot->setMode( typeBox->currentIndex() )
-        #connect( typeBox, SIGNAL( curr entIndexChanged( int ) ), d_plot, SLOT( setMode( int ) ) )
+        self.d_plot.setMode( self.typeBox.currentIndex() )
+        self.typeBox.currentIndexChanged['int'].connect(self.d_plot.setMode)
 
 a = QApplication(sys.argv)
 mainWindow = MainWindow()

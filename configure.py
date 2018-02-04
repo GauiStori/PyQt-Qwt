@@ -1,4 +1,4 @@
-# Copyright (c) 2016, Riverbank Computing Limited
+# Copyright (c) 2017, Riverbank Computing Limited
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -23,8 +23,7 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-# This is v1.8 of this boilerplate.
-# Adapted to Qwt
+# This is v2.2 of this boilerplate.
 
 
 from distutils import sysconfig
@@ -73,7 +72,7 @@ class ModuleConfiguration(object):
     # The minimum version of SIP that is required.  This should be a
     # dot-separated string of two or three integers (e.g. '1.0', '4.10.3').  If
     # it is None or an empty string then the version is not checked.
-    minimum_sip_version = '4.18'
+    minimum_sip_version = '4.19'
 
     # Set if support for C++ exceptions can be disabled.
     no_exceptions = True
@@ -115,7 +114,8 @@ class ModuleConfiguration(object):
     # 'pyqt5_is_supported' is set.
     user_pyqt_sip_flags_is_supported = True
 
-    def init_target_configuration(self, target_configuration):
+    @staticmethod
+    def init_target_configuration(target_configuration):
         """ Perform any module specific initialisation of the target
         target configuration.  Typically this is the initialisation of module
         specific attributes.  To avoid name clashes attributes should be given
@@ -129,7 +129,8 @@ class ModuleConfiguration(object):
         target_configuration.qwt_lib_dir = None
         target_configuration.qwt_sip_dir = None
 
-    def init_optparser(self, optparser, target_configuration):
+    @staticmethod
+    def init_optparser(optparser, target_configuration):
         """ Perform any module specific initialisation of the command line
         option parser.  To avoid name clashes destination attributes should be
         given a module specific prefix.  optparser is the option parser.
@@ -166,7 +167,8 @@ class ModuleConfiguration(object):
                 help="disable the installation of the .sip files "
                         "[default: enabled]")
 
-    def apply_options(self, target_configuration, options):
+    @staticmethod
+    def apply_options(target_configuration, options):
         """ Apply the module specific command line options to the target
         configuration.  target_configuration is the target configuration.
         options are the parsed options.
@@ -189,7 +191,8 @@ class ModuleConfiguration(object):
         if options.qwt_no_sip_files:
             target_configuration.qwt_sip_dir = ''
 
-    def check_module(self, target_configuration):
+    @staticmethod
+    def check_module(target_configuration):
         """ Perform any module specific checks now that the target
         configuration is complete.  target_configuration is the target
         configuration.
@@ -240,7 +243,8 @@ class ModuleConfiguration(object):
 
         target_configuration.qwt_version = qwt_version
 
-    def inform_user(self, target_configuration):
+    @staticmethod
+    def inform_user(target_configuration):
         """ Inform the user about module specific configuration information.
         target_configuration is the target configuration.
         """
@@ -252,14 +256,16 @@ class ModuleConfiguration(object):
             inform("The Qwt .sip files will be installed in %s." %
                     target_configuration.qwt_sip_dir)
 
-    def pre_code_generation(self, target_config):
+    @staticmethod
+    def pre_code_generation(target_config):
         """ Perform any module specific initialisation prior to generating the
         code.  target_config is the target configuration.
         """
 
         # Nothing to do.
 
-    def get_sip_flags(self, target_configuration):
+    @staticmethod
+    def get_sip_flags(target_configuration):
         """ Return the list of module-specific flags to pass to SIP.
         target_configuration is the target configuration.
         """
@@ -267,7 +273,8 @@ class ModuleConfiguration(object):
         # Nothing to do.
         return []
 
-    def get_sip_file(self, target_configuration):
+    @staticmethod
+    def get_sip_file(target_configuration):
         """ Return the name of the module's .sip file.  target_configuration is
         the target configuration.
         """
@@ -276,11 +283,12 @@ class ModuleConfiguration(object):
         #if target_configuration.pyqt_package == 'PyQt5':
         #    return os.path.join(src_dir, 'sip/qwt.sip')
         #else:
-        #    return os.path.join(src_dir, 'sip/qscimod4.sip')
+        #    return os.path.join(src_dir, 'sip/qwtmod4.sip')
 
-        #return 'sip/qscimod5.sip' if target_configuration.pyqt_package == 'PyQt5' else 'sip/qscimod4.sip'
+        #return 'sip/qwtmod5.sip' if target_configuration.pyqt_package == 'PyQt5' else 'sip/qwtmod4.sip'
 
-    def get_sip_installs(self, target_configuration):
+    @staticmethod
+    def get_sip_installs(target_configuration):
         """ Return a tuple of the installation directory of the module's .sip
         files and a sequence of the names of each of the .sip files relative to
         the directory containing this configuration script.  None is returned
@@ -296,7 +304,8 @@ class ModuleConfiguration(object):
 
         return path, files
 
-    def get_qmake_configuration(self, target_configuration):
+    @staticmethod
+    def get_qmake_configuration(target_configuration):
         """ Return a dict of qmake configuration values for CONFIG, DEFINES,
         INCLUDEPATH, LIBS and QT.  If value names (i.e. dict keys) have either
         'Qt4' or 'Qt5' prefixes then they are specific to the corresponding
@@ -316,7 +325,8 @@ class ModuleConfiguration(object):
 
         return qmake
 
-    def get_mac_wrapped_library_file(self, target_configuration):
+    @staticmethod
+    def get_mac_wrapped_library_file(target_configuration):
         """ Return the full pathname of the file that implements the library
         being wrapped by the module as it would be called on OS/X so that the
         module will reference it explicitly without DYLD_LIBRARY_PATH being
@@ -327,6 +337,8 @@ class ModuleConfiguration(object):
         lib_dir = target_configuration.qwt_lib_dir
         if lib_dir is None:
             lib_dir = target_configuration.qt_lib_dir
+
+        debug = '_debug' if target_configuration.debug else ''
 
         return os.path.join(lib_dir,
                 'libqwt.%s.dylib' % QWT_API_MAJOR)
@@ -638,6 +650,7 @@ class _HostPythonConfiguration:
         self.inc_dir = sysconfig.get_python_inc()
         self.venv_inc_dir = sysconfig.get_python_inc(prefix=sys.prefix)
         self.module_dir = sysconfig.get_python_lib(plat_specific=1)
+        self.debug = hasattr(sys, 'gettotalrefcount')
 
         if sys.platform == 'win32':
             self.data_dir = sys.prefix
@@ -655,7 +668,7 @@ class _TargetQtConfiguration:
         qmake executable that will provide the configuration.
         """
 
-        pipe = os.popen(' '.join([qmake, '-query']))
+        pipe = os.popen(quote(qmake) + ' -query')
 
         for l in pipe:
             l = l.strip()
@@ -680,13 +693,14 @@ class _TargetQtConfiguration:
 class _TargetConfiguration:
     """ A container for the target configuration. """
 
-    def __init__(self, module_config):
-        """ Initialise the configuration with default values.  module_config is
-        the module configuration.
+    def __init__(self, pkg_config):
+        """ Initialise the configuration with default values.  pkg_config is
+        the package configuration.
         """
 
         # Values based on the host Python configuration.
         py_config = _HostPythonConfiguration()
+        self.py_debug = py_config.debug
         self.py_platform = py_config.platform
         self.py_version = py_config.version
         self.py_module_dir = py_config.module_dir
@@ -696,39 +710,27 @@ class _TargetConfiguration:
         self.py_sip_dir = os.path.join(py_config.data_dir, 'sip')
         self.sip_inc_dir = py_config.venv_inc_dir
 
-        # The default qmake spec.
-        if self.py_platform == 'win32':
-            if self.py_version >= 0x030500:
-                self.qmake_spec = 'win32-msvc2015'
-            elif self.py_version >= 0x030300:
-                self.qmake_spec = 'win32-msvc2010'
-            elif self.py_version >= 0x020600:
-                self.qmake_spec = 'win32-msvc2008'
-            elif self.py_version >= 0x020400:
-                self.qmake_spec = 'win32-msvc.net'
-            else:
-                self.qmake_spec = 'win32-msvc'
-        else:
-            # Use the Qt default.  (We may update it for MacOS/X later.)
-            self.qmake_spec = ''
-
         # Remaining values.
+        self.debug = False
         self.pyqt_sip_flags = None
         self.pyqt_version_str = ''
         self.qmake = self._find_exe('qmake')
+        self.qmake_spec = ''
+        self.qt_version = 0
         self.qt_version_str = ''
         self.sip = self._find_exe('sip5', 'sip')
         self.sip_version = None
+        self.sip_version_str = None
         self.sysroot = ''
         self.stubs_dir = ''
 
         self.prot_is_public = (self.py_platform.startswith('linux') or self.py_platform == 'darwin')
 
-        if module_config.pyqt5_is_supported and module_config.pyqt4_is_supported:
-            pyqt = 'PyQt5' if module_config.pyqt5_is_default else 'PyQt4'
-        elif module_config.pyqt5_is_supported and not module_config.pyqt4_is_supported:
+        if pkg_config.pyqt5_is_supported and pkg_config.pyqt4_is_supported:
+            pyqt = 'PyQt5' if pkg_config.pyqt5_is_default else 'PyQt4'
+        elif pkg_config.pyqt5_is_supported and not pkg_config.pyqt4_is_supported:
             pyqt = 'PyQt5'
-        elif not module_config.pyqt5_is_supported and module_config.pyqt4_is_supported:
+        elif not pkg_config.pyqt5_is_supported and pkg_config.pyqt4_is_supported:
             pyqt = 'PyQt4'
         else:
             pyqt = None
@@ -742,7 +744,7 @@ class _TargetConfiguration:
 
         self.pyqt_package = pyqt
 
-        module_config.init_target_configuration(self)
+        pkg_config.init_target_configuration(self)
 
     def update_from_configuration_file(self, config_file):
         """ Update the configuration with values from a file.  config_file
@@ -817,23 +819,19 @@ class _TargetConfiguration:
             flags.append('-t')
             flags.append(self._get_platform_tag())
 
-            qt_version = version_from_string(self.qt_version_str)
-            if qt_version is None:
-                error("Unable to determine the version of Qt.")
-
             if self.pyqt_package == 'PyQt5':
-                if qt_version < 0x050000:
+                if self.qt_version < 0x050000:
                     error("PyQt5 requires Qt v5.0 or later.")
 
-                if qt_version > 0x060000:
-                    qt_version = 0x060000
+                if self.qt_version > 0x060000:
+                    self.qt_version = 0x060000
             else:
-                if qt_version > 0x050000:
-                    qt_version = 0x050000
+                if self.qt_version > 0x050000:
+                    self.qt_version = 0x050000
 
-            major = (qt_version >> 16) & 0xff
-            minor = (qt_version >> 8) & 0xff
-            patch = qt_version & 0xff
+            major = (self.qt_version >> 16) & 0xff
+            minor = (self.qt_version >> 8) & 0xff
+            patch = self.qt_version & 0xff
 
             flags.append('-t')
             flags.append('Qt_%d_%d_%d' % (major, minor, patch))
@@ -857,9 +855,9 @@ class _TargetConfiguration:
 
         return plattag
 
-    def introspect_pyqt(self, module_config):
-        """ Introspect PyQt to determine the sip flags required.  module_config
-        is the module configuration.
+    def introspect_pyqt(self, pkg_config):
+        """ Introspect PyQt to determine the sip flags required.  pkg_config
+        is the package configuration.
         """
 
         if self.pyqt_package == 'PyQt5':
@@ -887,7 +885,7 @@ class _TargetConfiguration:
             pyqt_config = None
 
         if pyqt_config is None:
-            if module_config.legacy_configuration_script:
+            if pkg_config.legacy_configuration_script:
                 # Fallback to the old configuration script.
                 config_script = sys.argv[0].replace('configure', 'configure-old')
                 args = [sys.executable, config_script] + sys.argv[1:]
@@ -931,8 +929,30 @@ class _TargetConfiguration:
         # Query qmake.
         qt_config = _TargetQtConfiguration(self.qmake)
 
-        # The binary MacOS/X Qt installer defaults to XCode.  If this is what
-        # we might have then use macx-clang (Qt v5) or macx-g++ (Qt v4).
+        self.qt_version_str = getattr(qt_config, 'QT_VERSION', '')
+        self.qt_version = version_from_string(self.qt_version_str)
+        if self.qt_version is None:
+            error("Unable to determine the version of Qt.")
+
+        # On Windows for Qt versions prior to v5.9.0 we need to be explicit
+        # about the qmake spec.
+        if self.qt_version < 0x050900 and self.py_platform == 'win32':
+            if self.py_version >= 0x030500:
+                self.qmake_spec = 'win32-msvc2015'
+            elif self.py_version >= 0x030300:
+                self.qmake_spec = 'win32-msvc2010'
+            elif self.py_version >= 0x020600:
+                self.qmake_spec = 'win32-msvc2008'
+            elif self.py_version >= 0x020400:
+                self.qmake_spec = 'win32-msvc.net'
+            else:
+                self.qmake_spec = 'win32-msvc'
+        else:
+            # Otherwise use the default.
+            self.qmake_spec = ''
+
+        # The binary MacOS/X Qt installer used to default to XCode.  If so then
+        # use macx-clang (Qt v5) or macx-g++ (Qt v4).
         if sys.platform == 'darwin':
             try:
                 # Qt v5.
@@ -946,7 +966,6 @@ class _TargetConfiguration:
                 # Qt v4.
                 self.qmake_spec = 'macx-g++'
 
-        self.qt_version_str = getattr(qt_config, 'QT_VERSION', '')
         self.api_dir = os.path.join(qt_config.QT_INSTALL_DATA, 'qwt')
         self.qt_inc_dir = qt_config.QT_INSTALL_HEADERS
         self.qt_lib_dir = qt_config.QT_INSTALL_LIBS
@@ -958,6 +977,21 @@ class _TargetConfiguration:
         """ Apply options from the command line that influence subsequent
         configuration.  opts are the command line options.
         """
+
+        # On Windows the interpreter must be a debug build if a debug version
+        # is to be built and vice versa.
+        if sys.platform == 'win32':
+            if opts.debug:
+                if not self.py_debug:
+                    error(
+                            "A debug version of Python must be used when "
+                            "--debug is specified.")
+            elif self.py_debug:
+                error(
+                        "--debug must be specified when a debug version of "
+                        "Python is used.")
+
+        self.debug = opts.debug
 
         # Get the system root.
         if opts.sysroot is not None:
@@ -992,14 +1026,14 @@ class _TargetConfiguration:
             self.module_dir = os.path.join(self.py_module_dir,
                     self.pyqt_package)
 
-    def apply_post_options(self, opts, module_config):
+    def apply_post_options(self, opts, pkg_config):
         """ Apply options from the command line that override the previous
-        configuration.  opts are the command line options.  module_config is
-        the module configuration.
+        configuration.  opts are the command line options.  pkg_config is the
+        package configuration.
         """
 
         if self.pyqt_package is not None:
-            if module_config.user_pyqt_sip_flags_is_supported:
+            if pkg_config.user_pyqt_sip_flags_is_supported:
                 if opts.pyqt_sip_flags is not None:
                     self.pyqt_sip_flags = opts.pyqt_sip_flags
 
@@ -1009,7 +1043,7 @@ class _TargetConfiguration:
                 self.pyqt_sip_dir = os.path.join(self.py_sip_dir,
                         self.pyqt_package)
 
-        if module_config.pep484_stub_file:
+        if _has_stubs(pkg_config):
             if opts.stubsdir is not None:
                 self.stubs_dir = opts.stubsdir
 
@@ -1018,7 +1052,7 @@ class _TargetConfiguration:
             elif self.stubs_dir == '':
                 self.stubs_dir = self.module_dir
 
-        if module_config.qwt_api_file:
+        if pkg_config.qwt_api_file:
             if opts.apidir is not None:
                 self.api_dir = opts.apidir
 
@@ -1028,7 +1062,7 @@ class _TargetConfiguration:
         if opts.destdir is not None:
             self.module_dir = opts.destdir
 
-        if module_config.protected_is_public_is_supported:
+        if pkg_config.protected_is_public_is_supported:
             if opts.prot_is_public is not None:
                 self.prot_is_public = opts.prot_is_public
         else:
@@ -1040,7 +1074,7 @@ class _TargetConfiguration:
         if opts.sip is not None:
             self.sip = opts.sip
 
-        module_config.apply_options(self, opts)
+        pkg_config.apply_options(self, opts)
 
     @staticmethod
     def _find_exe(*exes):
@@ -1065,44 +1099,44 @@ class _TargetConfiguration:
         return None
 
 
-def _create_optparser(target_config, module_config):
+def _create_optparser(target_config, pkg_config):
     """ Create the parser for the command line.  target_config is the target
-    configuration containing default values.  module_config is the module
+    configuration containing default values.  pkg_config is the package
     configuration.
     """
 
-    module_name = module_config.descriptive_name
+    pkg_name = pkg_config.descriptive_name
 
     p = optparse.OptionParser(usage="python %prog [options]",
-            version=module_config.version)
+            version=pkg_config.version)
 
     p.add_option('--spec', dest='qmakespec', default=None, action='store',
             metavar="SPEC",
-            help="pass -spec SPEC to qmake [default: %s]" % "don't pass -spec" if target_config.qmake_spec == '' else target_config.qmake_spec)
+            help="pass -spec SPEC to qmake")
 
-    if module_config.pep484_stub_file:
+    if _has_stubs(pkg_config):
         p.add_option('--stubsdir', dest='stubsdir', type='string',
                 default=None, action='callback',
                 callback=optparser_store_abspath, metavar="DIR", 
-                help="the PEP 484 stub file will be installed in DIR "
-                        "[default: with the module]")
+                help="the PEP 484 stubs will be installed in DIR [default: "
+                        "with the module]")
         p.add_option('--no-stubs', dest='no_stubs', default=False,
                 action='store_true',
-                help="disable the installation of the PEP 484 stub file "
+                help="disable the installation of the PEP 484 stubs "
                         "[default: enabled]")
 
-    if module_config.qwt_api_file:
+    if pkg_config.qwt_api_file:
         p.add_option('--apidir', '-a', dest='apidir', type='string',
                 default=None, action='callback',
                 callback=optparser_store_abspath, metavar="DIR", 
-                help="the Qwt API file will be installed in DIR "
+                help="the QScintilla API file will be installed in DIR "
                         "[default: QT_INSTALL_DATA/qwt]")
         p.add_option('--no-qwt-api', dest='no_qwt_api', default=False,
                 action='store_true',
-                help="disable the installation of the Qwt API file "
+                help="disable the installation of the QScintilla API file "
                         "[default: enabled]")
 
-    if module_config.user_configuration_file_is_supported:
+    if pkg_config.user_configuration_file_is_supported:
         p.add_option('--configuration', dest='config_file', type='string',
                 default=None, action='callback',
                 callback=optparser_store_abspath, metavar="FILE",
@@ -1111,10 +1145,10 @@ def _create_optparser(target_config, module_config):
     p.add_option('--destdir', '-d', dest='destdir', type='string',
             default=None, action='callback', callback=optparser_store_abspath,
             metavar="DIR",
-            help="install the %s module in DIR [default: %s]" %
-                    (module_name, target_config.module_dir))
+            help="install %s in DIR [default: %s]" %
+                    (pkg_name, target_config.module_dir))
 
-    if module_config.protected_is_public_is_supported:
+    if pkg_config.protected_is_public_is_supported:
         p.add_option('--protected-is-public', dest='prot_is_public',
                 default=None, action='store_true',
                 help="enable building with 'protected' redefined as 'public' "
@@ -1126,13 +1160,13 @@ def _create_optparser(target_config, module_config):
     if target_config.pyqt_package is not None:
         pyqt = target_config.pyqt_package
 
-        if module_config.pyqt5_is_supported and module_config.pyqt4_is_supported:
+        if pkg_config.pyqt5_is_supported and pkg_config.pyqt4_is_supported:
             p.add_option('--pyqt', dest='pyqt_package', type='choice',
                     choices=['PyQt4', 'PyQt5'], default=pyqt,
                     action='store', metavar="PyQtn",
                     help="configure for PyQt4 or PyQt5 [default: %s]" % pyqt)
 
-        if module_config.user_pyqt_sip_flags_is_supported:
+        if pkg_config.user_pyqt_sip_flags_is_supported:
             p.add_option('--pyqt-sip-flags', dest='pyqt_sip_flags',
                 default=None, action='store', metavar="FLAGS",
                 help="the sip flags used to build PyQt [default: query PyQt]")
@@ -1170,7 +1204,7 @@ def _create_optparser(target_config, module_config):
                     "[default: 1]")
     p.add_option('--static', '-k', dest='static', default=False,
             action='store_true',
-            help="build the %s module as a static library" % module_name)
+            help="build a static %s" % pkg_name)
     p.add_option("--sysroot", dest='sysroot', type='string', action='callback',
             callback=optparser_store_abspath_dir, metavar="DIR",
             help="DIR is the target system root directory")
@@ -1179,31 +1213,49 @@ def _create_optparser(target_config, module_config):
             help="disable the generation of docstrings")
     p.add_option('--trace', '-r', dest='tracing', default=False,
             action='store_true',
-            help="build the %s module with tracing enabled" % module_name)
+            help="build %s with tracing enabled" % pkg_name)
     p.add_option('--debug', '-u', default=False, action='store_true',
-            help="build the %s module with debugging symbols" % module_name)
+            help="build %s with debugging symbols" % pkg_name)
     p.add_option('--verbose', '-w', dest='verbose', default=False,
             action='store_true',
             help="enable verbose output during configuration")
 
-    module_config.init_optparser(p, target_config)
+    pkg_config.init_optparser(p, target_config)
 
     return p
 
 
-def _inform_user(target_config, module_config):
-    """ Tell the user the values that are going to be used.  target_config is
-    the target configuration.  module_config is the module configuration.
+def _has_stubs(pkg_config):
+    """ See if a stub file for any of the modules will be generated.
+    pkg_config is the package configuration.
     """
 
-    module_name = module_config.descriptive_name
+    for module_config in pkg_config.modules:
+        if module_config.pep484_stub_file:
+            return True
 
-    inform("Configuring %s %s..." % (module_name, module_config.version))
+    return False
 
-    module_config.inform_user(target_config)
 
-    inform("The %s module will be installed in %s." %
-            (module_name, target_config.module_dir))
+def _inform_user(target_config, pkg_config):
+    """ Tell the user the values that are going to be used.  target_config is
+    the target configuration.  pkg_config is the package configuration.
+    """
+
+    pkg_name = pkg_config.descriptive_name
+
+    inform("Configuring %s %s..." % (pkg_name, pkg_config.version))
+
+    pkg_config.inform_user(target_config)
+
+    inform("%s will be installed in %s." %
+            (pkg_name, target_config.module_dir))
+
+    if target_config.debug:
+        inform("A debug version of %s will be built." % pkg_name)
+
+    if target_config.py_debug:
+        inform("A debug build of Python is being used.")
 
     if target_config.pyqt_version_str != '':
         inform("PyQt %s is being used." % target_config.pyqt_version_str)
@@ -1216,38 +1268,47 @@ def _inform_user(target_config, module_config):
     if target_config.sysroot != '':
         inform("The system root directory is %s." % target_config.sysroot)
 
-    inform("sip %s is being used." % target_config.sip_version)
+    inform("sip %s is being used." % target_config.sip_version_str)
     inform("The sip executable is %s." % target_config.sip)
 
     if target_config.prot_is_public:
-        inform(
-                "The %s module is being built with 'protected' redefined as "
-                "'public'." % module_name)
+        inform("%s is being built with 'protected' redefined as 'public'." %
+                pkg_name)
 
     if target_config.stubs_dir != '':
-        inform("The PEP 484 stub file will be installed in %s." %
+        inform("The PEP 484 stubs will be installed in %s." %
                 target_config.stubs_dir)
 
-    if module_config.qwt_api_file and target_config.api_dir != '':
-        inform("The Qwt API file will be installed in %s." %
+    if pkg_config.qwt_api_file and target_config.api_dir != '':
+        inform("The QScintilla API file will be installed in %s." %
                 os.path.join(target_config.api_dir, 'api', 'python'))
 
 
-def _generate_code(target_config, opts, module_config):
+def _generate_code(target_config, opts, pkg_config, module_config):
     """ Generate the code for the module.  target_config is the target
-    configuration.  opts are the command line options.  module_config is the
-    module configuration.
+    configuration.  opts are the command line options.  pkg_config is the
+    package configuration.  module_config is the module configuration.
     """
 
     inform(
             "Generating the C++ source for the %s module..." %
                     module_config.name)
 
+    # Generate the code in a module-specific sub-directory.
+    try:
+        os.mkdir(module_config.name)
+    except:
+        pass
+
     # Build the SIP command line.
     argv = [quote(target_config.sip)]
 
+    # Tell SIP if this is a debug build of Python (SIP v4.19.1 and later).
+    if target_config.sip_version >= 0x041301 and target_config.py_debug:
+        argv.append('-D')
+
     # Add the module-specific flags.
-    argv.extend(module_config.get_sip_flags(target_config))
+    argv.extend(pkg_config.get_sip_flags(target_config))
 
     if target_config.pyqt_package is not None:
         # Get the flags used for the main PyQt module.
@@ -1267,10 +1328,10 @@ def _generate_code(target_config, opts, module_config):
         argv.append('-y')
         argv.append(quote(module_config.pep484_stub_file + '.pyi'))
 
-    if module_config.qwt_api_file and target_config.api_dir != '':
+    if pkg_config.qwt_api_file and target_config.api_dir != '':
         # Generate the API file.
         argv.append('-a')
-        argv.append(quote(module_config.qwt_api_file + '.api'))
+        argv.append(quote(module_config.name + '.api'))
 
     if target_config.prot_is_public:
         argv.append('-P');
@@ -1286,11 +1347,24 @@ def _generate_code(target_config, opts, module_config):
         argv.append('-r')
 
     argv.append('-c')
-    argv.append('.')
+    argv.append(os.path.abspath(module_config.name))
 
-    argv.append(module_config.get_sip_file(target_config))
-    print(module_config.name)
-    check_file = 'sipAPI%s.h' % module_config.name
+    # This assumes that, for multi-module packages, all modules's .sip files
+    # will be rooted in a common root directory.
+    sip_file = module_config.get_sip_file(target_config)
+
+    head, tail = os.path.split(sip_file)
+    while head != '/':
+        head, tail = os.path.split(head)
+
+    if tail != sip_file:
+        argv.append('-I')
+        argv.append(quote(tail))
+
+    argv.append(sip_file)
+
+    check_file = os.path.join(module_config.name,
+            'sipAPI%s.h' % module_config.name)
     _remove_file(check_file)
 
     _run_command(' '.join(argv), opts.verbose)
@@ -1299,10 +1373,7 @@ def _generate_code(target_config, opts, module_config):
         error("Unable to create the C++ code.")
 
     # Generate the .pro file.
-    pro = _generate_pro(target_config, opts, module_config)
-
-    # Generate the Makefile.
-    _run_qmake(target_config, opts.verbose, pro, module_config)
+    _generate_pro(target_config, opts, module_config)
 
 
 def _get_qt_qmake_config(qmake_config, qt_version):
@@ -1329,9 +1400,9 @@ def _write_qt_qmake_config(qt_qmake_config, pro):
 
 
 def _generate_pro(target_config, opts, module_config):
-    """ Generate the .pro file for the module and return its name.
-    target_config is the target configuration.  opts are the command line
-    options.  module_config is the module configuration.
+    """ Generate the .pro file for the module.  target_config is the target
+    configuration.  opts are the command line options.  module_config is the
+    module configuration.
     """
 
     inform("Generating the .pro file for the %s module..." % module_config.name)
@@ -1341,9 +1412,8 @@ def _generate_pro(target_config, opts, module_config):
 
     qmake_config = module_config.get_qmake_configuration(target_config)
 
-    pro_name = module_config.name + '.pro'
-
-    pro = open(pro_name, 'w')
+    pro = open(os.path.join(module_config.name, module_config.name + '.pro'),
+            'w')
 
     pro.write('TEMPLATE = lib\n')
 
@@ -1351,8 +1421,8 @@ def _generate_pro(target_config, opts, module_config):
     if qt:
         pro.write('QT += %s\n' % qt)
 
-    pro.write('CONFIG += %s\n' % ('debug' if opts.debug else 'release'))
-    pro.write('CONFIG += %s\n' % ('staticlib' if opts.static else 'plugin'))
+    pro.write('CONFIG += %s\n' % ('debug' if target_config.debug else 'release'))
+    pro.write('CONFIG += %s\n' % ('staticlib' if opts.static else 'plugin plugin_bundle'))
 
     config = qmake_config.get('CONFIG')
     if config:
@@ -1380,38 +1450,43 @@ greaterThan(QT_MAJOR_VERSION, 4) {
 
     mname = module_config.name
 
+    pro.write('TARGET = %s\n' % mname)
+
     if not opts.static:
         pro.write('''
 win32 {
     PY_MODULE = %s.pyd
-    target.files = %s.pyd
+    PY_MODULE_SRC = $(DESTDIR_TARGET)
+
     LIBS += -L%s
 } else {
     PY_MODULE = %s.so
-    target.files = %s.so
+
+    macx {
+        PY_MODULE_SRC = $(TARGET).plugin/Contents/MacOS/$(TARGET)
+
+        QMAKE_LFLAGS += "-undefined dynamic_lookup"
+
+        equals(QT_MAJOR_VERSION, 5) {
+            equals(QT_MINOR_VERSION, 5) {
+                QMAKE_RPATHDIR += $$[QT_INSTALL_LIBS]
+            }
+        }
+    } else {
+        PY_MODULE_SRC = $(TARGET)
+    }
 }
 
+QMAKE_POST_LINK = $(COPY_FILE) $$PY_MODULE_SRC $$PY_MODULE
+
 target.CONFIG = no_check_exist
-''' % (mname, mname, quote(target_config.py_pylib_dir), mname, mname))
+target.files = $$PY_MODULE
+''' % (mname, quote(target_config.py_pylib_dir), mname))
 
     pro.write('''
 target.path = %s
 INSTALLS += target
 ''' % quote(target_config.module_dir))
-
-    if target_config.stubs_dir != '':
-        pro.write('''
-pep484_stubs.path = %s
-pep484_stubs.files = %s.pyi
-INSTALLS += pep484_stubs
-''' % (target_config.stubs_dir, module_config.pep484_stub_file))
-
-    if module_config.qwt_api_file and target_config.api_dir != '':
-        pro.write('''
-api.path = %s/api/python
-api.files = %s.api
-INSTALLS += api
-''' % (target_config.api_dir, module_config.qwt_api_file))
 
     sip_installs = module_config.get_sip_installs(target_config)
     if sip_installs is not None:
@@ -1422,7 +1497,7 @@ sip.path = %s
 sip.files =''' % quote(path))
 
         for f in files:
-            pro.write(' \\\n    %s' % f)
+            pro.write(' \\\n    ../%s' % f)
 
         pro.write('''
 INSTALLS += sip
@@ -1441,7 +1516,7 @@ INSTALLS += sip
         else:
             entry_point = 'init%s' % mname
 
-        exp = open('%s.exp' % mname, 'wt')
+        exp = open(os.path.join(mname, mname + '.exp'), 'wt')
         exp.write('{ global: %s; local: *; };' % entry_point)
         exp.close()
 
@@ -1470,58 +1545,39 @@ INSTALLS += sip
     libs = qmake_config.get('LIBS')
     if libs:
         if target_config.pyqt_package == 'PyQt5':
-            pro.write('LIBS += %s -lqt5scintilla2\n' % libs)
+            pro.write('LIBS += %s -lqwt2_qt5\n' % libs)
         else:
-            pro.write('LIBS += %s -lqwt\n' % libs)
+            pro.write('LIBS += %s -lqwt2_qt4\n' % libs)
 
     if not opts.static:
-        pro.write('''
-win32 {
-    QMAKE_POST_LINK = $(COPY_FILE) $(DESTDIR_TARGET) $$PY_MODULE
-} else {
-    QMAKE_POST_LINK = $(COPY_FILE) $(TARGET) $$PY_MODULE
-}
-
-macx {
-    QMAKE_LFLAGS += "-undefined dynamic_lookup"
-    greaterThan(QT_MAJOR_VERSION, 4) {
-        QMAKE_LFLAGS += "-install_name $$absolute_path($$PY_MODULE, $$target.path)"
-        greaterThan(QT_MINOR_VERSION, 4) {
-            QMAKE_RPATHDIR += $$[QT_INSTALL_LIBS]
-        }
-    }
-''')
-
         dylib = module_config.get_mac_wrapped_library_file(target_config)
 
         if dylib:
             pro.write('''
+macx {
     QMAKE_POST_LINK = $$QMAKE_POST_LINK$$escape_expand(\\\\n\\\\t)$$quote(install_name_tool -change %s %s $$PY_MODULE)
+}
 ''' % (os.path.basename(dylib), dylib))
 
-        pro.write('}\n')
-
     pro.write('\n')
-    pro.write('TARGET = %s\n' % mname)
     pro.write('HEADERS = sipAPI%s.h\n' % mname)
 
     pro.write('SOURCES =')
-    for s in glob.glob('*.cpp'):
-        pro.write(' \\\n    %s' % s)
+    for s in os.listdir(module_config.name):
+        if s.endswith('.cpp'):
+            pro.write(' \\\n    %s' % s)
     pro.write('\n')
 
     pro.close()
 
-    return pro_name
 
-
-def _run_qmake(target_config, verbose, pro_name, module_config):
+def _run_qmake(target_config, verbose, pro_name):
     """ Run qmake against a .pro file.  target_config is the target
     configuration.  verbose is set if the output is to be displayed.  pro_name
-    is the name of the .pro file.  module_config is the module configuration.
+    is the name of the .pro file.
     """
 
-    inform("Creating the Makefile for the %s module..." % module_config.name)
+    inform("Generating the Makefiles...")
 
     # qmake doesn't behave consistently if it is not run from the directory
     # containing the .pro file - so make sure it is.
@@ -1537,6 +1593,10 @@ def _run_qmake(target_config, verbose, pro_name, module_config):
     _remove_file(mf)
 
     args = [quote(target_config.qmake)]
+
+    # Make sure all Makefiles are generated now in case qmake has been
+    # configured with environment variables.
+    args.append('-recursive')
 
     if target_config.qmake_spec != '':
         args.append('-spec')
@@ -1614,9 +1674,9 @@ def _remove_file(fname):
         pass
 
 
-def _check_sip(target_config, module_config):
+def _check_sip(target_config, pkg_config):
     """ Check that the version of sip is good enough.  target_config is the
-    target configuration.  module_config is the module configuration.
+    target configuration.  pkg_config is the package configuration.
     """
 
     if target_config.sip is None:
@@ -1634,35 +1694,37 @@ def _check_sip(target_config, module_config):
 
     pipe.close()
 
-    if '.dev' not in version_str and 'snapshot' not in version_str:
+    if '.dev' in version_str or 'snapshot' in version_str:
+        version = 0
+    else:
         version = version_from_string(version_str)
         if version is None:
             error(
                     "'%s -V' generated unexpected output: '%s'." % (
                             target_config.sip, version_str))
 
-        min_sip_version = module_config.minimum_sip_version
+        min_sip_version = pkg_config.minimum_sip_version
         if min_sip_version:
             min_version = version_from_string(min_sip_version)
             if version < min_version:
                 error(
                         "This version of %s requires sip %s or later." %
-                                (module_config.descriptive_name,
-                                        min_sip_version))
+                                (pkg_config.descriptive_name, min_sip_version))
 
-    target_config.sip_version = version_str
+    target_config.sip_version = version
+    target_config.sip_version_str = version_str
 
 
-def _main(argv, module_config):
-    """ Create the configuration module module.  argv is the list of command
-    line arguments.  module_config is the module configuration.
+def _main(argv, pkg_config):
+    """ Create the configured package.  argv is the list of command line
+    arguments.  pkg_config is the package configuration.
     """
 
     # Create the default target configuration.
-    target_config = _TargetConfiguration(module_config)
+    target_config = _TargetConfiguration(pkg_config)
 
     # Parse the command line.
-    p = _create_optparser(target_config, module_config)
+    p = _create_optparser(target_config, pkg_config)
     opts, args = p.parse_args()
 
     if args:
@@ -1675,7 +1737,7 @@ def _main(argv, module_config):
     target_config.get_qt_configuration(opts)
 
     # Update the target configuration.
-    if module_config.user_configuration_file_is_supported:
+    if pkg_config.user_configuration_file_is_supported:
         config_file = opts.config_file
     else:
         config_file = None
@@ -1685,27 +1747,80 @@ def _main(argv, module_config):
     else:
         target_config.apply_sysroot()
 
-    target_config.apply_post_options(opts, module_config)
+    target_config.apply_post_options(opts, pkg_config)
 
     if target_config.pyqt_package is not None:
         if target_config.pyqt_sip_flags is None:
-            target_config.introspect_pyqt(module_config)
+            target_config.introspect_pyqt(pkg_config)
 
     # Check SIP is new enough.
-    _check_sip(target_config, module_config)
+    _check_sip(target_config, pkg_config)
 
-    # Perform any module specific checks now that all other information has
+    # Perform any package specific checks now that all other information has
     # been captured.
-    module_config.check_module(target_config)
+    pkg_config.check_package(target_config)
 
     # Tell the user what's been found.
-    _inform_user(target_config, module_config)
+    _inform_user(target_config, pkg_config)
 
     # Allow for module specific hacks.
-    module_config.pre_code_generation(target_config)
+    pkg_config.pre_code_generation(target_config)
 
     # Generate the code.
-    _generate_code(target_config, opts, module_config)
+    for module_config in pkg_config.modules:
+        _generate_code(target_config, opts, pkg_config, module_config)
+
+    # Concatenate any .api files.
+    if pkg_config.qwt_api_file and target_config.api_dir != '':
+        inform("Generating the QScintilla API file...")
+        f = open(pkg_config.qwt_api_file + '.api', 'w')
+
+        for module_config in pkg_config.modules:
+            api = open(module_config.name + '.api')
+
+            for l in api:
+                if target_config.pyqt_package is not None:
+                    l = target_config.pyqt_package + '.' + l
+
+                f.write(l)
+
+            api.close()
+            os.remove(module_config.name + '.api')
+
+        f.close()
+
+    # Generate the top-level .pro file.
+    inform("Generating the top-level .pro file...")
+
+    pro_name = pkg_config.descriptive_name + '.pro'
+    pro = open(pro_name, 'w')
+
+    pro.write('''TEMPLATE = subdirs
+CONFIG += ordered nostrip
+SUBDIRS = %s
+''' % ' '.join([module.name for module in pkg_config.modules]))
+
+    if target_config.stubs_dir != '':
+        stubs = [module.pep484_stub_file + '.pyi' for module in pkg_config.modules if module.pep484_stub_file]
+
+        if stubs:
+            pro.write('''
+pep484_stubs.path = %s
+pep484_stubs.files = %s
+INSTALLS += pep484_stubs
+''' % (target_config.stubs_dir, ' '.join(stubs)))
+
+    if pkg_config.qwt_api_file and target_config.api_dir != '':
+        pro.write('''
+api.path = %s/api/python
+api.files = %s.api
+INSTALLS += api
+''' % (target_config.api_dir, pkg_config.qwt_api_file))
+
+    pro.close()
+
+    # Generate the Makefile.
+    _run_qmake(target_config, opts.verbose, pro_name)
 
 
 ###############################################################################
@@ -1713,17 +1828,60 @@ def _main(argv, module_config):
 ###############################################################################
 
 if __name__ == '__main__':
-    module_config = ModuleConfiguration()
+    # Assume the product is a package containing multiple modules.  If it isn't
+    # then create a dummy package containing the single module.
+    try:
+        pkg_config_type = PackageConfiguration
+    except NameError:
+        pkg_config_type = type('PackageConfiguration', (object, ), {})
+
+    if not hasattr(pkg_config_type, 'modules'):
+        mod_config_type = ModuleConfiguration
+
+        # Extract the package-specific attributes and methods.
+        pkg_config_type.descriptive_name = mod_config_type.descriptive_name
+        pkg_config_type.legacy_configuration_script = mod_config_type.legacy_configuration_script
+        pkg_config_type.minimum_sip_version = mod_config_type.minimum_sip_version
+        pkg_config_type.protected_is_public_is_supported = mod_config_type.protected_is_public_is_supported
+        pkg_config_type.pyqt4_is_supported = mod_config_type.pyqt4_is_supported
+        pkg_config_type.pyqt5_is_supported = mod_config_type.pyqt5_is_supported
+        pkg_config_type.pyqt5_is_default = mod_config_type.pyqt5_is_default
+        pkg_config_type.qwt_api_file = mod_config_type.qwt_api_file
+        pkg_config_type.support_email_address = mod_config_type.support_email_address
+        pkg_config_type.user_configuration_file_is_supported = mod_config_type.user_configuration_file_is_supported
+        pkg_config_type.user_pyqt_sip_flags_is_supported = mod_config_type.user_pyqt_sip_flags_is_supported
+        pkg_config_type.version = mod_config_type.version
+
+        pkg_config_type.init_target_configuration = staticmethod(
+                mod_config_type.init_target_configuration)
+        pkg_config_type.init_optparser = staticmethod(
+                mod_config_type.init_optparser)
+        pkg_config_type.apply_options = staticmethod(
+                mod_config_type.apply_options)
+        pkg_config_type.inform_user = staticmethod(
+                mod_config_type.inform_user)
+        pkg_config_type.pre_code_generation = staticmethod(
+                mod_config_type.pre_code_generation)
+        pkg_config_type.get_sip_flags = staticmethod(
+                mod_config_type.get_sip_flags)
+
+        # Note the name change.
+        pkg_config_type.check_package = staticmethod(
+                mod_config_type.check_module)
+
+        pkg_config_type.modules = [mod_config_type()]
+
+    pkg_config = pkg_config_type()
 
     try:
-        _main(sys.argv, module_config)
+        _main(sys.argv, pkg_config)
     except SystemExit:
         raise
     except:
-        if module_config.support_email_address:
+        if pkg_config.support_email_address:
             sys.stderr.write(
 """An internal error occured.  Please report all the output from the program,
 including the following traceback, to %s.
-""" % module_config.support_email_address)
+""" % pkg_config.support_email_address)
 
         raise
