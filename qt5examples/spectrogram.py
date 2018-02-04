@@ -1,12 +1,8 @@
 #!/usr/bin/python
 
-# python simpleplot.py <qtversion (4 or 5)>
-# Tested for python3, Qt5
-
 import sys
-sys.path.append('../sip/')
-#import math
-import Qwt
+#import Qwt
+from PyQt5 import Qwt
 from PyQt5.QtCore import Qt,  qIsNaN,  qRound
 from PyQt5.QtGui import QColor, QPen, QBrush, qRgb,  QFontMetrics
 from PyQt5.QtWidgets import QApplication, QWidget,  QCheckBox,  QToolBar,  QToolButton,  QLabel,  QComboBox,  QSlider,  QSizePolicy, QMainWindow

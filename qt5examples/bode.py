@@ -1,9 +1,9 @@
 #!/usr/bin/python
 
 import sys
-sys.path.append('../sip/')
 import math
-import Qwt
+#import Qwt
+from PyQt5 import Qwt
 import numpy as np
 
 from PyQt5.QtCore import Qt,  QSize

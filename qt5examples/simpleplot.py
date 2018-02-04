@@ -4,8 +4,8 @@
 # Tested for python3 Qt5
 
 import sys
-sys.path.append("../sip")
-import Qwt
+#import Qwt
+from PyQt5 import Qwt
 import numpy as np
 from PyQt5.QtCore import Qt,  QSize
 from PyQt5.QtGui import QBrush, QPen

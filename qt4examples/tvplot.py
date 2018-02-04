@@ -1,11 +1,8 @@
 #!/usr/bin/python
 
-# Doesn't work
-
 import sys
-sys.path.append('../sip/')
-import Qwt
-
+#import Qwt
+from PyQt4 import Qwt
 from PyQt4.QtCore import Qt,  QSize
 from PyQt4.QtGui import QColor,  QPixmap, QFont, QBrush, QMainWindow,  QWidget,  QToolBar,  QToolButton,  QHBoxLayout,  QLabel,  QApplication, QPalette, QComboBox, QSizePolicy
 

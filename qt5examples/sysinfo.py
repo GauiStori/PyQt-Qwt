@@ -1,12 +1,9 @@
 #!/usr/bin/python
 
-# python simpleplot.py <qtversion (4 or 5)>
-# Tested for python3 Qt5. Crashes if mouse is over plot canvas
-
 import sys
-sys.path.append('../sip/')
+#import Qwt
+from PyQt5 import Qwt
 import math
-import Qwt
 import numpy as np
 
 from PyQt5.QtCore import pyqtSignal, Qt,  QSize, QBasicTimer

@@ -1,14 +1,9 @@
-
-
 #!/usr/bin/python
 
-# python scatterplot.py <qtversion (4 or 5)>
-# Tested for python3 Qt5. Crashes if mose is over plot canvas
-
 import sys
-sys.path.append('../sip/')
 import math
-import Qwt
+#import Qwt
+from PyQt5 import Qwt
 import numpy as np
 from PyQt5.QtCore import Qt,  QSize, qrand, QPointF
 from PyQt5.QtGui import QColor,  QPixmap, QFont,  QIcon, QPen, QPolygonF

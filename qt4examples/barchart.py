@@ -1,13 +1,10 @@
 #!/usr/bin/python
 
-# python simpleplot.py <qtversion (4 or 5)>
-# Tested for python3, Qt5
-
 import sys
+#import Qwt
+from PyQt4 import Qwt
 sys.path.append('../sip/')
 import math, random
-import Qwt
-#import numpy as np
 from PyQt4.QtCore import Qt, QTime,  QPointF,  QSize
 from PyQt4.QtGui import QColor,  QTransform,  QPalette, QApplication, QMainWindow, QFrame, QWidget,  QToolBar,  QComboBox,  QSizePolicy,  QToolButton
 

@@ -1,13 +1,9 @@
 #!/usr/bin/python
 
-# python simpleplot.py <qtversion (4 or 5)>
-# Tested for python3 Qt5
-
 import sys
-sys.path.append("../sip")
-import Qwt
 import math
-#import numpy as np
+#import Qwt
+from PyQt4 import Qwt
 from PyQt4.QtCore import Qt,  QSize
 from PyQt4.QtGui import QBrush, QPen, QApplication
 

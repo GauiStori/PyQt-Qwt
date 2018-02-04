@@ -1,12 +1,9 @@
 #!/usr/bin/python
 
-# python simpleplot.py <qtversion (4 or 5)>
-# Tested for python3, Qt5
-
 import sys
-sys.path.append('../sip/')
 import math
-import Qwt
+#import Qwt
+from PyQt5 import Qwt
 from PyQt5.QtCore import Qt, QTime,  QPointF,  QSize
 from PyQt5.QtGui import QColor,  QTransform
 from PyQt5.QtWidgets import QApplication, QFrame
@@ -16,7 +13,7 @@ class Curve(Qwt.QwtPlotCurve):
     def __init__(self):
         Qwt.QwtPlotCurve.__init__(self)
         self.d_transform = QTransform()
-        
+
     def setTransformation(self, transform ):
         self.d_transform = transform;
 
@@ -138,7 +135,7 @@ class Curve4(Curve):
             angle = i * ( 2.0 * 3.14159 / ( numSamples - 1 ) );
             p= QPointF( math.cos( angle ), math.sin( angle ) );
             if ( i % 2 ):
-                p *= 0.4            
+                p *= 0.4
             self.d_points += p
 
     def updateSamples( self, phase ):
@@ -181,9 +178,7 @@ class Plot( Qwt.QwtPlot):
         phase = self.d_time.elapsed() * speed
         for i in range(len(self.d_curves)):
             self.d_curves[i].updateSamples( phase )
-    
 
-#QApplication a( argc, argv );
 
 if __name__ == '__main__':
     a = QApplication(sys.argv)
