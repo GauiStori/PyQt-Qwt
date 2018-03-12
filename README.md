@@ -20,15 +20,26 @@ which supports coexisting Qt libraries (4 and 5) you need to
 add QT_SELECT ahead of the command line.
 
 cp -a /usr/include/qwt .
+
 cd qwt
+
 patch -p2  < ../06_python_compat.patch
+
 cd ..
+
 QT_SELECT=qt5 python configure.py --qwt-incdir=qwt
+
 QT_SELECT=qt5 python3 configure.py --qwt-incdir=qwt
+
 QT_SELECT=qt4 python configure_new.py --qwt-incdir=qwt --pyqt=PyQt4
+
 QT_SELECT=qt4 python3 configure_new.py --qwt-incdir=qwt --pyqt=PyQt4
+
 make
+
 cp Qwt.so  qt5examples/
+
 cd qt5examples
+
 python3 bode.py
 

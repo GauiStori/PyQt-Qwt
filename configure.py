@@ -23,7 +23,7 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-# This is v2.2 of this boilerplate.
+# This is v2.3 of this boilerplate.
 
 
 from distutils import sysconfig
@@ -37,7 +37,6 @@ import sys
 # You shouldn't need to modify anything above this line.
 ###############################################################################
 
-src_dir = os.path.dirname(os.path.abspath(__file__))
 
 # This must be kept in sync with Python/configure-old.py, qwt.pro,
 # example-Qt4Qt5/application.pro and designer-Qt4Qt5/designer.pro.
@@ -61,7 +60,7 @@ class ModuleConfiguration(object):
 
     # The version of the module as a string.  Set it to None if you don't
     # provide version information.
-    version = None
+    version = '6.1.3'
 
     # Set if a configuration script is provided that handles versions of PyQt4
     # prior to v4.10 (i.e. versions where the pyqtconfig.py module is
@@ -219,8 +218,6 @@ class ModuleConfiguration(object):
                     "The Qwt version number could not be determined by "
                     "reading %s." % qwtglobal)
 
-        return # Debian: do not check for the installed version, we're good this way.
-
         lib_dir = target_configuration.qwt_lib_dir
         if lib_dir is None:
             lib_dir = target_configuration.qt_lib_dir
@@ -235,11 +232,11 @@ class ModuleConfiguration(object):
         # Because we include the Python bindings with the C++ code we can
         # reasonably force the same version to be used and not bother about
         # versioning in the .sip files.
-        if qwt_version != self.version:
+        if qwt_version != ModuleConfiguration.version:
             error(
                     "Qwt %s is being used but the Python bindings %s "
                     "are being built. Please use matching "
-                    "versions." % (qwt_version, self.version))
+                    "versions." % (qwt_version, ModuleConfiguration.version))
 
         target_configuration.qwt_version = qwt_version
 
@@ -278,7 +275,7 @@ class ModuleConfiguration(object):
         """ Return the name of the module's .sip file.  target_configuration is
         the target configuration.
         """
-        return os.path.join(src_dir, 'sip/qwt.sip')
+        return 'sip/qwt.sip'
 
         #if target_configuration.pyqt_package == 'PyQt5':
         #    return os.path.join(src_dir, 'sip/qwt.sip')
@@ -653,8 +650,22 @@ class _HostPythonConfiguration:
         self.debug = hasattr(sys, 'gettotalrefcount')
 
         if sys.platform == 'win32':
+            try:
+                # Python v3.3 and later.
+                base_prefix = sys.base_prefix
+
+            except AttributeError:
+                try:
+                    # virtualenv for Python v2.
+                    base_prefix = sys.real_prefix
+
+                except AttributeError:
+                    # We can't detect the base prefix in Python v3 prior to
+                    # v3.3.
+                    base_prefix = sys.prefix
+
             self.data_dir = sys.prefix
-            self.lib_dir = sys.prefix + '\\libs'
+            self.lib_dir = base_prefix + '\\libs'
         else:
             self.data_dir = sys.prefix + '/share'
             self.lib_dir = sys.prefix + '/lib'
@@ -1129,11 +1140,11 @@ def _create_optparser(target_config, pkg_config):
         p.add_option('--apidir', '-a', dest='apidir', type='string',
                 default=None, action='callback',
                 callback=optparser_store_abspath, metavar="DIR", 
-                help="the QScintilla API file will be installed in DIR "
+                help="the Qwt API file will be installed in DIR "
                         "[default: QT_INSTALL_DATA/qwt]")
         p.add_option('--no-qwt-api', dest='no_qwt_api', default=False,
                 action='store_true',
-                help="disable the installation of the QScintilla API file "
+                help="disable the installation of the Qwt API file "
                         "[default: enabled]")
 
     if pkg_config.user_configuration_file_is_supported:
@@ -1280,7 +1291,7 @@ def _inform_user(target_config, pkg_config):
                 target_config.stubs_dir)
 
     if pkg_config.qwt_api_file and target_config.api_dir != '':
-        inform("The QScintilla API file will be installed in %s." %
+        inform("The Qwt API file will be installed in %s." %
                 os.path.join(target_config.api_dir, 'api', 'python'))
 
 
@@ -1354,7 +1365,7 @@ def _generate_code(target_config, opts, pkg_config, module_config):
     sip_file = module_config.get_sip_file(target_config)
 
     head, tail = os.path.split(sip_file)
-    while head != '/':
+    while head:
         head, tail = os.path.split(head)
 
     if tail != sip_file:
@@ -1533,9 +1544,6 @@ INSTALLS += sip
     if includepath:
         pro.write('INCLUDEPATH += %s\n' % includepath)
 
-    if target_config.pyqt_package == 'PyQt5':
-        pro.write('INCLUDEPATH += %s\n' % (target_config.qt_inc_dir + '/QtWidgets ' + target_config.qt_inc_dir + '/QtPrintSupport'))
-
     # Make sure the SIP include directory is searched before the Python include
     # directory if they are different.
     pro.write('INCLUDEPATH += %s\n' % quote(target_config.sip_inc_dir))
@@ -1544,10 +1552,7 @@ INSTALLS += sip
 
     libs = qmake_config.get('LIBS')
     if libs:
-        if target_config.pyqt_package == 'PyQt5':
-            pro.write('LIBS += %s -lqwt2_qt5\n' % libs)
-        else:
-            pro.write('LIBS += %s -lqwt2_qt4\n' % libs)
+        pro.write('LIBS += %s\n' % libs)
 
     if not opts.static:
         dylib = module_config.get_mac_wrapped_library_file(target_config)
@@ -1772,7 +1777,7 @@ def _main(argv, pkg_config):
 
     # Concatenate any .api files.
     if pkg_config.qwt_api_file and target_config.api_dir != '':
-        inform("Generating the QScintilla API file...")
+        inform("Generating the Qwt API file...")
         f = open(pkg_config.qwt_api_file + '.api', 'w')
 
         for module_config in pkg_config.modules:
