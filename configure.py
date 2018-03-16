@@ -101,7 +101,7 @@ class ModuleConfiguration(object):
 
     # The email address that will be included when an error in the script is
     # detected.  Leave it blank if you don't want to include an address.
-    support_email_address = 'support@riverbankcomputing.com'
+    support_email_address = 'gudjon@gudjon.org'
 
     # Set if the user can provide a configuration file.  It is normally only
     # used if cross-compilation is supported.
