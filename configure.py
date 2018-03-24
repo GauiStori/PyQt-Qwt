@@ -338,7 +338,8 @@ class ModuleConfiguration(object):
         debug = '_debug' if target_configuration.debug else ''
 
         return os.path.join(lib_dir,
-                'libqwt.%s.dylib' % QWT_API_MAJOR)
+                'libqwt%s.%s.dylib' % (debug,
+                        QWT_API_MAJOR))
 
 
 ###############################################################################
