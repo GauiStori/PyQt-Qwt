@@ -1432,6 +1432,9 @@ def _generate_pro(target_config, opts, module_config):
     if qt:
         pro.write('QT += %s\n' % qt)
 
+    if target_config.pyqt_package == 'PyQt5':
+        pro.write("QT += core gui widgets\n")
+
     pro.write('CONFIG += %s\n' % ('debug' if target_config.debug else 'release'))
     pro.write('CONFIG += %s\n' % ('staticlib' if opts.static else 'plugin plugin_bundle'))
 
@@ -1552,7 +1555,7 @@ INSTALLS += sip
 
     libs = qmake_config.get('LIBS')
     if libs:
-        pro.write('LIBS += %s\n' % libs)
+        pro.write('LIBS += %s -lqwt\n' % libs)
 
     if not opts.static:
         dylib = module_config.get_mac_wrapped_library_file(target_config)
@@ -1790,7 +1793,7 @@ def _main(argv, pkg_config):
                 f.write(l)
 
             api.close()
-            os.remove(module_config.name + '.api')
+            #os.remove(module_config.name + '.api')
 
         f.close()
 
