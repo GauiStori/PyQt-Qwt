@@ -7,3 +7,4 @@ rm -f Qwt.exp
 rm -f Qwt.so
 rm -f qwt.sbf
 rm -f Qwt.pyi Qwt.pro Qwt.api sipAPIQwt.h .qmake.stash
+rm -rf Qwt

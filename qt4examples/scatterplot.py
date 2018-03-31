@@ -8,7 +8,8 @@
 import sys
 sys.path.append('../sip/')
 import math
-import Qwt
+#import Qwt
+from PyQt4 import Qwt
 #import numpy as np
 from PyQt4.QtCore import Qt,  QSize, qrand, QPointF
 from PyQt4.QtGui import QColor,  QPixmap, QFont,  QIcon, QPen, QPolygonF, QMainWindow,  QWidget,  QToolBar,  QToolButton,  QHBoxLayout,  QLabel,  QApplication

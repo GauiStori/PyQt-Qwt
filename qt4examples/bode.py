@@ -2,7 +2,7 @@
 
 import sys
 import math
-import Qwt
+#import Qwt
 #import Qwt
 from PyQt4 import Qwt
 from PyQt4.QtCore import Qt,  QSize

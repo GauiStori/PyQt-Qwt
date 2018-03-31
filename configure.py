@@ -126,6 +126,7 @@ class ModuleConfiguration(object):
         target_configuration.qwt_features_dir = None
         target_configuration.qwt_inc_dir = None
         target_configuration.qwt_lib_dir = None
+        target_configuration.qwt_lib = None
         target_configuration.qwt_sip_dir = None
 
     @staticmethod
@@ -155,6 +156,11 @@ class ModuleConfiguration(object):
                 help="the directory containing the Qwt library is DIR "
                         "[default: QT_INSTALL_LIBS]")
 
+        optparser.add_option('--qwt-lib', '-l', dest='qwt_lib',
+                type='string', default=None,
+                help="the Qwt library "
+                        "[default: qwt]")
+
         optparser.add_option('--qwt-sipdir', '-v', dest='qwt_sip_dir',
                 type='string', default=None, action='callback',
                 callback=optparser_store_abspath_dir, metavar="DIR",
@@ -181,6 +187,9 @@ class ModuleConfiguration(object):
 
         if options.qwt_lib_dir is not None:
             target_configuration.qwt_lib_dir = options.qwt_lib_dir
+
+        if options.qwt_lib is not None:
+            target_configuration.qwt_lib = options.qwt_lib
 
         if options.qwt_sip_dir is not None:
             target_configuration.qwt_sip_dir = options.qwt_sip_dir
@@ -1543,6 +1552,7 @@ INSTALLS += sip
     defines = qmake_config.get('DEFINES')
     if defines:
         pro.write('DEFINES += %s\n' % defines)
+    pro.write('DEFINES += QWT_PYTHON_WRAPPER\n')
 
     includepath = qmake_config.get('INCLUDEPATH')
     if includepath:
@@ -1556,7 +1566,10 @@ INSTALLS += sip
 
     libs = qmake_config.get('LIBS')
     if libs:
-        pro.write('LIBS += %s -lqwt\n' % libs)
+        if target_config.qwt_lib == None:
+            pro.write('LIBS += %s -lqwt\n' % libs)
+        else:
+            pro.write('LIBS += %s -l%s\n' % (libs,target_config.qwt_lib))            
 
     if not opts.static:
         dylib = module_config.get_mac_wrapped_library_file(target_config)
