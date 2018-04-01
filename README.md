@@ -51,11 +51,13 @@ Assuming the default installation directory, c:\qwt-6.1.3
 
 Compile Qwt with the following parts in qwtconfig.pri commented out:
 
-#QWT_CONFIG     += QwtSvg
+#QWT_CONFIG += QwtDll
 
-#QWT_CONFIG     += QwtOpenGL
+#QWT_CONFIG += QwtSvg
 
-#QWT_CONFIG     += QwtMathML
+#QWT_CONFIG += QwtOpenGL
+
+#QWT_CONFIG += QwtMathML
 
 
 Open "Qt 5.9.2 32-bit for Desktop (MSVC2015)" command prompt
