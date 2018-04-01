@@ -211,7 +211,7 @@ class ModuleConfiguration(object):
         if inc_dir is None:
             inc_dir = target_configuration.qt_inc_dir
 
-        qwtglobal = os.path.join(inc_dir, '../qwt', 'qwt_global.h')
+        qwtglobal = os.path.join(inc_dir, '', 'qwt_global.h')
         print(inc_dir)
         if not os.access(qwtglobal, os.F_OK):
             error(
