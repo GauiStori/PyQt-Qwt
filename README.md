@@ -10,9 +10,9 @@ The qwt include files must be patched to build PyQt-Qwt.
 
 
 
-BUILD:
+## BUILD:
 
-******* IMPORTANT *********
+### ******* IMPORTANT *********
 
 The PyQt-Qwt doesn't build against unpatched Qwt version 6.1.3.
 The header files need to be patched with 06_python_compat.patch
@@ -20,11 +20,11 @@ but for convenience the patched files are kept in the header
 directory.
 Do the following before compiling:
 
-cp -a /usr/include/qwt header
+$ cp -a /usr/include/qwt header
 
-cp header/qwt*.h header/qwt/
+$ cp header/qwt*.h header/qwt/
 
-Linux:
+### Linux:
 
 Dependencies in Debian:
 
@@ -54,7 +54,7 @@ $ python3 bode.py
 
 $ for name in *.py; do python3 $name; done
 
-Windows:
+## Windows:
 
 MSVC2015
 
