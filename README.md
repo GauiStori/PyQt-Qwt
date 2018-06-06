@@ -13,6 +13,7 @@ The qwt include files must be patched to build PyQt-Qwt.
 BUILD:
 
 ******* IMPORTANT *********
+
 The PyQt-Qwt doesn't build against unpatched Qwt version 6.1.3.
 The header files need to be patched with 06_python_compat.patch
 but for convenience the patched files are kept in the header
@@ -27,7 +28,7 @@ Linux:
 
 Dependencies in Debian:
 
-# apt-get install pyqt5-dev pyqt5-dev-tools python3-pyqt5 libqwt-qt5-dev libqwt-headers
+$ sudo apt-get install pyqt5-dev pyqt5-dev-tools python3-pyqt5 libqwt-qt5-dev libqwt-headers
 
 A proper configure.py file has been added. To use it on Debian
 which supports coexisting Qt libraries (4 and 5) you need to 
@@ -35,23 +36,23 @@ add QT_SELECT ahead of the command line.
 
 
 
-QT_SELECT=qt5 python configure.py --qwt-incdir=header/qwt --qwt-libdir=/usr/lib --qwt-lib=qwt-qt5
+$ QT_SELECT=qt5 python configure.py --qwt-incdir=header/qwt --qwt-libdir=/usr/lib --qwt-lib=qwt-qt5
 
-QT_SELECT=qt5 python3 configure.py --qwt-incdir=header/qwt --qwt-libdir=/usr/lib --qwt-lib=qwt-qt5
+$ QT_SELECT=qt5 python3 configure.py --qwt-incdir=header/qwt --qwt-libdir=/usr/lib --qwt-lib=qwt-qt5
 
-QT_SELECT=qt4 python configure_new.py --qwt-incdir=header/qwt --qwt-libdir=/usr/lib --pyqt=PyQt4
+$ QT_SELECT=qt4 python configure_new.py --qwt-incdir=header/qwt --qwt-libdir=/usr/lib --pyqt=PyQt4
 
-QT_SELECT=qt4 python3 configure_new.py --qwt-incdir=header/qwt --qwt-libdir=/usr/lib --pyqt=PyQt4
+$ QT_SELECT=qt4 python3 configure_new.py --qwt-incdir=header/qwt --qwt-libdir=/usr/lib --pyqt=PyQt4
 
-make
+$ make
 
-sudo make install
+$ sudo make install
 
-cd qt5examples
+$ cd qt5examples
 
-python3 bode.py
+$ python3 bode.py
 
-for name in *.py; do python3 $name; done
+$ for name in *.py; do python3 $name; done
 
 Windows:
 
