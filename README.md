@@ -40,9 +40,9 @@ $ QT_SELECT=qt5 python configure.py --qwt-incdir=header/qwt --qwt-libdir=/usr/li
 
 $ QT_SELECT=qt5 python3 configure.py --qwt-incdir=header/qwt --qwt-libdir=/usr/lib --qwt-lib=qwt-qt5
 
-$ QT_SELECT=qt4 python configure_new.py --qwt-incdir=header/qwt --qwt-libdir=/usr/lib --pyqt=PyQt4
+$ QT_SELECT=qt4 python configure.py --qwt-incdir=header/qwt --qwt-libdir=/usr/lib --pyqt=PyQt4
 
-$ QT_SELECT=qt4 python3 configure_new.py --qwt-incdir=header/qwt --qwt-libdir=/usr/lib --pyqt=PyQt4
+$ QT_SELECT=qt4 python3 configure.py --qwt-incdir=header/qwt --qwt-libdir=/usr/lib --pyqt=PyQt4
 
 $ make
 
