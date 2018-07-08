@@ -1,10 +1,9 @@
 #!/usr/bin/python
 
 import sys
-#import Qwt
 from PyQt5 import Qwt
 from PyQt5.QtCore import Qt,  QSize
-from PyQt5.QtGui import QColor,  QPixmap, QFont, QBrush, QPalette
+from PyQt5.QtGui import QColor,  QPixmap, QFont, QBrush, QPalette, QPen
 from PyQt5.QtWidgets import (QMainWindow,  QWidget,  QToolBar,  QToolButton,  QHBoxLayout,  QLabel,  QApplication, QComboBox, QSizePolicy)
 
 class Histogram(Qwt.QwtPlotHistogram):
@@ -94,13 +93,13 @@ class TVPlot( Qwt.QwtPlot):
 
     def setMode( self, mode):
         #QwtPlotItemList
-        print("Set mode %d"%mode)
-        """items = self.itemList( Qwt.QwtPlotItem.Rtti_PlotHistogram )
+        #print("Set mode %d"%mode)
+        items = self.itemList( Qwt.QwtPlotItem.Rtti_PlotHistogram )
         for i in range(len(items)):
             histogram = items[i]
             if ( mode < 3 ):
                 histogram.setStyle(mode)
-                histogram.setSymbol( )
+                #histogram.setSymbol( )
                 pen = QPen( Qt.black, 0 )
                 if ( mode == Qwt.QwtPlotHistogram.Lines ):
                     pen.setBrush( histogram.brush() )
@@ -111,7 +110,7 @@ class TVPlot( Qwt.QwtPlot):
                 symbol.setFrameStyle( Qwt.QwtColumnSymbol.Raised )
                 symbol.setLineWidth( 2 )
                 symbol.setPalette( QPalette( histogram.brush().color() ) )
-                histogram.setSymbol( symbol )"""
+                histogram.setSymbol( symbol )
 
     def showItem( self, itemInfo, on ):
         print("Doesn't work yet.") 
