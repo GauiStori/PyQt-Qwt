@@ -46,9 +46,9 @@ public:
         ScaledColors
     };
 
-    QwtLinearColorMap( QwtColorMap::Format = QwtColorMap::RGB );
+    QwtLinearColorMap( Format = QwtColorMap::RGB );
     QwtLinearColorMap( const QColor &from, const QColor &to, 
-                       QwtColorMap::Format = QwtColorMap::RGB );
+                       Format = QwtColorMap::RGB );
 
     virtual ~QwtLinearColorMap();
 
