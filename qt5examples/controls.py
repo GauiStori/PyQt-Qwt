@@ -266,14 +266,14 @@ class WheelBox( QWidget ):
         dmin = self.d_wheel.minimum()
         dmax = self.d_wheel.maximum()
 
-        if ( self.d_wheel.isInverted() ):
-            tmp = dmin
-            dmin = dmax
-            dmax = tmp
-            #swap( dmin, dmax )
+        #if ( self.d_wheel.isInverted() ):
+        #    tmp = dmin
+        #    dmin = dmax
+        #    dmax = tmp
+        #    #swap( dmin, dmax )
         self.d_thermo.setScale( dmin, dmax )
         self.d_thermo.setValue( self.d_wheel.value() )
-        self.d_wheel.valueChanged['double'].connect( self.d_thermo.setValue )
+        #self.d_wheel.valueChanged['double'].connect( self.d_thermo.setValue )
 
         box = QWidget()
 
@@ -296,17 +296,100 @@ class WheelTab( QWidget ):
         numBoxes = 4
         layout1 = QGridLayout()
         for i in range(numBoxes):
-            box = WheelBox( Qt.Vertical, i, self )
+            box = WheelBox( Qt.Vertical, i )
             layout1.addWidget( box, i // 2, i % 2 )
 
         layout2 = QGridLayout()
         for i in range( numBoxes ):
-            box = WheelBox( Qt.Horizontal, i + numBoxes, self )
+            box = WheelBox( Qt.Horizontal, i + numBoxes )
             layout2.addWidget( box, i // 2, i % 2 )
 
         layout = QHBoxLayout( self )
         layout.addLayout( layout1, 2 )
-        layout.addLayout( layout2, 5 )
+        #layout.addLayout( layout2, 5 )
+
+
+class KnobBox( QWidget ):
+    def __init__( self, knobType, parent=None ):
+        QWidget.__init__(self, parent)
+        self.d_knob = self.createKnob( knobType )
+        self.d_knob.setKnobWidth( 100 )
+        self.d_label = QLabel( self )
+        self.d_label.setAlignment( Qt.AlignCenter )
+
+        layout = QVBoxLayout( self )
+        layout.setSpacing( 0 )
+        layout.addWidget( self.d_knob, 10 )
+        layout.addWidget( self.d_label )
+        layout.addStretch( 10 )
+        self.d_knob.valueChanged['double'].connect(self.setNum )
+        self.setNum( self.d_knob.value() )
+
+    def createKnob( self, knobType ):
+        knob = Qwt.QwtKnob()
+        knob.setTracking( True )
+        if knobType == 0:
+            knob.setKnobStyle( Qwt.QwtKnob.Sunken )
+            knob.setMarkerStyle( Qwt.QwtKnob.Nub )
+            knob.setWrapping( True )
+            knob.setNumTurns( 4 )
+            knob.setScaleStepSize( 10.0 )
+            knob.setScale( 0, 400 )
+            knob.setTotalSteps( 400 )
+        elif knobType == 1:
+            knob.setKnobStyle( Qwt.QwtKnob.Sunken )
+            knob.setMarkerStyle( Qwt.QwtKnob.Dot )
+        elif knobType == 2:
+            knob.setKnobStyle( Qwt.QwtKnob.Sunken )
+            knob.setMarkerStyle( Qwt.QwtKnob.Tick )
+            #QwtLinearScaleEngine *scaleEngine = new QwtLinearScaleEngine( 2 )
+            #scaleEngine.setTransformation( new QwtPowerTransform( 2 ) )
+            #knob.setScaleEngine( scaleEngine )
+            """QList< double > ticks[ QwtScaleDiv.NTickTypes ]
+            ticks[ QwtScaleDiv.MajorTick ] << 0 << 4 
+                << 16 << 32 << 64 << 96 << 128
+            ticks[ QwtScaleDiv.MediumTick ] << 24 << 48 << 80 << 112
+            ticks[ QwtScaleDiv.MinorTick ] 
+                << 0.5 << 1 << 2 
+                << 7 << 10 << 13
+                << 20 << 28 
+                << 40 << 56 
+                << 72 << 88 
+                << 104 << 120 
+            knob.setScale( QwtScaleDiv( 0, 128, ticks ) )"""
+            knob.setTotalSteps( 100 )
+            knob.setStepAlignment( False )
+            knob.setSingleSteps( 1 )
+            knob.setPageSteps( 5 )
+        elif knobType == 3:
+            knob.setKnobStyle( Qwt.QwtKnob.Flat )
+            knob.setMarkerStyle( Qwt.QwtKnob.Notch )
+            knob.setScaleEngine( Qwt.QwtLogScaleEngine() )
+            knob.setScaleStepSize( 1.0 )
+            knob.setScale( 0.1, 1000.0 )
+            knob.setScaleMaxMinor( 10 )
+        elif knobType == 4:
+            knob.setKnobStyle( Qwt.QwtKnob.Raised )
+            knob.setMarkerStyle( Qwt.QwtKnob.Dot )
+            knob.setWrapping( True )
+        elif knobType == 5:
+            knob.setKnobStyle( Qwt.QwtKnob.Styled )
+            knob.setMarkerStyle( Qwt.QwtKnob.Triangle )
+            knob.setTotalAngle( 180.0 )
+            knob.setScale( 100, -100 )
+        return knob
+
+    def setNum( self, v ):
+        self.d_label.setText( "%.2f"%v )
+
+class KnobTab( QWidget ):
+    def __init__(self,parent=None):
+        QWidget.__init__(self, parent)
+        layout = QGridLayout( self )
+        numRows = 3
+        for i in range(2*numRows):
+            knobBox = KnobBox( i, self )
+            layout.addWidget( knobBox, i // numRows, i % numRows )
 
 a = QApplication(sys.argv)
 tabWidget = QTabWidget()
@@ -315,22 +398,21 @@ sliderTab = SliderTab()
 #print(type(sliderTab))
 #sliderTab.setAutoFillBackground( True )
 #sliderTab.setPalette( QColor( "DimGray" ) )
-sliderTab1 = SliderTab()
 wheelTab = WheelTab()
 #wheelTab.setAutoFillBackground( True )
 #wheelTab.setPalette( QColor( "Silver" ) )
 
-"""knobTab = KnobTab()
-knobTab.setAutoFillBackground( True )
-knobTab.setPalette( Qt.darkGray )
+knobTab = KnobTab()
+#knobTab.setAutoFillBackground( True )
+#knobTab.setPalette( Qt.darkGray )
 
-dialTab = DialTab()
-dialTab.setAutoFillBackground( True )
-dialTab.setPalette( Qt.darkGray )"""
+#dialTab = DialTab()
+#dialTab.setAutoFillBackground( True )
+#dialTab.setPalette( Qt.darkGray )
 
 tabWidget.addTab( sliderTab, "Slider" )
 tabWidget.addTab( wheelTab, "Wheel/Thermo" )
-#tabWidget.addTab( knobTab, "Knob" )
+tabWidget.addTab( knobTab, "Knob" )
 #tabWidget.addTab( dialTab, "Dial" )
 
 tabWidget.resize( 800, 600 )

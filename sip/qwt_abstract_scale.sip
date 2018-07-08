@@ -24,7 +24,7 @@ class QwtAbstractScale: QWidget
     Q_PROPERTY( double scaleStepSize READ scaleStepSize WRITE setScaleStepSize )
 */
 public:
-    QwtAbstractScale( QWidget *parent = NULL );
+    QwtAbstractScale( QWidget *parent /TransferThis/ = NULL );
     virtual ~QwtAbstractScale();
 
     void setScale( double lowerBound, double upperBound );
@@ -48,7 +48,7 @@ public:
     void setScaleMaxMinor( int ticks );
     int scaleMaxMajor() const;
 
-    void setScaleEngine( QwtScaleEngine * );
+    void setScaleEngine( QwtScaleEngine * /Transfer/ );
     //const QwtScaleEngine *scaleEngine() const; FIXME
 
     QwtScaleEngine *scaleEngine();
@@ -66,7 +66,7 @@ public:
 protected:
     void rescale( double lowerBound, double upperBound, double stepSize );
 
-    void setAbstractScaleDraw( QwtAbstractScaleDraw * );
+    void setAbstractScaleDraw( QwtAbstractScaleDraw * /Transfer/ );
 
     //const QwtAbstractScaleDraw *abstractScaleDraw() const; FIXME
     QwtAbstractScaleDraw *abstractScaleDraw();
