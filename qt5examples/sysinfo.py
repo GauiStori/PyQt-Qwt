@@ -1,7 +1,6 @@
 #!/usr/bin/python
 
 import sys
-#import Qwt
 from PyQt5 import Qwt
 import math
 import numpy as np
@@ -27,16 +26,15 @@ class ValueBar(QWidget):
         self.d_thermo.setScaleMaxMinor( 5 )
         self.d_thermo.setFillBrush( Qt.darkMagenta )
 
-        """#if 0
-        QwtLinearColorMap *colorMap =
-            QwtLinearColorMap( Qt.blue, Qt.red )
+        #if 0
+        colorMap = Qwt.QwtLinearColorMap( Qt.blue, Qt.red )
 
         colorMap.addColorStop( 0.2, Qt.yellow )
         colorMap.addColorStop( 0.3, Qt.cyan )
         colorMap.addColorStop( 0.4, Qt.green )
-        #dcolorMap.addColorStop( 0.5, Qt.magenta )
-        colorMap.setMode( QwtLinearColorMap.FixedColors )
-        d_thermo.setColorMap( colorMap )
+        colorMap.addColorStop( 0.5, Qt.magenta )
+        colorMap.setMode( Qwt.QwtLinearColorMap.FixedColors )
+        self.d_thermo.setColorMap( colorMap )
         #endif"""
 
         self.layout = QVBoxLayout( self )
@@ -89,7 +87,7 @@ class SysInfo(QFrame):
         self.cpuLayout.addWidget( ValueBar( o, "Idle", self.cpuBox, 27 ) )
 
         self.layout = QHBoxLayout( self )
-        #self.layout.setMargin( 10 )
+        self.layout.setContentsMargins( 10, 10, 10, 10 )
         self.layout.addWidget( self.memBox, 10 )
         self.layout.addWidget( self.cpuBox, 0 )
 
