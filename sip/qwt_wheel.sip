@@ -41,7 +41,7 @@ class QwtWheel: QWidget
     Q_PROPERTY( int wheelBorderWidth READ wheelBorderWidth WRITE setWheelBorderWidth )*/
 
 public:
-    explicit QwtWheel( QWidget *parent = NULL );
+    explicit QwtWheel( QWidget *parent /TransferThis/ = NULL );
     virtual ~QwtWheel();
 
     double value() const;
@@ -109,13 +109,13 @@ Q_SIGNALS:
     void wheelMoved( double value );
 
 protected:
-    virtual void paintEvent( QPaintEvent * );
-    virtual void mousePressEvent( QMouseEvent * );
-    virtual void mouseReleaseEvent( QMouseEvent * );
-    virtual void mouseMoveEvent( QMouseEvent * );
-    virtual void keyPressEvent( QKeyEvent * );
-    virtual void wheelEvent( QWheelEvent * );
-    virtual void timerEvent( QTimerEvent * );
+    virtual void paintEvent( QPaintEvent * /Transfer/);
+    virtual void mousePressEvent( QMouseEvent * /Transfer/);
+    virtual void mouseReleaseEvent( QMouseEvent * /Transfer/);
+    virtual void mouseMoveEvent( QMouseEvent * /Transfer/);
+    virtual void keyPressEvent( QKeyEvent * /Transfer/);
+    virtual void wheelEvent( QWheelEvent * /Transfer/);
+    virtual void timerEvent( QTimerEvent * /Transfer/);
 
     void stopFlying();
 
@@ -124,8 +124,8 @@ protected:
     virtual QSize sizeHint() const;
     virtual QSize minimumSizeHint() const;
 
-    virtual void drawTicks( QPainter *, const QRectF & );
-    virtual void drawWheelBackground( QPainter *, const QRectF & );
+    virtual void drawTicks( QPainter * /Transfer/, const QRectF & );
+    virtual void drawWheelBackground( QPainter * /Transfer/, const QRectF & );
 
     virtual double valueAt( const QPoint & ) const;
 

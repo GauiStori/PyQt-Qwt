@@ -96,5 +96,6 @@ typedef unsigned long size_t;
 //%Include qwt_point_data.sip // Fails to compile
 
 
-//%Include qwt_slider.sip
+%Include qwt_slider.sip
+%Include qwt_transform.sip
 
