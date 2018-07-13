@@ -45,7 +45,7 @@ public:
     void setStyle( HistogramStyle style );
     HistogramStyle style() const;
 
-    void setSymbol( const QwtColumnSymbol * );
+    void setSymbol( const QwtColumnSymbol * /Transfer/);
     const QwtColumnSymbol *symbol() const;
 
     virtual void drawSeries( QPainter *p,

@@ -38,12 +38,12 @@ public:
     void setStyle( ChartStyle style );
     ChartStyle style() const;
 
-    void setSymbol( int barIndex, QwtColumnSymbol *symbol /TransferThis/);
-    const QwtColumnSymbol *symbol( int barIndex ) const;
+    void setSymbol( int barIndex, QwtColumnSymbol *symbol /Transfer/);
+    //const QwtColumnSymbol *symbol( int barIndex ) const;
 
     void resetSymbolMap();
 
-    virtual void drawSeries( QPainter *painter,
+    virtual void drawSeries( QPainter *painter /TransferThis/,
         const QwtScaleMap &xMap, const QwtScaleMap &yMap,
         const QRectF &canvasRect, int from, int to ) const;
 
@@ -54,7 +54,7 @@ public:
     virtual QwtGraphic legendIcon( int index, const QSizeF & ) const;
 
 protected:
-    //QwtColumnSymbol *symbol( int barIndex );
+    QwtColumnSymbol *symbol( int barIndex );
 
     virtual QwtColumnSymbol *specialSymbol( 
         int sampleIndex, int valueIndex ) const;

@@ -15,8 +15,8 @@ class BarChart( Qwt.QwtPlot ):
         Qwt.QwtPlot.__init__(self, parent)
         self.setAutoFillBackground( True )
         self.setPalette( QPalette(Qt.white) )
-        #self.canvas.setPalette( QColor( "LemonChiffon" ) ) #FIXME
-        #self.canvas.setPalette( QColor( "LemonChiffon" ) ) #FIXME
+        #Qwt.QwtPlot.canvas.setPalette( Qt.yellow ) #FIXME
+        #Qwt.QwtPlot.canvas.setPalette( QColor( "LemonChiffon" ) ) #FIXME
 
         self.setTitle( "Bar Chart" )
 
@@ -56,7 +56,7 @@ class BarChart( Qwt.QwtPlot ):
             symbol.setLineWidth( 2 )
             symbol.setFrameStyle( Qwt.QwtColumnSymbol.Raised )
             symbol.setPalette( QPalette( colors[i] ) ) 
-            #self.d_barChartItem.setSymbol( i, symbol ) #FIXME Segfaults
+            self.d_barChartItem.setSymbol( i, symbol ) #FIXME Segfaults
         
         self.series = []
         for i in range(numSamples):

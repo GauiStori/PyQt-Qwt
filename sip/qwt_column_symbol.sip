@@ -138,9 +138,9 @@ public:
     void setStyle( Style );
     Style style() const;
 
-    virtual void draw( QPainter *, const QwtColumnRect & ) const;
+    virtual void draw( QPainter * /Transfer/, const QwtColumnRect & ) const;
 
 protected:
-    void drawBox( QPainter *, const QwtColumnRect & ) const;
+    void drawBox( QPainter * /Transfer/, const QwtColumnRect & ) const;
 
 };
