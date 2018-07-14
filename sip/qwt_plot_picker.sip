@@ -19,10 +19,10 @@ public:
     explicit QwtPlotPicker( QWidget *canvas /TransferThis/ );
     virtual ~QwtPlotPicker();
 
-    explicit QwtPlotPicker( int xAxis, int yAxis, QWidget * /Transfer/);
+    explicit QwtPlotPicker( int xAxis, int yAxis, QWidget * /TransferThis/);
 
     explicit QwtPlotPicker( int xAxis, int yAxis,
-        RubberBand rubberBand, DisplayMode trackerMode, QWidget * /Transfer/ );
+        RubberBand rubberBand, DisplayMode trackerMode, QWidget * /TransferThis/ );
 
     virtual void setAxis( int xAxis, int yAxis );
 

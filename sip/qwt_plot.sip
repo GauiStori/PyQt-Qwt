@@ -53,7 +53,7 @@ public:
         TopLegend
     };
 
-    explicit QwtPlot( QWidget * /Transfer/ = NULL );
+    explicit QwtPlot( QWidget * /TransferThis/ = NULL );
     //explicit QwtPlot( const QwtText &title, QWidget * = NULL );
 
     virtual ~QwtPlot();
