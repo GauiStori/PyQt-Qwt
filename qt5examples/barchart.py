@@ -1,9 +1,8 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 
 
 import sys
 import math, random
-#import Qwt
 from PyQt5 import Qwt
 import numpy as np
 from PyQt5.QtCore import Qt, QTime,  QPointF,  QSize
@@ -15,8 +14,7 @@ class BarChart( Qwt.QwtPlot ):
         Qwt.QwtPlot.__init__(self, parent)
         self.setAutoFillBackground( True )
         self.setPalette( QPalette(Qt.white) )
-        #Qwt.QwtPlot.canvas.setPalette( Qt.yellow ) #FIXME
-        #Qwt.QwtPlot.canvas.setPalette( QColor( "LemonChiffon" ) ) #FIXME
+        self.canvas().setPalette( QPalette( Qt.darkYellow )) # Original color "LemonChiffon"
 
         self.setTitle( "Bar Chart" )
 
@@ -38,8 +36,7 @@ class BarChart( Qwt.QwtPlot ):
         self.setAutoReplot( True )
 
     def populate(self):
-        #colors = ["DarkOrchid", "SteelBlue", "Gold"]
-        colors = [Qt.magenta, Qt.blue, Qt.yellow]
+        colors = [Qt.magenta, Qt.blue, Qt.yellow] #Original colors ["DarkOrchid", "SteelBlue", "Gold"]
 
         numSamples = 5
         numBars = len(colors )
@@ -56,7 +53,7 @@ class BarChart( Qwt.QwtPlot ):
             symbol.setLineWidth( 2 )
             symbol.setFrameStyle( Qwt.QwtColumnSymbol.Raised )
             symbol.setPalette( QPalette( colors[i] ) ) 
-            self.d_barChartItem.setSymbol( i, symbol ) #FIXME Segfaults
+            self.d_barChartItem.setSymbol( i, symbol )
         
         self.series = []
         for i in range(numSamples):

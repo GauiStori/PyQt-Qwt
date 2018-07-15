@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 
 import sys
 import math
@@ -316,11 +316,12 @@ class MainWindow( QMainWindow ):
         self.addToolBar( self.toolBar )
         self.statusBar()
         self.enableZoomMode( False )
-        self.showInfo("humm")
+        self.showInfo()
 
         self.cntDamp.valueChanged['double'].connect(self.d_plot.setDamp)
         self.d_picker.moved.connect(self.moved)
         #connect( d_picker, SIGNAL( moved( const QPoint & ) ), SLOT( moved( const QPoint & ) ) )
+        #self.d_picker.selected['const QPolygon &'].connect( self.selected )
         #connect( d_picker, SIGNAL( selected( const QPolygon & ) ), SLOT( selected( const QPolygon & ) ) )
 
     def mprint(self):
@@ -355,16 +356,15 @@ class MainWindow( QMainWindow ):
         self.d_zoomer[1].setEnabled( on )
         self.d_zoomer[1].zoom( 0 )
         self.d_picker.setEnabled(  not on )
-        #self.showInfo()
+        self.showInfo()
 
-    def showInfo( self, text ):
+    def showInfo( self, text="" ):
         if ( text=="" ):
             if ( self.d_picker.rubberBand() ):
                 text = "Cursor Pos: Press left mouse button in plot region"
             else:
                 text = "Zoom: Press mouse button and drag"
-
-        #self.statusBar.showMessage( text )
+        self.statusBar().showMessage( text )
 
     def moved( self, pos ):
         info = "Freq=%g, Ampl=%g, Phase=%g"%(
