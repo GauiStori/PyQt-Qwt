@@ -33,7 +33,6 @@ class Histogram(Qwt.QwtPlotHistogram):
 class TVPlot( Qwt.QwtPlot):
     def __init__(self, parent=None):
         Qwt.QwtPlot.__init__(self, parent )
-        self.grid=None
         self.setTitle( "Watching TV during a weekend" )
         canvas = Qwt.QwtPlotCanvas()
         canvas.setPalette( QPalette(Qt.gray) )
@@ -45,36 +44,37 @@ class TVPlot( Qwt.QwtPlot):
         self.setAxisTitle( Qwt.QwtPlot.yLeft, "Number of People" )
         self.setAxisTitle( Qwt.QwtPlot.xBottom, "Number of Hours" )
 
-        self.legend = Qwt.QwtLegend()
-        self.legend.setDefaultItemMode( Qwt.QwtLegendData.Checkable )
-        self.insertLegend( self.legend, Qwt.QwtPlot.RightLegend )
+        legend = Qwt.QwtLegend()
+        legend.setDefaultItemMode( Qwt.QwtLegendData.Checkable )
+        self.insertLegend( legend, Qwt.QwtPlot.RightLegend )
         self.populate()
 
-        self.legend.checked['QVariant','bool','int'].connect(self.showItem )
+        #connect( legend, SIGNAL( checked( const QVariant &, bool, int ) ), SLOT( showItem( const QVariant &, bool ) ) );
+        legend.checked['QVariant','bool','int'].connect(self.showItem )
 
         self.replot() # creating the legend items
-        """self.items = Qwt.QwtPlotDict.itemList( Qwt.QwtPlotItem.Rtti_PlotHistogram )
+        self.items = self.itemList( Qwt.QwtPlotItem.Rtti_PlotHistogram )
         for i in range(len(self.items)):
             if ( i == 0 ):
                 #const QVariant 
-                itemInfo = itemToInfo( self.items[i] )
+                itemInfo = self.itemToInfo( self.items[i] )
                 #QwtLegendLabel *
                 legendLabel = legend.legendWidget( itemInfo )
                 if ( legendLabel ):
                     legendLabel.setChecked( True )
                 self.items[i].setVisible( True )
             else:
-                self.items[i].setVisible( False )"""
+                self.items[i].setVisible( False )
         self.setAutoReplot( True )
 
     def populate(self):
-        self.grid = Qwt.QwtPlotGrid()
-        self.grid.enableX( False )
-        self.grid.enableY( True )
-        self.grid.enableXMin( False )
-        self.grid.enableYMin( False )
-        self.grid.setMajorPen( Qt.black, 0, Qt.DotLine )
-        self.grid.attach( self )
+        grid = Qwt.QwtPlotGrid()
+        grid.enableX( False )
+        grid.enableY( True )
+        grid.enableXMin( False )
+        grid.enableYMin( False )
+        grid.setMajorPen( Qt.black, 0, Qt.DotLine )
+        grid.attach( self )
         juneValues = [ 7.0, 19.0, 24.0, 32.0, 10.0, 5.0, 3.0 ]
         novemberValues = [ 4.0, 15.0, 22.0, 34.0, 13.0, 8.0, 4.0 ]
 
@@ -99,7 +99,7 @@ class TVPlot( Qwt.QwtPlot):
             histogram = items[i]
             if ( mode < 3 ):
                 histogram.setStyle(mode)
-                #histogram.setSymbol( )
+                histogram.setSymbol( 0)
                 pen = QPen( Qt.black, 0 )
                 if ( mode == Qwt.QwtPlotHistogram.Lines ):
                     pen.setBrush( histogram.brush() )
@@ -113,7 +113,7 @@ class TVPlot( Qwt.QwtPlot):
                 histogram.setSymbol( symbol )
 
     def showItem( self, itemInfo, on ):
-        print("Doesn't work yet.") 
+        print("Doesn't work yet.") # infoToItem returns None FIXME
         plotItem = self.infoToItem( itemInfo )
         if ( plotItem):
             plotItem.setVisible( on )

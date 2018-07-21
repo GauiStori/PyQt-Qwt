@@ -38,7 +38,7 @@ class ValueBar(QWidget):
         #endif"""
 
         self.layout = QVBoxLayout( self )
-        #self.layout.setMargin( 0 )
+        self.layout.setCanvasMargin( 0 )
         self.layout.setSpacing( 0 )
 
         if ( orientation == Qt.Horizontal ):
@@ -77,7 +77,7 @@ class SysInfo(QFrame):
         self.cpuBox.setFont( QFont( "Helvetica", 10 ) )
 
         self.cpuLayout = QHBoxLayout( self.cpuBox )
-        #self.cpuLayout.setMargin( 15 )
+        self.cpuLayout.setContentsMargin( 15,15,15,15 )
         self.cpuLayout.setSpacing( 5 )
 
         o = Qt.Vertical

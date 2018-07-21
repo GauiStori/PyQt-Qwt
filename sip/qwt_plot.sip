@@ -178,7 +178,7 @@ public:
     /*virtual void drawItems( QPainter *, const QRectF &,
         const QwtScaleMap maps[axisCnt] ) const;*/
 
-    virtual QVariant itemToInfo( QwtPlotItem * ) const;
+    virtual QVariant itemToInfo( QwtPlotItem * /Transfer/) const;
     virtual QwtPlotItem *infoToItem( const QVariant & ) const;
 
 signals:
