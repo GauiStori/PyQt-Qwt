@@ -112,11 +112,8 @@ class TVPlot( Qwt.QwtPlot):
                 symbol.setPalette( QPalette( histogram.brush().color() ) )
                 histogram.setSymbol( symbol )
 
-    def showItem( self, itemInfo, on ):
-        print("Doesn't work yet.") # infoToItem returns None FIXME
-        plotItem = self.infoToItem( itemInfo )
-        if ( plotItem):
-            plotItem.setVisible( on )
+    def showItem( self, plotItem, on ):
+        plotItem.setVisible( on )
 
 class MainWindow(QMainWindow):
     def __init__(self):
