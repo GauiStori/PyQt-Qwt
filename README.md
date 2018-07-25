@@ -82,3 +82,42 @@ python configure.py --qwt-incdir=c:\qwt-6.1.3\include --qwt-libdir=c:\qwt-6.1.3\
 
 nmake
 
+### Debugging
+
+It took me a lot of time to find out how to debug with gdb, and there is
+a bug/(feature) in gcc that makes the procedure more problematic.
+https://gcc.gnu.org/bugzilla/show_bug.cgi?id=61918
+
+I am using gcc 8.1.0
+
+$ QT_SELECT=qt5 python3-dbg configure.py --qwt-incdir=header/qwt --qwt-libdir=/usr/lib --qwt-lib=qwt-qt5 --trace --debug
+
+Then do the following in Qwt/Makefile
+
+Replace "-isystem" with "-I"
+
+Remove "$(shell dpkg-buildflags --get CFLAGS) -D_FORTIFY_SOURCE=2". The line looks very Debianish, don't know if it exists on other systems. Will check.
+
+Then do:
+
+$ make; sudo make install
+
+Then debug with
+
+$ gdb --args python3-dbg
+$ run barchart.py
+
+
+### Status
+
+2018-07-25
+  * Merged next version into master
+  * Compiles with sip >= 4.19.11
+  * Add more examples from Qwt: curvdemo1. and controls.py
+  * Add more sip files: qwt_slider.sip, qwt_transform.sip
+  * Improved several examples
+  * Changed some /Transfer/ /TransferThis/ instructions. Will run the full library through valgrind before release.
+  * All examples except for oscilloscope.py do work.
+
+
+
