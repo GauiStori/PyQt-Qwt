@@ -4,8 +4,8 @@ import sys
 #import Qwt
 from PyQt5 import Qwt
 from PyQt5.QtCore import Qt,  qIsNaN,  qRound
-from PyQt5.QtGui import QColor, QPen, QBrush, qRgb,  QFontMetrics
-from PyQt5.QtWidgets import QApplication, QWidget,  QCheckBox,  QToolBar,  QToolButton,  QLabel,  QComboBox,  QSlider,  QSizePolicy, QMainWindow
+from PyQt5.QtGui import QColor, QPen, QBrush,  QFontMetrics
+from PyQt5.QtWidgets import QApplication,  QCheckBox,  QToolBar,  QToolButton,  QLabel,  QComboBox,  QSlider,  QSizePolicy, QMainWindow
 from PyQt5.QtPrintSupport import QPrintDialog, QPrinter
 
 class MyZoomer(Qwt.QwtPlotZoomer):
