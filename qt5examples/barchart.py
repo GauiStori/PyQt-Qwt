@@ -2,26 +2,30 @@
 
 
 import sys
-import math, random
+import random
 from PyQt5 import Qwt
-import numpy as np
-from PyQt5.QtCore import Qt, QTime,  QPointF,  QSize
-from PyQt5.QtGui import QColor,  QTransform,  QPalette
-from PyQt5.QtWidgets import QApplication, QMainWindow, QFrame, QWidget,  QToolBar,  QComboBox,  QSizePolicy,  QToolButton
+from PyQt5.QtCore import Qt, QSize
+from PyQt5.QtGui import QPalette,  QColor
+from PyQt5.QtWidgets import QApplication, QMainWindow, QToolBar,  QComboBox,  QSizePolicy,  QToolButton
+
+colours={"DarkOrchid":QColor(153, 50, 204), 
+                "Gold":QColor(255, 215, 0), 
+                "LemonChiffon":QColor(255, 250, 205),
+                "SteelBlue":QColor( 70, 130, 180) }
 
 class BarChart( Qwt.QwtPlot ):
     def __init__(self, parent):
         Qwt.QwtPlot.__init__(self, parent)
         self.setAutoFillBackground( True )
         self.setPalette( QPalette(Qt.white) )
-        self.canvas().setPalette( QPalette( Qt.darkYellow )) # Original color "LemonChiffon"
+        self.canvas().setPalette( QPalette( colours["LemonChiffon"]))
 
         self.setTitle( "Bar Chart" )
 
         self.setAxisTitle( Qwt.QwtPlot.yLeft, "Whatever" )
         self.setAxisTitle( Qwt.QwtPlot.xBottom, "Whatever" )
 
-        self.d_barChartItem = Qwt.QwtPlotMultiBarChart( "Bar Chart " )
+        self.d_barChartItem = Qwt.QwtPlotMultiBarChart( "Bar Chart" )
         self.d_barChartItem.setLayoutPolicy( Qwt.QwtPlotMultiBarChart.AutoAdjustSamples )
         self.d_barChartItem.setSpacing( 20 )
         self.d_barChartItem.setMargin( 3 )
@@ -36,7 +40,7 @@ class BarChart( Qwt.QwtPlot ):
         self.setAutoReplot( True )
 
     def populate(self):
-        colors = [Qt.magenta, Qt.blue, Qt.yellow] #Original colors ["DarkOrchid", "SteelBlue", "Gold"]
+        colors = [colours["DarkOrchid"], colours["SteelBlue"], colours["Gold"]]
 
         numSamples = 5
         numBars = len(colors )
@@ -83,7 +87,6 @@ class BarChart( Qwt.QwtPlot ):
             self.d_barChartItem.setOrientation( Qt.Horizontal )
 
         self.setAxisScale( axis1, 0, len(self.series) -1, 1.0 )
-        #self.setAxisScale( axis1, 0, self.d_barChartItem.dataSize() - 1, 1.0 )
         self.setAxisAutoScale( axis2 )
 
         self.scaleDraw1 = self.axisScaleDraw( axis1 )

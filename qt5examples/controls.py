@@ -163,15 +163,6 @@ class SliderTab( QWidget ):
         layout.setContentsMargins( 0,  0,  0,  0)
         return layout
 
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qwt_wheel.h>
-#include <qwt_thermo.h>
-#include <qwt_scale_engine.h>
-#include <qwt_transform.h>
-#include <qwt_color_map.h>
-#include "wheelbox.h"
-
 class WheelBox( QWidget ):
     def __init__(self, orientation, typ, parent=None ):
         QWidget.__init__(self, parent)
@@ -273,7 +264,7 @@ class WheelBox( QWidget ):
         #    #swap( dmin, dmax )
         self.d_thermo.setScale( dmin, dmax )
         self.d_thermo.setValue( self.d_wheel.value() )
-        #self.d_wheel.valueChanged['double'].connect( self.d_thermo.setValue )
+        self.d_wheel.valueChanged['double'].connect( self.d_thermo.setValue )
 
         box = QWidget()
 
