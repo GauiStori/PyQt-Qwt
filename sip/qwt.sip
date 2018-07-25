@@ -92,8 +92,10 @@ typedef unsigned long size_t;
 %Include qwt_plot_spectrogram.sip
 %Include qwt_raster_data.sip
 
+%Include qwt_plot_renderer.sip
 //%Include qwt_point_data.sip // Fails to compile
 
 
-
+%Include qwt_slider.sip
+%Include qwt_transform.sip
 

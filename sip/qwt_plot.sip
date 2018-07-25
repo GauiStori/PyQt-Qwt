@@ -53,7 +53,7 @@ public:
         TopLegend
     };
 
-    explicit QwtPlot( QWidget * /Transfer/ = NULL );
+    explicit QwtPlot( QWidget * /TransferThis/ = NULL );
     //explicit QwtPlot( const QwtText &title, QWidget * = NULL );
 
     virtual ~QwtPlot();
@@ -178,7 +178,7 @@ public:
     /*virtual void drawItems( QPainter *, const QRectF &,
         const QwtScaleMap maps[axisCnt] ) const;*/
 
-    virtual QVariant itemToInfo( QwtPlotItem * ) const;
+    virtual QVariant itemToInfo( QwtPlotItem * /Transfer/) const;
     virtual QwtPlotItem *infoToItem( const QVariant & ) const;
 
 signals:

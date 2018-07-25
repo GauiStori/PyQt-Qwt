@@ -4,8 +4,8 @@ import sys
 #import Qwt
 from PyQt5 import Qwt
 from PyQt5.QtCore import Qt,  qIsNaN,  qRound
-from PyQt5.QtGui import QColor, QPen, QBrush, qRgb,  QFontMetrics
-from PyQt5.QtWidgets import QApplication, QWidget,  QCheckBox,  QToolBar,  QToolButton,  QLabel,  QComboBox,  QSlider,  QSizePolicy, QMainWindow
+from PyQt5.QtGui import QColor, QPen, QBrush,  QFontMetrics
+from PyQt5.QtWidgets import QApplication,  QCheckBox,  QToolBar,  QToolButton,  QLabel,  QComboBox,  QSlider,  QSizePolicy, QMainWindow
 from PyQt5.QtPrintSupport import QPrintDialog, QPrinter
 
 class MyZoomer(Qwt.QwtPlotZoomer):
@@ -197,20 +197,21 @@ class Plot( Qwt.QwtPlot ):
             self.d_spectrogram.setAlpha( alpha )
             self.replot()
 
-    def printPlot(self):
-        self.printer = QPrinter( QPrinter.HighResolution )
-        self.printer.setOrientation( QPrinter.Landscape )
-        self.printer.setOutputFileName( "spectrogram.pdf" )
-
-        self.dialog = QPrintDialog ( self.printer )
-        if ( self.dialog.exec() ):
+    def printPlot(self): # Creates an empty file XXXXX
+        printer = QPrinter( QPrinter.HighResolution )
+        printer.setOrientation( QPrinter.Landscape )
+        printer.setDocName( "spectrogram.pdf" )
+        printer.setCreator( "Spectrogram example" )
+        
+        dialog = QPrintDialog ( printer )
+        if ( dialog.exec_() ):
             renderer = Qwt.QwtPlotRenderer()
-            if ( self.printer.colorMode() == QPrinter.GrayScale ):
+            if ( printer.colorMode() == QPrinter.GrayScale ):
                 renderer.setDiscardFlag( Qwt.QwtPlotRenderer.DiscardBackground )
                 renderer.setDiscardFlag( Qwt.QwtPlotRenderer.DiscardCanvasBackground )
                 renderer.setDiscardFlag( Qwt.QwtPlotRenderer.DiscardCanvasFrame )
                 renderer.setLayoutFlag( Qwt.QwtPlotRenderer.FrameWithScales )
-            renderer.renderTo( self,  self.printer )
+            renderer.renderTo( self,  printer )
 
 
 class MainWindow( QMainWindow ):
@@ -224,7 +225,7 @@ class MainWindow( QMainWindow ):
         self.btnPrint.setText( "Print" )
         self.btnPrint.setToolButtonStyle( Qt.ToolButtonTextUnderIcon )
         self.toolBar.addWidget( self.btnPrint )
-        #self.btnPrint.clicked.connect(self.d_plot.printPlot() )
+        self.btnPrint.clicked.connect(self.d_plot.printPlot )
 
         self.toolBar.addSeparator()
 

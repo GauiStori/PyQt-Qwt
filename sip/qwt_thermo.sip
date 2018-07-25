@@ -48,7 +48,7 @@ public:
         OriginCustom
     };
 
-    explicit QwtThermo( QWidget *parent = NULL );
+    explicit QwtThermo( QWidget *parent /TransferThis/ = NULL );
     virtual ~QwtThermo();
 
     void setOrientation( Qt::Orientation );
@@ -81,7 +81,7 @@ public:
     void setAlarmEnabled( bool tf );
     bool alarmEnabled() const;
 
-    void setColorMap( QwtColorMap * );
+    void setColorMap( QwtColorMap * /Transfer/);
     QwtColorMap *colorMap();
     //const QwtColorMap *colorMap() const;
 
@@ -96,19 +96,19 @@ public:
     virtual QSize sizeHint() const;
     virtual QSize minimumSizeHint() const;
 
-    void setScaleDraw( QwtScaleDraw * );
+    void setScaleDraw( QwtScaleDraw * /Transfer/);
     //const QwtScaleDraw *scaleDraw() const;
 
 public Q_SLOTS:
     virtual void setValue( double val );
 
 protected:
-    virtual void drawLiquid( QPainter *, const QRect & ) const;
+    virtual void drawLiquid( QPainter * /Transfer/, const QRect & ) const;
     virtual void scaleChange();
 
-    virtual void paintEvent( QPaintEvent * );
-    virtual void resizeEvent( QResizeEvent * );
-    virtual void changeEvent( QEvent * );
+    virtual void paintEvent( QPaintEvent * /Transfer/);
+    virtual void resizeEvent( QResizeEvent * /Transfer/);
+    virtual void changeEvent( QEvent * /Transfer/);
 
     QwtScaleDraw *scaleDraw();
 

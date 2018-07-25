@@ -84,8 +84,8 @@ public:
     int titleHeightForWidth( int width ) const;
     int dimForLength( int length, const QFont &scaleFont ) const;
 
-    void drawColorBar( QPainter *painter /TransferThis/, const QRectF & ) const;
-    void drawTitle( QPainter *painter /TransferThis/, QwtScaleDraw::Alignment,
+    void drawColorBar( QPainter *painter /Transfer/, const QRectF & ) const;
+    void drawTitle( QPainter *painter /Transfer/, QwtScaleDraw::Alignment,
         const QRectF &rect ) const;
 
     void setAlignment( QwtScaleDraw::Alignment );
@@ -97,7 +97,7 @@ protected:
     virtual void paintEvent( QPaintEvent * /Transfer/);
     virtual void resizeEvent( QResizeEvent * /Transfer/);
 
-    void draw( QPainter *p /TransferThis/) const;
+    void draw( QPainter *p /Transfer/) const;
 
     void scaleChange();
     void layoutScale( bool update = true );

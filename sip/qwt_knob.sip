@@ -44,7 +44,7 @@ public:
         Notch 
     };
 
-    explicit QwtKnob( QWidget* parent = NULL );
+    explicit QwtKnob( QWidget* parent /TransferThis/ = NULL );
     virtual ~QwtKnob();
 
     void setAlignment( Qt::Alignment );
@@ -74,7 +74,7 @@ public:
     virtual QSize sizeHint() const;
     virtual QSize minimumSizeHint() const;
 
-    void setScaleDraw( QwtRoundScaleDraw * );
+    void setScaleDraw( QwtRoundScaleDraw * /Transfer/);
 
     //const QwtRoundScaleDraw *scaleDraw() const;
     QwtRoundScaleDraw *scaleDraw();
@@ -82,14 +82,14 @@ public:
     QRect knobRect() const;
 
 protected:
-    virtual void paintEvent( QPaintEvent * );
-    virtual void changeEvent( QEvent * );
+    virtual void paintEvent( QPaintEvent * /Transfer/);
+    virtual void changeEvent( QEvent * /Transfer/);
 
-    virtual void drawKnob( QPainter *, const QRectF & ) const;
+    virtual void drawKnob( QPainter * /Transfer/, const QRectF & ) const;
 
-    virtual void drawFocusIndicator( QPainter * ) const;
+    virtual void drawFocusIndicator( QPainter * /Transfer/) const;
 
-    virtual void drawMarker( QPainter *, 
+    virtual void drawMarker( QPainter * /Transfer/, 
         const QRectF &, double arc ) const;
 
     virtual double scrolledTo( const QPoint & ) const;

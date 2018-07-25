@@ -100,8 +100,8 @@ public:
         int maxMajorSteps, int maxMinorSteps,
         double stepSize = 0.0 ) const = 0;
 
-    //void setTransformation( QwtTransform * );
-    //QwtTransform *transformation() const;
+    void setTransformation( QwtTransform * /Transfer/);
+    QwtTransform *transformation() const;
 
 protected:
     bool contains( const QwtInterval &, double val ) const;

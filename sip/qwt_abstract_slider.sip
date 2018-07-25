@@ -29,7 +29,7 @@ class QwtAbstractSlider: QwtAbstractScale
     Q_PROPERTY( bool invertedControls READ invertedControls WRITE setInvertedControls )*/
 
 public:
-    explicit QwtAbstractSlider( QWidget *parent = NULL );
+    explicit QwtAbstractSlider( QWidget *parent /TransferThis/ = NULL );
     virtual ~QwtAbstractSlider();
 
     void setValid( bool );
@@ -71,11 +71,11 @@ Q_SIGNALS:
     void sliderMoved( double value );
 
 protected:
-    virtual void mousePressEvent( QMouseEvent * );
-    virtual void mouseReleaseEvent( QMouseEvent * );
-    virtual void mouseMoveEvent( QMouseEvent * );
-    virtual void keyPressEvent( QKeyEvent * );
-    virtual void wheelEvent( QWheelEvent * );
+    virtual void mousePressEvent( QMouseEvent * /Transfer/);
+    virtual void mouseReleaseEvent( QMouseEvent * /Transfer/);
+    virtual void mouseMoveEvent( QMouseEvent * /Transfer/);
+    virtual void keyPressEvent( QKeyEvent * /Transfer/);
+    virtual void wheelEvent( QWheelEvent * /Transfer/);
     virtual bool isScrollPosition( const QPoint &pos ) const = 0;
     virtual double scrolledTo( const QPoint &pos ) const = 0;
     void incrementValue( int numSteps );
@@ -85,10 +85,10 @@ protected:
     virtual void sliderChange();
     double incrementedValue( double value, int stepCount ) const;
 
-/*private:
+private:
     double alignedValue( double ) const;
     double boundedValue( double ) const;
 
-    class PrivateData;
+/*    class PrivateData;
     PrivateData *d_data;*/
 };
