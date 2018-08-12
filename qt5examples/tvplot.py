@@ -99,7 +99,7 @@ class TVPlot( Qwt.QwtPlot):
             histogram = items[i]
             if ( mode < 3 ):
                 histogram.setStyle(mode)
-                histogram.setSymbol( 0)
+                histogram.setSymbol( None)
                 pen = QPen( Qt.black, 0 )
                 if ( mode == Qwt.QwtPlotHistogram.Lines ):
                     pen.setBrush( histogram.brush() )
