@@ -80,9 +80,9 @@ public:
     //FIXME const QVector<KeyPattern> &keyPattern() const;
     QVector<QwtEventPattern::MousePattern> &mousePattern();
     QVector<QwtEventPattern::KeyPattern> &keyPattern();
-    bool mouseMatch( MousePatternCode, const QMouseEvent * /Transfer/) const;
-    bool keyMatch( KeyPatternCode, const QKeyEvent * /Transfer/) const;
+    bool mouseMatch( MousePatternCode, const QMouseEvent *) const;
+    bool keyMatch( KeyPatternCode, const QKeyEvent *) const;
 protected:
-    virtual bool mouseMatch( const QwtEventPattern::MousePattern &, const QMouseEvent * /Transfer/) const;
-    virtual bool keyMatch( const QwtEventPattern::KeyPattern &, const QKeyEvent * /Transfer/) const;
+    virtual bool mouseMatch( const QwtEventPattern::MousePattern &, const QMouseEvent *) const;
+    virtual bool keyMatch( const QwtEventPattern::KeyPattern &, const QKeyEvent *) const;
 };

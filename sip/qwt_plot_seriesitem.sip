@@ -18,10 +18,10 @@ public:
     virtual ~QwtPlotSeriesItem();
     void setOrientation( Qt::Orientation );
     Qt::Orientation orientation() const;
-    virtual void draw( QPainter *p /TransferThis/,
+    virtual void draw( QPainter *p /Transfer/,
         const QwtScaleMap &xMap, const QwtScaleMap &yMap,
         const QRectF & ) const;
-    virtual void drawSeries( QPainter *painter /TransferThis/,
+    virtual void drawSeries( QPainter *painter /Transfer/,
         const QwtScaleMap &xMap, const QwtScaleMap &yMap,
         const QRectF &canvasRect, int from, int to ) const = 0;
     virtual QRectF boundingRect() const;

@@ -82,8 +82,8 @@ public:
     QRect knobRect() const;
 
 protected:
-    virtual void paintEvent( QPaintEvent * /Transfer/);
-    virtual void changeEvent( QEvent * /Transfer/);
+    virtual void paintEvent( QPaintEvent *);
+    virtual void changeEvent( QEvent *);
 
     virtual void drawKnob( QPainter * /Transfer/, const QRectF & ) const;
 

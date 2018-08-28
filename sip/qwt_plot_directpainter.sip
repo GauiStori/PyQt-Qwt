@@ -38,7 +38,7 @@ public:
     void drawSeries( QwtPlotSeriesItem * /Transfer/, int from, int to );
     void reset();
 
-    virtual bool eventFilter( QObject * /Transfer/, QEvent * );
+    virtual bool eventFilter( QObject *, QEvent * );
 
 /*private:
     class PrivateData;

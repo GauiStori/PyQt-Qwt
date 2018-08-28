@@ -94,8 +94,8 @@ public:
     QRectF colorBarRect( const QRectF& ) const;
 
 protected:
-    virtual void paintEvent( QPaintEvent * /Transfer/);
-    virtual void resizeEvent( QResizeEvent * /Transfer/);
+    virtual void paintEvent( QPaintEvent *);
+    virtual void resizeEvent( QResizeEvent *);
 
     void draw( QPainter *p /Transfer/) const;
 

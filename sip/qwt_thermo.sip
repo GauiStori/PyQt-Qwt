@@ -106,9 +106,9 @@ protected:
     virtual void drawLiquid( QPainter * /Transfer/, const QRect & ) const;
     virtual void scaleChange();
 
-    virtual void paintEvent( QPaintEvent * /Transfer/);
-    virtual void resizeEvent( QResizeEvent * /Transfer/);
-    virtual void changeEvent( QEvent * /Transfer/);
+    virtual void paintEvent( QPaintEvent *);
+    virtual void resizeEvent( QResizeEvent *);
+    virtual void changeEvent( QEvent *);
 
     QwtScaleDraw *scaleDraw();
 

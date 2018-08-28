@@ -43,7 +43,7 @@ public:
 
     void resetSymbolMap();
 
-    virtual void drawSeries( QPainter *painter /TransferThis/,
+    virtual void drawSeries( QPainter *painter /Transfer/,
         const QwtScaleMap &xMap, const QwtScaleMap &yMap,
         const QRectF &canvasRect, int from, int to ) const;
 

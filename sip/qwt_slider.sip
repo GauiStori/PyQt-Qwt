@@ -1,7 +1,8 @@
-/* -*- mode: C++ ; c-file-style: "stroustrup" -*- *****************************
- * Qwt Widget Library
+/* 
+ * python-qwt. Python wrapper for the Qwt Widget Library
  * Copyright (C) 1997   Josef Wilgen
  * Copyright (C) 2002   Uwe Rathmann
+ * Copyright (C) 2015   Gudjon I. Gudjonsson
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the Qwt License, Version 1.0
@@ -46,8 +47,8 @@ public:
         TrailingScale
     };
 
-    explicit QwtSlider( QWidget *parent /Transfer/ = NULL );
-    explicit QwtSlider( Qt::Orientation, QWidget *parent = NULL );
+    explicit QwtSlider( QWidget *parent /TransferThis/ = NULL );
+    explicit QwtSlider( Qt::Orientation, QWidget *parent /TransferThis/ = NULL );
 
     virtual ~QwtSlider();
 

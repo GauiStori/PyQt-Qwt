@@ -1,0 +1,17 @@
+Change Log
+----------
+Version 1.01.00
+- Bug fixes in examples
+- Add examples controls.py and curvdemo1.py
+- Add sip files: qwt_plot_renderer.sip, qwt_transform.sip, qwt_slider.sip
+
+- Correct Transfer/TransferThis annotations. There may still be errors but 
+  I have not seen any crashes.
+- Add more functions that were earlier commented out:
+  qwt_scale_engine.sip:
+    void setTransformation( QwtTransform * );
+    QwtTransform *transformation() const;
+  qwt_slider.sip:
+    const QwtScaleDraw *scaleDraw() const;
+  qwt_plot.sip:
+    explicit QwtPlot( const QwtText &title, QWidget * = NULL );

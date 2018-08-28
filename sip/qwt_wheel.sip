@@ -109,13 +109,13 @@ Q_SIGNALS:
     void wheelMoved( double value );
 
 protected:
-    virtual void paintEvent( QPaintEvent * /Transfer/);
-    virtual void mousePressEvent( QMouseEvent * /Transfer/);
-    virtual void mouseReleaseEvent( QMouseEvent * /Transfer/);
-    virtual void mouseMoveEvent( QMouseEvent * /Transfer/);
-    virtual void keyPressEvent( QKeyEvent * /Transfer/);
-    virtual void wheelEvent( QWheelEvent * /Transfer/);
-    virtual void timerEvent( QTimerEvent * /Transfer/);
+    virtual void paintEvent( QPaintEvent *);
+    virtual void mousePressEvent( QMouseEvent *);
+    virtual void mouseReleaseEvent( QMouseEvent *);
+    virtual void mouseMoveEvent( QMouseEvent *);
+    virtual void keyPressEvent( QKeyEvent *);
+    virtual void wheelEvent( QWheelEvent *);
+    virtual void timerEvent( QTimerEvent *);
 
     void stopFlying();
 

@@ -49,8 +49,8 @@ public:
     int scaleMaxMajor() const;
 
     void setScaleEngine( QwtScaleEngine * /Transfer/ );
-    //const QwtScaleEngine *scaleEngine() const; FIXME
 
+    //const QwtScaleEngine *scaleEngine() const;
     QwtScaleEngine *scaleEngine();
 
     int transform( double ) const;
@@ -68,7 +68,7 @@ protected:
 
     void setAbstractScaleDraw( QwtAbstractScaleDraw * /Transfer/ );
 
-    //const QwtAbstractScaleDraw *abstractScaleDraw() const; FIXME
+    //const QwtAbstractScaleDraw *abstractScaleDraw() const;
     QwtAbstractScaleDraw *abstractScaleDraw();
 
     virtual void scaleChange();

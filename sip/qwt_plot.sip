@@ -54,7 +54,7 @@ public:
     };
 
     explicit QwtPlot( QWidget * /TransferThis/ = NULL );
-    //explicit QwtPlot( const QwtText &title, QWidget * = NULL );
+    explicit QwtPlot( const QwtText &title, QWidget * /TransferThis/ = NULL );
 
     virtual ~QwtPlot();
 
@@ -155,7 +155,7 @@ public:
     //const QwtAbstractLegend *legend() const;
 
     void updateLegend();
-    void updateLegend( const QwtPlotItem * /Transfer/);
+    void updateLegend( const QwtPlotItem *);
 
     // Misc
 
@@ -173,12 +173,12 @@ public:
         double &left, double &top, double &right, double &bottom) const;*/
 
     virtual bool event( QEvent * );
-    virtual bool eventFilter( QObject * /Transfer/, QEvent * /Transfer/);
+    virtual bool eventFilter( QObject *, QEvent *);
 
     /*virtual void drawItems( QPainter *, const QRectF &,
         const QwtScaleMap maps[axisCnt] ) const;*/
 
-    virtual QVariant itemToInfo( QwtPlotItem * /Transfer/) const;
+    virtual QVariant itemToInfo( QwtPlotItem *) const;
     virtual QwtPlotItem *infoToItem( const QVariant & ) const;
 
 signals:

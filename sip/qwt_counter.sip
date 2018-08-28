@@ -96,9 +96,9 @@ Q_SIGNALS:
     void valueChanged ( double value );
 
 protected:
-    virtual bool event( QEvent * /Transfer/);
-    virtual void wheelEvent( QWheelEvent * /Transfer/);
-    virtual void keyPressEvent( QKeyEvent * /Transfer/);
+    virtual bool event( QEvent *);
+    virtual void wheelEvent( QWheelEvent *);
+    virtual void keyPressEvent( QKeyEvent *);
 
 /*private Q_SLOTS:
     void btnReleased();

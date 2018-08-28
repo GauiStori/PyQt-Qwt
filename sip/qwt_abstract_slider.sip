@@ -71,11 +71,11 @@ Q_SIGNALS:
     void sliderMoved( double value );
 
 protected:
-    virtual void mousePressEvent( QMouseEvent * /Transfer/);
-    virtual void mouseReleaseEvent( QMouseEvent * /Transfer/);
-    virtual void mouseMoveEvent( QMouseEvent * /Transfer/);
-    virtual void keyPressEvent( QKeyEvent * /Transfer/);
-    virtual void wheelEvent( QWheelEvent * /Transfer/);
+    virtual void mousePressEvent( QMouseEvent *);
+    virtual void mouseReleaseEvent( QMouseEvent *);
+    virtual void mouseMoveEvent( QMouseEvent *);
+    virtual void keyPressEvent( QKeyEvent *);
+    virtual void wheelEvent( QWheelEvent *);
     virtual bool isScrollPosition( const QPoint &pos ) const = 0;
     virtual double scrolledTo( const QPoint &pos ) const = 0;
     void incrementValue( int numSteps );
