@@ -1164,7 +1164,7 @@ def _create_optparser(target_config, pkg_config):
                 callback=optparser_store_abspath, metavar="DIR", 
                 help="the Qwt API file will be installed in DIR "
                         "[default: QT_INSTALL_DATA/qwt]")
-        p.add_option('--no-qwt-api', dest='no_qwt_api', default=False,
+        p.add_option('--no-qwt-api', dest='no_qwt_api', default=True,
                 action='store_true',
                 help="disable the installation of the Qwt API file "
                         "[default: enabled]")
