@@ -15,3 +15,5 @@ Version 1.01.00
     const QwtScaleDraw *scaleDraw() const;
   qwt_plot.sip:
     explicit QwtPlot( const QwtText &title, QWidget * = NULL );
+- Add QT += printsupport.
+- Known bug: printing from spectrogram.py freezes in Linux.
