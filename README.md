@@ -110,9 +110,9 @@ $ run barchart.py
 
 ### Status
 
-2018-07-25
+2018-09-01
   * Merged next version into master
-  * Compiles with sip >= 4.19.11
+  * Compiles with sip >= 4.19.11. Tested on Windows. Doesn't compile with sip 4.19.8 but it compiles with 4.19.12.
   * Add more examples from Qwt: curvdemo1. and controls.py
   * Add more sip files: qwt_slider.sip, qwt_transform.sip
   * Improved several examples
