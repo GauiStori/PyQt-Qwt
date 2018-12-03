@@ -9,10 +9,24 @@
  *****************************************************************************/
 //class QwtPlot;
 //class QPixmap;
+%ModuleHeaderCode
+// fix to allow compilation with sip that for some reason
+// doesn't add this include to the file where the code from
+// ConvertToSubClassCode goes.
+#include <qwt_plot_canvas.h>
+%End
+
+
 class QwtPlotCanvas : QFrame
 {
 %TypeHeaderCode
 #include <qwt_plot_canvas.h>
+%End
+%ConvertToSubClassCode
+    if ( qobject_cast<QwtPlotCanvas *>( sipCpp ) )
+      sipType = sipType_QwtPlotCanvas;
+    else
+      sipType = NULL;
 %End
 //    Q_OBJECT
 
