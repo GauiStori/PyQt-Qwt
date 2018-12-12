@@ -188,6 +188,7 @@ public:
     void setRawSamples( const double *xData, const double *yData, int size );
     void setSamples( const double *xData, const double *yData, int size );
     void setSamples( const QVector<double> &xData, const QVector<double> &yData );
+    void setSamples( const QPolygonF & );
     void setSamples( const QVector<QPointF> & );
     void setSamples( QwtSeriesDataQPointF * );
 
