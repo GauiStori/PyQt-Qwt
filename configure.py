@@ -1344,7 +1344,9 @@ def _generate_code(target_config, opts, pkg_config, module_config, all_installs)
 
     # Add the module-specific flags.
     argv.extend(pkg_config.get_sip_flags(target_config))
-    argv.append('-n sip')
+    # -n arg new in sip 4.19.9
+    if target_config.sip_version >= version_from_string("4.19.9"):
+        argv.append('-n sip')
 
     if target_config.pyqt_package is not None:
         # Get the flags used for the main PyQt module.
