@@ -3,7 +3,7 @@
 %MappedType QMap<double,QString> /DocType="dict-of-double-QString"/
 {
 %TypeHeaderCode
-#include <qmap.h>
+#include <qwt_compass.h>
 %End
 
 %ConvertFromTypeCode
@@ -63,7 +63,8 @@
     QMap<double,QString> *qm = new QMap<double,QString>;
     while (PyDict_Next(sipPy, &i, &kobj, &tobj))
     {
-        int state, k = SIPLong_AsLong(kobj);
+        int state;
+        double k = PyFloat_AS_DOUBLE(kobj);
         QString *t = reinterpret_cast<QString *>(sipConvertToType(tobj, sipType_QString, sipTransferObj, SIP_NOT_NONE, &state, sipIsErr));
         if (*sipIsErr)
         {

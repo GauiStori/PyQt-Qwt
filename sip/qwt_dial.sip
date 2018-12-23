@@ -107,7 +107,7 @@ public:
     virtual void setOrigin( double );
     double origin() const;
 
-    void setNeedle( QwtDialNeedle * );
+    void setNeedle( QwtDialNeedle * /Transfer/);
     //const QwtDialNeedle *needle() const;
     QwtDialNeedle *needle();
 
@@ -119,7 +119,7 @@ public:
     virtual QSize sizeHint() const;
     virtual QSize minimumSizeHint() const;
 
-    void setScaleDraw( QwtRoundScaleDraw * );
+    void setScaleDraw( QwtRoundScaleDraw * /Transfer/);
 
     QwtRoundScaleDraw *scaleDraw();
     //const QwtRoundScaleDraw *scaleDraw() const;

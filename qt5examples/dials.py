@@ -4,14 +4,10 @@
 # Tested for python3 Qt5. Crashes if mouse is over plot canvas
 
 import sys
-import math
 from PyQt5 import Qwt
-import numpy as np
-
-from PyQt5.QtCore import pyqtSignal, Qt,  QSize, QBasicTimer
-from PyQt5.QtGui import QColor,  QPixmap, QFont,  QIcon,  QPalette, QLinearGradient
-from PyQt5.QtWidgets import (QMainWindow,  QWidget,  QToolBar,  QToolButton,  QHBoxLayout,  QLabel,  QApplication,  QSizePolicy, 
-    QVBoxLayout,  QFrame, QTabWidget,  QGridLayout )
+from PyQt5.QtCore import Qt # pyqtSignal, Qt,  QSize, QBasicTimer
+from PyQt5.QtGui import QColor,  QPalette #,  QPixmap, QFont,  QIcon, QLinearGradient
+from PyQt5.QtWidgets import (QWidget,  QApplication,  QTabWidget,  QGridLayout )
 #from PyQt5.QtPrintSupport import QPrintDialog, QPrinter
 
 
@@ -26,7 +22,7 @@ class CompassGrid( QWidget ): #QFrame( parent )
         layout = QGridLayout( self )
         layout.setSpacing( 5 )
         #layout.setMargin( 0 )
-        for i in range(1):
+        for i in range(6):
             compass = self.createCompass( i )
             layout.addWidget( compass, i / 3, i % 3 )
 
@@ -59,18 +55,18 @@ class CompassGrid( QWidget ): #QFrame( parent )
         elif pos == 1:
             #A windrose, with a scale indicating the main directions only
             map = {}
-            map[0] = "N" 
-            map[90] = "E" 
-            map[180] = "S" 
-            map[270] = "W" 
+            map[0.0] = "N" 
+            map[90.0] = "E" 
+            map[180.0] = "S" 
+            map[270.0] = "W" 
 
             compass.setScaleDraw( Qwt.QwtCompassScaleDraw( map ) )
 
             rose = Qwt.QwtSimpleCompassRose( 4, 1 )
             compass.setRose( rose )
 
-            #compass.setNeedle( Qwt.QwtCompassWindArrow( Qwt.QwtCompassWindArrow.Style2 ) )
-            #compass.setValue( 60.0 )
+            compass.setNeedle( Qwt.QwtCompassWindArrow( Qwt.QwtCompassWindArrow.Style2 ) )
+            compass.setValue( 60.0 )
         elif pos == 2:
             #A compass with a rotating needle in darkBlue. Shows
             #a ticks for each degree.
@@ -126,16 +122,13 @@ class CompassGrid( QWidget ): #QFrame( parent )
             scaleDraw.setTickLength( Qwt.QwtScaleDiv.MinorTick, 0 )
             scaleDraw.setTickLength( Qwt.QwtScaleDiv.MediumTick, 0 )
             scaleDraw.setTickLength( Qwt.QwtScaleDiv.MajorTick, 3 )
-
             compass.setScaleDraw( scaleDraw )
-
-            compass.setNeedle( Qwt.QwtCompassMagnetNeedle(
-                Qwt.QwtCompassMagnetNeedle.TriangleStyle, Qt.white, Qt.red ) )
+            compass.setNeedle( Qwt.QwtCompassMagnetNeedle( Qwt.QwtCompassMagnetNeedle.TriangleStyle, Qt.white, Qt.red ) )
             compass.setValue( 220.0 )
         elif pos == 5:
             #A compass with a yellow on black ray
             palette0.setColor( QPalette.WindowText, Qt.black )
-            #compass.setNeedle( Qwt.QwtDialSimpleNeedle( Qwt.QwtDialSimpleNeedle.Ray, False, Qt.yellow ) )
+            compass.setNeedle( Qwt.QwtDialSimpleNeedle( Qwt.QwtDialSimpleNeedle.Ray, False, Qt.yellow ) )
             compass.setValue( 315.0 )
 
         newPalette = compass.palette()
