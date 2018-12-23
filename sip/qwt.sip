@@ -107,3 +107,8 @@ typedef unsigned long size_t;
 %Include qwt_compass_rose.sip
 %Include qwt_compass.sip
 
+%Include qwt_point_polar.sip
+%Include qwt_analog_clock.sip
+
+
+
