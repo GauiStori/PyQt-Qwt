@@ -17,7 +17,9 @@ typedef unsigned long size_t;
 %Import QtWidgets/QtWidgetsmod.sip
 %End
 
+
 %Include conversions.sip
+%Include qmap_convert.sip
 
 %Include qwt_legend.sip
 %Include qwt_legend_data.sip
@@ -98,4 +100,10 @@ typedef unsigned long size_t;
 
 %Include qwt_slider.sip
 %Include qwt_transform.sip
+
+%Include qwt_dial_needle.sip
+%Include qwt_dial.sip
+%Include qwt_round_scale_draw.sip
+%Include qwt_compass_rose.sip
+%Include qwt_compass.sip
 

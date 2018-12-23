@@ -1,6 +1,6 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 
-# python simpleplot.py <qtversion (4 or 5)>
+# python radio.py <qtversion (4 or 5)>
 # Tested for python3 Qt5. Crashes if mouse is over plot canvas
 
 import sys

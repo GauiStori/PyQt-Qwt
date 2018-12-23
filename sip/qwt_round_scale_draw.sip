@@ -1,18 +1,32 @@
-/* 
- * python-qwt. Python wrapper for the Qwt Widget Library
+/* -*- mode: C++ ; c-file-style: "stroustrup" -*- *****************************
+ * Qwt Widget Library
  * Copyright (C) 1997   Josef Wilgen
  * Copyright (C) 2002   Uwe Rathmann
- * Copyright (C) 2015   Gudjon I. Gudjonsson
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the Qwt License, Version 1.0
  *****************************************************************************/
+
+
+/*!
+  \brief A class for drawing round scales
+
+  QwtRoundScaleDraw can be used to draw round scales.
+  The circle segment can be adjusted by setAngleRange().
+  The geometry of the scale can be specified with
+  moveCenter() and setRadius().
+
+  After a scale division has been specified as a QwtScaleDiv object
+  using QwtAbstractScaleDraw::setScaleDiv(const QwtScaleDiv &s),
+  the scale can be drawn with the QwtAbstractScaleDraw::draw() member.
+*/
 
 class QwtRoundScaleDraw: QwtAbstractScaleDraw
 {
 %TypeHeaderCode
 #include <qwt_round_scale_draw.h>
 %End
+
 public:
     QwtRoundScaleDraw();
     virtual ~QwtRoundScaleDraw();
@@ -35,8 +49,16 @@ protected:
 
 private:
     QwtRoundScaleDraw( const QwtRoundScaleDraw & );
-    /*QwtRoundScaleDraw &operator=( const QwtRoundScaleDraw &other );
+    //QwtRoundScaleDraw &operator=( const QwtRoundScaleDraw &other );
 
-    class PrivateData;
-    PrivateData *d_data;*/
+    //class PrivateData;
+    //PrivateData *d_data;
 };
+
+//! Move the center of the scale draw, leaving the radius unchanged
+/*inline void QwtRoundScaleDraw::moveCenter( double x, double y )
+{
+    moveCenter( QPointF( x, y ) );
+}*/
+
+//#endif
