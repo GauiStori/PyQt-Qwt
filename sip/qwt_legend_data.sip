@@ -45,17 +45,17 @@ public:
     QwtLegendData();
     ~QwtLegendData();
 
-    //void setValues( const QMap<int, QVariant> & );XXX unsupported function argument type - provide %MethodCode and a C++ signature
-    //const QMap<int, QVariant> &values() const;
+    void setValues( const QMap<int, QVariant> & );
+    const QMap<int, QVariant> &values() const;
 
-    //void setValue( int role, const QVariant & );
-    //QVariant value( int role ) const;
+    void setValue( int role, const QVariant & );
+    QVariant value( int role ) const;
 
     bool hasRole( int role ) const;
     bool isValid() const;
 
-    //QwtGraphic icon() const;
-    //QwtText title() const;
+    QwtGraphic icon() const;
+    QwtText title() const;
     Mode mode() const;
 
 //private:
