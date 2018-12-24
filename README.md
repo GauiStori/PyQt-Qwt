@@ -107,6 +107,33 @@ Then debug with
 $ gdb --args python3-dbg
 $ run barchart.py
 
+### Usage
+
+The pyuic5 doesn't fully work with PyQt-Qwt.
+
+After creating the python file.
+
+pyuic5 uifile.ui -o ui_uifile.py
+
+you need to edit the file afterwards.
+
+Add 
+
+from PyQt5.Qwt import *
+
+at the top of the file.
+
+Then remove all lines with
+
+import qwt_
+
+from the bottom of the file.
+
+The following command will do this automatically
+
+pyuic5 uifile.ui |grep -v "from qwt_" | sed 's/# WARNING! All changes made in this file will be lost!/from PyQt5.Qwt import */g' > ui_uifile.py
+
+but it needs sed and grep to be installed on your computer.
 
 ### Status
 
