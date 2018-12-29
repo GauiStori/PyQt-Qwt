@@ -37,8 +37,8 @@ public:
     double radius() const;
     double azimuth() const;
 
-    double &rRadius();
-    double &rAzimuth();
+    //double &rRadius();
+    //double &rAzimuth();
 
     void setRadius( double );
     void setAzimuth( double );
@@ -97,5 +97,5 @@ inline QPointF qwtPolar2Pos( const QPointF &pole, double radius, double angle );
 inline QPointF qwtDegree2Pos( const QPointF &pole, double radius, double angle );
 inline QPointF qwtFastPolar2Pos( const QPointF &pole, double radius, double angle );
 inline QPointF qwtFastDegree2Pos( const QPointF &pole, double radius, double angle );
-inline QwtPointPolar qwtFastPos2Polar( const QPointF &pos );*/
+inline QwtPointPolar qwtFastPos2Polar( const QPointF &pos );
 */
