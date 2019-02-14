@@ -18,7 +18,8 @@ The PyQt-Qwt doesn't build against unpatched Qwt version 6.1.3.
 The header files need to be patched with 06_python_compat.patch
 but for convenience the patched files are kept in the header
 directory.
-Do the following before compiling:
+
+For Qwt version < 6.1.5 the following is needed before compiling:
 
 $ cp -a /usr/include/qwt header
 
@@ -34,13 +35,12 @@ A proper configure.py file has been added. To use it on Debian
 which supports coexisting Qt libraries (4 and 5) you need to 
 add QT_SELECT ahead of the command line.
 
+All systems are not exactly equal. python may refer to python3 on some systems.
+On Debian systems the Qt5 version of Qwt is named libqwt-qt5.so but the default name is
+libqwt.so. Remove the  --qwt-lib=qwt-qt5 if the name extension is not used on your system.
 
-
-$ QT_SELECT=qt5 python configure.py --qwt-incdir=header/qwt --qwt-libdir=/usr/lib --qwt-lib=qwt-qt5
 
 $ QT_SELECT=qt5 python3 configure.py --qwt-incdir=header/qwt --qwt-libdir=/usr/lib --qwt-lib=qwt-qt5
-
-$ QT_SELECT=qt4 python configure.py --qwt-incdir=header/qwt --qwt-libdir=/usr/lib --pyqt=PyQt4
 
 $ QT_SELECT=qt4 python3 configure.py --qwt-incdir=header/qwt --qwt-libdir=/usr/lib --pyqt=PyQt4
 
@@ -137,13 +137,9 @@ but it needs sed and grep to be installed on your computer.
 
 ### Status
 
-2018-09-01
-  * Merged next version into master
-  * Compiles with sip >= 4.19.11. Tested on Windows. Doesn't compile with sip 4.19.8 but it compiles with 4.19.12.
-  * Add more examples from Qwt: curvdemo1. and controls.py
-  * Add more sip files: qwt_slider.sip, qwt_transform.sip
-  * Improved several examples
-  * Changed some /Transfer/ /TransferThis/ instructions. Will run the full library through valgrind before release.
+2019-02-14
+  * Compiles with sip >= 4.18.
+  * Compiles with Qwt >= 6.1.2
   * All examples except for oscilloscope.py do work.
 
 

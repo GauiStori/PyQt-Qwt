@@ -60,7 +60,7 @@ class ModuleConfiguration(object):
 
     # The version of the module as a string.  Set it to None if you don't
     # provide version information.
-    version = '6.1.3'
+    version = "6.1.2"
 
     # The name of the PEP 376 .dist-info directory to be created.
     distinfo_name = 'Qwt'
@@ -74,7 +74,7 @@ class ModuleConfiguration(object):
     # The minimum version of SIP that is required.  This should be a
     # dot-separated string of two or three integers (e.g. '1.0', '4.10.3').  If
     # it is None or an empty string then the version is not checked.
-    minimum_sip_version = '4.19'
+    minimum_sip_version = '4.18'
 
     # Set if support for C++ exceptions can be disabled.
     no_exceptions = True
@@ -244,11 +244,15 @@ class ModuleConfiguration(object):
         # Because we include the Python bindings with the C++ code we can
         # reasonably force the same version to be used and not bother about
         # versioning in the .sip files.
-        if qwt_version != ModuleConfiguration.version:
+        qv=qwt_version.split('.')
+        qwt_version_numeric = int(qv[0])*10000 + int(qv[1])*100 + int(qv[2])
+        mv=ModuleConfiguration.version.split('.')
+        mod_version_numeric = int(mv[0])*10000 + int(mv[1])*100 + int(mv[2])
+        if qwt_version_numeric < mod_version_numeric:
             error(
                     "Qwt %s is being used but the Python bindings %s "
-                    "are being built. Please use matching "
-                    "versions." % (qwt_version, ModuleConfiguration.version))
+                    "are being built. Please use a newer Qwt "
+                    "version." % (qwt_version, ModuleConfiguration.version))
 
         target_configuration.qwt_version = qwt_version
 
