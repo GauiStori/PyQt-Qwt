@@ -17,3 +17,14 @@ Version 1.01.00
     explicit QwtPlot( const QwtText &title, QWidget * = NULL );
 - Add QT += printsupport.
 - Known bug: printing from spectrogram.py freezes in Linux.
+
+Version 1.02.00
+- Fix compilation for Sip >= 4.18 and Qwt >= 6.1.2
+  Tested for Qwt 6.1.2, 6.1.3 and 6.1.4
+- Add Analog Clock widget
+- Add Compass widget
+- Add Dial wigets
+- Add setSamples(QPolygon). Improves framerate. 
+  Thanks to Olivier.
+- A few bug fixes
+- A few more examples
