@@ -139,7 +139,7 @@ but it needs sed and grep to be installed on your computer.
 
 2019-02-14
   * Compiles with sip >= 4.18.
-  * Compiles with Qwt >= 6.1.2
+  * Compiles with Qwt >= 6.1.2. Tested for version 6.1.2, 6.1.3, 6.1.4
   * All examples except for oscilloscope.py do work.
 
 
