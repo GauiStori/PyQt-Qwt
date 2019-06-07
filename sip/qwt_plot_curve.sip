@@ -11,7 +11,6 @@
 class QwtPlotCurve: QwtPlotSeriesItem, QwtSeriesStoreQPointF
 {
 %TypeHeaderCode
-//class QwtSeriesStoreQPointF;
 #include <qwt_plot_curve.h>
 typedef QwtSeriesStore<QPointF> QwtSeriesStoreQPointF;
 %End
@@ -225,7 +224,7 @@ public:
         const QwtScaleMap &xMap, const QwtScaleMap &yMap,
         const QRectF &canvasRect, int from, int to ) const;
 
-    //virtual QwtGraphic legendIcon( int index, const QSizeF & ) const;
+    virtual QwtGraphic legendIcon( int index, const QSizeF & ) const;
 
 protected:
 
@@ -235,9 +234,9 @@ protected:
         const QwtScaleMap &xMap, const QwtScaleMap &yMap,
         const QRectF &canvasRect, int from, int to ) const;
 
-    /*virtual void drawSymbols( QPainter *p, const QwtSymbol &,
+    virtual void drawSymbols( QPainter *p, const QwtSymbol &,
         const QwtScaleMap &xMap, const QwtScaleMap &yMap,
-        const QRectF &canvasRect, int from, int to ) const;*/
+        const QRectF &canvasRect, int from, int to ) const;
 
     virtual void drawLines( QPainter *p,
         const QwtScaleMap &xMap, const QwtScaleMap &yMap,
