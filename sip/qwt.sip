@@ -10,7 +10,7 @@
 %Module(name=Qwt, keyword_arguments="Optional")
 
 %Import QtCore/QtCoremod.sip
-typedef unsigned long size_t;
+//typedef unsigned long size_t;
 %Import QtGui/QtGuimod.sip
 
 %If (Qt_5_0_0 -)
