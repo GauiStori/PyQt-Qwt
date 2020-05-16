@@ -109,6 +109,7 @@
 
 %Include qwt_point_polar.sip
 %Include qwt_analog_clock.sip
-
+%Include qwt_magnifier.sip
+%Include qwt_plot_magnifier.sip
 
 
