@@ -1,11 +1,9 @@
 # PyQt-Qwt
-Python PyQt wrapper for Qwt6
+Python PyQt wrapper for Qwt6.1
 
-The code is tested for python2/3 and Qt4/5.
-oscilloscope.py is unfinished.
-animation.py works only for qt5.
-All the other examples have been tested to work on 
-Debian Linux.
+The code is tested for python3 and Qt5 on Fedora 31 Linux
+
+
 The qwt include files must be patched to build PyQt-Qwt.
 
 
@@ -54,33 +52,8 @@ $ python3 bode.py
 
 $ for name in *.py; do python3 $name; done
 
-## Windows:
-
-MSVC2015
-
-Assuming the default installation directory, c:\qwt-6.1.3
-
-Compile Qwt with the following parts in qwtconfig.pri commented out:
-
-#QWT_CONFIG += QwtDll
-
-#QWT_CONFIG += QwtSvg
-
-#QWT_CONFIG += QwtOpenGL
-
-#QWT_CONFIG += QwtMathML
 
 
-Open "Qt 5.9.2 32-bit for Desktop (MSVC2015)" command prompt
-run
-
-"C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat"
-
-copy header\qwt*.h c:\qwt-6.1.3\include
-
-python configure.py --qwt-incdir=c:\qwt-6.1.3\include --qwt-libdir=c:\qwt-6.1.3\lib
-
-nmake
 
 ### Debugging
 
@@ -137,10 +110,10 @@ but it needs sed and grep to be installed on your computer.
 
 ### Status
 
-2019-02-14
+2020-05-20
   * Compiles with sip >= 4.18.
-  * Compiles with Qwt >= 6.1.2. Tested for version 6.1.2, 6.1.3, 6.1.4
-  * All examples except for oscilloscope.py do work.
+  * Compiles with Qwt >= 6.1.5. Tested for version 6.1.5
+  * All examples available in C++ will be converted to python
 
 
 
