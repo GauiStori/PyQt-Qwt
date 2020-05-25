@@ -1,6 +1,6 @@
 // QMap<double, QString> is implemented as a Python dictionary.
 
-%MappedType QMap<double,QString> /DocType="dict-of-double-QString"/
+%MappedType QMap<double,QString> 
 {
 %TypeHeaderCode
 #include <qwt_compass.h>

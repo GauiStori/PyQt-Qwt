@@ -12,12 +12,28 @@ class QwtPointArrayData: QwtSeriesDataQPointF
 {
 %TypeHeaderCode
 #include <qwt_point_data.h>
+typedef QwtSeriesData<QPointF> QwtSeriesDataQPointF;
 %End
 
 public:
     QwtPointArrayData( const QVector<double> &x, const QVector<double> &y );
-    //QwtPointArrayData( const double *x, const double *y, size_t size ); FIXME
+    
+      	
+    QwtPointArrayData(QVector<double> &,QVector<double> &)[( const double *x, const double *y, size_t size )];
+    
+    %MethodCode
+         //QVector<double> d_x;
+         //QVector<double> d_y;
+         //size_t size;
+         //const double*x;
+	//const double*y;
+	//d_x.resize( size );
+    	//::memcpy( d_x.data(), x, size * sizeof( double ) );
 
+    	//d_y.resize( size );
+    	//::memcpy( d_y.data(), y, size * sizeof( double ) );
+    %End
+     
     virtual QRectF boundingRect() const;
 
     virtual size_t size() const;
@@ -33,44 +49,66 @@ public:
 
 /*!
   \brief Data class containing two pointers to memory blocks of doubles.
- */
-/*class QwtCPointerData: QwtSeriesDataQPointF
+*/ 
+class QwtCPointerData: QwtSeriesDataQPointF
 {
 %TypeHeaderCode
 #include <qwt_point_data.h>
+typedef QwtSeriesData<QPointF> QwtSeriesDataQPointF;
 %End
 
 public:
-    //QwtCPointerData( const double *x, const double *y, size_t size ); FIXME
-
+    QwtCPointerData(SIP_PYLIST,SIP_PYLIST,size_t size)[( const double *x, const double *y, size_t size )];
+    %MethodCode
+    //const double *d_x;
+    //const double *d_y;
+    //size_t d_size;
+    //size_t size;
+    //const double*x;
+    //const double*y;
+    //d_x = x ;
+    //d_y = y ;
+    //d_size =  size ;	
+    %End 
+    
+    
     virtual QRectF boundingRect() const;
     virtual size_t size() const;
     virtual QPointF sample( size_t i ) const;
 
-    const double *xData() const;
-    const double *yData() const;
-*/
+    //const double *xData() const;
+    //const double *yData() const;
+
+    const SIP_PYLIST xData() const;
+     %MethodCode
+	//const double *d_x;
+	//return d_x;	
+    %End
+     const SIP_PYLIST yData() const;	
+      %MethodCode
+	//const double *d_y;
+	//return d_y;	
+    %End
+	
+
+
 /*private:
     const double *d_x;
     const double *d_y;
     size_t d_size;*/
-//};
+};
 
 
-/*class SinusData: QwtSyntheticPointData FIXME
-{
-%TypeHeaderCode
-#include <qwt_point_data.h>
-%End
-public:
-    SinusData();
-    virtual double y( double x ) const;
-};*/
+
+
+
+
 
 class QwtSyntheticPointData: QwtSeriesDataQPointF
 {
 %TypeHeaderCode
 #include <qwt_point_data.h>
+typedef QwtSeriesData<QPointF> QwtSeriesDataQPointF;
 %End
 public:
     QwtSyntheticPointData( size_t size,
@@ -91,10 +129,14 @@ public:
     virtual void setRectOfInterest( const QRectF & );
     QRectF rectOfInterest() const;
 
+
 /*private:
     size_t d_size;
     QwtInterval d_interval;
     QRectF d_rectOfInterest;
     QwtInterval d_intervalOfInterest;*/
 };
+
+
+
 
