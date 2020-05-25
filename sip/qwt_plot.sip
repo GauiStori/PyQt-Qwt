@@ -168,15 +168,15 @@ public:
     void updateAxes();
     void updateCanvasMargins();
 
-    /*virtual void getCanvasMarginsHint( 
-        const QwtScaleMap maps[], const QRectF &canvasRect,
-        double &left, double &top, double &right, double &bottom) const;*/
+    virtual void getCanvasMarginsHint( 
+        const QwtScaleMap *, const QRectF &canvasRect,
+        double &left, double &top, double &right, double &bottom) const;
 
     virtual bool event( QEvent * );
     virtual bool eventFilter( QObject *, QEvent *);
 
-    /*virtual void drawItems( QPainter *, const QRectF &,
-        const QwtScaleMap maps[axisCnt] ) const;*/
+    virtual void drawItems( QPainter *, const QRectF &,
+        const QwtScaleMap * ) const;
 
     virtual QVariant itemToInfo( QwtPlotItem *) const;
     virtual QwtPlotItem *infoToItem( const QVariant & ) const;
