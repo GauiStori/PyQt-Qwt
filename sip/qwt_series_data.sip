@@ -329,3 +329,14 @@ public:
 };
 
 
+
+QRectF qwtBoundingRect(const QwtSeriesDataQPointF &, int from = 0, int to = -1 );
+QRectF qwtBoundingRect(const QwtSeriesDataQwtPoint3D &, int from = 0, int to = -1 );
+
+//QRectF qwtBoundingRect(const QwtSeriesDataQwtPointPolar &, int from = 0, int to = -1 );
+
+QRectF qwtBoundingRect(const QwtSeriesDataQwtIntervalSample &, int from = 0, int to = -1 );
+
+QRectF qwtBoundingRect(const QwtSeriesDataQwtSetSample &, int from = 0, int to = -1 );
+
+QRectF qwtBoundingRect(const QwtSeriesDataQwtOHLCSample &, int from = 0, int to = -1 );
