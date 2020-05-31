@@ -63,8 +63,7 @@ class Plot(Qwt.QwtPlot):
         self.__d_paintedPoints = 0 
         
         self.setAutoReplot( False )
-        can = Canvas()
-        self.setCanvas( can )
+        self.setCanvas( Canvas() )
         self.plotLayout().setAlignCanvasToScales( True )
 
         self.setAxisTitle( Qwt.QwtPlot.xBottom, "Time [s]" )
