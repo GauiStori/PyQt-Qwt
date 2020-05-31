@@ -41,6 +41,28 @@ private:
     QwtSeriesDataQPointF &operator=( const QwtSeriesDataQPointF& );
 };
 
+class QwtSeriesDataQwtPointPolar
+{
+%TypeHeaderCode
+#include <qwt_series_data.h>
+typedef QwtSeriesData<QwtPointPolar> QwtSeriesDataQwtPointPolar;
+%End
+public:
+    QwtSeriesDataQwtPointPolar();
+    virtual ~QwtSeriesDataQwtPointPolar();
+    virtual size_t size() const;
+    virtual QwtPointPolar sample( size_t i ) const;
+    virtual QRectF boundingRect() const;
+    virtual void setRectOfInterest( const QRectF &rect );
+//protected:
+//    mutable QRectF d_boundingRect;
+private:
+    QwtSeriesDataQwtPointPolar &operator=( const QwtSeriesDataQwtPointPolar& );
+};
+
+
+
+
 class QwtSeriesDataQwtPoint3D
 {
 %TypeHeaderCode
@@ -328,15 +350,15 @@ public:
     virtual QRectF boundingRect() const;
 };
 
-
-
 QRectF qwtBoundingRect(const QwtSeriesDataQPointF &, int from = 0, int to = -1 );
 QRectF qwtBoundingRect(const QwtSeriesDataQwtPoint3D &, int from = 0, int to = -1 );
 
-//QRectF qwtBoundingRect(const QwtSeriesDataQwtPointPolar &, int from = 0, int to = -1 );
+QRectF qwtBoundingRect(const QwtSeriesDataQwtPointPolar &, int from = 0, int to = -1 );
 
 QRectF qwtBoundingRect(const QwtSeriesDataQwtIntervalSample &, int from = 0, int to = -1 );
 
 QRectF qwtBoundingRect(const QwtSeriesDataQwtSetSample &, int from = 0, int to = -1 );
 
 QRectF qwtBoundingRect(const QwtSeriesDataQwtOHLCSample &, int from = 0, int to = -1 );
+
+
