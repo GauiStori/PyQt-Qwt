@@ -123,4 +123,6 @@ public:
 
     virtual QwtTransform *copy() const;
 
+private:
+    QwtPowerTransform& operator=(const QwtPowerTransform&);
 };
