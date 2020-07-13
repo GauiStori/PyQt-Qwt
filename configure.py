@@ -47,24 +47,24 @@ class ModuleConfiguration(object):
     """
 
     # The name of the module as it would be used in an import statement.
-    name = 'Qsci'
+    name = 'Qwt'
 
     # The descriptive name of the module.  This is used in help text and error
     # messages.
-    descriptive_name = "QScintilla"
+    descriptive_name = "Qwt"
 
     # The version of the module as a string.  Set it to None if you don't
     # provide version information.
-    version = '2.11.5'
+    version = '6.1.2'
 
     # The name of the PEP 376 .dist-info directory to be created.
-    distinfo_name = 'QScintilla'
+    distinfo_name = 'Qwt'
 
     # Set if a configuration script is provided that handles versions of PyQt4
     # prior to v4.10 (i.e. versions where the pyqtconfig.py module is
     # available).  If provided the script must be called configure-old.py and
     # be in the same directory as this script.
-    legacy_configuration_script = True
+    legacy_configuration_script = False
 
     # The minimum version of SIP that is required.  This should be a
     # dot-separated string of two or three integers (e.g. '1.0', '4.10.3').  If
@@ -77,7 +77,7 @@ class ModuleConfiguration(object):
     # The name (without the .pyi extension) of the name of the PEP 484 stub
     # file to be generated.  If it is None or an empty string then a stub file
     # is not generated.
-    pep484_stub_file = 'Qsci'
+    pep484_stub_file = 'Qwt'
 
     # Set if the module supports redefining 'protected' as 'public'.
     protected_is_public_is_supported = True
@@ -90,16 +90,16 @@ class ModuleConfiguration(object):
 
     # Set if the PyQt5 support is the default.  It is ignored unless both
     # 'pyqt4_is_supported' and 'pyqt5_is_supported' are set.
-    pyqt5_is_default = False
+    pyqt5_is_default = True
 
-    # The name (without the .api extension) of the name of the QScintilla API
+    # The name (without the .api extension) of the name of the Qwt API
     # file to be generated.  If it is None or an empty string then an API file
     # is not generated.
-    qscintilla_api_file = 'QScintilla2'
+    qwt_api_file = 'Qwt'
 
     # The email address that will be included when an error in the script is
     # detected.  Leave it blank if you don't want to include an address.
-    support_email_address = 'support@riverbankcomputing.com'
+    support_email_address = 'gudjon@gudjon.org'
 
     # Set if the user can provide a configuration file.  It is normally only
     # used if cross-compilation is supported.
@@ -120,11 +120,11 @@ class ModuleConfiguration(object):
         configuration.
         """
 
-        target_configuration.qsci_version = None
-        target_configuration.qsci_features_dir = None
-        target_configuration.qsci_inc_dir = None
-        target_configuration.qsci_lib_dir = None
-        target_configuration.qsci_sip_dir = None
+        target_configuration.qwt_version = None
+        target_configuration.qwt_features_dir = None
+        target_configuration.qwt_inc_dir = None
+        target_configuration.qwt_lib_dir = None
+        target_configuration.qwt_sip_dir = None
 
     @staticmethod
     def init_optparser(optparser, target_configuration):
@@ -134,33 +134,38 @@ class ModuleConfiguration(object):
         target_configuration is the target configuration.
         """
 
-        optparser.add_option('--qsci-incdir', '-n', dest='qsci_inc_dir',
+        optparser.add_option('--qwt-incdir', '-n', dest='qwt_inc_dir',
                 type='string', default=None, action='callback',
                 callback=optparser_store_abspath_dir, metavar="DIR",
-                help="the directory containing the QScintilla Qsci header "
+                help="the directory containing the Qwt header "
                         "file directory is DIR [default: QT_INSTALL_HEADERS]")
 
-        optparser.add_option('--qsci-featuresdir', dest='qsci_features_dir',
+        optparser.add_option('--qwt-featuresdir', dest='qwt_features_dir',
                 type='string', default=None, action='callback',
                 callback=optparser_store_abspath_dir, metavar="DIR",
-                help="the directory containing the qscintilla2.prf features "
+                help="the directory containing the qwt.prf features "
                         "file is DIR [default: "
                         "QT_INSTALL_PREFIX/mkspecs/features]")
 
-        optparser.add_option('--qsci-libdir', '-o', dest='qsci_lib_dir',
+        optparser.add_option('--qwt-libdir', '-o', dest='qwt_lib_dir',
                 type='string', default=None, action='callback',
                 callback=optparser_store_abspath_dir, metavar="DIR",
-                help="the directory containing the QScintilla library is DIR "
+                help="the directory containing the Qwt library is DIR "
                         "[default: QT_INSTALL_LIBS]")
 
-        optparser.add_option('--qsci-sipdir', '-v', dest='qsci_sip_dir',
+        optparser.add_option('--qwt-lib', '-l', dest='qwt_lib',
+                type='string', default=None,
+                help="the Qwt library "
+                        "[default: qwt]")
+
+        optparser.add_option('--qwt-sipdir', '-v', dest='qwt_sip_dir',
                 type='string', default=None, action='callback',
                 callback=optparser_store_abspath_dir, metavar="DIR",
-                help="the QScintilla .sip files will be installed in DIR "
+                help="the Qwt .sip files will be installed in DIR "
                         "[default: %s]" % target_configuration.pyqt_sip_dir)
 
         optparser.add_option("--no-sip-files", action="store_true",
-                default=False, dest="qsci_no_sip_files",
+                default=False, dest="qwt_no_sip_files",
                 help="disable the installation of the .sip files "
                         "[default: enabled]")
 
@@ -171,22 +176,22 @@ class ModuleConfiguration(object):
         options are the parsed options.
         """
 
-        if options.qsci_features_dir is not None:
-            target_configuration.qsci_features_dir = options.qsci_features_dir
+        if options.qwt_features_dir is not None:
+            target_configuration.qwt_features_dir = options.qwt_features_dir
 
-        if options.qsci_inc_dir is not None:
-            target_configuration.qsci_inc_dir = options.qsci_inc_dir
+        if options.qwt_inc_dir is not None:
+            target_configuration.qwt_inc_dir = options.qwt_inc_dir
 
-        if options.qsci_lib_dir is not None:
-            target_configuration.qsci_lib_dir = options.qsci_lib_dir
+        if options.qwt_lib_dir is not None:
+            target_configuration.qwt_lib_dir = options.qwt_lib_dir
 
-        if options.qsci_sip_dir is not None:
-            target_configuration.qsci_sip_dir = options.qsci_sip_dir
+        if options.qwt_sip_dir is not None:
+            target_configuration.qwt_sip_dir = options.qwt_sip_dir
         else:
-            target_configuration.qsci_sip_dir = target_configuration.pyqt_sip_dir
+            target_configuration.qwt_sip_dir = target_configuration.pyqt_sip_dir
 
-        if options.qsci_no_sip_files:
-            target_configuration.qsci_sip_dir = ''
+        if options.qwt_no_sip_files:
+            target_configuration.qwt_sip_dir = ''
 
     @staticmethod
     def check_module(target_configuration):
@@ -195,48 +200,52 @@ class ModuleConfiguration(object):
         configuration.
         """
 
-        # Find the QScintilla header files.
-        inc_dir = target_configuration.qsci_inc_dir
+        # Find the Qwt header files.
+        inc_dir = target_configuration.qwt_inc_dir
         if inc_dir is None:
             inc_dir = target_configuration.qt_inc_dir
 
-        sciglobal = os.path.join(inc_dir, 'Qsci', 'qsciglobal.h')
+        qwtglobal = os.path.join(inc_dir, '', 'qwt_global.h')
 
-        if not os.access(sciglobal, os.F_OK):
+        if not os.access(qwtglobal, os.F_OK):
             error(
-                    "Qsci/qsciglobal.h could not be found in %s. If "
-                    "QScintilla is installed then use the --qsci-incdir "
+                    "%s could not be found in %s. If "
+                    "Qwt is installed then use the --qwt-incdir "
                     "argument to explicitly specify the correct "
-                    "directory." % inc_dir)
+                    "directory." %(qwtglobal,inc_dir))
 
-        # Get the QScintilla version string.
-        qsci_version = read_define(sciglobal, 'QSCINTILLA_VERSION_STR')
-        if qsci_version is None:
+        # Get the Qwt version string.
+        qwt_version = read_define(qwtglobal, 'QWT_VERSION_STR')
+        if qwt_version is None:
             error(
-                    "The QScintilla version number could not be determined by "
-                    "reading %s." % sciglobal)
+                    "The Qwt version number could not be determined by "
+                    "reading %s." % qwtglobal)
 
-        lib_dir = target_configuration.qsci_lib_dir
+        lib_dir = target_configuration.qwt_lib_dir
         if lib_dir is None:
             lib_dir = target_configuration.qt_lib_dir
 
-        if not glob.glob(os.path.join(lib_dir, '*qscintilla2_qt*')):
+        if not glob.glob(os.path.join(lib_dir, '*qwt*')):
             error(
-                    "The QScintilla library could not be found in %s. If "
-                    "QScintilla is installed then use the --qsci-libdir "
+                    "The Qwt library could not be found in %s. If "
+                    "Qwt is installed then use the --qwt-libdir "
                     "argument to explicitly specify the correct "
                     "directory." % lib_dir)
 
         # Because we include the Python bindings with the C++ code we can
         # reasonably force the same version to be used and not bother about
         # versioning in the .sip files.
-        if qsci_version != ModuleConfiguration.version:
+        qv=qwt_version.split('.')
+        qwt_version_numeric = int(qv[0])*10000 + int(qv[1])*100 + int(qv[2])
+        mv=ModuleConfiguration.version.split('.')
+        mod_version_numeric = int(mv[0])*10000 + int(mv[1])*100 + int(mv[2])
+        if qwt_version_numeric < mod_version_numeric:
             error(
-                    "QScintilla %s is being used but the Python bindings %s "
-                    "are being built. Please use matching "
-                    "versions." % (qsci_version, ModuleConfiguration.version))
+                    "Qwt %s is being used but the Python bindings %s "
+                    "are being built. Please use a newer Qwt "
+                    "version." % (qwt_version, ModuleConfiguration.version))
 
-        target_configuration.qsci_version = qsci_version
+        target_configuration.qwt_version = qwt_version
 
     @staticmethod
     def inform_user(target_configuration):
@@ -244,12 +253,12 @@ class ModuleConfiguration(object):
         target_configuration is the target configuration.
         """
 
-        inform("QScintilla %s is being used." %
-                target_configuration.qsci_version)
+        inform("Qwt %s is being used." %
+                target_configuration.qwt_version)
 
-        if target_configuration.qsci_sip_dir != '':
-            inform("The QScintilla .sip files will be installed in %s." %
-                    target_configuration.qsci_sip_dir)
+        if target_configuration.qwt_sip_dir != '':
+            inform("The Qwt .sip files will be installed in %s." %
+                    target_configuration.qwt_sip_dir)
 
     @staticmethod
     def pre_code_generation(target_config):
@@ -274,7 +283,7 @@ class ModuleConfiguration(object):
         the target configuration.
         """
 
-        return 'sip/qscimod5.sip' if target_configuration.pyqt_package == 'PyQt5' else 'sip/qscimod4.sip'
+        return 'sip/qwt.sip'# if target_configuration.pyqt_package == 'PyQt5' else 'sip/qscimod4.sip'
 
     @staticmethod
     def get_sip_installs(target_configuration):
@@ -285,10 +294,10 @@ class ModuleConfiguration(object):
         target_configuration is the target configuration.
         """
 
-        if target_configuration.qsci_sip_dir == '':
+        if target_configuration.qwt_sip_dir == '':
             return None
 
-        path = os.path.join(target_configuration.qsci_sip_dir, 'Qsci')
+        path = os.path.join(target_configuration.qwt_sip_dir, 'Qwt')
         files = glob.glob('sip/*.sip')
 
         return path, files
@@ -301,16 +310,16 @@ class ModuleConfiguration(object):
         version of Qt.  target_configuration is the target configuration.
         """
 
-        qmake = {'CONFIG': 'qscintilla2'}
+        qmake = {'CONFIG': 'qwt'}
 
-        if target_configuration.qsci_inc_dir is not None:
-            qmake['INCLUDEPATH'] = quote(target_configuration.qsci_inc_dir)
+        if target_configuration.qwt_inc_dir is not None:
+            qmake['INCLUDEPATH'] = quote(target_configuration.qwt_inc_dir)
 
-        if target_configuration.qsci_lib_dir is not None:
-            qmake['LIBS'] = '-L%s' % quote(target_configuration.qsci_lib_dir)
+        if target_configuration.qwt_lib_dir is not None:
+            qmake['LIBS'] = '-L%s' % quote(target_configuration.qwt_lib_dir)
 
-        if target_configuration.qsci_features_dir is not None:
-            os.environ['QMAKEFEATURES'] = target_configuration.qsci_features_dir
+        if target_configuration.qwt_features_dir is not None:
+            os.environ['QMAKEFEATURES'] = target_configuration.qwt_features_dir
 
         return qmake
 
@@ -975,7 +984,7 @@ class _TargetConfiguration:
                 # Qt v4.
                 self.qmake_spec = 'macx-g++'
 
-        self.api_dir = os.path.join(qt_config.QT_INSTALL_DATA, 'qsci')
+        self.api_dir = os.path.join(qt_config.QT_INSTALL_DATA, 'qwt')
         self.qt_inc_dir = qt_config.QT_INSTALL_HEADERS
         self.qt_lib_dir = qt_config.QT_INSTALL_LIBS
 
@@ -1067,11 +1076,11 @@ class _TargetConfiguration:
             elif self.stubs_dir == '':
                 self.stubs_dir = self.module_dir
 
-        if pkg_config.qscintilla_api_file:
+        if pkg_config.qwt_api_file:
             if opts.apidir is not None:
                 self.api_dir = opts.apidir
 
-            if opts.no_qsci_api:
+            if opts.no_qwt_api:
                 self.api_dir = ''
 
         if opts.destdir is not None:
@@ -1159,15 +1168,15 @@ def _create_optparser(target_config, pkg_config):
                 help="disable the installation of the PEP 484 stubs "
                         "[default: enabled]")
 
-    if pkg_config.qscintilla_api_file:
+    if pkg_config.qwt_api_file:
         p.add_option('--apidir', '-a', dest='apidir', type='string',
                 default=None, action='callback',
                 callback=optparser_store_abspath, metavar="DIR", 
-                help="the QScintilla API file will be installed in DIR "
-                        "[default: QT_INSTALL_DATA/qsci]")
-        p.add_option('--no-qsci-api', dest='no_qsci_api', default=False,
+                help="the Qwt API file will be installed in DIR "
+                        "[default: QT_INSTALL_DATA/qwt]")
+        p.add_option('--no-qwt-api', dest='no_qwt_api', default=False,
                 action='store_true',
-                help="disable the installation of the QScintilla API file "
+                help="disable the installation of the Qwt API file "
                         "[default: enabled]")
 
     if pkg_config.user_configuration_file_is_supported:
@@ -1316,8 +1325,8 @@ def _inform_user(target_config, pkg_config):
         inform("The PEP 484 stubs will be installed in %s." %
                 target_config.stubs_dir)
 
-    if pkg_config.qscintilla_api_file and target_config.api_dir != '':
-        inform("The QScintilla API file will be installed in %s." %
+    if pkg_config.qwt_api_file and target_config.api_dir != '':
+        inform("The Qwt API file will be installed in %s." %
                 os.path.join(target_config.api_dir, 'api', 'python'))
 
 
@@ -1387,7 +1396,7 @@ def _generate_code(target_config, opts, pkg_config, module_config, all_installs)
         argv.append('-y')
         argv.append(quote(module_config.pep484_stub_file + '.pyi'))
 
-    if pkg_config.qscintilla_api_file and target_config.api_dir != '':
+    if pkg_config.qwt_api_file and target_config.api_dir != '':
         # Generate the API file.
         argv.append('-a')
         argv.append(quote(module_config.name + '.api'))
@@ -1603,6 +1612,7 @@ INSTALLS += sip
     defines = qmake_config.get('DEFINES')
     if defines:
         pro.write('DEFINES += %s\n' % defines)
+    pro.write('DEFINES += QWT_PYTHON_WRAPPER\n')
 
     includepath = qmake_config.get('INCLUDEPATH')
     if includepath:
@@ -1877,9 +1887,9 @@ def _main(argv, pkg_config):
                 all_installs)
 
     # Concatenate any .api files.
-    if pkg_config.qscintilla_api_file and target_config.api_dir != '':
-        inform("Generating the QScintilla API file...")
-        f = open(pkg_config.qscintilla_api_file + '.api', 'w')
+    if pkg_config.qwt_api_file and target_config.api_dir != '':
+        inform("Generating the Qwt API file...")
+        f = open(pkg_config.qwt_api_file + '.api', 'w')
 
         for module_config in pkg_config.modules:
             api = open(module_config.name + '.api')
@@ -1919,9 +1929,9 @@ INSTALLS += pep484_stubs
             all_installs.extend(
                     [target_config.stubs_dir + '/' + pyi for pyi in stubs])
 
-    if pkg_config.qscintilla_api_file and target_config.api_dir != '':
+    if pkg_config.qwt_api_file and target_config.api_dir != '':
         api_dir = target_config.api_dir + '/api/python'
-        api_file = pkg_config.qscintilla_api_file + '.api'
+        api_file = pkg_config.qwt_api_file + '.api'
 
         pro.write('''
 api.path = %s
@@ -1990,7 +2000,7 @@ if __name__ == '__main__':
         pkg_config_type.pyqt4_is_supported = mod_config_type.pyqt4_is_supported
         pkg_config_type.pyqt5_is_supported = mod_config_type.pyqt5_is_supported
         pkg_config_type.pyqt5_is_default = mod_config_type.pyqt5_is_default
-        pkg_config_type.qscintilla_api_file = mod_config_type.qscintilla_api_file
+        pkg_config_type.qwt_api_file = mod_config_type.qwt_api_file
         pkg_config_type.support_email_address = mod_config_type.support_email_address
         pkg_config_type.user_configuration_file_is_supported = mod_config_type.user_configuration_file_is_supported
         pkg_config_type.user_pyqt_sip_flags_is_supported = mod_config_type.user_pyqt_sip_flags_is_supported
