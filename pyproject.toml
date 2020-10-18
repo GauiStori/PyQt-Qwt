@@ -1,0 +1,28 @@
+[build-system]
+requires = ["sip >=5", "PyQt-builder", "PyQt5"]
+build-backend = "sipbuild.api"
+
+[tool.sip.metadata]
+name = "qwt"
+version = "6.1.2"
+summary = "Python wrapper for Qwt6"
+description-file = "README.md"
+description-content-type = "text/markdown"
+home-page = "https://github.com/GauiStori/PyQt-Qwt"
+maintainer = "Gudjon I. Gudjonsson"
+maintainer-email = "gudjon@gudjon.org"
+license = "Qwt License 1.0"
+requires-dist = "PyQt5"
+
+[tool.sip.project]
+sip-files-dir = "sip"
+sdist-excludes = [
+  "version.sip",
+  ".git/*",
+  ".git/*/*",
+  ".git/*/*/*",
+  ".git/*/*/*/*",
+  ".git/*/*/*/*/*",
+  ".git/*/*/*/*/*/*",
+  ".git/*/*/*/*/*/*/*"
+]
