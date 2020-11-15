@@ -919,6 +919,13 @@ class _TargetConfiguration:
             error("PyQt v4.10 or later is required.")
 
         self.pyqt_sip_flags = pyqt_config['sip_flags']
+        # This is a hack to remove the -t Qt_5_15_0 which doesn't seem to work with sip5 and > Qt_5_15_0
+        # There must be a better fix but until then...... XXXXXXXXXXXXXXXX
+        if self.using_sip5() and self.pyqt_package == 'PyQt5':
+            for f in pyqt_config['sip_flags'].split():
+                if len(f) > 6 and f[0:5] == "Qt_5_" and f >= "Qt_5_15_0":
+                    self.pyqt_sip_flags = "-n PyQt5.sip" #pyqt_config['sip_flags']
+                    break
 
     def apply_sysroot(self):
         """ Apply sysroot where necessary. """
