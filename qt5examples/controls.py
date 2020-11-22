@@ -87,7 +87,7 @@ class SliderBox(QWidget):
             slider.setGroove( True )
             slider.setHandleSize( QSize( 12, 25 ) )
             slider.setScale( 1000.0, 3000.0 )
-            slider.setTotalSteps( 200.0 )
+            slider.setTotalSteps( 200 )
             slider.setSingleSteps( 2 )
             slider.setPageSteps( 10 )
         elif sliderType == 3:

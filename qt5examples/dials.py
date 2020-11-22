@@ -24,7 +24,7 @@ class CompassGrid( QWidget ): #QFrame( parent )
         #layout.setMargin( 0 )
         for i in range(6):
             compass = self.createCompass( i )
-            layout.addWidget( compass, i / 3, i % 3 )
+            layout.addWidget( compass, i // 3, i % 3 )
 
         #for i in range(layout.columnCount()):
         #    layout.setColumnStretch( i, 1 )
