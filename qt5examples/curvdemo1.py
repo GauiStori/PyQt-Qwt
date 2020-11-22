@@ -78,7 +78,7 @@ class MainWin(QFrame):
     # REDRAW CONTENTS
     def drawContents( self, painter ):
         r = self.contentsRect()
-        deltay = r.height() / CurvCnt - 1
+        deltay = r.height() // CurvCnt - 1
         r.setHeight( deltay )
         #  draw curves
         for i in range( CurvCnt ):
