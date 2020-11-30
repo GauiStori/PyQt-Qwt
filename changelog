@@ -28,3 +28,7 @@ Version 1.02.00
   Thanks to Olivier.
 - A few bug fixes
 - A few more examples
+
+Version 1.02.01
+- Fix compilation with sip5
+- Minor bugfixes in examples
