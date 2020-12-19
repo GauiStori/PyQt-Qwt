@@ -55,7 +55,7 @@ class ModuleConfiguration(object):
 
     # The version of the module as a string.  Set it to None if you don't
     # provide version information.
-    version = '6.1.2'
+    version = '1.02.01'
 
     # The name of the PEP 376 .dist-info directory to be created.
     distinfo_name = 'Qwt'
