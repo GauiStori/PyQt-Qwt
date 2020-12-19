@@ -3,8 +3,8 @@ requires = ["sip >=5", "PyQt-builder", "PyQt5"]
 build-backend = "sipbuild.api"
 
 [tool.sip.metadata]
-name = "qwt"
-version = "6.1.2"
+name = "PyQt-Qwt"
+version = "1.02.01"
 summary = "Python wrapper for Qwt6"
 description-file = "README.md"
 description-content-type = "text/markdown"
