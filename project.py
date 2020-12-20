@@ -25,7 +25,7 @@ class QwtBindings(PyQtBindings):
 
     def __init__(self, project):
         super().__init__(project, name='Qwt',
-                         sip_file='qwt.sip',
+                         sip_file='Qwt_Qt5.sip',
                          qmake_QT=['widgets'])
 
     def get_options(self):

@@ -283,7 +283,7 @@ class ModuleConfiguration(object):
         the target configuration.
         """
 
-        return 'sip/qwt.sip'# if target_configuration.pyqt_package == 'PyQt5' else 'sip/qscimod4.sip'
+        return 'sip/Qwt_Qt5.sip' if target_configuration.pyqt_package == 'PyQt5' else 'sip/Qwt_Qt4.sip'
 
     @staticmethod
     def get_sip_installs(target_configuration):
