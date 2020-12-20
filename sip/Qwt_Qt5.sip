@@ -7,7 +7,8 @@
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the Qwt License, Version 1.0
  *****************************************************************************/
-%Module(name=Qwt, keyword_arguments="Optional")
+
+%Module(name=PyQt5.Qwt, keyword_arguments="Optional")
 
 %Import QtCore/QtCoremod.sip
 //typedef unsigned long size_t;
