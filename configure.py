@@ -124,6 +124,7 @@ class ModuleConfiguration(object):
         target_configuration.qwt_features_dir = None
         target_configuration.qwt_inc_dir = None
         target_configuration.qwt_lib_dir = None
+        target_configuration.qwt_lib = None
         target_configuration.qwt_sip_dir = None
 
     @staticmethod
@@ -184,6 +185,9 @@ class ModuleConfiguration(object):
 
         if options.qwt_lib_dir is not None:
             target_configuration.qwt_lib_dir = options.qwt_lib_dir
+
+        if options.qwt_lib is not None:
+            target_configuration.qwt_lib = options.qwt_lib
 
         if options.qwt_sip_dir is not None:
             target_configuration.qwt_sip_dir = options.qwt_sip_dir
@@ -1633,7 +1637,10 @@ INSTALLS += sip
 
     libs = qmake_config.get('LIBS')
     if libs:
-        pro.write('LIBS += %s\n' % libs)
+        if target_config.qwt_lib == None:
+            pro.write('LIBS += %s -lqwt\n' % libs)
+        else:
+            pro.write('LIBS += %s -l%s\n' % (libs,target_config.qwt_lib))            
 
     if not opts.static:
         dylib = module_config.get_mac_wrapped_library_file(target_config)
