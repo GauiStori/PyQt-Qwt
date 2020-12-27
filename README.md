@@ -6,6 +6,8 @@ The code is tested for python3 and Qt5 on Fedora 31 Linux
 
 The qwt include files must be patched to build PyQt-Qwt.
 
+The code is not tested properly for Qt4.
+
 
 
 ## BUILD:
@@ -17,7 +19,7 @@ The header files need to be patched with 06_python_compat.patch
 but for convenience the patched files are kept in the header
 directory.
 
-For Qwt version < 6.1.5 the following is needed before compiling:
+For Qwt version < 6.1.4 the following is needed before compiling:
 
 $ cp -a /usr/include/qwt header
 
@@ -26,6 +28,9 @@ $ cp header/qwt*.h header/qwt/
 ### Linux:
 
 Dependencies in Debian:
+
+There is a PyQt-Qwt package for Debian/Ubuntu systems but the instructions should work for any 
+other Linux distro.
 
 $ sudo apt-get install pyqt5-dev pyqt5-dev-tools python3-pyqt5 libqwt-qt5-dev libqwt-headers
 
@@ -37,6 +42,7 @@ All systems are not exactly equal. python may refer to python3 on some systems.
 On Debian systems the Qt5 version of Qwt is named libqwt-qt5.so but the default name is
 libqwt.so. Remove the  --qwt-lib=qwt-qt5 if the name extension is not used on your system.
 
+$ sip-build --qwt-incdir=/usr/include/qwt --qwt-libdir=/usr/lib --qwt-lib=qwt-qt5
 
 $ QT_SELECT=qt5 python3 configure.py --qwt-incdir=header/qwt --qwt-libdir=/usr/lib --qwt-lib=qwt-qt5
 
@@ -52,8 +58,44 @@ $ python3 bode.py
 
 $ for name in *.py; do python3 $name; done
 
+<<<<<<< HEAD
 
 
+=======
+## Windows:
+
+Tested for MSVC2017 and python 3.9
+
+Assuming the default installation directory, c:\qwt-6.1.5
+
+Compile Qwt with the following parts in qwtconfig.pri commented out:
+
+\#QWT_CONFIG += QwtDll
+
+\#QWT_CONFIG += QwtSvg
+
+\#QWT_CONFIG += QwtOpenGL
+
+\#QWT_CONFIG += QwtMathML
+
+
+Open "Qt 5.14.2 64-bit for Desktop (MSVC2017)" command prompt
+
+run
+
+"C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvars64.bat"
+
+Install Python prerequisites:
+
+pip install numpy
+
+pip install pyqt-builder
+
+pip install pyqt5
+
+pip install sip
+
+sip-install --qwt-incdir=c:\qwt-6.1.5\include --qwt-libdir=c:\qwt-6.1.5\lib --qwt-lib=qwt --verbose
 
 ### Debugging
 
@@ -112,7 +154,7 @@ but it needs sed and grep to be installed on your computer.
 
 2020-05-20
   * Compiles with sip >= 4.18.
-  * Compiles with Qwt >= 6.1.5. Tested for version 6.1.5
+  * Compiles with Qwt >= 6.1.4. Tested for version 6.1.4-6.1.5
   * All examples available in C++ will be converted to python
 
 
