@@ -1489,6 +1489,9 @@ def _generate_pro(target_config, opts, module_config, all_installs):
     if qt:
         pro.write('QT += %s\n' % qt)
 
+    if target_config.pyqt_package == 'PyQt5':
+        pro.write("QT += core gui widgets printsupport\n")
+
     pro.write('CONFIG += %s\n' % ('debug' if target_config.debug else 'release'))
     pro.write('CONFIG += %s\n' % ('staticlib' if opts.static else 'plugin plugin_bundle'))
 
