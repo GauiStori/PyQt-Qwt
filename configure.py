@@ -1903,8 +1903,8 @@ def _main(argv, pkg_config):
         _generate_code(target_config, opts, pkg_config, module_config,
                 all_installs)
 
-    # Concatenate any .api files.
-    if pkg_config.qwt_api_file and target_config.api_dir != '':
+    # Concatenate any .api files. The lines below don't work because the "name" is the same as "qwt_api_name"
+    """if pkg_config.qwt_api_file and target_config.api_dir != '':
         inform("Generating the Qwt API file...")
         f = open(pkg_config.qwt_api_file + '.api', 'w')
 
@@ -1921,6 +1921,7 @@ def _main(argv, pkg_config):
             os.remove(module_config.name + '.api')
 
         f.close()
+    """
 
     # Generate the top-level .pro file.
     inform("Generating the top-level .pro file...")
