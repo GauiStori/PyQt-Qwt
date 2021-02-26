@@ -95,10 +95,17 @@ pip install sip
 
 sip-install --qwt-incdir=c:\qwt-6.1.5\include --qwt-libdir=c:\qwt-6.1.5\lib --qwt-lib=qwt --verbose
 
+Compiled Windows binaries can be found at:
+
+https://sourceforge.net/projects/pcpu/files/Python3%20windows%20amd64/
+
+Thanks to 	Philippe Dalet
+
 ### Debugging
 
 It took me a lot of time to find out how to debug with gdb, and there is
 a bug/(feature) in gcc that makes the procedure more problematic.
+
 https://gcc.gnu.org/bugzilla/show_bug.cgi?id=61918
 
 I am using gcc 8.1.0
