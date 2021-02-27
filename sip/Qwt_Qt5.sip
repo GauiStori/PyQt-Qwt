@@ -127,7 +127,7 @@
 %Include qwt_painter.sip
 %Include qwt_plot_svgitem.sip
 %Include qwt_interval_symbol.sip
-%Include qwt_plot_spectrocurve.sip	
+//%Include qwt_plot_spectrocurve.sip	
 %Include qwt_plot_intervalcurve.sip
 %Include qwt_plot_legenditem.sip
 %Include qwt_painter_command.sip
@@ -137,4 +137,4 @@
 %Include qwt_plot_zoneitem.sip
 %Include qwt_plot_scaleitem.sip
 %Include qwt_clipper.sip
-%Include qwt_plot_tradingcurve.sip
+//%Include qwt_plot_tradingcurve.sip
