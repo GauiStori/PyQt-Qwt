@@ -122,5 +122,3 @@ public:
     QwtSeriesDataQwtSetSample *swapData( QwtSeriesDataQwtSetSample *series );
 };
 
-
-

@@ -8,29 +8,13 @@
  * modify it under the terms of the Qwt License, Version 1.0
  *****************************************************************************/
 
-<<<<<<< HEAD
-<<<<<<< HEAD:sip/Qwt_Qt4.sip
 %Module(name=PyQt4.Qwt, keyword_arguments="Optional")
-=======
-%Module(name=PyQt5.Qwt, keyword_arguments="Optional")
->>>>>>> rizzoa-master:sip/Qwt_Qt5.sip
-=======
-%Module(name=PyQt4.Qwt, keyword_arguments="Optional")
->>>>>>> rizzoa-master
 
 %Import QtCore/QtCoremod.sip
 //typedef unsigned long size_t;
 %Import QtGui/QtGuimod.sip
-<<<<<<< HEAD
-
-=======
 %Import QtOpenGL/QtOpenGLmod.sip
 %Import QtSvg/QtSvgmod.sip
->>>>>>> rizzoa-master
-%If (Qt_5_0_0 -)
-%Import QtWidgets/QtWidgetsmod.sip
-%End
-
 
 %Include conversions.sip
 %Include qmap_convert.sip
@@ -109,11 +93,7 @@
 %Include qwt_raster_data.sip
 
 %Include qwt_plot_renderer.sip
-<<<<<<< HEAD
 //%Include qwt_point_data.sip // Fails to compile
-=======
-%Include qwt_point_data.sip 
->>>>>>> rizzoa-master
 
 
 %Include qwt_slider.sip
@@ -127,11 +107,6 @@
 
 %Include qwt_point_polar.sip
 %Include qwt_analog_clock.sip
-<<<<<<< HEAD
-
-
-
-=======
 %Include qwt_magnifier.sip
 %Include qwt_plot_magnifier.sip
 %Include qwt_arrow_button.sip
@@ -161,4 +136,3 @@
 %Include qwt_plot_scaleitem.sip
 %Include qwt_clipper.sip
 %Include qwt_plot_tradingcurve.sip
->>>>>>> rizzoa-master

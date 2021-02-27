@@ -98,12 +98,6 @@ public:
     size_t d_size;*/
 };
 
-
-
-
-
-
-
 class QwtSyntheticPointData: QwtSeriesDataQPointF
 {
 %TypeHeaderCode
