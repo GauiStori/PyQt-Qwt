@@ -55,13 +55,15 @@ class Plot( Qwt.QwtPlot ):
         self.setSymbol( None )
         # panning with the left mouse button
         Qwt.QwtPlotPanner( self.canvas() )
-        # zoom in/out with the wheel
-        #magnifier = Qwt.QwtPlotMagnifier( self.canvas() ) FIXME
-        #magnifier.setMouseButton( Qt.NoButton )
+       
         # distanve measurement with the right mouse button
         self.picker = DistancePicker( self.canvas() )
         self.picker.setMousePattern( Qwt.QwtPlotPicker.MouseSelect1, Qt.RightButton )
         self.picker.setRubberBandPen( QPen( Qt.blue ) )
+        # zoom in/out with the wheel
+        self.magnifier = Qwt.QwtPlotMagnifier( self.canvas() )
+        self.magnifier.setMouseButton( Qt.NoButton )
+               
 
     def setSymbol( self, symbol ):
         self.d_curve.setSymbol( symbol )

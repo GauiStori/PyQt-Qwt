@@ -1,11 +1,9 @@
 # PyQt-Qwt
-Python PyQt wrapper for Qwt6
+Python PyQt wrapper for Qwt6.1
 
-The code is tested for python2/3 and Qt4/5.
-oscilloscope.py is unfinished.
-animation.py works only for qt5.
-All the other examples have been tested to work on 
-Debian Linux.
+The code is tested for python3 and Qt5 on Fedora 31 Linux
+
+
 The qwt include files must be patched to build PyQt-Qwt.
 
 The code is not tested properly for Qt4.
@@ -60,6 +58,10 @@ $ python3 bode.py
 
 $ for name in *.py; do python3 $name; done
 
+<<<<<<< HEAD
+
+
+=======
 ## Windows:
 
 Tested for MSVC2017 and python 3.9
@@ -157,10 +159,10 @@ but it needs sed and grep to be installed on your computer.
 
 ### Status
 
-2020-12-27
+2020-05-20
   * Compiles with sip >= 4.18.
-  * Compiles with Qwt >= 6.1.2. Tested for version 6.1.2 -- 6.1.5
-  * All examples except for oscilloscope.py do work.
+  * Compiles with Qwt >= 6.1.4. Tested for version 6.1.4 -- 6.1.5
+  * All examples available in C++ will be converted to python
 
 
 

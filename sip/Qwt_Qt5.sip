@@ -8,7 +8,15 @@
  * modify it under the terms of the Qwt License, Version 1.0
  *****************************************************************************/
 
+<<<<<<< HEAD
 %Module(name=PyQt5.Qwt, keyword_arguments="Optional")
+=======
+<<<<<<< HEAD:sip/Qwt_Qt4.sip
+%Module(name=PyQt4.Qwt, keyword_arguments="Optional")
+=======
+%Module(name=PyQt5.Qwt, keyword_arguments="Optional")
+>>>>>>> rizzoa-master:sip/Qwt_Qt5.sip
+>>>>>>> rizzoa-master
 
 %Import QtCore/QtCoremod.sip
 //typedef unsigned long size_t;

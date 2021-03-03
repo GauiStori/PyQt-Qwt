@@ -1357,9 +1357,9 @@ def _generate_code(target_config, opts, pkg_config, module_config, all_installs)
         argv.extend(target_config.pyqt_sip_flags.split())
 
         # Add the backstop version.
-        argv.append('-B')
-        argv.append('Qt_6_0_0' if target_config.pyqt_package == 'PyQt5'
-                else 'Qt_5_0_0')
+        #argv.append('-B')
+        #argv.append('Qt_6_0_0' if target_config.pyqt_package == 'PyQt5'
+        #        else 'Qt_5_0_0')
 
         # Add PyQt's .sip files to the search path.
         argv.append('-I')
@@ -1408,6 +1408,7 @@ def _generate_code(target_config, opts, pkg_config, module_config, all_installs)
     check_file = os.path.join(module_config.name,
             'sipAPI%s.h' % module_config.name)
     _remove_file(check_file)
+    #print (' '.join(argv))
 
     _run_command(' '.join(argv), opts.verbose)
 
@@ -1465,7 +1466,7 @@ def _generate_pro(target_config, opts, module_config, all_installs):
         pro.write('QT += %s\n' % qt)
 
     if target_config.pyqt_package == 'PyQt5':
-        pro.write("QT += core gui widgets printsupport\n")
+        pro.write("QT += core gui widgets printsupport opengl svg\n")
 
     pro.write('CONFIG += %s\n' % ('debug' if target_config.debug else 'release'))
     pro.write('CONFIG += %s\n' % ('staticlib' if opts.static else 'plugin plugin_bundle'))

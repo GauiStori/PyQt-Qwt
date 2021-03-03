@@ -234,11 +234,11 @@ public:
 
     virtual QList<QwtLegendData> legendData() const;
 
-/*    virtual QwtGraphic legendIcon( int index, const QSizeF  & ) const;
+    virtual QwtGraphic legendIcon( int index, const QSizeF  & ) const;
 
 protected:
     QwtGraphic defaultIcon( const QBrush &, const QSizeF & ) const;
-*/
+
 private:
     // Disabled copy constructor and operator=
     QwtPlotItem( const QwtPlotItem & );
