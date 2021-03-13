@@ -10,6 +10,12 @@ The qwt include files must be patched to build PyQt-Qwt.
 
 The code is not tested properly for Qt4.
 
+## NEWS: 2021-03-13
+
+Nearly all the Qwt library is now wrapped. Thanks to Alfie
+https://github.com/rizzoa
+ 
+Please test the next_version branch. It will be released soon.
 
 
 ## BUILD:
