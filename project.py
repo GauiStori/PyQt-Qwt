@@ -26,7 +26,7 @@ class QwtBindings(PyQtBindings):
     def __init__(self, project):
         super().__init__(project, name='Qwt',
                          sip_file='Qwt_Qt5.sip',
-                         qmake_QT=['widgets'])
+                         qmake_QT=['widgets','opengl','svg'])
 
     def get_options(self):
         """Our custom options that a user can pass to sip-build."""
