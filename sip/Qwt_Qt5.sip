@@ -10,6 +10,8 @@
 
 %Module(name=PyQt5.Qwt, keyword_arguments="Optional")
 
+%Timeline {Qwt_6_1_2 Qwt_6_1_3 Qwt_6_1_4 Qwt_6_1_5 Qwt_6_1_6}
+
 %Import QtCore/QtCoremod.sip
 //typedef unsigned long size_t;
 %Import QtGui/QtGuimod.sip
@@ -127,7 +129,6 @@
 %Include qwt_painter.sip
 %Include qwt_plot_svgitem.sip
 %Include qwt_interval_symbol.sip
-//%Include qwt_plot_spectrocurve.sip	
 %Include qwt_plot_intervalcurve.sip
 %Include qwt_plot_legenditem.sip
 %Include qwt_painter_command.sip
@@ -137,4 +138,8 @@
 %Include qwt_plot_zoneitem.sip
 %Include qwt_plot_scaleitem.sip
 %Include qwt_clipper.sip
-//%Include qwt_plot_tradingcurve.sip
+
+%If(Qwt_6_1_5 -)
+%Include qwt_plot_spectrocurve.sip	
+%Include qwt_plot_tradingcurve.sip
+%End // (Qwt_6_1_5 -)

@@ -59,4 +59,13 @@ class QwtBindings(PyQtBindings):
         if self.qwt_lib is not None:
             self.libraries.append(self.qwt_lib)
         self.define_macros.append('QWT_PYTHON_WRAPPER')
+        # Add Qwt version tag. Used for Timeline
+        qwt_version = "6.1.2" # Lowest supported version
+        with open(os.path.join(self.qwt_incdir,'qwt_global.h')) as qwt_version_file:
+            for l in qwt_version_file.readlines():
+                if "QWT_VERSION_STR" in l:
+                    qwt_version = l.split()[2].strip("\"")
+        tag = "Qwt_"+qwt_version.replace('.','_')
+        self.tags.append(tag)
+        print(tag)
         super().apply_user_defaults(tool)

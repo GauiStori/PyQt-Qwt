@@ -39,7 +39,7 @@ public:
     virtual size_t dataSize() const;
     virtual QRectF dataRect() const;
     virtual void setRectOfInterest( const QRectF &rect );
-    QwtSeriesDataQwtIntervalSample *swapData( QwtSeriesDataQwtIntervalSample *series );//XXXunsupported function argument type - provide %MethodCode and a C++ signature
+    QwtSeriesDataQwtIntervalSample *swapData( QwtSeriesDataQwtIntervalSample *series );
 };
 
 class QwtSeriesStoreQPointF: QwtAbstractSeriesStore
@@ -59,7 +59,7 @@ public:
     virtual size_t dataSize() const;
     virtual QRectF dataRect() const;
     virtual void setRectOfInterest( const QRectF &rect );
-    QwtSeriesDataQPointF *swapData( QwtSeriesDataQPointF *series );//XXXunsupported function argument type - provide %MethodCode and a C++ signature
+    QwtSeriesDataQPointF *swapData( QwtSeriesDataQPointF *series );
 };
 
 class QwtSeriesStoreQwtPoint3D: QwtAbstractSeriesStore
