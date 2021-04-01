@@ -6,6 +6,26 @@ from sipbuild import Option
 from pyqtbuild import PyQtBindings, PyQtProject
 import PyQt5
 
+def read_define(filename, define):
+    """ Read the value of a #define from a file.  filename is the name of the
+    file.  define is the name of the #define.  None is returned if there was no
+    such #define.
+    """
+
+    f = open(filename)
+
+    for l in f:
+        wl = l.split()
+        if len(wl) >= 3 and wl[0] == "#define" and wl[1] == define:
+            # Take account of embedded spaces.
+            value = ' '.join(wl[2:])[1:-1]
+            break
+    else:
+        value = None
+
+    f.close()
+
+    return value
 
 class QwtProject(PyQtProject):
     """The Qwt Project class."""
@@ -60,11 +80,11 @@ class QwtBindings(PyQtBindings):
             self.libraries.append(self.qwt_lib)
         self.define_macros.append('QWT_PYTHON_WRAPPER')
         # Add Qwt version tag. Used for Timeline
-        qwt_version = "6.1.2" # Lowest supported version
-        with open(os.path.join(self.qwt_incdir,'qwt_global.h')) as qwt_version_file:
-            for l in qwt_version_file.readlines():
-                if "QWT_VERSION_STR" in l:
-                    qwt_version = l.split()[2].strip("\"")
+        qwtglobal = os.path.join(self.qwt_incdir, '', 'qwt_global.h')
+        qwt_version = read_define(qwtglobal, 'QWT_VERSION_STR')
+        if qwt_version is None:
+            print("The Qwt version number could not be determined by "
+                  "reading %s." % qwtglobal)
         tag = "Qwt_"+qwt_version.replace('.','_')
         self.tags.append(tag)
         print(tag)
