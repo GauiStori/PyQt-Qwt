@@ -13,7 +13,7 @@ The qwt include files must be patched to build PyQt-Qwt.
 
 ### ******* IMPORTANT *********
 
-The PyQt-Qwt doesn't build against unpatched Qwt version 6.1.3.
+The PyQt-Qwt doesn't build against unpatched Qwt version <6.1.4.
 The header files need to be patched with 06_python_compat.patch
 but for convenience the patched files are kept in the header
 directory.
@@ -23,6 +23,9 @@ For Qwt version < 6.1.4 the following is needed before compiling:
 $ cp -a /usr/include/qwt header
 
 $ cp header/qwt*.h header/qwt/
+
+Spectrocurve and tradingcurve are enabled for Qwt >= 6.1.5.
+
 
 ### Linux:
 
