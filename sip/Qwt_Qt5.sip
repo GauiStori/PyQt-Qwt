@@ -139,7 +139,7 @@
 %Include qwt_plot_scaleitem.sip
 %Include qwt_clipper.sip
 
-//%If(Qwt_6_1_5 -)
-//%Include qwt_plot_spectrocurve.sip	
-//%Include qwt_plot_tradingcurve.sip
-//%End // (Qwt_6_1_5 -)
+%If(Qwt_6_1_5 -)
+%Include qwt_plot_spectrocurve.sip	
+%Include qwt_plot_tradingcurve.sip
+%End // (Qwt_6_1_5 -)
