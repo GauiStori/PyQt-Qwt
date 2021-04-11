@@ -14,8 +14,8 @@ class QwtPlotZoomer: QwtPlotPicker
 #include <qwt_plot_zoomer.h>
 %End
 public:
-    explicit QwtPlotZoomer( QWidget *, bool doReplot = true );
-    explicit QwtPlotZoomer( int xAxis, int yAxis, QWidget *, bool doReplot = true );
+    explicit QwtPlotZoomer( QWidget * /TransferThis/, bool doReplot = true );
+    explicit QwtPlotZoomer( int xAxis, int yAxis, QWidget * /TransferThis/, bool doReplot = true );
 
     virtual ~QwtPlotZoomer();
 
@@ -30,8 +30,8 @@ public:
     void setMaxStackDepth( int );
     int maxStackDepth() const;
 
-    //const QStack<QRectF> &zoomStack() const; FIXME
-    //void setZoomStack( const QStack<QRectF> &, int zoomRectIndex = -1 ); FIXME
+    const QStack<QRectF> &zoomStack() const;
+    void setZoomStack( const QStack<QRectF> &, int zoomRectIndex = -1 );
 
     uint zoomRectIndex() const;
 

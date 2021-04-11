@@ -18,7 +18,7 @@
 %Import QtOpenGL/QtOpenGLmod.sip
 %Import QtSvg/QtSvgmod.sip
 %Import QtWidgets/QtWidgetsmod.sip
-
+%Include QtQStack.sip
 
 %Include conversions.sip
 %Include qmap_convert.sip
