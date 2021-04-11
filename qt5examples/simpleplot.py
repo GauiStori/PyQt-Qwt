@@ -33,6 +33,10 @@ y=np.sin(x)
 curve.setSamples(x,y)
 curve.attach(plot)
 
+zoomer = Qwt.QwtPlotZoomer( Qwt.QwtPlot.xBottom, Qwt.QwtPlot.yLeft, plot.canvas() );
+zoomer.setZoomBase(False);
+zoomer.zoom(0);
+
 plot.resize(600,400)
 plot.replot()
 plot.show()
