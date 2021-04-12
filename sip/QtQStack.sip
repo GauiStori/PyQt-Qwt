@@ -44,7 +44,6 @@ template<_TYPE_>
     }
 
     QStack<_TYPE_> *tl = new QStack<_TYPE_>;
-    //QStack<QPoint> *ql = new QList<QPoint>;
 
     for (int i = 0; i < PyList_GET_SIZE(sipPy); ++i)
     {
@@ -52,11 +51,11 @@ template<_TYPE_>
         int state;
         t = reinterpret_cast<_TYPE_ *>(
                 sipForceConvertToType(PyList_GET_ITEM(sipPy, i),
-                        sipType_QPoint, 0, SIP_NOT_NONE, &state,
+                        sipType__TYPE_, 0, SIP_NOT_NONE, &state,
                         sipIsErr));
         if (*sipIsErr)
         {
-            sipReleaseType(t, sipType_QPoint, state);
+            sipReleaseType(t, sipType__TYPE_, state);
             delete t;
             return 0;
         }
