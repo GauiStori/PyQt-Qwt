@@ -44,7 +44,6 @@ template<_TYPE_>
     }
 
     QStack<_TYPE_> *tl = new QStack<_TYPE_>;
-    //QStack<QPoint> *ql = new QList<QPoint>;
 
     for (int i = 0; i < PyList_GET_SIZE(sipPy); ++i)
     {
