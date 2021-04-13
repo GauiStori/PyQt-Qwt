@@ -277,9 +277,27 @@ class ModuleConfiguration(object):
         """ Return the list of module-specific flags to pass to SIP.
         target_configuration is the target configuration.
         """
+        inc_dir = target_configuration.qwt_inc_dir
+        if inc_dir is None:
+            inc_dir = target_configuration.qt_inc_dir
 
-        # Nothing to do.
-        return []
+        qwtglobal = os.path.join(inc_dir, '', 'qwt_global.h')
+
+        if not os.access(qwtglobal, os.F_OK):
+            error(
+                    "%s could not be found in %s. If "
+                    "Qwt is installed then use the --qwt-incdir "
+                    "argument to explicitly specify the correct "
+                    "directory." %(qwtglobal,inc_dir))
+
+        # Get the Qwt version string.
+        qwt_version = read_define(qwtglobal, 'QWT_VERSION_STR')
+
+        if qwt_version is None:
+            print("The Qwt version number could not be determined by "
+                  "reading %s." % qwtglobal)
+        qwttimeline = "Qwt_"+qwt_version.replace('.','_')
+        return ['-t', qwttimeline]
 
     @staticmethod
     def get_sip_file(target_configuration):
