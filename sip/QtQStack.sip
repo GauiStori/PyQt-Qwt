@@ -32,7 +32,7 @@ template<_TYPE_>
         }
 
         // Add the wrapper to the list.
-        PyList_SET_ITEM(t, i, tobj);
+        PyList_SET_ITEM(l, i, tobj);
     }
     return l;
 %End
