@@ -13,11 +13,8 @@
 %Import QtCore/QtCoremod.sip
 //typedef unsigned long size_t;
 %Import QtGui/QtGuimod.sip
-
-%If (Qt_5_0_0 -)
-%Import QtWidgets/QtWidgetsmod.sip
-%End
-
+%Import QtOpenGL/QtOpenGLmod.sip
+%Import QtSvg/QtSvgmod.sip
 
 %Include conversions.sip
 %Include qmap_convert.sip
@@ -110,6 +107,32 @@
 
 %Include qwt_point_polar.sip
 %Include qwt_analog_clock.sip
-
-
-
+%Include qwt_magnifier.sip
+%Include qwt_plot_magnifier.sip
+%Include qwt_arrow_button.sip
+%Include qwt_plot_textlabel.sip
+%Include qwt_legend_label.sip
+%Include qwt_system_clock.sip
+%Include qwt_date.sip
+%Include qwt_dyngrid_layout.sip
+%Include qwt_plot_glcanvas.sip
+%Include qwt_plot_rescaler.sip
+%Include qwt_widget_overlay.sip
+%Include qwt_plot_shapeitem.sip
+%Include qwt_matrix_raster_data.sip
+%Include qwt_pixel_matrix.sip
+%Include qwt_date_scale_engine.sip
+%Include qwt_painter.sip
+%Include qwt_plot_svgitem.sip
+%Include qwt_interval_symbol.sip
+%Include qwt_plot_spectrocurve.sip	
+%Include qwt_plot_intervalcurve.sip
+%Include qwt_plot_legenditem.sip
+%Include qwt_painter_command.sip
+%Include qwt_point_mapper.sip
+%Include qwt_point_3d.sip
+%Include qwt_date_scale_draw.sip
+%Include qwt_plot_zoneitem.sip
+%Include qwt_plot_scaleitem.sip
+%Include qwt_clipper.sip
+%Include qwt_plot_tradingcurve.sip

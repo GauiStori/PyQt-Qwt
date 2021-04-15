@@ -1,14 +1,11 @@
 # PyQt-Qwt
-Python PyQt wrapper for Qwt6
+Python PyQt wrapper for Qwt6.1
 
-The code is tested for python2/3 and Qt4/5.
-oscilloscope.py is unfinished.
-animation.py works only for qt5.
+The code is tested for python3 and Qt5.
 All the other examples have been tested to work on 
 Debian Linux.
-The qwt include files must be patched to build PyQt-Qwt.
 
-The code is not tested properly for Qt4.
+The qwt include files must be patched to build PyQt-Qwt.
 
 ## NEWS: 2021-03-13
 
@@ -22,7 +19,7 @@ Please test the next_version branch. It will be released soon.
 
 ### ******* IMPORTANT *********
 
-The PyQt-Qwt doesn't build against unpatched Qwt version 6.1.3.
+The PyQt-Qwt doesn't build against unpatched Qwt version <6.1.4.
 The header files need to be patched with 06_python_compat.patch
 but for convenience the patched files are kept in the header
 directory.
@@ -33,6 +30,9 @@ $ cp -a /usr/include/qwt header
 
 $ cp header/qwt*.h header/qwt/
 
+Spectrocurve and tradingcurve are enabled for Qwt >= 6.1.5.
+
+
 ### Linux:
 
 Dependencies in Debian:
@@ -40,7 +40,7 @@ Dependencies in Debian:
 There is a PyQt-Qwt package for Debian/Ubuntu systems but the instructions should work for any 
 other Linux distro.
 
-$ sudo apt-get install pyqt5-dev pyqt5-dev-tools python3-pyqt5 libqwt-qt5-dev libqwt-headers
+$ sudo apt-get install pyqt5-dev pyqt5-dev-tools python3-pyqt5 libqwt-qt5-dev libqwt-headers libqt5opengl5-dev
 
 A proper configure.py file has been added. To use it on Debian
 which supports coexisting Qt libraries (4 and 5) you need to 
@@ -163,10 +163,10 @@ but it needs sed and grep to be installed on your computer.
 
 ### Status
 
-2020-12-27
+2020-05-20
   * Compiles with sip >= 4.18.
-  * Compiles with Qwt >= 6.1.2. Tested for version 6.1.2 -- 6.1.5
-  * All examples except for oscilloscope.py do work.
+  * Compiles with Qwt >= 6.1.4. Tested for version 6.1.4 -- 6.1.5
+  * All examples available in C++ will be converted to python
 
 
 
