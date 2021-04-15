@@ -4,7 +4,7 @@ build-backend = "sipbuild.api"
 
 [tool.sip.metadata]
 name = "PyQt-Qwt"
-version = "1.02.02"
+version = "2.0.0beta0"
 summary = "Python wrapper for Qwt6"
 description-file = "README.md"
 description-content-type = "text/markdown"
