@@ -40,7 +40,7 @@ Dependencies in Debian:
 There is a PyQt-Qwt package for Debian/Ubuntu systems but the instructions should work for any 
 other Linux distro.
 
-$ sudo apt-get install pyqt5-dev pyqt5-dev-tools python3-pyqt5 libqwt-qt5-dev libqwt-headers libqt5opengl5-dev
+$ sudo apt-get install pyqt5-dev pyqt5-dev-tools python3-pyqt5 libqwt-qt5-dev libqwt-headers libqt5opengl5-dev python3-pyqt5.qtopengl python3-pyqt5.qtsvg
 
 A proper configure.py file has been added. To use it on Debian
 which supports coexisting Qt libraries (4 and 5) you need to 
