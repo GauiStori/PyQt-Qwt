@@ -12,22 +12,21 @@
   \brief Some clipping algorithms
 */
 
-class QwtClipper
+namespace QwtClipper
 {
 %TypeHeaderCode
 #include <qwt_clipper.h>
 %End
 
-public:
-    static QPolygon clipPolygon( const QRect &,
+    QPolygon clippedPolygon( const QRect &,
         const QPolygon &, bool closePolygon = false );
-    static QPolygon clipPolygon( const QRectF &,
+    QPolygon clippedPolygon( const QRectF &,
         const QPolygon &, bool closePolygon = false );
 
-    static QPolygonF clipPolygonF( const QRectF &,
+    QPolygonF clippedPolygonF( const QRectF &,
         const QPolygonF &, bool closePolygon = false );
 
-    static QVector<QwtInterval> clipCircle(
+    QVector<QwtInterval> clipCircle(
         const QRectF &, const QPointF &, double radius );
 };
 

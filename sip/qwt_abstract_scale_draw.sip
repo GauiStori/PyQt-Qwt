@@ -54,8 +54,8 @@ public:
     void setSpacing( double margin );
     double spacing() const;
 
-    void setPenWidth( int width );
-    int penWidth() const;
+    void setPenWidthF( int width );
+    int penWidthF() const;
 
     virtual void draw( QPainter *, const QPalette & ) const;
 

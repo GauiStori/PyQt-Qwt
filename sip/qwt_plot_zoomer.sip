@@ -25,7 +25,7 @@ public:
     QRectF zoomBase() const;
     QRectF zoomRect() const;
 
-    virtual void setAxis( int xAxis, int yAxis );
+    virtual void setAxes( int xAxis, int yAxis );
 
     void setMaxStackDepth( int );
     int maxStackDepth() const;

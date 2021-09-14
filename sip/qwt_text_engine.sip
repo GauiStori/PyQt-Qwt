@@ -24,6 +24,9 @@ public:
 
 protected:
     QwtTextEngine();
+
+private:
+    QwtTextEngine( const QwtTextEngine & );
 };
 
 class QwtPlainTextEngine: QwtTextEngine

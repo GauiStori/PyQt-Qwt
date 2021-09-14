@@ -25,8 +25,7 @@ public:
     QwtRasterData();
     virtual ~QwtRasterData();
 
-    virtual void setInterval( Qt::Axis, const QwtInterval & );
-    const QwtInterval &interval(Qt::Axis) const;
+    virtual QwtInterval interval( Qt::Axis ) const = 0;
 
     virtual QRectF pixelHint( const QRectF & ) const;
 

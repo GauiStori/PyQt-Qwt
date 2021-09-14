@@ -3,6 +3,7 @@
 %MappedType QMap<double,QString> /TypeHint="Dict[double,QString]", TypeHintValue="{}"/
 {
 %TypeHeaderCode
+#include <qmap.h>
 #include <qwt_compass.h>
 %End
 

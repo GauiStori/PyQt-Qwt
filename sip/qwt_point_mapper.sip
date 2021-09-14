@@ -73,7 +73,9 @@ public:
         const QwtSeriesDataQPointF *series, int from, int to,
         const QPen &, bool antialiased, uint numThreads ) const;
 
-/*private:
+private:
+    QwtPointMapper( const QwtPointMapper & );
+/*
     class PrivateData;
     PrivateData *d_data;
     */

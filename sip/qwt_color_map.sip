@@ -25,12 +25,15 @@ public:
 
     Format format() const;
     virtual QRgb rgb( const QwtInterval &interval, double value ) const = 0;
-    virtual unsigned char colorIndex( const QwtInterval &interval, double value ) const = 0;
+    virtual uint colorIndex( int numColors, const QwtInterval &interval, double value ) const = 0;
 
     QColor color( const QwtInterval &, double value ) const;
-    virtual QVector<QRgb> colorTable( const QwtInterval & ) const;
+    virtual QVector<QRgb> colorTable( int ) const;
+    virtual QVector<QRgb> colorTable256( ) const;
 
-//private:
+private:
+    // Disabled copy constructor and operator=
+    QwtColorMap( const QwtColorMap & );
 //    Format d_format;
 };
 
@@ -63,7 +66,7 @@ public:
     QColor color2() const;
 
     virtual QRgb rgb( const QwtInterval &, double value ) const;
-    virtual unsigned char colorIndex( const QwtInterval &, double value ) const;
+    virtual uint colorIndex( int numColors, const QwtInterval &, double value ) const;
 
     class ColorStops;
 
@@ -94,7 +97,7 @@ private:
     QwtAlphaColorMap( const QwtAlphaColorMap & );
     //QwtAlphaColorMap &operator=( const QwtAlphaColorMap & );
 
-    virtual unsigned char colorIndex( const QwtInterval &, double value ) const;
+    virtual uint colorIndex( int, const QwtInterval &, double value ) const;
 
     //class PrivateData;
     //PrivateData *d_data;

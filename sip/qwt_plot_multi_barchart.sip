@@ -21,7 +21,7 @@ public:
         Stacked
     };
 
-    explicit QwtPlotMultiBarChart( const QString &title = QString::null );
+    explicit QwtPlotMultiBarChart( const QString &title = QString() );
     explicit QwtPlotMultiBarChart( const QwtText &title );
 
     virtual ~QwtPlotMultiBarChart();

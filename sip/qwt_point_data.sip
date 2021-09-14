@@ -8,18 +8,21 @@
  * modify it under the terms of the Qwt License, Version 1.0
  *****************************************************************************/
 
-class QwtPointArrayData: QwtSeriesDataQPointF
+class QwtPointArrayDataDouble: QwtPointSeriesData
 {
 %TypeHeaderCode
+#include <qwt_series_data.h>
 #include <qwt_point_data.h>
 typedef QwtSeriesData<QPointF> QwtSeriesDataQPointF;
+typedef QwtArraySeriesData<QPointF> QwtArraySeriesDataQPointF;
+typedef QwtPointArrayData<double> QwtPointArrayDataDouble;
 %End
 
 public:
-    QwtPointArrayData( const QVector<double> &x, const QVector<double> &y );
+    QwtPointArrayDataDouble( const QVector<double> &x, const QVector<double> &y );
     
       	
-    QwtPointArrayData(QVector<double> &,QVector<double> &)[( const double *x, const double *y, size_t size )];
+    QwtPointArrayDataDouble(QVector<double> &,QVector<double> &)[( const double *x, const double *y, size_t size )];
     
     %MethodCode
          //QVector<double> d_x;
@@ -50,15 +53,18 @@ public:
 /*!
   \brief Data class containing two pointers to memory blocks of doubles.
 */ 
-class QwtCPointerData: QwtSeriesDataQPointF
+class QwtCPointerDataDouble: QwtPointSeriesData
 {
 %TypeHeaderCode
+#include <qwt_series_data.h>
 #include <qwt_point_data.h>
 typedef QwtSeriesData<QPointF> QwtSeriesDataQPointF;
+typedef QwtArraySeriesData<QPointF> QwtArraySeriesDataQPointF;
+typedef QwtCPointerData<double> QwtCPointerDataDouble;
 %End
 
 public:
-    QwtCPointerData(SIP_PYLIST,SIP_PYLIST,size_t size)[( const double *x, const double *y, size_t size )];
+    QwtCPointerDataDouble(SIP_PYLIST,SIP_PYLIST,size_t size)[( const double *x, const double *y, size_t size )];
     %MethodCode
     //const double *d_x;
     //const double *d_y;
@@ -98,11 +104,13 @@ public:
     size_t d_size;*/
 };
 
-class QwtSyntheticPointData: QwtSeriesDataQPointF
+class QwtSyntheticPointData: QwtPointSeriesData
 {
 %TypeHeaderCode
+#include <qwt_series_data.h>
 #include <qwt_point_data.h>
 typedef QwtSeriesData<QPointF> QwtSeriesDataQPointF;
+typedef QwtArraySeriesData<QPointF> QwtArraySeriesDataQPointF;
 %End
 public:
     QwtSyntheticPointData( size_t size,
