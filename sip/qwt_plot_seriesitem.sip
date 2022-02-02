@@ -13,7 +13,7 @@ class QwtPlotSeriesItem: QwtPlotItem, QwtAbstractSeriesStore
 #include <qwt_plot_seriesitem.h>
 %End
 public:
-    explicit QwtPlotSeriesItem( const QString &title = QString::null );
+    explicit QwtPlotSeriesItem( const QString &title = QString() );
     //explicit QwtPlotSeriesItem( const QwtText &title );
     virtual ~QwtPlotSeriesItem();
     void setOrientation( Qt::Orientation );

@@ -47,7 +47,8 @@ public:
     void setResampleMode(ResampleMode mode);
     ResampleMode resampleMode() const;
 
-    virtual void setInterval( Qt::Axis, const QwtInterval & );
+    void setInterval( Qt::Axis, const QwtInterval & );
+    virtual QwtInterval interval( Qt::Axis axis) const final;
 
     void setValueMatrix( const QVector<double> &values, int numColumns );
     const QVector<double> valueMatrix() const;

@@ -31,7 +31,7 @@ public:
     //! Display modes
     typedef QFlags<QwtPlotSpectrogram::DisplayMode> DisplayModes;
 
-    explicit QwtPlotSpectrogram( const QString &title = QString::null );
+    explicit QwtPlotSpectrogram( const QString &title = QString() );
     virtual ~QwtPlotSpectrogram();
 
     void setDisplayMode( QwtPlotSpectrogram::DisplayMode, bool on = true );

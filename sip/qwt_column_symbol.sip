@@ -143,4 +143,6 @@ public:
 protected:
     void drawBox( QPainter * /Transfer/, const QwtColumnRect & ) const;
 
+private:
+    QwtColumnSymbol( const QwtColumnSymbol & );
 };

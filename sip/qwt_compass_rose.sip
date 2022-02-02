@@ -41,7 +41,8 @@ public:
         const QPointF &center, double radius, double north,
         QPalette::ColorGroup colorGroup = QPalette::Active ) const = 0;
         
-//private:
+private:
+    QwtCompassRose( const QwtCompassRose & );
 //    QPalette d_palette;
 };
 

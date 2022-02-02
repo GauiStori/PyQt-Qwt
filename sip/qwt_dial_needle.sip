@@ -55,7 +55,8 @@ protected:
     virtual void drawKnob( QPainter *, double width, 
         const QBrush &, bool sunken ) const;
 
-//private:
+private:
+    QwtDialNeedle( const QwtDialNeedle & );
 //    QPalette d_palette;
 };
 

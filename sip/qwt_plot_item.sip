@@ -52,8 +52,8 @@ public:
         //! For QwtPlotSpectrogram
         Rtti_PlotSpectrogram,
 
-        //! For QwtPlotSvgItem
-        Rtti_PlotSVG,
+        //! For QwtPlotGraphicItem, QwtPlotSvgItem
+        Rtti_PlotGraphic,
 
         //! For QwtPlotTradingCurve
         Rtti_PlotTradingCurve,
@@ -73,7 +73,10 @@ public:
         //! For QwtPlotZoneItem
         Rtti_PlotZone,
 
-        /*! 
+        //! For QwtPlotVectorField
+        Rtti_PlotVectorField,
+
+        /*!
            Values >= Rtti_PlotUserItem are reserved for plot items
            not implemented in the Qwt library.
          */

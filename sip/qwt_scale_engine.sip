@@ -111,7 +111,9 @@ protected:
 
     QwtInterval buildInterval( double v ) const;
 
-/*private:
+private:
+    QwtScaleEngine( const QwtScaleEngine & );
+/*
     class PrivateData;
     PrivateData *d_data;*/
 };

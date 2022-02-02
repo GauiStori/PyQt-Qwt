@@ -66,9 +66,9 @@ public:
       \return Sample at position i
      */
 #ifndef QWT_PYTHON_WRAPPER
-    virtual T sample( size_t i ) const = 0;
+    virtual T sample( size_t ) const = 0;
 #else
-    virtual T sample( size_t i ) const {return T();};
+    virtual T sample( size_t ) const {return T();};
 #endif
     /*!
        Calculate the bounding rect of all samples

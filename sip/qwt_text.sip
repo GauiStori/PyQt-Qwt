@@ -42,7 +42,7 @@ public:
     typedef QFlags<QwtText::LayoutAttribute> LayoutAttributes;
 
     QwtText( const QwtText & );
-    QwtText( const QString & = QString::null, QwtText::TextFormat textFormat = AutoText );
+    QwtText( const QString & = QString(), QwtText::TextFormat textFormat = AutoText );
     ~QwtText();
 
     bool operator==( const QwtText & ) const;

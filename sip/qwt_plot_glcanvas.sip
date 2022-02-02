@@ -40,36 +40,36 @@ public:
          The following enum is made for the designer only. It is safe
          to use QFrame::Shadow instead.
      */
-    enum Shadow
-    {
-        //! QFrame::Plain
-        Plain = QFrame::Plain,
-
-        //! QFrame::Raised
-        Raised = QFrame::Raised,
-
-        //! QFrame::Sunken
-        Sunken = QFrame::Sunken
-    };
-
-    /*!
-        \brief Frame shape
-
-        Unfortunately it is not possible to use QFrame::Shape
-        as a property of a widget that is not derived from QFrame.
-        The following enum is made for the designer only. It is safe
-        to use QFrame::Shadow instead.
-
-        \note QFrame::StyledPanel and QFrame::WinPanel are unsupported
-              and will be displayed as QFrame::Panel.
-     */
-    enum Shape
-    {
-        NoFrame = QFrame::NoFrame,
-
-        Box = QFrame::Box,
-        Panel = QFrame::Panel
-    };
+//    enum Shadow
+//    {
+//        //! QFrame::Plain
+//        Plain = QFrame::Plain,
+//
+//        //! QFrame::Raised
+//        Raised = QFrame::Raised,
+//
+//        //! QFrame::Sunken
+//        Sunken = QFrame::Sunken
+//    };
+//
+//    /*!
+//        \brief Frame shape
+//
+//        Unfortunately it is not possible to use QFrame::Shape
+//        as a property of a widget that is not derived from QFrame.
+//        The following enum is made for the designer only. It is safe
+//        to use QFrame::Shadow instead.
+//
+//        \note QFrame::StyledPanel and QFrame::WinPanel are unsupported
+//              and will be displayed as QFrame::Panel.
+//     */
+//    enum Shape
+//    {
+//        NoFrame = QFrame::NoFrame,
+//
+//        Box = QFrame::Box,
+//        Panel = QFrame::Panel
+//    };
 
     explicit QwtPlotGLCanvas( QwtPlot * = NULL );
     virtual ~QwtPlotGLCanvas();
@@ -77,11 +77,11 @@ public:
     void setFrameStyle( int style );
     int frameStyle() const;
 
-    void setFrameShadow( Shadow );
-    Shadow frameShadow() const;
+    void setFrameShadow( QFrame::Shadow );
+    QFrame::Shadow frameShadow() const;
 
-    void setFrameShape( Shape );
-    Shape frameShape() const;
+    void setFrameShape( QFrame::Shape );
+    QFrame::Shape frameShape() const;
 
     void setLineWidth( int );
     int lineWidth() const;
@@ -92,6 +92,10 @@ public:
     int frameWidth() const;
     QRect frameRect() const;
 
+    void setBorderRadius( double );
+    double borderRadius() const;
+
+    virtual void invalidateBackingStore();
     QPainterPath borderPath( const QRect & ) const;
 
     virtual bool event( QEvent * );
@@ -102,9 +106,9 @@ public:
 protected:
     virtual void paintEvent( QPaintEvent * );
 
-    virtual void drawBackground( QPainter * );
-    virtual void drawBorder( QPainter * );
-    virtual void drawItems( QPainter * );
+    virtual void initializeGL();
+    virtual void paintGL();
+    virtual void resizeGL( int width, int height );
 
 /*    
 private:

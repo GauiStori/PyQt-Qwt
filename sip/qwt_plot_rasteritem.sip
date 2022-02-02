@@ -27,7 +27,7 @@ public:
 
     typedef QFlags<QwtPlotRasterItem::PaintAttribute> PaintAttributes;
 
-    explicit QwtPlotRasterItem( const QString& title = QString::null );
+    explicit QwtPlotRasterItem( const QString& title = QString() );
     explicit QwtPlotRasterItem( const QwtText& title );
     virtual ~QwtPlotRasterItem();
 

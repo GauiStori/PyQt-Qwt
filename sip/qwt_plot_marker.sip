@@ -35,7 +35,7 @@ public:
         Cross
     };
 
-    explicit QwtPlotMarker( const QString &title = QString::null );
+    explicit QwtPlotMarker( const QString &title = QString() );
     explicit QwtPlotMarker( const QwtText &title );
 
     virtual ~QwtPlotMarker();

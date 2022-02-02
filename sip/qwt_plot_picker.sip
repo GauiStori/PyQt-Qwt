@@ -24,7 +24,7 @@ public:
     explicit QwtPlotPicker( int xAxis, int yAxis,
         RubberBand rubberBand, DisplayMode trackerMode, QWidget * /TransferThis/ );
 
-    virtual void setAxis( int xAxis, int yAxis );
+    virtual void setAxes( int xAxis, int yAxis );
 
     int xAxis() const;
     int yAxis() const;

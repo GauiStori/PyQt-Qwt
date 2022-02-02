@@ -15,40 +15,52 @@ class QwtSpline
 %End
 
 public:
-    //! Spline type
-    enum SplineType
-    {
-        //! A natural spline
-        Natural,
 
-        //! A periodic spline
-        Periodic
+    enum BoundaryType
+    {
+        ConditionalBoundaries,
+        PeriodicPolygon,
+        ClosedPolygon
+    };
+
+    enum BoundaryPosition
+    {
+        AtBeginning,
+        AtEnd
+    };
+
+    enum BoundaryCondition
+    {
+        Clamped1,
+        Clamped2,
+        Clamped3,
+        LinearRunout
     };
 
     QwtSpline();
+    virtual ~QwtSpline();
+
+    void setParametrization( int type );
+    //void setParametrization( QwtSplineParametrization* );
+    //const QwtSplineParametrization* parametrization() const;
+
+    void setBoundaryType( BoundaryType );
+    BoundaryType boundaryType() const;
+
+    void setBoundaryValue( BoundaryPosition, double value );
+    double boundaryValue( BoundaryPosition ) const;
+
+    void setBoundaryCondition( BoundaryPosition, int condition );
+    int boundaryCondition( BoundaryPosition ) const;
+
+    void setBoundaryConditions( int condition,
+        double valueBegin = 0.0, double valueEnd = 0.0 );
+
+    virtual QPolygonF polygon( const QPolygonF&, double tolerance ) const;
+    virtual QPainterPath painterPath( const QPolygonF& ) const = 0;
+
+    virtual uint locality() const;
+
+private:
     QwtSpline( const QwtSpline & );
-
-    ~QwtSpline();
-
-    //QwtSpline &operator=( const QwtSpline & );
-
-    void setSplineType( SplineType );
-    SplineType splineType() const;
-
-    bool setPoints( const QPolygonF& points );
-    QPolygonF points() const;
-
-    void reset();
-
-    bool isValid() const;
-    double value( double x ) const;
-
-    const QVector<double> &coefficientsA() const;
-    const QVector<double> &coefficientsB() const;
-    const QVector<double> &coefficientsC() const;
-
-protected:
-    bool buildNaturalSpline( const QPolygonF & );
-    bool buildPeriodicSpline( const QPolygonF & );
-
 };
