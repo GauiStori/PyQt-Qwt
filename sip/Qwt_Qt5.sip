@@ -9,7 +9,7 @@
  *****************************************************************************/
 
 %Module(name=PyQt5.Qwt, keyword_arguments="Optional")
-%Timeline {Qwt_6_1_2 Qwt_6_1_3 Qwt_6_1_4 Qwt_6_1_5 Qwt_6_1_6}
+%Timeline {Qwt_6_1_2 Qwt_6_1_3 Qwt_6_1_4 Qwt_6_1_5 Qwt_6_1_6 Qwt_6_2_0}
 
 
 
@@ -132,6 +132,9 @@
 %Include qwt_pixel_matrix.sip
 %Include qwt_date_scale_engine.sip
 %Include qwt_painter.sip
+%If(Qwt_6_2_0 -)
+%Include qwt_plot_graphicitem.sip
+%End // (Qwt_6_2_0 -)
 %Include qwt_plot_svgitem.sip
 %Include qwt_interval_symbol.sip
 %Include qwt_plot_intervalcurve.sip
