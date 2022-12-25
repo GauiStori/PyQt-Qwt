@@ -15,6 +15,7 @@
   SVG images are often used to display maps
 */
 
+%If(- Qwt_6_1_6)
 class QwtPlotSvgItem: public QwtPlotItem
 {
 %TypeHeaderCode
@@ -45,13 +46,21 @@ protected:
 
     QRectF viewBox( const QRectF &rect ) const;
 
-/*    
-private:
-    void init();
-
-    class PrivateData;
-    PrivateData *d_data;
-    */
 };
+%End // (- Qwt_6_1_6)
 
+%If(Qwt_6_2_0 -)
+class QwtPlotSvgItem : public QwtPlotGraphicItem
+{
+%TypeHeaderCode
+#include <qwt_plot_svgitem.h>
+%End
+  public:
+    explicit QwtPlotSvgItem( const QString& title = QString() );
+    explicit QwtPlotSvgItem( const QwtText& title );
+    virtual ~QwtPlotSvgItem();
 
+    bool loadFile( const QRectF&, const QString& fileName );
+    bool loadData( const QRectF&, const QByteArray& );
+};
+%End // (Qwt_6_2_0 -)

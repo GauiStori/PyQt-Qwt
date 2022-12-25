@@ -33,6 +33,8 @@
   \sa QwtDate, QwtPlot::setAxisScaleEngine(),
       QwtAbstractScale::setScaleEngine()
 */
+
+%If(- Qwt_6_1_6)
 class QwtDateScaleEngine: public QwtLinearScaleEngine
 {
 %TypeHeaderCode
@@ -75,11 +77,53 @@ private:
     QwtScaleDiv buildScaleDiv( const QDateTime &, const QDateTime &,
         int maxMajorSteps, int maxMinorSteps,
         QwtDate::IntervalType ) const;
-/*
-private:
-    class PrivateData;
-    PrivateData *d_data;
-    */
 };
+%End // (- Qwt_6_1_6)
 
+%If(Qwt_6_2_0 -)
+class QwtDateScaleEngine : public QwtLinearScaleEngine /NoDefaultCtors/
+{
+%TypeHeaderCode
+#include <qwt_date_scale_engine.h>
+%End
+  public:
+    explicit QwtDateScaleEngine( Qt::TimeSpec = Qt::LocalTime );
+    virtual ~QwtDateScaleEngine();
 
+    void setTimeSpec( Qt::TimeSpec );
+    Qt::TimeSpec timeSpec() const;
+
+    void setUtcOffset( int seconds );
+    int utcOffset() const;
+
+    void setWeek0Type( QwtDate::Week0Type );
+    QwtDate::Week0Type week0Type() const;
+
+    void setMaxWeeks( int );
+    int maxWeeks() const;
+
+    virtual void autoScale(
+        int maxNumSteps, double& x1, double& x2,
+        double& stepSize ) const; // QWT_OVERRIDE;
+
+    virtual QwtScaleDiv divideScale(
+        double x1, double x2,
+        int maxMajorSteps, int maxMinorSteps,
+        double stepSize = 0.0 ) const; // QWT_OVERRIDE;
+
+    virtual QwtDate::IntervalType intervalType(
+        const QDateTime&, const QDateTime&, int maxSteps ) const;
+
+    QDateTime toDateTime( double ) const;
+
+  protected:
+    virtual QDateTime alignDate( const QDateTime&, double stepSize,
+        QwtDate::IntervalType, bool up ) const;
+
+  private:
+    QwtScaleDiv buildScaleDiv( const QDateTime&, const QDateTime&,
+        int maxMajorSteps, int maxMinorSteps,
+        QwtDate::IntervalType ) const;
+
+};
+%End // (Qwt_6_2_0 -)

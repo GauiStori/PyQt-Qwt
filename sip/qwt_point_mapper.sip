@@ -16,7 +16,7 @@
   It is used by QwtPlotCurve but might also be useful for
   similar plot items displaying a QwtSeriesData<QPointF>.
  */
-class QwtPointMapper
+class QwtPointMapper  /NoDefaultCtors/
 {
 %TypeHeaderCode
 #include <qwt_point_mapper.h>
@@ -74,7 +74,7 @@ public:
         const QPen &, bool antialiased, uint numThreads ) const;
 
 /*private:
-    class PrivateData;
+        class PrivateData;
     PrivateData *d_data;
     */
 };

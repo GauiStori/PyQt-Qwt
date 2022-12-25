@@ -9,17 +9,16 @@
  *****************************************************************************/
 
 %Module(name=PyQt5.Qwt, keyword_arguments="Optional")
+
+
 %Timeline {Qwt_6_1_2 Qwt_6_1_3 Qwt_6_1_4 Qwt_6_1_5 Qwt_6_1_6 Qwt_6_2_0}
-
-
-
 
 %Import QtCore/QtCoremod.sip
 %Import QtGui/QtGuimod.sip
-%If(- SIP_4_19_16) 
+//%If(- SIP_4_19_16)  FIXME. Doesn't work for some reason 2022-12-25
 // This should be correct version according to the sip changelog
-%Import typedefs.sip
-%End
+//%Import typedefs.sip
+//%End
 %Import QtOpenGL/QtOpenGLmod.sip
 %Import QtSvg/QtSvgmod.sip
 %Import QtWidgets/QtWidgetsmod.sip
