@@ -91,8 +91,8 @@ class QwtMatrixRasterData : public QwtRasterData
     void setResampleMode(ResampleMode mode);
     ResampleMode resampleMode() const;
 
-    void setInterval( Qt::Axis, const QwtInterval& );
-    virtual QwtInterval interval( Qt::Axis axis) const;//QWT_OVERRIDE QWT_FINAL; //Check FIXME
+    virtual QwtInterval interval( Qt::Axis axis) const final;//QWT_OVERRIDE QWT_FINAL;
+    void setInterval( Qt::Axis, const QwtInterval& ) final;
 
     void setValueMatrix( const QVector< double >& values, int numColumns );
     const QVector< double > valueMatrix() const;
