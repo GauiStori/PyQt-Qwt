@@ -12,9 +12,9 @@
 
 
 %Timeline {Qwt_6_1_2 Qwt_6_1_3 Qwt_6_1_4 Qwt_6_1_5 Qwt_6_1_6 Qwt_6_2_0}
-
 %Import QtCore/QtCoremod.sip
 %Import QtGui/QtGuimod.sip
+
 //%If(- SIP_4_19_16)  FIXME. Doesn't work for some reason 2022-12-25
 // This should be correct version according to the sip changelog
 //%Import typedefs.sip
@@ -28,6 +28,7 @@
 %Include qmap_convert.sip
 
 %Include qwt_legend.sip
+/*
 %Include qwt_legend_data.sip
 %Include qwt_plot.sip
 %Include qwt_plot_item.sip
@@ -45,7 +46,6 @@
 %Include qwt_color_map.sip
 %Include qwt_text_engine.sip
 
-
 %Include qwt_picker.sip
 %Include qwt_plot_picker.sip
 %Include qwt_plot_zoomer.sip
@@ -55,7 +55,6 @@
 %Include qwt_plot_canvas.sip
 
 %Include qwt_plot_grid.sip
-
 %Include qwt_plot_curve.sip
 %Include qwt_plot_seriesitem.sip
 %Include qwt_series_store.sip
@@ -110,8 +109,8 @@
 %Include qwt_dial_needle.sip
 %Include qwt_dial.sip
 %Include qwt_round_scale_draw.sip
-%Include qwt_compass_rose.sip
-%Include qwt_compass.sip
+//%Include qwt_compass_rose.sip FIXME Add to 6.2.0 before release
+//%Include qwt_compass.sip
 
 %Include qwt_point_polar.sip
 %Include qwt_analog_clock.sip
@@ -150,3 +149,4 @@
 %Include qwt_plot_spectrocurve.sip	
 %Include qwt_plot_tradingcurve.sip
 %End // (Qwt_6_1_5 -)
+*/

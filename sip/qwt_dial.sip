@@ -35,7 +35,7 @@
   \note QDial is more similar to QwtKnob than to QwtDial
 */
 
-class QwtDial: QwtAbstractSlider
+class QwtDial: QwtAbstractSlider /NoDefaultCtors/
 {
 %TypeHeaderCode
 #include <qwt_dial.h>

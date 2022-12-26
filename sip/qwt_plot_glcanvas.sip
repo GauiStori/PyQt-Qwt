@@ -26,6 +26,7 @@
         QPaintEngine::OpenGL2 shows very basic problems like translated
         geometries.
 */
+%If(- Qwt_6_1_6)
 class QwtPlotGLCanvas: public QGLWidget
 {
 %TypeHeaderCode
@@ -112,5 +113,44 @@ private:
     PrivateData *d_data;
     */
 };
+%End // (- Qwt_6_1_6)
 
+%If(Qwt_6_2_0 -)
+class QwtPlotGLCanvas : public QGLWidget //, public QwtPlotAbstractGLCanvas
+{
+%TypeHeaderCode
+#include <qwt_plot_glcanvas.h>
+%End
+/*    Q_OBJECT
 
+    Q_PROPERTY( QFrame::Shadow frameShadow READ frameShadow WRITE setFrameShadow )
+    Q_PROPERTY( QFrame::Shape frameShape READ frameShape WRITE setFrameShape )
+    Q_PROPERTY( int lineWidth READ lineWidth WRITE setLineWidth )
+    Q_PROPERTY( int midLineWidth READ midLineWidth WRITE setMidLineWidth )
+    Q_PROPERTY( int frameWidth READ frameWidth )
+    Q_PROPERTY( QRect frameRect READ frameRect DESIGNABLE false )
+
+    Q_PROPERTY( double borderRadius READ borderRadius WRITE setBorderRadius )
+*/
+  public:
+    explicit QwtPlotGLCanvas( QwtPlot* = NULL );
+    explicit QwtPlotGLCanvas( const QGLFormat&, QwtPlot* = NULL );
+    virtual ~QwtPlotGLCanvas();
+
+    virtual void invalidateBackingStore(); // QWT_OVERRIDE;
+    QPainterPath borderPath( const QRect& ) const;
+
+    virtual bool event( QEvent* ); // QWT_OVERRIDE;
+
+  public Q_SLOTS:
+    void replot();
+
+  protected:
+    virtual void paintEvent( QPaintEvent* ); // QWT_OVERRIDE;
+
+    virtual void initializeGL(); // QWT_OVERRIDE;
+    virtual void paintGL(); // QWT_OVERRIDE;
+    virtual void resizeGL( int width, int height ); // QWT_OVERRIDE;
+
+};
+%End // (Qwt_6_2_0 -)

@@ -8,6 +8,7 @@
  * modify it under the terms of the Qwt License, Version 1.0
  *****************************************************************************/
 
+%If(- Qwt_6_1_6)
 class QwtPointArrayData: QwtSeriesDataQPointF
 {
 %TypeHeaderCode
@@ -17,8 +18,6 @@ typedef QwtSeriesData<QPointF> QwtSeriesDataQPointF;
 
 public:
     QwtPointArrayData( const QVector<double> &x, const QVector<double> &y );
-    
-      	
     QwtPointArrayData(QVector<double> &,QVector<double> &)[( const double *x, const double *y, size_t size )];
     
     %MethodCode
@@ -130,7 +129,110 @@ public:
     QRectF d_rectOfInterest;
     QwtInterval d_intervalOfInterest;*/
 };
+%End // (- Qwt_6_1_6)
 
+%If(Qwt_6_2_0 -)
 
+class QwtPointArrayData : QwtPointSeriesDataQPointF
+{
+%TypeHeaderCode
+#include <qwt_point_data.h>
+typedef QwtPointSeriesData<QPointF> QwtPointSeriesDataQPointF;
+%End
 
+  public:
+    //QwtPointArrayData( const QVector<double>& x, const QVector<double>& y );
+    QwtPointArrayData(QVector<double> &,QVector<double> &)[( const double *x, const double *y, size_t size )];
 
+    virtual size_t size() const; // QWT_OVERRIDE;
+    virtual QPointF sample( size_t index ) const; // QWT_OVERRIDE;
+
+    const QVector<double>& xData() const;
+    const QVector<double>& yData() const;
+};
+
+class QwtCPointerData : QwtPointSeriesDataQPointF
+{
+%TypeHeaderCode
+#include <qwt_point_data.h>
+typedef QwtPointSeriesData<QPointF> QwtPointSeriesDataQPointF;
+%End
+  public:
+    QwtCPointerData(SIP_PYLIST,SIP_PYLIST,size_t size)[( const double *x, const double *y, size_t size )];
+
+    virtual size_t size() const; // QWT_OVERRIDE;
+    virtual QPointF sample( size_t index ) const; // QWT_OVERRIDE;
+
+    const SIP_PYLIST xData() const;
+    const SIP_PYLIST yData() const;
+    //const double* xData() const;
+    //const double* yData() const;
+};
+
+class QwtValuePointData : QwtPointSeriesDataQPointF
+{
+%TypeHeaderCode
+#include <qwt_point_data.h>
+typedef QwtPointSeriesData<QPointF> QwtPointSeriesDataQPointF;
+%End
+  public:
+    QwtValuePointData( const QVector<double>& y );
+    QwtValuePointData(SIP_PYLIST,size_t size)[( const double *y, size_t size )];
+
+    virtual size_t size() const; // QWT_OVERRIDE;
+    virtual QPointF sample( size_t index ) const; // QWT_OVERRIDE;
+
+    //const QVector<double>& yData() const;
+    const SIP_PYLIST yData() const;
+};
+
+class QwtCPointerValueData : QwtPointSeriesDataQPointF
+{
+%TypeHeaderCode
+#include <qwt_point_data.h>
+typedef QwtPointSeriesData<QPointF> QwtPointSeriesDataQPointF;
+%End
+  public:
+    QwtCPointerValueData(SIP_PYLIST,size_t size)[( const double *y, size_t size )];
+
+    virtual size_t size() const; // QWT_OVERRIDE;
+    virtual QPointF sample( size_t index ) const; // QWT_OVERRIDE;
+
+    const SIP_PYLIST yData() const;
+    //const double* yData() const;
+};
+
+class QwtSyntheticPointData : QwtPointSeriesDataQPointF
+{
+%TypeHeaderCode
+#include <qwt_point_data.h>
+typedef QwtPointSeriesData<QPointF> QwtPointSeriesDataQPointF;
+%End
+  public:
+    QwtSyntheticPointData( size_t size,
+        const QwtInterval& = QwtInterval() );
+
+    void setSize( size_t size );
+    virtual size_t size() const; // QWT_OVERRIDE;
+
+    void setInterval( const QwtInterval& );
+    QwtInterval interval() const;
+
+    virtual QRectF boundingRect() const; // QWT_OVERRIDE;
+    virtual QPointF sample( size_t index ) const; // QWT_OVERRIDE;
+
+    /*!
+       Calculate a y value for a x value
+
+       \param x x value
+       \return Corresponding y value
+     */
+    virtual double y( double x ) const = 0;
+    virtual double x( uint index ) const;
+
+    virtual void setRectOfInterest( const QRectF& ); // QWT_OVERRIDE;
+    QRectF rectOfInterest() const;
+
+};
+
+%End // (Qwt_6_2_0 -)

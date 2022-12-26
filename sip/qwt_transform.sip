@@ -8,7 +8,7 @@
  * modify it under the terms of the Qwt License, Version 1.0
  *****************************************************************************/
 
-class QwtTransform
+class QwtTransform /NoDefaultCtors/
 {
 %TypeHeaderCode
 #include <qwt_transform.h>
@@ -53,7 +53,7 @@ public:
    QwtNullTransform returns the values unmodified.
    
  */
-class QwtNullTransform: QwtTransform
+class QwtNullTransform: QwtTransform /NoDefaultCtors/
 {
 %TypeHeaderCode
 #include <qwt_transform.h>
@@ -76,7 +76,7 @@ public:
          has no effect on the mapping. So QwtLogTransform can be used 
          for log2(), log10() or any other logarithmic scale.
  */
-class QwtLogTransform: QwtTransform
+class QwtLogTransform: QwtTransform /NoDefaultCtors/
 {   
 %TypeHeaderCode
 #include <qwt_transform.h>
@@ -109,7 +109,7 @@ public:
    transforms a value of -3 to -9 and v.v. Thus QwtPowerTransform
    can be used for scales including negative values.
  */
-class QwtPowerTransform: QwtTransform
+class QwtPowerTransform: QwtTransform /NoDefaultCtors/
 {
 %TypeHeaderCode
 #include <qwt_transform.h>

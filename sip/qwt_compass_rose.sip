@@ -13,7 +13,7 @@
 /*!
   \brief Abstract base class for a compass rose
 */
-class QwtCompassRose
+class QwtCompassRose /NoDefaultCtors/
 {
 %TypeHeaderCode
 #include <qwt_compass_rose.h>
@@ -48,7 +48,7 @@ public:
 /*!
   \brief A simple rose for QwtCompass
 */
-class  QwtSimpleCompassRose: QwtCompassRose
+class  QwtSimpleCompassRose: QwtCompassRose /NoDefaultCtors/
 {
 %TypeHeaderCode
 #include <qwt_compass_rose.h>

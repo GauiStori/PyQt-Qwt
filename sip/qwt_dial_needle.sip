@@ -17,7 +17,7 @@
   \sa QwtDial, QwtCompass
 */
 
-class QwtDialNeedle
+class QwtDialNeedle /NoDefaultCtors/
 {
 %TypeHeaderCode
 #include <qwt_dial_needle.h>
@@ -72,7 +72,7 @@ protected:
   \sa QwtDial, QwtCompass
 */
 
-class QwtDialSimpleNeedle: QwtDialNeedle
+class QwtDialSimpleNeedle: QwtDialNeedle /NoDefaultCtors/
 {
 %TypeHeaderCode
 #include <qwt_dial_needle.h>
@@ -121,7 +121,7 @@ protected:
   \sa QwtDial, QwtCompass
 */
 
-class QwtCompassMagnetNeedle: QwtDialNeedle
+class QwtCompassMagnetNeedle: QwtDialNeedle /NoDefaultCtors/
 {
 %TypeHeaderCode
 #include <qwt_dial_needle.h>
@@ -161,7 +161,7 @@ protected:
   \sa QwtDial, QwtCompass
 */
 
-class QwtCompassWindArrow: QwtDialNeedle
+class QwtCompassWindArrow: QwtDialNeedle /NoDefaultCtors/
 {
 %TypeHeaderCode
 #include <qwt_dial_needle.h>
