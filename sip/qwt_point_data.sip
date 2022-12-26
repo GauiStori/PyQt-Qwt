@@ -156,10 +156,8 @@ public:
     	//::memcpy( d_y.data(), y, size * sizeof( double ) );
     %End
 
-    virtual QRectF boundingRect() const;
-
-    virtual size_t size() const;
-    virtual QPointF sample( size_t i ) const;
+    virtual size_t size() const; // QWT_OVERRIDE;
+    virtual QPointF sample( size_t index ) const; // QWT_OVERRIDE;
 
     const QVector<double> &xData() const;
     const QVector<double> &yData() const;
@@ -169,9 +167,6 @@ public:
     QVector<double> d_y;*/
 };
 
-/*!
-  \brief Data class containing two pointers to memory blocks of doubles.
-*/
 class QwtCPointerData: QwtSeriesDataQPointF
 {
 %TypeHeaderCode
@@ -194,9 +189,8 @@ public:
     %End
 
 
-    virtual QRectF boundingRect() const;
-    virtual size_t size() const;
-    virtual QPointF sample( size_t i ) const;
+    virtual size_t size() const; // QWT_OVERRIDE;
+    virtual QPointF sample( size_t index ) const; // QWT_OVERRIDE;
 
     //const double *xData() const;
     //const double *yData() const;
@@ -211,13 +205,22 @@ public:
 	//const double *d_y;
 	//return d_y;
     %End
+};
 
+class QwtValuePointData : public QwtPointSeriesData
+{
+%TypeHeaderCode
+#include <qwt_point_data.h>
+typedef QwtPointSeriesData<QPointF> QwtPointSeriesDataQPointF;
+%End
+  public:
+    QwtValuePointData( const QVector< QPointF >& y );
+    QwtValuePointData( const QPointF* y, size_t size );
 
+    virtual size_t size() const;// QWT_OVERRIDE;
+    virtual QPointF sample( size_t index ) const;// QWT_OVERRIDE;
 
-/*private:
-    const double *d_x;
-    const double *d_y;
-    size_t d_size;*/
+    const QVector< QPointF >& yData() const;
 };
 
 class QwtSyntheticPointData: QwtSeriesDataQPointF
