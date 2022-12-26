@@ -28,7 +28,6 @@
 %Include qmap_convert.sip
 
 %Include qwt_legend.sip
-/*
 %Include qwt_legend_data.sip
 %Include qwt_plot.sip
 %Include qwt_plot_item.sip
@@ -149,4 +148,3 @@
 %Include qwt_plot_spectrocurve.sip	
 %Include qwt_plot_tradingcurve.sip
 %End // (Qwt_6_1_5 -)
-*/

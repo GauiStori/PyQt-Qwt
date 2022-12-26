@@ -362,26 +362,20 @@ QRectF qwtBoundingRect(const QwtSeriesDataQwtOHLCSample &, int from = 0, int to 
 %End // (- Qwt_6_1_6)
 
 %If(Qwt_6_2_0 -)
-
 class QwtSeriesDataQPointF
 {
 %TypeHeaderCode
 #include <qwt_series_data.h>
 typedef QwtSeriesData<QPointF> QwtSeriesDataQPointF;
 %End
-  public:
-    //! Constructor
+public:
     QwtSeriesDataQPointF();
-
-    //! Destructor
     virtual ~QwtSeriesDataQPointF();
-
-    // Needed for generating the python bindings, but not for using them !
     virtual size_t size() const;
     virtual QPointF sample( size_t i ) const;
     virtual QRectF boundingRect() const;
-
-  private:
+    virtual void setRectOfInterest( const QRectF &rect );
+private:
     QwtSeriesDataQPointF& operator=( const QwtSeriesDataQPointF& );
 };
 
@@ -391,20 +385,17 @@ class QwtSeriesDataQwtPoint3D
 #include <qwt_series_data.h>
 typedef QwtSeriesData<QwtPoint3D> QwtSeriesDataQwtPoint3D;
 %End
-  public:
-    //! Constructor
+public:
     QwtSeriesDataQwtPoint3D();
-
-    //! Destructor
     virtual ~QwtSeriesDataQwtPoint3D();
-
-    // Needed for generating the python bindings, but not for using them !
     virtual size_t size() const;
-    virtual QPointF sample( size_t i ) const;
+    virtual QwtPoint3D sample( size_t i ) const;
     virtual QRectF boundingRect() const;
-
-  private:
-    QwtSeriesDataQwtPoint3D& operator=( const QwtSeriesDataQwtPoint3D& );
+    virtual void setRectOfInterest( const QRectF &rect );
+//protected:
+//    mutable QRectF d_boundingRect;
+private:
+    QwtSeriesDataQwtPoint3D &operator=( const QwtSeriesDataQwtPoint3D& );
 };
 
 class QwtSeriesDataQwtPointPolar
@@ -413,22 +404,18 @@ class QwtSeriesDataQwtPointPolar
 #include <qwt_series_data.h>
 typedef QwtSeriesData<QwtPointPolar> QwtSeriesDataQwtPointPolar;
 %End
-  public:
-    //! Constructor
+public:
     QwtSeriesDataQwtPointPolar();
-
-    //! Destructor
     virtual ~QwtSeriesDataQwtPointPolar();
-
-    // Needed for generating the python bindings, but not for using them !
     virtual size_t size() const;
-    virtual QPointF sample( size_t i ) const;
+    virtual QwtPointPolar sample( size_t i ) const;
     virtual QRectF boundingRect() const;
-
-  private:
-    QwtSeriesDataQwtPointPolar& operator=( const QwtSeriesDataQwtPointPolar& );
+    virtual void setRectOfInterest( const QRectF &rect );
+//protected:
+//    mutable QRectF d_boundingRect;
+private:
+    QwtSeriesDataQwtPointPolar &operator=( const QwtSeriesDataQwtPointPolar& );
 };
-
 
 class QwtSeriesDataQwtIntervalSample
 {
@@ -436,20 +423,17 @@ class QwtSeriesDataQwtIntervalSample
 #include <qwt_series_data.h>
 typedef QwtSeriesData<QwtIntervalSample> QwtSeriesDataQwtIntervalSample;
 %End
-  public:
-    //! Constructor
+public:
     QwtSeriesDataQwtIntervalSample();
-
-    //! Destructor
     virtual ~QwtSeriesDataQwtIntervalSample();
-
-    // Needed for generating the python bindings, but not for using them !
     virtual size_t size() const;
-    virtual QPointF sample( size_t i ) const;
+    virtual QwtIntervalSample sample( size_t i ) const;
     virtual QRectF boundingRect() const;
-
-  private:
-    QwtSeriesDataQwtIntervalSample& operator=( const QwtSeriesDataQwtIntervalSample& );
+    virtual void setRectOfInterest( const QRectF &rect );
+//protected:
+//    mutable QRectF d_boundingRect;
+private:
+    QwtSeriesDataQwtIntervalSample &operator=( const QwtSeriesDataQwtIntervalSample& );
 };
 
 class QwtSeriesDataQwtSetSample
@@ -458,22 +442,33 @@ class QwtSeriesDataQwtSetSample
 #include <qwt_series_data.h>
 typedef QwtSeriesData<QwtSetSample> QwtSeriesDataQwtSetSample;
 %End
-  public:
-    //! Constructor
+public:
     QwtSeriesDataQwtSetSample();
-
-    //! Destructor
     virtual ~QwtSeriesDataQwtSetSample();
-
-    // Needed for generating the python bindings, but not for using them !
     virtual size_t size() const;
-    virtual QPointF sample( size_t i ) const;
+    virtual QwtSetSample sample( size_t i ) const;
     virtual QRectF boundingRect() const;
-
-  private:
-    QwtSeriesDataQwtSetSample& operator=( const QwtSeriesDataQwtSetSample& );
+    virtual void setRectOfInterest( const QRectF &rect );
+//protected:
+//    mutable QRectF d_boundingRect;
+private:
+    QwtSeriesDataQPointF &operator=( const QwtSeriesDataQPointF& );
 };
 
+
+/*template <typename T>
+class QwtArraySeriesData: public QwtSeriesData<T>
+{
+public:
+    QwtArraySeriesData();
+    QwtArraySeriesData( const QVector<T> &samples );
+    void setSamples( const QVector<T> &samples );
+    const QVector<T> samples() const;
+    virtual size_t size() const;
+    virtual T sample( size_t index ) const;
+protected:
+    QVector<T> d_samples;
+};*/
 
 class QwtSeriesDataQwtOHLCSample
 {
@@ -481,53 +476,112 @@ class QwtSeriesDataQwtOHLCSample
 #include <qwt_series_data.h>
 typedef QwtSeriesData<QwtOHLCSample> QwtSeriesDataQwtOHLCSample;
 %End
-  public:
-    //! Constructor
+public:
     QwtSeriesDataQwtOHLCSample();
-
-    //! Destructor
     virtual ~QwtSeriesDataQwtOHLCSample();
-
-    // Needed for generating the python bindings, but not for using them !
     virtual size_t size() const;
-    virtual QPointF sample( size_t i ) const;
+    virtual QwtOHLCSample sample( size_t i ) const;
     virtual QRectF boundingRect() const;
-
-  private:
-    QwtSeriesDataQwtOHLCSample& operator=( const QwtSeriesDataQwtOHLCSample& );
+    virtual void setRectOfInterest( const QRectF &rect );
+//protected:
+//    mutable QRectF d_boundingRect;
+private:
+    QwtSeriesDataQwtOHLCSample &operator=( const QwtSeriesDataQwtOHLCSample& );
 };
-class QwtSeriesDataQwtVectorFieldSample
+
+
+
+class QwtArraySeriesDataQPointF: QwtSeriesDataQPointF
 {
 %TypeHeaderCode
 #include <qwt_series_data.h>
-typedef QwtSeriesData<QwtVectorFieldSample> QwtSeriesDataQwtVectorFieldSample;
+typedef QwtArraySeriesData<QPointF> QwtArraySeriesDataQPointF;
+typedef QwtSeriesData<QPointF> QwtSeriesDataQPointF;
 %End
-  public:
-    //! Constructor
-    QwtSeriesDataQwtVectorFieldSample();
-
-    //! Destructor
-    virtual ~QwtSeriesDataQwtVectorFieldSample();
-
-    // Needed for generating the python bindings, but not for using them !
+public:
+    QwtArraySeriesDataQPointF();
+    QwtArraySeriesDataQPointF( const QVector<QPointF> &samples );
+    void setSamples( const QVector<QPointF> &samples );
+    const QVector<QPointF> samples() const;
     virtual size_t size() const;
-    virtual QPointF sample( size_t i ) const;
-    virtual QRectF boundingRect() const;
-
-  private:
-    QwtSeriesDataQwtVectorFieldSample& operator=( const QwtSeriesDataQwtVectorFieldSample& );
+    virtual QPointF sample( size_t index ) const;
+//protected:
+//    QVector<T> d_samples;
 };
 
-class QwtArraySeriesDataQPointF : public QwtSeriesDataQPointF
+class QwtArraySeriesDataQwtPoint3D: QwtSeriesDataQwtPoint3D
 {
-  public:
-    //! Constructor
-    QwtArraySeriesDataQPointF();
-    explicit QwtArraySeriesDataQPointF( const QVector< QPointF >& samples );
-    void setSamples( const QVector< QPointF >& samples );
-    const QVector< QPointF > samples() const;
-    virtual size_t size() const;// QWT_OVERRIDE;
-    virtual QPointF sample( size_t index ) const;// QWT_OVERRIDE;
+%TypeHeaderCode
+#include <qwt_series_data.h>
+typedef QwtArraySeriesData<QwtPoint3D> QwtArraySeriesDataQwtPoint3D;
+typedef QwtSeriesData<QwtPoint3D> QwtSeriesDataQwtPoint3D;
+%End
+public:
+    QwtArraySeriesDataQwtPoint3D();
+    QwtArraySeriesDataQwtPoint3D( const QVector<QwtPoint3D> &samples );
+    void setSamples( const QVector<QwtPoint3D> &samples );
+    const QVector<QwtPoint3D> samples() const;
+    virtual size_t size() const;
+    virtual QwtPoint3D sample( size_t index ) const;
+//protected:
+//    QVector<T> d_samples;
+};
+
+
+class QwtArraySeriesDataQwtOHLCSample: public QwtSeriesDataQwtOHLCSample
+{
+%TypeHeaderCode
+#include <qwt_series_data.h>
+typedef QwtArraySeriesData<QwtOHLCSample> QwtArraySeriesDataQwtOHLCSample;
+typedef QwtSeriesData<QwtOHLCSample> QwtSeriesDataQwtOHLCSample;
+%End
+public:
+    QwtArraySeriesDataQwtOHLCSample();
+    QwtArraySeriesDataQwtOHLCSample( const QVector<QwtOHLCSample> &samples );
+    void setSamples( const QVector<QwtOHLCSample> &samples );
+    const QVector<QwtOHLCSample> samples() const;
+    virtual size_t size() const;
+    virtual QwtOHLCSample sample( size_t index ) const;
+//protected:
+//    QVector<T> d_samples;
+};
+
+
+
+class QwtArraySeriesDataQwtSetSample: QwtSeriesDataQwtSetSample
+{
+%TypeHeaderCode
+#include <qwt_series_data.h>
+typedef QwtArraySeriesData<QwtSetSample> QwtArraySeriesDataQwtSetSample;
+typedef QwtSeriesData<QwtSetSample> QwtSeriesDataQwtSetSample;
+%End
+public:
+    QwtArraySeriesDataQwtSetSample();
+    QwtArraySeriesDataQwtSetSample( const QVector<QwtSetSample> &samples );
+    void setSamples( const QVector<QwtSetSample> &samples );
+    const QVector<QwtSetSample> samples() const;
+    virtual size_t size() const;
+    virtual QwtSetSample sample( size_t index ) const;
+//protected:
+//    QVector<T> d_samples;
+};
+
+class QwtArraySeriesDataQwtIntervalSample: QwtSeriesDataQwtIntervalSample
+{
+%TypeHeaderCode
+#include <qwt_series_data.h>
+typedef QwtArraySeriesData<QwtIntervalSample> QwtArraySeriesDataQwtIntervalSample;
+typedef QwtSeriesData<QwtIntervalSample> QwtSeriesDataQwtIntervalSample;
+%End
+public:
+    QwtArraySeriesDataQwtIntervalSample();
+    QwtArraySeriesDataQwtIntervalSample( const QVector<QwtIntervalSample> &samples );
+    void setSamples( const QVector<QwtIntervalSample> &samples );
+    const QVector<QwtIntervalSample> samples() const;
+    virtual size_t size() const;
+    virtual QwtIntervalSample sample( size_t index ) const;
+//protected:
+//    QVector<T> d_samples;
 };
 
 //! Interface for iterating over an array of points
@@ -536,6 +590,7 @@ class QwtPointSeriesData : public QwtArraySeriesDataQPointF
 %TypeHeaderCode
 #include <qwt_series_data.h>
 typedef QwtArraySeriesData<QPointF> QwtArraySeriesDataQPointF;
+//typedef QwtSeriesData<QPointF> QwtSeriesDataQPointF;
 %End
   public:
     QwtPointSeriesData(
@@ -550,6 +605,7 @@ class QwtPoint3DSeriesData : public QwtArraySeriesDataQwtPoint3D
 %TypeHeaderCode
 #include <qwt_series_data.h>
 typedef QwtArraySeriesData<QwtPoint3D> QwtArraySeriesDataQwtPoint3D;
+//typedef QwtSeriesData<QwtPoint3D> QwtSeriesDataQwtPoint3D;
 %End
   public:
     QwtPoint3DSeriesData(
@@ -564,6 +620,7 @@ class QwtIntervalSeriesData : public QwtArraySeriesDataQwtIntervalSample
 %TypeHeaderCode
 #include <qwt_series_data.h>
 typedef QwtArraySeriesData<QwtIntervalSample> QwtArraySeriesDataQwtIntervalSample;
+//typedef QwtSeriesData<QwtIntervalSample> QwtSeriesDataQwtIntervalSample;
 %End
   public:
     QwtIntervalSeriesData(
@@ -578,6 +635,7 @@ class QwtSetSeriesData : public QwtArraySeriesDataQwtSetSample
 %TypeHeaderCode
 #include <qwt_series_data.h>
 typedef QwtArraySeriesData<QwtSetSample> QwtArraySeriesDataQwtSetSample;
+//typedef QwtSeriesData<QwtSetSample> QwtSeriesDataQwtSetSample;
 %End
   public:
     QwtSetSeriesData(
@@ -586,19 +644,7 @@ typedef QwtArraySeriesData<QwtSetSample> QwtArraySeriesDataQwtSetSample;
     virtual QRectF boundingRect() const; // QWT_OVERRIDE;
 };
 
-//! Interface for iterating over an array of vector field samples
-class QwtVectorFieldData : public QwtArraySeriesDataQwtVectorFieldSample
-{
-%TypeHeaderCode
-#include <qwt_series_data.h>
-typedef QwtArraySeriesData<QwtVectorFieldSample> QwtArraySeriesDataQwtVectorFieldSample;
-%End
-  public:
-    QwtVectorFieldData(
-        const QVector< QwtVectorFieldSample >& = QVector< QwtVectorFieldSample >( ) );
 
-    virtual QRectF boundingRect() const; // QWT_OVERRIDE;
-};
 
 class QwtTradingChartData : public QwtArraySeriesDataQwtOHLCSample
 {
@@ -620,7 +666,7 @@ QRectF qwtBoundingRect( const QwtSeriesDataQwtPointPolar&, int from = 0, int to 
 QRectF qwtBoundingRect( const QwtSeriesDataQwtIntervalSample&, int from = 0, int to = -1 );
 QRectF qwtBoundingRect( const QwtSeriesDataQwtSetSample&, int from = 0, int to = -1 );
 QRectF qwtBoundingRect( const QwtSeriesDataQwtOHLCSample&, int from = 0, int to = -1 );
-QRectF qwtBoundingRect( const QwtSeriesDataQwtVectorFieldSample&, int from = 0, int to = -1 );
+//QRectF qwtBoundingRect( const QwtSeriesDataQwtVectorFieldSample&, int from = 0, int to = -1 );
 
 %End // (Qwt_6_2_0 -)
 
