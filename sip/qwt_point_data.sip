@@ -132,11 +132,10 @@ public:
 %End // (- Qwt_6_1_6)
 
 %If(Qwt_6_2_0 -)
-class QwtPointArrayData: QwtSeriesDataQPointF
+class QwtPointArrayData: QwtPointSeriesData
 {
 %TypeHeaderCode
 #include <qwt_point_data.h>
-typedef QwtSeriesData<QPointF> QwtSeriesDataQPointF;
 %End
 
 public:
@@ -167,11 +166,10 @@ public:
     QVector<double> d_y;*/
 };
 
-class QwtCPointerData: QwtSeriesDataQPointF
+class QwtCPointerData: QwtPointSeriesData
 {
 %TypeHeaderCode
 #include <qwt_point_data.h>
-typedef QwtSeriesData<QPointF> QwtSeriesDataQPointF;
 %End
 
 public:
@@ -207,15 +205,15 @@ public:
     %End
 };
 
-class QwtValuePointData : public QwtPointSeriesData
+class QwtValuePointDataQPointF : QwtPointSeriesData
 {
 %TypeHeaderCode
 #include <qwt_point_data.h>
-typedef QwtPointSeriesData<QPointF> QwtPointSeriesDataQPointF;
+typedef QwtValuePointData<QPointF> QwtValuePointDataQPointF;
 %End
   public:
-    QwtValuePointData( const QVector< QPointF >& y );
-    QwtValuePointData( const QPointF* y, size_t size );
+    QwtValuePointDataQPointF( const QVector< QPointF >& y );
+    QwtValuePointDataQPointF( const QPointF* y, size_t size );
 
     virtual size_t size() const;// QWT_OVERRIDE;
     virtual QPointF sample( size_t index ) const;// QWT_OVERRIDE;
@@ -223,11 +221,10 @@ typedef QwtPointSeriesData<QPointF> QwtPointSeriesDataQPointF;
     const QVector< QPointF >& yData() const;
 };
 
-class QwtSyntheticPointData: QwtSeriesDataQPointF
+class QwtSyntheticPointData: QwtPointSeriesData
 {
 %TypeHeaderCode
 #include <qwt_point_data.h>
-typedef QwtSeriesData<QPointF> QwtSeriesDataQPointF;
 %End
 public:
     QwtSyntheticPointData( size_t size,

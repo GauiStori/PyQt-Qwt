@@ -259,7 +259,7 @@ public:
 
 
 //! Interface for iterating over an array of points
-class QwtPointSeriesDataQPointF: public QwtArraySeriesDataQPointF
+class QwtPointSeriesData: public QwtArraySeriesDataQPointF
 {
 %TypeHeaderCode
 #include <qwt_series_data.h>
@@ -269,7 +269,7 @@ typedef QwtSeriesData<QPointF> QwtSeriesDataQPointF;
 %End
 
 public:
-    QwtPointSeriesDataQPointF(
+    QwtPointSeriesData(
         const QVector<QPointF> & = QVector<QPointF>() );
 
     virtual QRectF boundingRect() const;
