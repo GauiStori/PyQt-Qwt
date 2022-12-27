@@ -132,15 +132,16 @@ public:
 %End // (- Qwt_6_1_6)
 
 %If(Qwt_6_2_0 -)
-class QwtPointArrayData: QwtPointSeriesData
+class QwtPointArrayDataDouble: QwtPointSeriesData
 {
 %TypeHeaderCode
 #include <qwt_point_data.h>
+typedef QwtPointArrayData<double> QwtPointArrayDataDouble;
 %End
 
 public:
-    QwtPointArrayData( const QVector<double> &x, const QVector<double> &y );
-    QwtPointArrayData(QVector<double> &,QVector<double> &)[( const double *x, const double *y, size_t size )];
+    QwtPointArrayDataDouble( const QVector<double> &x, const QVector<double> &y );
+    QwtPointArrayDataDouble(QVector<double> &,QVector<double> &)[( const double *x, const double *y, size_t size )];
 
     %MethodCode
          //QVector<double> d_x;
@@ -166,14 +167,15 @@ public:
     QVector<double> d_y;*/
 };
 
-class QwtCPointerData: QwtPointSeriesData
+class QwtCPointerDataDouble: QwtPointSeriesData
 {
 %TypeHeaderCode
 #include <qwt_point_data.h>
+typedef QwtCPointerData<double> QwtCPointerDataDouble;
 %End
 
 public:
-    QwtCPointerData(SIP_PYLIST,SIP_PYLIST,size_t size)[( const double *x, const double *y, size_t size )];
+    QwtCPointerDataDouble(SIP_PYLIST,SIP_PYLIST,size_t size)[( const double *x, const double *y, size_t size )];
     %MethodCode
     //const double *d_x;
     //const double *d_y;
@@ -193,7 +195,7 @@ public:
     //const double *xData() const;
     //const double *yData() const;
 
-    const SIP_PYLIST xData() const;
+    /*const SIP_PYLIST xData() const;
      %MethodCode
 	//const double *d_x;
 	//return d_x;
@@ -202,23 +204,28 @@ public:
       %MethodCode
 	//const double *d_y;
 	//return d_y;
-    %End
+    %End*/
 };
 
-class QwtValuePointDataQPointF : QwtPointSeriesData
+class QwtValuePointDataDouble : QwtPointSeriesData
 {
 %TypeHeaderCode
 #include <qwt_point_data.h>
-typedef QwtValuePointData<QPointF> QwtValuePointDataQPointF;
+typedef QwtValuePointData<double> QwtValuePointDataDouble;
 %End
   public:
-    QwtValuePointDataQPointF( const QVector< QPointF >& y );
-    QwtValuePointDataQPointF( const QPointF* y, size_t size );
-
+    QwtValuePointDataDouble( const QVector< double >& y )[( const double *y, size_t size )];
+    //QwtValuePointDataDouble( const double* y, size_t size );
+    //QwtValuePointDataDouble( SIP_PYLIST, size_t size)[( const double *y, size_t size )];
+    %MethodCode
+    %End
     virtual size_t size() const;// QWT_OVERRIDE;
     virtual QPointF sample( size_t index ) const;// QWT_OVERRIDE;
 
-    const QVector< QPointF >& yData() const;
+    const QVector< double >& yData() const;
+    //const SIP_PYLIST yData() const;
+    %MethodCode
+    %End
 };
 
 class QwtSyntheticPointData: QwtPointSeriesData
