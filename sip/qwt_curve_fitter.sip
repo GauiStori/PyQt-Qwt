@@ -8,6 +8,7 @@
  * modify it under the terms of the Qwt License, Version 1.0
  *****************************************************************************/
 
+%If(- Qwt_6_1_6)
 class QwtCurveFitter
 {
 %TypeHeaderCode
@@ -36,7 +37,7 @@ private:
 /*!
   \brief A curve fitter using cubic splines
 */
-class QwtSplineCurveFitter: public QwtCurveFitter
+class QwtSplineCurveFitter: QwtCurveFitter
 {
 %TypeHeaderCode
 #include <qwt_curve_fitter.h>
@@ -110,7 +111,7 @@ private:
   axis scales QwtSplineCurveFitter can be used to implement different
   level of details to speed up painting of curves of many points.
 */
-class QwtWeedingCurveFitter: public QwtCurveFitter
+class QwtWeedingCurveFitter: QwtCurveFitter
 {
 %TypeHeaderCode
 #include <qwt_curve_fitter.h>
@@ -136,3 +137,28 @@ private:
     //class PrivateData;
     //PrivateData *d_data;
 };
+%End // (- Qwt_6_1_6)
+
+%If(Qwt_6_2_0 -)
+class QwtCurveFitter /NoDefaultCtors/
+{
+%TypeHeaderCode
+#include <qwt_curve_fitter.h>
+%End
+  public:
+    enum Mode
+    {
+        Polygon,
+        Path
+    };
+
+    virtual ~QwtCurveFitter();
+
+    Mode mode() const;
+    virtual QPolygonF fitCurve( const QPolygonF& polygon ) const = 0;
+    virtual QPainterPath fitCurvePath( const QPolygonF& polygon ) const = 0;
+
+  protected:
+    explicit QwtCurveFitter( Mode mode );
+};
+%End // (Qwt_6_2_0 -)
