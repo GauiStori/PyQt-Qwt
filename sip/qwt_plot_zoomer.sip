@@ -8,6 +8,7 @@
  * modify it under the terms of the Qwt License, Version 1.0
  *****************************************************************************/
 
+%If(- Qwt_6_1_6)
 class QwtPlotZoomer: QwtPlotPicker
 {
 %TypeHeaderCode
@@ -70,3 +71,68 @@ protected:
     //class PrivateData;
     //PrivateData *d_data;
 };
+%End // (- Qwt_6_1_6)
+
+%If(Qwt_6_2_0 -)
+class QwtPlotZoomer : QwtPlotPicker
+{
+%TypeHeaderCode
+#include <qwt_plot_zoomer.h>
+typedef int QwtAxisId;
+%End
+  public:
+    explicit QwtPlotZoomer( QWidget*, bool doReplot = true );
+    //explicit QwtPlotZoomer( QwtAxisId xAxis, QwtAxisId yAxis,
+    //    QWidget* /TransferThis/, bool doReplot = true );    FIXME
+    explicit QwtPlotZoomer( int xAxis, int yAxis,
+        QWidget* /TransferThis/, bool doReplot = true );
+
+    virtual ~QwtPlotZoomer();
+
+    virtual void setZoomBase( bool doReplot = true );
+    virtual void setZoomBase( const QRectF& );
+
+    QRectF zoomBase() const;
+    QRectF zoomRect() const;
+
+    virtual void setAxes( QwtAxisId xAxis, QwtAxisId yAxis ) ; // QWT_OVERRIDE; //FIXME
+    void setMaxStackDepth( int );
+    int maxStackDepth() const;
+
+    const QStack< QRectF >& zoomStack() const;
+    void setZoomStack( const QStack< QRectF >&,
+        int zoomRectIndex = -1 );
+
+    uint zoomRectIndex() const;
+
+  public Q_SLOTS:
+    void moveBy( double dx, double dy );
+    virtual void moveTo( const QPointF& );
+
+    virtual void zoom( const QRectF& );
+    virtual void zoom( int offset );
+
+  Q_SIGNALS:
+    /*!
+       A signal emitting the zoomRect(), when the plot has been
+       zoomed in or out.
+
+       \param rect Current zoom rectangle.
+     */
+
+    void zoomed( const QRectF& rect );
+
+  protected:
+    virtual void rescale();
+
+    virtual QSizeF minZoomSize() const;
+
+    virtual void widgetMouseReleaseEvent( QMouseEvent* ) ; // QWT_OVERRIDE;
+    virtual void widgetKeyPressEvent( QKeyEvent* ) ; // QWT_OVERRIDE;
+
+    virtual void begin() ; // QWT_OVERRIDE;
+    virtual bool end( bool ok = true ) ; // QWT_OVERRIDE;
+    virtual bool accept( QPolygon& ) const ; // QWT_OVERRIDE;
+
+};
+%End // (Qwt_6_2_0 -)
