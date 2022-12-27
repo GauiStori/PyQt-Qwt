@@ -8,6 +8,7 @@
  * modify it under the terms of the Qwt License, Version 1.0
  *****************************************************************************/
 
+%If(- Qwt_6_1_6)
 class QwtColumnRect
 {
 %TypeHeaderCode
@@ -144,3 +145,72 @@ protected:
     void drawBox( QPainter * /Transfer/, const QwtColumnRect & ) const;
 
 };
+%End // (- Qwt_6_1_6)
+
+%If(Qwt_6_2_0 -)
+class QwtColumnRect
+{
+%TypeHeaderCode
+#include <qwt_column_symbol.h>
+%End
+  public:
+    enum Direction
+    {
+        LeftToRight,
+        RightToLeft,
+        BottomToTop,
+        TopToBottom
+    };
+    //QwtColumnRect() : direction( BottomToTop );
+
+    QRectF toRect() const;
+
+    Qt::Orientation orientation() const;
+
+    QwtInterval hInterval;
+    QwtInterval vInterval;
+    Direction direction;
+};
+
+class QwtColumnSymbol /NoDefaultCtors/
+{
+%TypeHeaderCode
+#include <qwt_column_symbol.h>
+%End
+  public:
+    enum Style
+    {
+        NoStyle = -1,
+        Box,
+        UserStyle = 1000
+    };
+
+    enum FrameStyle
+    {
+        NoFrame,
+        Plain,
+        Raised
+    };
+
+  public:
+    explicit QwtColumnSymbol( Style = NoStyle );
+    virtual ~QwtColumnSymbol();
+
+    void setFrameStyle( FrameStyle );
+    FrameStyle frameStyle() const;
+
+    void setLineWidth( int width );
+    int lineWidth() const;
+
+    void setPalette( const QPalette& );
+    const QPalette& palette() const;
+
+    void setStyle( Style );
+    Style style() const;
+
+    virtual void draw( QPainter* /Transfer/, const QwtColumnRect& ) const;
+
+  protected:
+    void drawBox( QPainter* /Transfer/, const QwtColumnRect& ) const;
+};
+%End // (Qwt_6_2_0 -)
