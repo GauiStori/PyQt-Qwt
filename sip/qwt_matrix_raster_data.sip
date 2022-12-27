@@ -54,34 +54,16 @@ public:
 %End // (- Qwt_6_1_6)
 
 %If(Qwt_6_2_0 -)
-class QwtMatrixRasterData : public QwtRasterData
+class QwtMatrixRasterData : QwtRasterData /NoDefaultCtors/
 {
 %TypeHeaderCode
 #include <qwt_matrix_raster_data.h>
 %End
   public:
-    /*!
-       \brief Resampling algorithm
-       The default setting is NearestNeighbour;
-     */
     enum ResampleMode
     {
-        /*!
-           Return the value from the matrix, that is nearest to the
-           the requested position.
-         */
         NearestNeighbour,
-
-        /*!
-           Interpolate the value from the distances and values of the
-           4 surrounding values in the matrix,
-         */
         BilinearInterpolation,
-
-        /*!
-           Interpolate the value from the 16 surrounding values in the
-           matrix using hermite bicubic interpolation
-         */
         BicubicInterpolation
     };
 
@@ -91,8 +73,8 @@ class QwtMatrixRasterData : public QwtRasterData
     void setResampleMode(ResampleMode mode);
     ResampleMode resampleMode() const;
 
+    void setInterval( Qt::Axis, const QwtInterval& );
     virtual QwtInterval interval( Qt::Axis axis) const final;//QWT_OVERRIDE QWT_FINAL;
-    void setInterval( Qt::Axis, const QwtInterval& ) final;
 
     void setValueMatrix( const QVector< double >& values, int numColumns );
     const QVector< double > valueMatrix() const;
