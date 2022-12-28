@@ -37,6 +37,7 @@
   \sa QwtPlotMarker
 */
 
+%If(- Qwt_6_1_6)
 class QwtPlotTextLabel: public QwtPlotItem
 {
 %TypeHeaderCode
@@ -68,5 +69,33 @@ private:
     PrivateData *d_data;
     */
 };
+%End // (- Qwt_6_1_6)
 
+%If(Qwt_6_2_0 -)
+class QwtPlotTextLabel : QwtPlotItem /NoDefaultCtors/
+{
+%TypeHeaderCode
+#include <qwt_plot_textlabel.h>
+%End
+  public:
+    QwtPlotTextLabel();
+    virtual ~QwtPlotTextLabel();
 
+    virtual int rtti() const;// QWT_OVERRIDE;
+
+    void setText( const QwtText& );
+    QwtText text() const;
+
+    void setMargin( int margin );
+    int margin() const;
+
+    virtual QRectF textRect( const QRectF&, const QSizeF& ) const;
+
+  protected:
+    virtual void draw( QPainter*,
+        const QwtScaleMap&, const QwtScaleMap&,
+        const QRectF&) const; // QWT_OVERRIDE;
+
+    void invalidateCache();
+};
+%End // (Qwt_6_2_0 -)

@@ -8,6 +8,7 @@
  * modify it under the terms of the Qwt License, Version 1.0
  *****************************************************************************/
 
+%If(- Qwt_6_1_6)
 class QwtPlotMultiBarChart: QwtPlotAbstractBarChart, QwtSeriesStoreQwtSetSample
 {
 %TypeHeaderCode
@@ -83,3 +84,79 @@ protected:
     class PrivateData;
     PrivateData *d_data;*/
 };
+%End // (- Qwt_6_1_6)
+
+%If(Qwt_6_2_0 -)
+class QwtPlotMultiBarChart
+    : QwtPlotAbstractBarChart
+    , QwtSeriesStoreQwtSetSample /NoDefaultCtors/
+{
+%TypeHeaderCode
+#include <qwt_plot_multi_barchart.h>
+typedef QwtSeriesStore<QwtSetSample> QwtSeriesStoreQwtSetSample;
+%End
+  public:
+    enum ChartStyle
+    {
+        Grouped,
+        Stacked
+    };
+
+    explicit QwtPlotMultiBarChart( const QString& title = QString() );
+    explicit QwtPlotMultiBarChart( const QwtText& title );
+
+    virtual ~QwtPlotMultiBarChart();
+
+    virtual int rtti() const; // QWT_OVERRIDE;
+
+    void setBarTitles( const QList< QwtText >& );
+    QList< QwtText > barTitles() const;
+
+    void setSamples( const QVector< QwtSetSample >& );
+    void setSamples( const QVector< QVector< double > >& );
+    //void setSamples( QwtSeriesData< QwtSetSample >* ); FIXME
+
+    void setStyle( ChartStyle style );
+    ChartStyle style() const;
+
+    void setSymbol( int valueIndex, QwtColumnSymbol* );
+    //const QwtColumnSymbol* symbol( int valueIndex ) const;
+
+    void resetSymbolMap();
+
+    virtual void drawSeries( QPainter*,
+        const QwtScaleMap& xMap, const QwtScaleMap& yMap,
+        const QRectF& canvasRect, int from, int to ) const; // QWT_OVERRIDE;
+
+    virtual QRectF boundingRect() const; // QWT_OVERRIDE;
+
+    virtual QList< QwtLegendData > legendData() const; // QWT_OVERRIDE;
+
+    virtual QwtGraphic legendIcon(
+        int index, const QSizeF& ) const; // QWT_OVERRIDE;
+
+  protected:
+    QwtColumnSymbol* symbol( int valueIndex );
+
+    virtual QwtColumnSymbol* specialSymbol(
+        int sampleIndex, int valueIndex ) const;
+
+    virtual void drawSample( QPainter*,
+        const QwtScaleMap& xMap, const QwtScaleMap& yMap,
+        const QRectF& canvasRect, const QwtInterval& boundingInterval,
+        int index, const QwtSetSample& ) const;
+
+    virtual void drawBar( QPainter*, int sampleIndex,
+        int valueIndex, const QwtColumnRect& ) const;
+
+    void drawStackedBars( QPainter*,
+        const QwtScaleMap& xMap, const QwtScaleMap& yMap,
+        const QRectF& canvasRect, int index,
+        double sampleWidth, const QwtSetSample& ) const;
+
+    void drawGroupedBars( QPainter*,
+        const QwtScaleMap& xMap, const QwtScaleMap& yMap,
+        const QRectF& canvasRect, int index,
+        double sampleWidth, const QwtSetSample& ) const;
+};
+%End // (Qwt_6_2_0 -)

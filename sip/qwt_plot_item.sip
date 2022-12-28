@@ -8,6 +8,7 @@
  *****************************************************************************/
 
 
+%If(- Qwt_6_1_6)
 class QwtPlotItem
 {
 %TypeHeaderCode
@@ -244,3 +245,141 @@ private:
     QwtPlotItem( const QwtPlotItem & );
     QwtPlotItem &operator=( const QwtPlotItem & );
 };
+%End // (- Qwt_6_1_6)
+
+%If(Qwt_6_2_0 -)
+class QwtPlotItem  /NoDefaultCtors/
+{
+%TypeHeaderCode
+#include <qwt_plot_item.h>
+%End
+  public:
+    enum RttiValues
+    {
+        Rtti_PlotItem = 0,
+        Rtti_PlotGrid,
+        Rtti_PlotScale,
+        Rtti_PlotLegend,
+        Rtti_PlotMarker,
+        Rtti_PlotCurve,
+        Rtti_PlotSpectroCurve,
+        Rtti_PlotIntervalCurve,
+        Rtti_PlotHistogram,
+        Rtti_PlotSpectrogram,
+        Rtti_PlotGraphic,
+        Rtti_PlotTradingCurve,
+        Rtti_PlotBarChart,
+        Rtti_PlotMultiBarChart,
+        Rtti_PlotShape,
+        Rtti_PlotTextLabel,
+        Rtti_PlotZone,
+        Rtti_PlotVectorField,
+        Rtti_PlotUserItem = 1000
+    };
+    enum ItemAttribute
+    {
+        Legend = 0x01,
+        AutoScale = 0x02,
+        Margins = 0x04
+    };
+
+    //Q_DECLARE_FLAGS( ItemAttributes, ItemAttribute )
+    enum ItemInterest
+    {
+        ScaleInterest = 0x01,
+        LegendInterest = 0x02
+    };
+
+    //Q_DECLARE_FLAGS( ItemInterests, ItemInterest )
+    enum RenderHint
+    {
+        RenderAntialiased = 0x1
+    };
+
+    //Q_DECLARE_FLAGS( RenderHints, RenderHint )
+
+    explicit QwtPlotItem();
+    explicit QwtPlotItem( const QString& title );
+    explicit QwtPlotItem( const QwtText& title );
+
+    virtual ~QwtPlotItem();
+
+    void attach( QwtPlot* plot );
+    void detach();
+
+    QwtPlot* plot() const;
+
+    void setTitle( const QString& title );
+    void setTitle( const QwtText& title );
+    const QwtText& title() const;
+
+    virtual int rtti() const;
+
+    void setItemAttribute( ItemAttribute, bool on = true );
+    bool testItemAttribute( ItemAttribute ) const;
+
+    void setItemInterest( ItemInterest, bool on = true );
+    bool testItemInterest( ItemInterest ) const;
+
+    void setRenderHint( RenderHint, bool on = true );
+    bool testRenderHint( RenderHint ) const;
+
+    void setRenderThreadCount( uint numThreads );
+    uint renderThreadCount() const;
+
+    void setLegendIconSize( const QSize& );
+    QSize legendIconSize() const;
+
+    double z() const;
+    void setZ( double z );
+
+    void show();
+    void hide();
+    virtual void setVisible( bool );
+    bool isVisible () const;
+
+    //void setAxes( QwtAxisId xAxis, QwtAxisId yAxis );
+    void setAxes( int xAxis, int yAxis );
+
+    //void setXAxis( QwtAxisId );
+    //QwtAxisId xAxis() const;
+
+    void setXAxis( int );
+    int xAxis() const;
+
+    //void setYAxis( QwtAxisId );
+    //QwtAxisId yAxis() const;
+
+    void setYAxis( int );
+    int yAxis() const;
+
+    virtual void itemChanged();
+    virtual void legendChanged();
+    virtual void draw( QPainter* painter,
+        const QwtScaleMap& xMap, const QwtScaleMap& yMap,
+        const QRectF& canvasRect ) const = 0;
+
+    virtual QRectF boundingRect() const;
+
+    virtual void getCanvasMarginHint(
+        const QwtScaleMap& xMap, const QwtScaleMap& yMap,
+        const QRectF& canvasRect,
+        double& left, double& top, double& right, double& bottom) const;
+
+    virtual void updateScaleDiv(
+        const QwtScaleDiv&, const QwtScaleDiv& );
+
+    virtual void updateLegend( const QwtPlotItem*,
+        const QList< QwtLegendData >& );
+
+    QRectF scaleRect( const QwtScaleMap&, const QwtScaleMap& ) const;
+    QRectF paintRect( const QwtScaleMap&, const QwtScaleMap& ) const;
+
+    virtual QList< QwtLegendData > legendData() const;
+
+    virtual QwtGraphic legendIcon( int index, const QSizeF& ) const;
+
+  protected:
+    QwtGraphic defaultIcon( const QBrush&, const QSizeF& ) const;
+};
+%End // (Qwt_6_2_0 -)

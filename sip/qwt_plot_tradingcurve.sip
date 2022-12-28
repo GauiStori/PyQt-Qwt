@@ -30,6 +30,7 @@
   the symbol is fixed.
 */
 
+%If(- Qwt_6_1_6)
 class QwtPlotTradingCurve: public QwtPlotSeriesItem, public QwtSeriesStoreQwtOHLCSample
 {
 %TypeHeaderCode
@@ -162,12 +163,100 @@ protected:
     virtual double scaledSymbolWidth(
         const QwtScaleMap &xMap, const QwtScaleMap &yMap,
         const QRectF &canvasRect ) const;
-
-/*
-private:
-    class PrivateData;
-    PrivateData *d_data;
-    */
 };
+%End // (- Qwt_6_1_6)
 
+%If(Qwt_6_2_0 -)
+class QwtPlotTradingCurve
+    : QwtPlotSeriesItem
+    , QwtSeriesStoreQwtOHLCSample /NoDefaultCtors/
+{
+%TypeHeaderCode
+#include <qwt_plot_tradingcurve.h>
+typedef QwtSeriesStore<QwtOHLCSample> QwtSeriesStoreQwtOHLCSample;
+%End
+  public:
+    enum SymbolStyle
+    {
+        NoSymbol = -1,
+        Bar,
+        CandleStick,
+        UserSymbol = 100
+    };
+    enum Direction
+    {
+        Increasing,
+        Decreasing
+    };
 
+    enum PaintAttribute
+    {
+        ClipSymbols   = 0x01
+    };
+
+    //Q_DECLARE_FLAGS( PaintAttributes, PaintAttribute )
+
+    explicit QwtPlotTradingCurve( const QString& title = QString() );
+    explicit QwtPlotTradingCurve( const QwtText& title );
+
+    virtual ~QwtPlotTradingCurve();
+
+    virtual int rtti() const;// QWT_OVERRIDE;
+
+    void setPaintAttribute( PaintAttribute, bool on = true );
+    bool testPaintAttribute( PaintAttribute ) const;
+
+    void setSamples( const QVector< QwtOHLCSample >& );
+    //void setSamples( QwtSeriesData< QwtOHLCSample >* ); FIXME
+
+    void setSymbolStyle( SymbolStyle style );
+    SymbolStyle symbolStyle() const;
+
+    void setSymbolPen( const QColor&,
+        qreal width = 0.0, Qt::PenStyle = Qt::SolidLine );
+    void setSymbolPen( const QPen& );
+    QPen symbolPen() const;
+
+    void setSymbolBrush( Direction, const QBrush& );
+    QBrush symbolBrush( Direction ) const;
+
+    void setSymbolExtent( double );
+    double symbolExtent() const;
+
+    void setMinSymbolWidth( double );
+    double minSymbolWidth() const;
+
+    void setMaxSymbolWidth( double );
+    double maxSymbolWidth() const;
+
+    virtual void drawSeries( QPainter*,
+        const QwtScaleMap& xMap, const QwtScaleMap& yMap,
+        const QRectF& canvasRect, int from, int to ) const;// QWT_OVERRIDE;
+
+    virtual QRectF boundingRect() const;// QWT_OVERRIDE;
+
+    virtual QwtGraphic legendIcon( int index, const QSizeF& ) const;// QWT_OVERRIDE;
+
+  protected:
+
+    void init();
+
+    virtual void drawSymbols( QPainter*,
+        const QwtScaleMap& xMap, const QwtScaleMap& yMap,
+        const QRectF& canvasRect, int from, int to ) const;
+
+    virtual void drawUserSymbol( QPainter*,
+        SymbolStyle, const QwtOHLCSample&,
+        Qt::Orientation, bool inverted, double symbolWidth ) const;
+
+    void drawBar( QPainter*, const QwtOHLCSample&,
+        Qt::Orientation, bool inverted, double width ) const;
+
+    void drawCandleStick( QPainter*, const QwtOHLCSample&,
+        Qt::Orientation, double width ) const;
+
+    virtual double scaledSymbolWidth(
+        const QwtScaleMap& xMap, const QwtScaleMap& yMap,
+        const QRectF& canvasRect ) const;
+};
+%End // (Qwt_6_2_0 -)

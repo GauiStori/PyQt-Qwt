@@ -8,6 +8,7 @@
  * modify it under the terms of the Qwt License, Version 1.0
  *****************************************************************************/
 
+%If(- Qwt_6_1_6)
 class QwtPlotMarker: QwtPlotItem
 {
 %TypeHeaderCode
@@ -93,3 +94,86 @@ protected:
     class PrivateData;
     PrivateData *d_data;*/
 };
+%End // (- Qwt_6_1_6)
+
+%If(Qwt_6_2_0 -)
+class QwtPlotMarker : QwtPlotItem /NoDefaultCtors/
+{
+%TypeHeaderCode
+#include <qwt_plot_marker.h>
+%End
+  public:
+    enum LineStyle
+    {
+        //! No line
+        NoLine,
+
+        //! A horizontal line
+        HLine,
+
+        //! A vertical line
+        VLine,
+
+        //! A crosshair
+        Cross
+    };
+
+    explicit QwtPlotMarker();
+    explicit QwtPlotMarker( const QString& title );
+    explicit QwtPlotMarker( const QwtText& title );
+
+    virtual ~QwtPlotMarker();
+
+    virtual int rtti() const;// QWT_OVERRIDE;
+
+    double xValue() const;
+    double yValue() const;
+    QPointF value() const;
+
+    void setXValue( double );
+    void setYValue( double );
+    void setValue( double, double );
+    void setValue( const QPointF& );
+
+    void setLineStyle( LineStyle );
+    LineStyle lineStyle() const;
+
+    void setLinePen( const QColor&, qreal width = 0.0, Qt::PenStyle = Qt::SolidLine );
+    void setLinePen( const QPen& );
+    const QPen& linePen() const;
+
+    void setSymbol( const QwtSymbol* /Transfer/);
+    const QwtSymbol* symbol() const;
+
+    void setLabel( const QwtText& );
+    QwtText label() const;
+
+    void setLabelAlignment( Qt::Alignment );
+    Qt::Alignment labelAlignment() const;
+
+    void setLabelOrientation( Qt::Orientation );
+    Qt::Orientation labelOrientation() const;
+
+    void setSpacing( int );
+    int spacing() const;
+
+    virtual void draw( QPainter*,
+        const QwtScaleMap& xMap, const QwtScaleMap& yMap,
+        const QRectF& ) const;// QWT_OVERRIDE;
+
+    virtual QRectF boundingRect() const;// QWT_OVERRIDE;
+
+    //virtual QwtGraphic legendIcon(
+    //    int index, const QSizeF& ) const QWT_OVERRIDE; FIXME
+
+  protected:
+    virtual void drawLines( QPainter*,
+        const QRectF&, const QPointF& ) const;
+
+    virtual void drawSymbol( QPainter*,
+        const QRectF&, const QPointF& ) const;
+
+    virtual void drawLabel( QPainter*,
+        const QRectF&, const QPointF& ) const;
+};
+%End // (Qwt_6_2_0 -)

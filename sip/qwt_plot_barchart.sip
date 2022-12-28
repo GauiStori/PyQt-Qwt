@@ -8,7 +8,7 @@
  * modify it under the terms of the Qwt License, Version 1.0
  *****************************************************************************/
 
-class QwtPlotBarChart: QwtPlotAbstractBarChart, QwtSeriesStoreQPointF
+class QwtPlotBarChart: QwtPlotAbstractBarChart, QwtSeriesStoreQPointF /NoDefaultCtors/
 {
 %TypeHeaderCode
 #include <qwt_plot_barchart.h>

@@ -8,6 +8,7 @@
  * modify it under the terms of the Qwt License, Version 1.0
  *****************************************************************************/
 
+%If(- Qwt_6_1_6)
 class QwtPlotLayout
 {
 %TypeHeaderCode
@@ -104,3 +105,69 @@ protected:
 
     PrivateData *d_data;*/
 };
+%End // (- Qwt_6_1_6)
+
+%If(Qwt_6_2_0 -)
+class QwtPlotLayout /NoDefaultCtors/
+{
+%TypeHeaderCode
+#include <qwt_plot_layout.h>
+%End
+  public:
+    enum Option
+    {
+        AlignScales = 0x01,
+        IgnoreScrollbars = 0x02,
+        IgnoreFrames = 0x04,
+        IgnoreLegend = 0x08,
+        IgnoreTitle = 0x10,
+        IgnoreFooter = 0x20
+    };
+
+    //Q_DECLARE_FLAGS( Options, Option )
+
+    explicit QwtPlotLayout();
+    virtual ~QwtPlotLayout();
+
+    void setCanvasMargin( int margin, int axis = -1 );
+    int canvasMargin( int axisId ) const;
+
+    void setAlignCanvasToScales( bool );
+
+    void setAlignCanvasToScale( int axisId, bool );
+    bool alignCanvasToScale( int axisId ) const;
+
+    void setSpacing( int );
+    int spacing() const;
+
+    void setLegendPosition( QwtPlot::LegendPosition pos, double ratio );
+    void setLegendPosition( QwtPlot::LegendPosition pos );
+    QwtPlot::LegendPosition legendPosition() const;
+
+    void setLegendRatio( double ratio );
+    double legendRatio() const;
+
+    virtual QSize minimumSizeHint( const QwtPlot* ) const;
+
+    /*virtual void activate( const QwtPlot*,
+        const QRectF& plotRect, Options options = Options() );FIXME*/
+
+    virtual void invalidate();
+
+    QRectF titleRect() const;
+    QRectF footerRect() const;
+    QRectF legendRect() const;
+    //QRectF scaleRect( QwtAxisId ) const;
+    QRectF scaleRect( int ) const;
+    QRectF canvasRect() const;
+
+  protected:
+
+    void setTitleRect( const QRectF& );
+    void setFooterRect( const QRectF& );
+    void setLegendRect( const QRectF& );
+    //void setScaleRect( QwtAxisId, const QRectF& );
+    void setScaleRect( int, const QRectF& );
+    void setCanvasRect( const QRectF& );
+};
+%End // (Qwt_6_2_0 -)

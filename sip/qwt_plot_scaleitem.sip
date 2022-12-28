@@ -36,6 +36,7 @@
   \endpar
 */
 
+%If(- Qwt_6_1_6)
 class QwtPlotScaleItem: public QwtPlotItem
 {
 %TypeHeaderCode
@@ -88,4 +89,54 @@ public:
     */
 };
 
+%If(Qwt_6_2_0 -)
 
+%End // (- Qwt_6_1_6)
+class QwtPlotScaleItem : QwtPlotItem
+{
+%TypeHeaderCode
+#include <qwt_plot_scaleitem.h>
+%End
+  public:
+    explicit QwtPlotScaleItem(
+        QwtScaleDraw::Alignment = QwtScaleDraw::BottomScale,
+        const double pos = 0.0 );
+
+    virtual ~QwtPlotScaleItem();
+
+    virtual int rtti() const;// QWT_OVERRIDE;
+
+    void setScaleDiv( const QwtScaleDiv& );
+    const QwtScaleDiv& scaleDiv() const;
+
+    void setScaleDivFromAxis( bool on );
+    bool isScaleDivFromAxis() const;
+
+    void setPalette( const QPalette& );
+    QPalette palette() const;
+
+    void setFont( const QFont& );
+    QFont font() const;
+
+    void setScaleDraw( QwtScaleDraw* );
+
+    const QwtScaleDraw* scaleDraw() const;
+    QwtScaleDraw* scaleDraw();
+
+    void setPosition( double pos );
+    double position() const;
+
+    void setBorderDistance( int );
+    int borderDistance() const;
+
+    void setAlignment( QwtScaleDraw::Alignment );
+
+    virtual void draw( QPainter*,
+        const QwtScaleMap& xMap, const QwtScaleMap& yMap,
+        const QRectF& canvasRect ) const;// QWT_OVERRIDE;
+
+    virtual void updateScaleDiv(
+        const QwtScaleDiv&, const QwtScaleDiv& );// QWT_OVERRIDE;
+
+};
+%End // (Qwt_6_2_0 -)

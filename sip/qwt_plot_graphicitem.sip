@@ -7,8 +7,7 @@
  * modify it under the terms of the Qwt License, Version 1.0
  *****************************************************************************/
 
-// QWT >= 6.2.0
-class  QwtPlotGraphicItem : public QwtPlotItem
+class  QwtPlotGraphicItem : QwtPlotItem /NoDefaultCtors/
 {
 %TypeHeaderCode
 #include <qwt_plot_graphicitem.h>

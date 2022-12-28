@@ -12,6 +12,7 @@
     \brief Curve that displays 3D points as dots, where the z coordinate is
            mapped to a color.
 */
+%If(- Qwt_6_1_6)
 class QwtPlotSpectroCurve: QwtPlotSeriesItem, QwtSeriesStoreQwtPoint3D
 {
 %TypeHeaderCode
@@ -70,5 +71,57 @@ private:
     PrivateData *d_data;
     */
 };
+%End // (- Qwt_6_1_6)
+
+%If(Qwt_6_2_0 -)
+class QwtPlotSpectroCurve
+    : public QwtPlotSeriesItem
+    , public QwtSeriesStoreQwtPoint3D /NoDefaultCtors/
+{
+%TypeHeaderCode
+#include <qwt_plot_spectrocurve.h>
+typedef QwtSeriesStore<QwtPoint3D> QwtSeriesStoreQwtPoint3D;
+%End
+  public:
+    //! Paint attributes
+    enum PaintAttribute
+    {
+        //! Clip points outside the canvas rectangle
+        ClipPoints = 1
+    };
+
+    //Q_DECLARE_FLAGS( PaintAttributes, PaintAttribute )
+
+    explicit QwtPlotSpectroCurve( const QString& title = QString() );
+    explicit QwtPlotSpectroCurve( const QwtText& title );
+
+    virtual ~QwtPlotSpectroCurve();
+
+    virtual int rtti() const;// QWT_OVERRIDE;
+
+    void setPaintAttribute( PaintAttribute, bool on = true );
+    bool testPaintAttribute( PaintAttribute ) const;
+
+    void setSamples( const QVector< QwtPoint3D >& );
+    //void setSamples( QwtSeriesData< QwtPoint3D >* );
 
 
+    void setColorMap( QwtColorMap* );
+    const QwtColorMap* colorMap() const;
+
+    void setColorRange( const QwtInterval& );
+    QwtInterval& colorRange() const;
+
+    virtual void drawSeries( QPainter*,
+        const QwtScaleMap& xMap, const QwtScaleMap& yMap,
+        const QRectF& canvasRect, int from, int to ) const;// QWT_OVERRIDE;
+
+    void setPenWidth( double );
+    double penWidth() const;
+
+  protected:
+    virtual void drawDots( QPainter*,
+        const QwtScaleMap& xMap, const QwtScaleMap& yMap,
+        const QRectF& canvasRect, int from, int to ) const;
+};
+%End // (Qwt_6_2_0 -)

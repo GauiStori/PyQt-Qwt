@@ -22,6 +22,7 @@
 
   \sa QwtPlotZone
 */
+%If(- Qwt_6_1_6)
 class QwtPlotShapeItem: public QwtPlotItem
 {
 %TypeHeaderCode
@@ -106,5 +107,63 @@ private:
     PrivateData *d_data;
     */
 };
+%End // (- Qwt_6_1_6)
 
+%If(Qwt_6_2_0 -)
+class QwtPlotShapeItem : QwtPlotItem /NoDefaultCtors/
+{
+%TypeHeaderCode
+#include <qwt_plot_shapeitem.h>
+%End
+  public:
+    enum PaintAttribute
+    {
+        ClipPolygons = 0x01,
+    };
 
+    //Q_DECLARE_FLAGS( PaintAttributes, PaintAttribute )
+    enum LegendMode
+    {
+        LegendShape,
+        LegendColor
+    };
+
+    explicit QwtPlotShapeItem( const QString& title = QString() );
+    explicit QwtPlotShapeItem( const QwtText& title );
+
+    virtual ~QwtPlotShapeItem();
+
+    void setPaintAttribute( PaintAttribute, bool on = true );
+    bool testPaintAttribute( PaintAttribute ) const;
+
+    void setLegendMode( LegendMode );
+    LegendMode legendMode() const;
+
+    void setRect( const QRectF& );
+    void setPolygon( const QPolygonF& );
+
+    void setShape( const QPainterPath& );
+    QPainterPath shape() const;
+
+    void setPen( const QColor&, qreal width = 0.0, Qt::PenStyle = Qt::SolidLine );
+    void setPen( const QPen& );
+    QPen pen() const;
+
+    void setBrush( const QBrush& );
+    QBrush brush() const;
+
+    void setRenderTolerance( double );
+    double renderTolerance() const;
+
+    virtual QRectF boundingRect() const;// QWT_OVERRIDE;
+
+    virtual void draw( QPainter*,
+        const QwtScaleMap& xMap, const QwtScaleMap& yMap,
+        const QRectF& canvasRect ) const;// QWT_OVERRIDE;
+
+    virtual QwtGraphic legendIcon(
+        int index, const QSizeF& ) const;// QWT_OVERRIDE;
+
+    virtual int rtti() const;// QWT_OVERRIDE;
+};
+%End // (Qwt_6_2_0 -)

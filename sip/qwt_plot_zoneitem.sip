@@ -19,6 +19,7 @@
         use QwtPlotShapeItem
 */
 
+%If(- Qwt_6_1_6)
 class QwtPlotZoneItem:
     public QwtPlotItem
 {
@@ -57,5 +58,37 @@ private:
     PrivateData *d_data;
     */
 };
+%If(Qwt_6_2_0 -)
 
+%End // (- Qwt_6_1_6)
+class QwtPlotZoneItem :
+    public QwtPlotItem /NoDefaultCtors/
+{
+  public:
+    explicit QwtPlotZoneItem();
+    virtual ~QwtPlotZoneItem();
 
+    virtual int rtti() const;// QWT_OVERRIDE;
+
+    void setOrientation( Qt::Orientation );
+    Qt::Orientation orientation() const;
+
+    void setInterval( double min, double max );
+    void setInterval( const QwtInterval& );
+    QwtInterval interval() const;
+
+    void setPen( const QColor&, qreal width = 0.0, Qt::PenStyle = Qt::SolidLine );
+    void setPen( const QPen& );
+    const QPen& pen() const;
+
+    void setBrush( const QBrush& );
+    const QBrush& brush() const;
+
+    virtual void draw( QPainter*,
+        const QwtScaleMap&, const QwtScaleMap&,
+        const QRectF& canvasRect ) const;// QWT_OVERRIDE;
+
+    virtual QRectF boundingRect() const;// QWT_OVERRIDE;
+
+};
+%End // (Qwt_6_2_0 -)

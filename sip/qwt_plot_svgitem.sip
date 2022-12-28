@@ -50,7 +50,7 @@ protected:
 %End // (- Qwt_6_1_6)
 
 %If(Qwt_6_2_0 -)
-class QwtPlotSvgItem : public QwtPlotGraphicItem
+class QwtPlotSvgItem : QwtPlotGraphicItem /NoDefaultCtors/
 {
 %TypeHeaderCode
 #include <qwt_plot_svgitem.h>
