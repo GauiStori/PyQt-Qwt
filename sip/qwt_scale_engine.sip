@@ -20,7 +20,7 @@ public:
         int numSteps, uint base );
 };*/
 
-
+%If(- Qwt_6_1_6)
 class QwtScaleEngine
 {
 %TypeHeaderCode
@@ -196,3 +196,137 @@ protected:
         int maxMinorSteps, double stepSize,
         QList<double> &minorTicks, QList<double> &mediumTicks ) const;
 };
+%End // (- Qwt_6_1_6)
+
+%If(Qwt_6_2_0 -)
+class QwtScaleArithmetic
+{
+%TypeHeaderCode
+#include <qwt_scale_engine.h>
+%End
+  public:
+    static double ceilEps( double value, double intervalSize );
+    static double floorEps( double value, double intervalSize );
+
+    static double divideEps( double intervalSize, double numSteps );
+
+    static double divideInterval( double intervalSize,
+        int numSteps, uint base );
+};
+
+class QwtScaleEngine  /NoDefaultCtors/
+{
+%TypeHeaderCode
+#include <qwt_scale_engine.h>
+%End
+  public:
+    enum Attribute
+    {
+        NoAttribute = 0x00,
+        IncludeReference = 0x01,
+        Symmetric = 0x02,
+        Floating = 0x04,
+        Inverted = 0x08
+    };
+
+    //Q_DECLARE_FLAGS( Attributes, Attribute )
+
+    explicit QwtScaleEngine( uint base = 10 );
+    virtual ~QwtScaleEngine();
+
+    void setBase( uint base );
+    uint base() const;
+
+    void setAttribute( Attribute, bool on = true );
+    bool testAttribute( Attribute ) const;
+
+    //void setAttributes( Attributes ); FIXME
+    //Attributes attributes() const; FIXME
+
+    void setReference( double );
+    double reference() const;
+
+    void setMargins( double lower, double upper );
+    double lowerMargin() const;
+    double upperMargin() const;
+    virtual void autoScale( int maxNumSteps,
+        double& x1, double& x2, double& stepSize ) const = 0;
+    virtual QwtScaleDiv divideScale( double x1, double x2,
+        int maxMajorSteps, int maxMinorSteps,
+        double stepSize = 0.0 ) const = 0;
+
+    void setTransformation( QwtTransform* );
+    QwtTransform* transformation() const;
+
+  protected:
+    bool contains( const QwtInterval&, double value ) const;
+    QList< double > strip( const QList< double >&, const QwtInterval& ) const;
+
+    double divideInterval( double intervalSize, int numSteps ) const;
+
+    QwtInterval buildInterval( double value ) const;
+};
+
+class QwtLinearScaleEngine : public QwtScaleEngine /NoDefaultCtors/
+{
+%TypeHeaderCode
+#include <qwt_scale_engine.h>
+%End
+  public:
+    explicit QwtLinearScaleEngine( uint base = 10 );
+    virtual ~QwtLinearScaleEngine();
+
+    virtual void autoScale( int maxNumSteps,
+        double& x1, double& x2, double& stepSize ) const;// QWT_OVERRIDE;
+
+    virtual QwtScaleDiv divideScale( double x1, double x2,
+        int maxMajorSteps, int maxMinorSteps,
+        double stepSize = 0.0 ) const;// QWT_OVERRIDE;
+
+
+  protected:
+    QwtInterval align( const QwtInterval&, double stepSize ) const;
+
+    /*void buildTicks(
+        const QwtInterval&, double stepSize, int maxMinorSteps,
+        QList< double > ticks[QwtScaleDiv::NTickTypes] ) const;FIXME*/
+
+    QList< double > buildMajorTicks(
+        const QwtInterval& interval, double stepSize ) const;
+
+    void buildMinorTicks( const QList< double >& majorTicks,
+        int maxMinorSteps, double stepSize,
+        QList< double >& minorTicks, QList< double >& mediumTicks ) const;
+};
+
+class QwtLogScaleEngine : public QwtScaleEngine /NoDefaultCtors/
+{
+%TypeHeaderCode
+#include <qwt_scale_engine.h>
+%End
+  public:
+    explicit QwtLogScaleEngine( uint base = 10 );
+    virtual ~QwtLogScaleEngine();
+
+    virtual void autoScale( int maxNumSteps,
+        double& x1, double& x2, double& stepSize ) const;// QWT_OVERRIDE;
+
+    virtual QwtScaleDiv divideScale( double x1, double x2,
+        int maxMajorSteps, int maxMinorSteps,
+        double stepSize = 0.0 ) const;// QWT_OVERRIDE;
+
+  protected:
+    QwtInterval align( const QwtInterval&, double stepSize ) const;
+
+    /*void buildTicks(
+        const QwtInterval&, double stepSize, int maxMinorSteps,
+        QList< double > ticks[QwtScaleDiv::NTickTypes] ) const;FIXME*/
+
+    QList< double > buildMajorTicks(
+        const QwtInterval& interval, double stepSize ) const;
+
+    void buildMinorTicks( const QList< double >& majorTicks,
+        int maxMinorSteps, double stepSize,
+        QList< double >& minorTicks, QList< double >& mediumTicks ) const;
+};
+%End // (Qwt_6_2_0 -)
