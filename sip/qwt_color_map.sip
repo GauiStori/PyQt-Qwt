@@ -8,6 +8,7 @@
  * modify it under the terms of the Qwt License, Version 1.0
  *****************************************************************************/
 
+%If(- Qwt_6_1_6)
 class QwtColorMap
 {
 %TypeHeaderCode
@@ -120,3 +121,142 @@ inline QwtColorMap::Format QwtColorMap::format() const
     return d_format;
 }*/
 
+%End // (- Qwt_6_1_6)
+
+%If(Qwt_6_2_0 -)
+class QwtColorMap /NoDefaultCtors/
+{
+%TypeHeaderCode
+#include <qwt_color_map.h>
+%End
+  public:
+    enum Format
+    {
+        RGB,
+        Indexed
+    };
+
+    explicit QwtColorMap( Format = QwtColorMap::RGB );
+    virtual ~QwtColorMap();
+
+    void setFormat( Format );
+    Format format() const;
+    virtual QRgb rgb( const QwtInterval& interval, double value ) const = 0;
+
+    virtual uint colorIndex( int numColors,
+        const QwtInterval& interval, double value ) const;
+
+    QColor color( const QwtInterval&, double value ) const;
+    virtual QVector< QRgb > colorTable( int numColors ) const;
+    virtual QVector< QRgb > colorTable256() const;
+};
+
+class QwtLinearColorMap : QwtColorMap /NoDefaultCtors/
+{
+%TypeHeaderCode
+#include <qwt_color_map.h>
+%End
+  public:
+    enum Mode
+    {
+        FixedColors,
+        ScaledColors
+    };
+
+    explicit QwtLinearColorMap( QwtColorMap::Format = QwtColorMap::RGB );
+
+    QwtLinearColorMap( const QColor& from, const QColor& to,
+        QwtColorMap::Format = QwtColorMap::RGB );
+
+    virtual ~QwtLinearColorMap();
+
+    void setMode( Mode );
+    Mode mode() const;
+
+    void setColorInterval( const QColor& color1, const QColor& color2 );
+    void addColorStop( double value, const QColor& );
+    QVector< double > colorStops() const;
+
+    QColor color1() const;
+    QColor color2() const;
+
+    virtual QRgb rgb( const QwtInterval&,
+        double value ) const;// QWT_OVERRIDE;
+
+    virtual uint colorIndex( int numColors,
+        const QwtInterval&, double value ) const;// QWT_OVERRIDE;
+
+    class ColorStops;
+};
+
+class QwtAlphaColorMap : QwtColorMap /NoDefaultCtors/
+{
+%TypeHeaderCode
+#include <qwt_color_map.h>
+%End
+  public:
+    explicit QwtAlphaColorMap( const QColor& = QColor( Qt::gray ) );
+    virtual ~QwtAlphaColorMap();
+
+    void setAlphaInterval( int alpha1, int alpha2 );
+
+    int alpha1() const;
+    int alpha2() const;
+
+    void setColor( const QColor& );
+    QColor color() const;
+
+    virtual QRgb rgb( const QwtInterval&,
+        double value ) const;// QWT_OVERRIDE;
+};
+
+class QwtHueColorMap : QwtColorMap /NoDefaultCtors/
+{
+%TypeHeaderCode
+#include <qwt_color_map.h>
+%End
+  public:
+    explicit QwtHueColorMap( QwtColorMap::Format = QwtColorMap::RGB );
+    virtual ~QwtHueColorMap();
+
+    void setHueInterval( int hue1, int hue2 ); // direction ?
+    void setSaturation( int saturation );
+    void setValue( int value );
+    void setAlpha( int alpha );
+
+    int hue1() const;
+    int hue2() const;
+    int saturation() const;
+    int value() const;
+    int alpha() const;
+
+    virtual QRgb rgb( const QwtInterval&,
+        double value ) const;// QWT_OVERRIDE;
+};
+
+class QwtSaturationValueColorMap : QwtColorMap /NoDefaultCtors/
+{
+%TypeHeaderCode
+#include <qwt_color_map.h>
+%End
+  public:
+    QwtSaturationValueColorMap();
+    virtual ~QwtSaturationValueColorMap();
+
+    void setHue( int hue );
+    void setSaturationInterval( int sat1, int sat2 );
+    void setValueInterval( int value1, int value2 );
+    void setAlpha( int alpha );
+
+    int hue() const;
+    int saturation1() const;
+    int saturation2() const;
+    int value1() const;
+    int value2() const;
+    int alpha() const;
+
+    virtual QRgb rgb( const QwtInterval&,
+        double value ) const;// QWT_OVERRIDE;
+};
+
+%End // (Qwt_6_2_0 -)
