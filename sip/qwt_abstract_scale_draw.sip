@@ -8,6 +8,7 @@
  * modify it under the terms of the Qwt License, Version 1.0
  *****************************************************************************/
 
+%If(- Qwt_6_1_6)
 class QwtAbstractScaleDraw
 {
 %TypeHeaderCode
@@ -118,3 +119,62 @@ private:
     class PrivateData;
     PrivateData *d_data;*/
 };
+%End // (- Qwt_6_1_6)
+
+%If(Qwt_6_2_0 -)
+class QwtAbstractScaleDraw /NoDefaultCtors/
+{
+%TypeHeaderCode
+#include <qwt_abstract_scale_draw.h>
+%End
+  public:
+    enum ScaleComponent
+    {
+        Backbone = 0x01,
+        Ticks = 0x02,
+        Labels = 0x04
+    };
+
+    //Q_DECLARE_FLAGS( ScaleComponents, ScaleComponent )
+
+    QwtAbstractScaleDraw();
+    virtual ~QwtAbstractScaleDraw();
+
+    void setScaleDiv( const QwtScaleDiv& );
+    //const QwtScaleDiv& scaleDiv() const;
+
+    void setTransformation( QwtTransform* );
+    //const QwtScaleMap& scaleMap() const;
+    QwtScaleMap& scaleMap();
+
+    void enableComponent( ScaleComponent, bool enable = true );
+    bool hasComponent( ScaleComponent ) const;
+
+    void setTickLength( QwtScaleDiv::TickType, double length );
+    double tickLength( QwtScaleDiv::TickType ) const;
+    double maxTickLength() const;
+
+    void setSpacing( double );
+    double spacing() const;
+
+    void setPenWidthF( qreal width );
+    qreal penWidthF() const;
+
+    virtual void draw( QPainter*, const QPalette& ) const;
+
+    virtual QwtText label( double ) const;
+    virtual double extent( const QFont& font ) const = 0;
+
+    void setMinimumExtent( double );
+    double minimumExtent() const;
+
+    void invalidateCache();
+
+  protected:
+    virtual void drawTick( QPainter* painter, double value, double len ) const = 0;
+    virtual void drawBackbone( QPainter* painter ) const = 0;
+    virtual void drawLabel( QPainter* painter, double value ) const = 0;
+
+    const QwtText& tickLabel( const QFont&, double value ) const;
+};
+%End // (Qwt_6_2_0 -)
