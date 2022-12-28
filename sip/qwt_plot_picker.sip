@@ -8,6 +8,7 @@
  * modify it under the terms of the Qwt License, Version 1.0
  *****************************************************************************/
 
+%If(- Qwt_6_1_6)
 class QwtPlotPicker: QwtPicker
 {
 %TypeHeaderCode
@@ -94,3 +95,59 @@ protected:
 //    int d_xAxis;
 //    int d_yAxis;
 };
+%End // (- Qwt_6_1_6)
+
+%If(Qwt_6_2_0 -)
+class QwtPlotPicker :  QwtPicker
+{
+%TypeHeaderCode
+#include <qwt_plot_picker.h>
+%End
+  public:
+    explicit QwtPlotPicker( QWidget* canvas );
+    virtual ~QwtPlotPicker();
+
+    //explicit QwtPlotPicker( QwtAxisId xAxisId, QwtAxisId yAxisId, QWidget* );
+    //explicit QwtPlotPicker( QwtAxisId xAxisId, QwtAxisId yAxisId,
+    //    RubberBand rubberBand, DisplayMode trackerMode, QWidget* );
+    explicit QwtPlotPicker( int xAxisId, int yAxisId, QWidget* /TransferThis/);
+    explicit QwtPlotPicker( int xAxisId, int yAxisId,
+        RubberBand rubberBand, DisplayMode trackerMode, QWidget* /TransferThis/);
+
+    virtual void setAxes( int xAxisId, int yAxisId );
+
+    int xAxis() const;
+    int yAxis() const;
+
+    QwtPlot* plot();
+    //const QwtPlot* plot() const;
+
+    QWidget* canvas();
+    //const QWidget* canvas() const;
+
+  Q_SIGNALS:
+
+    void selected( const QPointF& pos );
+    void selected( const QRectF& rect );
+    void selected( const QVector< QPointF >& pa );
+    void appended( const QPointF& pos );
+    void moved( const QPointF& pos );
+
+  protected:
+    QRectF scaleRect() const;
+
+    QRectF invTransform( const QRect& ) const;
+    QRect transform( const QRectF& ) const;
+
+    QPointF invTransform( const QPoint& ) const;
+    QPoint transform( const QPointF& ) const;
+
+    virtual QwtText trackerText( const QPoint& ) const;// QWT_OVERRIDE;
+    virtual QwtText trackerTextF( const QPointF& ) const;
+
+    virtual void move( const QPoint& );// QWT_OVERRIDE;
+    virtual void append( const QPoint& );// QWT_OVERRIDE;
+    virtual bool end( bool ok = true );// QWT_OVERRIDE;
+
+};
+%End // (Qwt_6_2_0 -)

@@ -78,12 +78,12 @@ class QwtPlotZoomer : QwtPlotPicker
 {
 %TypeHeaderCode
 #include <qwt_plot_zoomer.h>
-typedef int QwtAxisId;
 %End
   public:
+    //typedef int QwtAxisId;
+
     explicit QwtPlotZoomer( QWidget*, bool doReplot = true );
     //explicit QwtPlotZoomer( QwtAxisId xAxis, QwtAxisId yAxis,
-    //    QWidget* /TransferThis/, bool doReplot = true );    FIXME
     explicit QwtPlotZoomer( int xAxis, int yAxis,
         QWidget* /TransferThis/, bool doReplot = true );
 
@@ -95,7 +95,8 @@ typedef int QwtAxisId;
     QRectF zoomBase() const;
     QRectF zoomRect() const;
 
-    virtual void setAxes( QwtAxisId xAxis, QwtAxisId yAxis ) ; // QWT_OVERRIDE; //FIXME
+    //virtual void setAxes( QwtAxisId xAxis, QwtAxisId yAxis ) ; // QWT_OVERRIDE; //FIXME
+    virtual void setAxes( int xAxis, int yAxis ); // QWT_OVERRIDE; //FIXME
     void setMaxStackDepth( int );
     int maxStackDepth() const;
 
