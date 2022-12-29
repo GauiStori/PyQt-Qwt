@@ -8,6 +8,7 @@
  * modify it under the terms of the Qwt License, Version 1.0
  *****************************************************************************/
 
+%If(- Qwt_6_1_6)
 class QwtPlotCurve: QwtPlotSeriesItem, QwtSeriesStoreQPointF
 {
 %TypeHeaderCode
@@ -265,6 +266,164 @@ protected:
     class PrivateData;
     PrivateData *d_data;*/
 };
+%End // (- Qwt_6_1_6)
 
+%If(Qwt_6_2_0 -)
+class QwtPlotCurve
+    : QwtPlotSeriesItem
+    , QwtSeriesStoreQPointF /NoDefaultCtors/
+{
+%TypeHeaderCode
+#include <qwt_plot_curve.h>
+typedef QwtSeriesStore<QPointF> QwtSeriesStoreQPointF;
+%End
+  public:
+    enum CurveStyle
+    {
+        NoCurve = -1,
+        Lines,
+        Sticks,
+        Steps,
+        Dots,
+        UserCurve = 100
+    };
+    enum CurveAttribute
+    {
+        Inverted = 0x01,
+        Fitted = 0x02
+    };
 
+    //Q_DECLARE_FLAGS( CurveAttributes, CurveAttribute )
+    enum LegendAttribute
+    {
+        LegendNoAttribute = 0x00,
+        LegendShowLine = 0x01,
+        LegendShowSymbol = 0x02,
+        LegendShowBrush = 0x04
+    };
 
+    //Q_DECLARE_FLAGS( LegendAttributes, LegendAttribute )
+
+    enum PaintAttribute
+    {
+        ClipPolygons = 0x01,
+        FilterPoints = 0x02,
+        MinimizeMemory = 0x04,
+        ImageBuffer = 0x08,
+        FilterPointsAggressive = 0x10,
+    };
+
+    //Q_DECLARE_FLAGS( PaintAttributes, PaintAttribute )
+
+    explicit QwtPlotCurve( const QString& title = QString() );
+    explicit QwtPlotCurve( const QwtText& title );
+
+    virtual ~QwtPlotCurve();
+
+    virtual int rtti() const;// QWT_OVERRIDE;
+
+    void setPaintAttribute( PaintAttribute, bool on = true );
+    bool testPaintAttribute( PaintAttribute ) const;
+
+    void setLegendAttribute( LegendAttribute, bool on = true );
+    bool testLegendAttribute( LegendAttribute ) const;
+
+    //void setLegendAttributes( LegendAttributes ); //FIXME
+    //LegendAttributes legendAttributes() const;
+
+    void setRawSamples( const double* xData, const double* yData, int size );
+    //void setRawSamples( const float* xData, const float* yData, int size );
+
+    void setRawSamples( const double* yData, int size );
+    //void setRawSamples( const float* yData, int size );
+
+    void setSamples( const double* xData, const double* yData, int size );
+    //void setSamples( const float* xData, const float* yData, int size );
+
+    void setSamples( const double* yData, int size );
+    //void setSamples( const float* yData, int size );
+
+    void setSamples( const QVector< double >& yData );
+    //void setSamples( const QVector< float >& yData );
+
+    void setSamples( const QVector< double >& xData, const QVector< double >& yData );
+    //void setSamples( const QVector< float >& xData, const QVector< float >& yData );
+
+    void setSamples( const QVector< QPointF >& );
+    //void setSamples( QwtSeriesData< QPointF >* ); //FIXME
+
+    virtual int closestPoint( const QPointF& pos, double* dist = NULL ) const;
+
+    double minXValue() const;
+    double maxXValue() const;
+    double minYValue() const;
+    double maxYValue() const;
+
+    void setCurveAttribute( CurveAttribute, bool on = true );
+    bool testCurveAttribute( CurveAttribute ) const;
+
+    void setPen( const QColor&, qreal width = 0.0, Qt::PenStyle = Qt::SolidLine );
+    void setPen( const QPen& );
+    const QPen& pen() const;
+
+    void setBrush( const QBrush& );
+    const QBrush& brush() const;
+
+    void setBaseline( double );
+    double baseline() const;
+
+    void setStyle( CurveStyle style );
+    CurveStyle style() const;
+
+    void setSymbol( QwtSymbol* /Transfer/);
+    const QwtSymbol* symbol() const;
+
+    void setCurveFitter( QwtCurveFitter* /Transfer/ );
+    QwtCurveFitter* curveFitter() const;
+
+    virtual void drawSeries( QPainter*,
+        const QwtScaleMap& xMap, const QwtScaleMap& yMap,
+        const QRectF& canvasRect, int from, int to ) const;// QWT_OVERRIDE;
+
+    virtual QwtGraphic legendIcon( int index, const QSizeF& ) const; // QWT_OVERRIDE;
+
+  protected:
+
+    void init();
+
+    virtual void drawCurve( QPainter*, int style,
+        const QwtScaleMap& xMap, const QwtScaleMap& yMap,
+        const QRectF& canvasRect, int from, int to ) const;
+
+    virtual void drawSymbols( QPainter*, const QwtSymbol&,
+        const QwtScaleMap& xMap, const QwtScaleMap& yMap,
+        const QRectF& canvasRect, int from, int to ) const;
+
+    virtual void drawLines( QPainter*,
+        const QwtScaleMap& xMap, const QwtScaleMap& yMap,
+        const QRectF& canvasRect, int from, int to ) const;
+
+    virtual void drawSticks( QPainter*,
+        const QwtScaleMap& xMap, const QwtScaleMap& yMap,
+        const QRectF& canvasRect, int from, int to ) const;
+
+    virtual void drawDots( QPainter*,
+        const QwtScaleMap& xMap, const QwtScaleMap& yMap,
+        const QRectF& canvasRect, int from, int to ) const;
+
+    virtual void drawSteps( QPainter*,
+        const QwtScaleMap& xMap, const QwtScaleMap& yMap,
+        const QRectF& canvasRect, int from, int to ) const;
+
+    virtual void fillCurve( QPainter*,
+        const QwtScaleMap&, const QwtScaleMap&,
+        const QRectF& canvasRect, QPolygonF& ) const;
+
+    void closePolyline( QPainter*,
+        const QwtScaleMap&, const QwtScaleMap&, QPolygonF& ) const;
+
+/*  private:
+    class PrivateData;
+    PrivateData* m_data;*/
+};
+%End // (Qwt_6_2_0 -)
