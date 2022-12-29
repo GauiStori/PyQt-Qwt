@@ -8,6 +8,7 @@
  * modify it under the terms of the Qwt License, Version 1.0
  *****************************************************************************/
 
+%If(- Qwt_6_1_6)
 class QwtPlot: QFrame , QwtPlotDict
 {
 %TypeHeaderCode
@@ -232,3 +233,209 @@ private slots:
     class PrivateData;
     PrivateData *d_data;*/
 };
+%End // (- Qwt_6_1_6)
+
+%If(Qwt_6_2_0 -)
+class QwtPlot : QFrame, QwtPlotDict
+{
+    //Q_OBJECT
+
+    /*Q_PROPERTY( QBrush canvasBackground
+        READ canvasBackground WRITE setCanvasBackground )
+
+    Q_PROPERTY( bool autoReplot READ autoReplot WRITE setAutoReplot )*/
+
+  public:
+    enum LegendPosition
+    {
+        LeftLegend,
+        RightLegend,
+        BottomLegend,
+        TopLegend
+    };
+
+    explicit QwtPlot( QWidget* /TransferThis/ = NULL );
+    explicit QwtPlot( const QwtText& title, QWidget* /TransferThis/ = NULL );
+
+    virtual ~QwtPlot();
+
+    void setAutoReplot( bool = true );
+    bool autoReplot() const;
+
+    // Layout
+
+    void setPlotLayout( QwtPlotLayout* );
+
+    QwtPlotLayout* plotLayout();
+    //const QwtPlotLayout* plotLayout() const;
+
+    // Title
+
+    void setTitle( const QString& );
+    void setTitle( const QwtText& );
+    QwtText title() const;
+
+    QwtTextLabel* titleLabel();
+    //const QwtTextLabel* titleLabel() const;
+
+    // Footer
+
+    void setFooter( const QString& );
+    void setFooter( const QwtText& );
+    QwtText footer() const;
+
+    QwtTextLabel* footerLabel();
+    //const QwtTextLabel* footerLabel() const;
+
+    // Canvas
+
+    void setCanvas( QWidget* /Transfer/);
+
+    QWidget* canvas();
+    //const QWidget* canvas() const;
+
+    void setCanvasBackground( const QBrush& );
+    QBrush canvasBackground() const;
+
+    virtual QwtScaleMap canvasMap( int ) const;
+
+    double invTransform( int, double pos ) const;
+    double transform( int, double value ) const;
+
+    // Axes
+
+    bool isAxisValid( int ) const;
+
+    void setAxisVisible( int, bool on = true );
+    bool isAxisVisible( int ) const;
+
+    // Axes data
+
+    QwtScaleEngine* axisScaleEngine( int );
+    //const QwtScaleEngine* axisScaleEngine( int ) const;
+    void setAxisScaleEngine( int, QwtScaleEngine* /Transfer/);
+
+    void setAxisAutoScale( int, bool on = true );
+    bool axisAutoScale( int ) const;
+
+    void setAxisFont( int, const QFont& );
+    QFont axisFont( int ) const;
+
+    void setAxisScale( int, double min, double max, double stepSize = 0 );
+    void setAxisScaleDiv( int, const QwtScaleDiv& );
+    void setAxisScaleDraw( int, QwtScaleDraw* /Transfer/);
+
+    double axisStepSize( int ) const;
+    QwtInterval axisInterval( int ) const;
+    const QwtScaleDiv& axisScaleDiv( int ) const;
+
+    //const QwtScaleDraw* axisScaleDraw( int ) const;
+    QwtScaleDraw* axisScaleDraw( int );
+
+    //const QwtScaleWidget* axisWidget( int ) const;
+    QwtScaleWidget* axisWidget( int );
+
+    void setAxisLabelAlignment( int, Qt::Alignment );
+    void setAxisLabelRotation( int, double rotation );
+
+    void setAxisTitle( int, const QString& );
+    void setAxisTitle( int, const QwtText& );
+    QwtText axisTitle( int ) const;
+
+    void setAxisMaxMinor( int, int maxMinor );
+    int axisMaxMinor( int ) const;
+
+    void setAxisMaxMajor( int, int maxMajor );
+    int axisMaxMajor( int ) const;
+
+    // Legend
+
+    void insertLegend( QwtAbstractLegend*,
+        LegendPosition = QwtPlot::RightLegend, double ratio = -1.0 );
+
+    QwtAbstractLegend* legend();
+    //const QwtAbstractLegend* legend() const;
+
+    void updateLegend();
+    void updateLegend( const QwtPlotItem* );
+
+    // Misc
+
+    virtual QSize sizeHint() const ; // QWT_OVERRIDE;
+    virtual QSize minimumSizeHint() const ; // QWT_OVERRIDE;
+
+    virtual void updateLayout();
+    virtual void drawCanvas( QPainter* );
+
+    void updateAxes();
+    void updateCanvasMargins();
+
+    /*virtual void getCanvasMarginsHint(
+        const QwtScaleMap maps[], const QRectF& canvasRect,
+        double& left, double& top, double& right, double& bottom) const; FIXME*/
+
+    virtual bool event( QEvent* ) ; // QWT_OVERRIDE;
+    virtual bool eventFilter( QObject*, QEvent* ) ; // QWT_OVERRIDE;
+
+    /*virtual void drawItems( QPainter*, const QRectF&,
+        const QwtScaleMap maps[ QwtAxis::AxisPositions ] ) const;FIXME*/
+
+    virtual QVariant itemToInfo( QwtPlotItem* ) const;
+    virtual QwtPlotItem* infoToItem( const QVariant& ) const;
+
+/*#if QWT_AXIS_COMPAT
+    enum Axis
+    {
+        yLeft   = QwtAxis::YLeft,
+        yRight  = QwtAxis::YRight,
+        xBottom = QwtAxis::XBottom,
+        xTop    = QwtAxis::XTop,
+
+        axisCnt = QwtAxis::AxisPositions
+    };
+
+    void enableAxis( int axisId, bool on = true )
+    {
+        setAxisVisible( axisId, on );
+    }
+
+    bool axisEnabled( int axisId ) const
+    {
+        return isAxisVisible( axisId );
+    }
+#endif
+*/
+  Q_SIGNALS:
+    void itemAttached( QwtPlotItem* plotItem, bool on );
+    void legendDataChanged( const QVariant& itemInfo,
+        const QList< QwtLegendData >& data );
+
+  public Q_SLOTS:
+    virtual void replot();
+    void autoRefresh();
+
+  protected:
+
+    virtual void resizeEvent( QResizeEvent* ) ; // QWT_OVERRIDE;
+
+  private Q_SLOTS:
+    void updateLegendItems( const QVariant& itemInfo,
+        const QList< QwtLegendData >& legendData );
+
+/*  private:
+    friend class QwtPlotItem;
+    void attachItem( QwtPlotItem*, bool );
+
+    void initAxesData();
+    void deleteAxesData();
+    void updateScaleDiv();
+
+    void initPlot( const QwtText& title );
+
+    class ScaleData;
+    ScaleData* m_scaleData;
+
+    class PrivateData;
+    PrivateData* m_data;*/
+};
+%End // (- Qwt_6_2_0)
