@@ -4,6 +4,7 @@
 {
 %TypeHeaderCode
 #include <qwt_compass.h>
+#include <QMultiMap>
 %End
 
 %ConvertFromTypeCode
