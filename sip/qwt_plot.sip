@@ -383,7 +383,7 @@ class QwtPlot : QFrame, QwtPlotDict
     virtual QVariant itemToInfo( QwtPlotItem* ) const;
     virtual QwtPlotItem* infoToItem( const QVariant& ) const;
 
-/*#if QWT_AXIS_COMPAT
+//#if QWT_AXIS_COMPAT
     enum Axis
     {
         yLeft   = QwtAxis::YLeft,
@@ -394,17 +394,10 @@ class QwtPlot : QFrame, QwtPlotDict
         axisCnt = QwtAxis::AxisPositions
     };
 
-    void enableAxis( int axisId, bool on = true )
-    {
-        setAxisVisible( axisId, on );
-    }
+    void enableAxis( int axisId, bool on = true );
 
-    bool axisEnabled( int axisId ) const
-    {
-        return isAxisVisible( axisId );
-    }
-#endif
-*/
+    bool axisEnabled( int axisId ) const;
+//#endif
   Q_SIGNALS:
     void itemAttached( QwtPlotItem* plotItem, bool on );
     void legendDataChanged( const QVariant& itemInfo,
