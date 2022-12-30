@@ -255,7 +255,7 @@ class QwtScaleEngine  /NoDefaultCtors/
         int maxMajorSteps, int maxMinorSteps,
         double stepSize = 0.0 ) const = 0;
 
-    void setTransformation( QwtTransform* );
+    void setTransformation( QwtTransform*  /Transfer/);
     QwtTransform* transformation() const;
 
   protected:

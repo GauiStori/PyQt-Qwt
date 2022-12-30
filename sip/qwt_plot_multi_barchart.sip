@@ -114,17 +114,17 @@ typedef QwtSeriesStore<QwtSetSample> QwtSeriesStoreQwtSetSample;
 
     void setSamples( const QVector< QwtSetSample >& );
     void setSamples( const QVector< QVector< double > >& );
-    //void setSamples( QwtSeriesData< QwtSetSample >* ); FIXME
+    void setSamples( QwtSeriesDataQwtSetSample*  /Transfer/);
 
     void setStyle( ChartStyle style );
     ChartStyle style() const;
 
-    void setSymbol( int valueIndex, QwtColumnSymbol* );
+    void setSymbol( int valueIndex, QwtColumnSymbol*  /Transfer/);
     //const QwtColumnSymbol* symbol( int valueIndex ) const;
 
     void resetSymbolMap();
 
-    virtual void drawSeries( QPainter*,
+    virtual void drawSeries( QPainter* /Transfer/,
         const QwtScaleMap& xMap, const QwtScaleMap& yMap,
         const QRectF& canvasRect, int from, int to ) const; // QWT_OVERRIDE;
 

@@ -72,7 +72,7 @@ public:
     virtual void draw( QPainter *, const QPointF &center, double radius,
         double north, QPalette::ColorGroup = QPalette::Active ) const;
 
-    static void drawRose( QPainter *, const QPalette &,
+    static void drawRose( QPainter * /Transfer/, const QPalette &,
         const QPointF &center, double radius, double origin, double width,
         int numThorns, int numThornLevels, double shrinkFactor );
 

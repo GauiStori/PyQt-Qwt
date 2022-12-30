@@ -66,10 +66,10 @@ public:
     QwtCompassRose *rose();
 
 protected:
-    virtual void drawRose( QPainter *, const QPointF &center,
+    virtual void drawRose( QPainter * /Transfer/, const QPointF &center,
         double radius, double north, QPalette::ColorGroup ) const;
 
-    virtual void drawScaleContents( QPainter *,
+    virtual void drawScaleContents( QPainter * /Transfer/,
         const QPointF &center, double radius ) const;
 
     virtual void keyPressEvent( QKeyEvent * );
@@ -108,18 +108,18 @@ class QwtCompass :  QwtDial
 %End
   //  Q_OBJECT
   public:
-    explicit QwtCompass( QWidget* parent = NULL );
+    explicit QwtCompass( QWidget* parent  /TransferThis/ = NULL );
     virtual ~QwtCompass();
 
-    void setRose( QwtCompassRose* rose );
+    void setRose( QwtCompassRose* rose /Transfer/ );
     //const QwtCompassRose* rose() const;
     QwtCompassRose* rose();
 
   protected:
-    virtual void drawRose( QPainter*, const QPointF& center,
+    virtual void drawRose( QPainter* /Transfer/, const QPointF& center,
         double radius, double north, QPalette::ColorGroup ) const;
 
-    virtual void drawScaleContents( QPainter*,
+    virtual void drawScaleContents( QPainter* /Transfer/,
         const QPointF& center, double radius ) const;// QWT_OVERRIDE;
 
     virtual void keyPressEvent( QKeyEvent* );// QWT_OVERRIDE;

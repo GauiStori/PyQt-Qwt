@@ -325,14 +325,14 @@ class CockpitGrid( QWidget ):
             self.d_speedo = SpeedoMeter( self )
             self.d_speedo.setScaleStepSize( 20.0 )
             self.d_speedo.setScale( 0.0, 240.0 )
-            self.d_speedo.scaleDraw().setPenWidth( 2 )
+            self.d_speedo.scaleDraw().setPenWidthF( 2 )
             timer = QTimer( self.d_speedo )
             timer.timeout.connect(self.changeSpeed )
             timer.start( 50 )
             dial = self.d_speedo
         elif pos == 2:
             self.d_ai = AttitudeIndicator( self )
-            self.d_ai.scaleDraw().setPenWidth( 3 )
+            self.d_ai.scaleDraw().setPenWidthF( 3 )
             gradientTimer = QTimer( self.d_ai )
             gradientTimer.timeout.connect(self.changeGradient )
             gradientTimer.start( 100 )
