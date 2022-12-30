@@ -22,6 +22,7 @@
 */
 
 
+%If(- Qwt_6_1_6)
 class QwtCompassScaleDraw: QwtRoundScaleDraw
 {
 %TypeHeaderCode
@@ -77,3 +78,54 @@ protected:
 //    class PrivateData;
 //    PrivateData *d_data;
 };
+%End // (- Qwt_6_1_6)
+
+%If(Qwt_6_2_0 -)
+class QwtCompassScaleDraw : QwtRoundScaleDraw
+{
+%TypeHeaderCode
+#include <qwt_compass.h>
+%End
+  public:
+    explicit QwtCompassScaleDraw();
+    explicit QwtCompassScaleDraw( const QMap< double, QString >& map );
+
+    virtual ~QwtCompassScaleDraw();
+
+    void setLabelMap( const QMap< double, QString >& map );
+    QMap< double, QString > labelMap() const;
+
+    virtual QwtText label( double value ) const;// QWT_OVERRIDE;
+
+/*  private:
+    class PrivateData;
+    PrivateData* m_data;*/
+};
+class QwtCompass :  QwtDial
+{
+%TypeHeaderCode
+#include <qwt_compass.h>
+%End
+  //  Q_OBJECT
+  public:
+    explicit QwtCompass( QWidget* parent = NULL );
+    virtual ~QwtCompass();
+
+    void setRose( QwtCompassRose* rose );
+    //const QwtCompassRose* rose() const;
+    QwtCompassRose* rose();
+
+  protected:
+    virtual void drawRose( QPainter*, const QPointF& center,
+        double radius, double north, QPalette::ColorGroup ) const;
+
+    virtual void drawScaleContents( QPainter*,
+        const QPointF& center, double radius ) const;// QWT_OVERRIDE;
+
+    virtual void keyPressEvent( QKeyEvent* );// QWT_OVERRIDE;
+
+/*  private:
+    class PrivateData;
+    PrivateData* m_data;*/
+};
+%End // (Qwt_6_2_0 -)

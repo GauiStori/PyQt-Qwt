@@ -108,8 +108,8 @@
 %Include qwt_dial_needle.sip
 %Include qwt_dial.sip
 %Include qwt_round_scale_draw.sip
-//%Include qwt_compass_rose.sip FIXME Add to 6.2.0 before release
-//%Include qwt_compass.sip
+%Include qwt_compass_rose.sip
+%Include qwt_compass.sip
 
 %Include qwt_point_polar.sip
 %Include qwt_analog_clock.sip
