@@ -55,7 +55,7 @@ class Knob(QWidget):
         off = ceil( self.__d_knob.scaleDraw().extent( self.__d_knob.font() ) )
         off -= 15 # spacing
 
-        return QSize( w, h - off )
+        return QSize( int(w), int(h - off) )
 
     def setValue( self,value ):
         self.__d_knob.setValue( value )
@@ -84,7 +84,7 @@ class Knob(QWidget):
         off = ceil( self.__d_knob.scaleDraw().extent( self.__d_knob.font() ) )
         off -= 15 # spacing
 
-        self.__d_knob.setGeometry( 0, self.__d_label.pos().y() - knobHeight + off, sz.width(), knobHeight )
+        self.__d_knob.setGeometry( 0, int(self.__d_label.pos().y() - knobHeight + off), sz.width(), knobHeight )
  
     theme = pyqtProperty(QColor, theme, setTheme)
 
