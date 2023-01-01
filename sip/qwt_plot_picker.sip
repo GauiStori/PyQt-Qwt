@@ -104,7 +104,7 @@ class QwtPlotPicker :  QwtPicker
 #include <qwt_plot_picker.h>
 %End
   public:
-    explicit QwtPlotPicker( QWidget* canvas );
+    explicit QwtPlotPicker( QWidget* canvas  /TransferThis/);
     virtual ~QwtPlotPicker();
 
     //explicit QwtPlotPicker( QwtAxisId xAxisId, QwtAxisId yAxisId, QWidget* );
