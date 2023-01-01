@@ -112,7 +112,7 @@ typedef QwtSeriesStore<QwtSetSample> QwtSeriesStoreQwtSetSample;
     void setBarTitles( const QList< QwtText >& );
     QList< QwtText > barTitles() const;
 
-    void setSamples( const QVector< QwtSetSample >& );
+    //void setSamples( const QVector< QwtSetSample >& );
     void setSamples( const QVector< QVector< double > >& );
     void setSamples( QwtSeriesDataQwtSetSample*  /Transfer/);
 
