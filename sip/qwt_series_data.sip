@@ -585,7 +585,7 @@ public:
 };
 
 //! Interface for iterating over an array of points
-class QwtPointSeriesData : public QwtArraySeriesDataQPointF
+class QwtPointSeriesData : QwtArraySeriesDataQPointF
 {
 %TypeHeaderCode
 #include <qwt_series_data.h>
@@ -600,7 +600,7 @@ typedef QwtArraySeriesData<QPointF> QwtArraySeriesDataQPointF;
 };
 
 //! Interface for iterating over an array of 3D points
-class QwtPoint3DSeriesData : public QwtArraySeriesDataQwtPoint3D
+class QwtPoint3DSeriesData : QwtArraySeriesDataQwtPoint3D
 {
 %TypeHeaderCode
 #include <qwt_series_data.h>
@@ -615,7 +615,7 @@ typedef QwtArraySeriesData<QwtPoint3D> QwtArraySeriesDataQwtPoint3D;
 };
 
 //! Interface for iterating over an array of intervals
-class QwtIntervalSeriesData : public QwtArraySeriesDataQwtIntervalSample
+class QwtIntervalSeriesData : QwtArraySeriesDataQwtIntervalSample
 {
 %TypeHeaderCode
 #include <qwt_series_data.h>
@@ -630,7 +630,7 @@ typedef QwtArraySeriesData<QwtIntervalSample> QwtArraySeriesDataQwtIntervalSampl
 };
 
 //! Interface for iterating over an array of samples
-class QwtSetSeriesData : public QwtArraySeriesDataQwtSetSample
+class QwtSetSeriesData : QwtArraySeriesDataQwtSetSample
 {
 %TypeHeaderCode
 #include <qwt_series_data.h>
@@ -644,7 +644,21 @@ typedef QwtArraySeriesData<QwtSetSample> QwtArraySeriesDataQwtSetSample;
     virtual QRectF boundingRect() const; // QWT_OVERRIDE;
 };
 
+/*
+class QwtVectorFieldData : QwtArraySeriesDataQwtVectorFieldSample
+{
+%TypeHeaderCode
+#include <qwt_series_data.h>
+typedef QwtArraySeriesData<QwtVectorFieldSample> QwtArraySeriesDataQwtVectorFieldSample;
+//typedef QwtSeriesData<QwtSetSample> QwtSeriesDataQwtSetSample;
+%End
+  public:
+    QwtVectorFieldData(
+        const QVector< QwtVectorFieldSample >& = QVector< QwtVectorFieldSample >( ) );
 
+    virtual QRectF boundingRect() const;// QWT_OVERRIDE;
+};
+*/
 
 class QwtTradingChartData : public QwtArraySeriesDataQwtOHLCSample
 {
