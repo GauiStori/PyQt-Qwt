@@ -132,6 +132,7 @@
 %If(Qwt_6_2_0 -)
 %Include qwt_plot_graphicitem.sip
 %Include qwt_weeding_curve_fitter.sip
+%Include qwt_spline_curve_fitter.sip
 %End // (Qwt_6_2_0 -)
 %Include qwt_plot_svgitem.sip
 %Include qwt_interval_symbol.sip
