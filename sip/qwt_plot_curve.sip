@@ -340,17 +340,17 @@ typedef QwtSeriesStore<QPointF> QwtSeriesStoreQPointF;
     void setSamples( const double* xData, const double* yData, int size );
     //void setSamples( const float* xData, const float* yData, int size );
 
-    void setSamples( const double* yData, int size );
+    //void setSamples( const double* yData, int size );
     //void setSamples( const float* yData, int size );
 
-    void setSamples( const QVector< double >& yData );
+    //void setSamples( const QVector< double >& yData );
     //void setSamples( const QVector< float >& yData );
 
     void setSamples( const QVector< double >& xData, const QVector< double >& yData );
     //void setSamples( const QVector< float >& xData, const QVector< float >& yData );
 
     void setSamples( const QPolygonF & ); // Added for PyQt
-    void setSamples( const QVector< QPointF >& );
+    void setSamples( const QVector< QPointF > & );
     void setSamples( QwtSeriesDataQPointF * );
 
     virtual int closestPoint( const QPointF& pos, double* dist = NULL ) const;
