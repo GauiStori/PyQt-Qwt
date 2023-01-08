@@ -25,9 +25,9 @@ class Curve1(Curve):
         self.setStyle( Qwt.QwtPlotCurve.Lines )
 
         curveFitter = Qwt.QwtSplineCurveFitter()
-        curveFitter.setSplineSize( 150 )
+        #curveFitter.setSplineSize( 150 )
         self.setCurveFitter( curveFitter )
-        self.setCurveAttribute( Qwt.QwtPlotCurve.Fitted, True )
+        #self.setCurveAttribute( Qwt.QwtPlotCurve.Fitted, True )
 
         symbol = Qwt.QwtSymbol( Qwt.QwtSymbol.XCross )
         symbol.setPen( Qt.yellow )
@@ -79,8 +79,8 @@ class Curve3(Curve):
         self.setPen( QColor( 100, 200, 150 ), 2 )
 
         curveFitter = Qwt.QwtSplineCurveFitter()
-        curveFitter.setFitMode( Qwt.QwtSplineCurveFitter.ParametricSpline )
-        curveFitter.setSplineSize( 200 )
+        #curveFitter.setFitMode( Qwt.QwtSplineCurveFitter.ParametricSpline )
+        #curveFitter.setSplineSize( 200 )
         self.setCurveFitter( curveFitter )
 
         self.setCurveAttribute( Qwt.QwtPlotCurve.Fitted, True )
