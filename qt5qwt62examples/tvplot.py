@@ -2,6 +2,7 @@
 
 import sys
 from PyQt5 import Qwt
+import time
 from PyQt5.QtCore import Qt,  QSize
 from PyQt5.QtGui import QColor,  QPixmap, QFont, QBrush, QPalette, QPen
 from PyQt5.QtWidgets import (QMainWindow,  QWidget,  QToolBar,  QToolButton,  QHBoxLayout,  QLabel,  QApplication, QComboBox, QSizePolicy)
@@ -19,7 +20,8 @@ class Histogram(Qwt.QwtPlotHistogram):
         for i in range(numValues):
             interval = Qwt.QwtInterval( i , i + 1.0 )
             interval.setBorderFlags( Qwt.QwtInterval.ExcludeMaximum )
-            samples.append(Qwt.QwtIntervalSample( values[i], interval ))
+            a=Qwt.QwtIntervalSample( values[i], interval )
+            samples.append(a)
         self.setSamples( samples )
         
 
@@ -78,13 +80,13 @@ class TVPlot( Qwt.QwtPlot):
         juneValues = [ 7.0, 19.0, 24.0, 32.0, 10.0, 5.0, 3.0 ]
         novemberValues = [ 4.0, 15.0, 22.0, 34.0, 13.0, 8.0, 4.0 ]
 
-        histogramJune = Histogram( "Summer", Qt.red )
-        histogramJune.setValues( juneValues )
-        histogramJune.attach( self )
+        self.histogramJune = Histogram( "Summer", Qt.red )
+        self.histogramJune.setValues( juneValues )
+        self.histogramJune.attach( self )
 
-        histogramNovember = Histogram( "Winter", Qt.blue )
-        histogramNovember.setValues( novemberValues )
-        histogramNovember.attach( self )
+        self.histogramNovember = Histogram( "Winter", Qt.blue )
+        self.histogramNovember.setValues( novemberValues )
+        self.histogramNovember.attach( self )
 
     def exportPlot(self):
         print("Export Plot")

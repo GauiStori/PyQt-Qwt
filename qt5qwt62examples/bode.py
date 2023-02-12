@@ -130,11 +130,11 @@ class Plot( Qwt.QwtPlot):
         self.insertLegend( legend, Qwt.QwtPlot.BottomLegend )
 
         # grid
-        grid = Qwt.QwtPlotGrid()
-        grid.enableXMin( True )
-        grid.setMajorPen( Qt.white, 0, Qt.DotLine )
-        grid.setMinorPen( Qt.gray, 0 , Qt.DotLine )
-        grid.attach( self )
+        self.grid = Qwt.QwtPlotGrid()
+        self.grid.enableXMin( True )
+        self.grid.setMajorPen( Qt.white, 0, Qt.DotLine )
+        self.grid.setMinorPen( Qt.gray, 0 , Qt.DotLine )
+        self.grid.attach( self )
 
         # axes
         self.enableAxis( Qwt.QwtPlot.yRight )
