@@ -85,11 +85,12 @@ private:
 %If(Qwt_6_2_0 -)
 class QwtPlotHistogram
     : QwtPlotSeriesItem
-    , QwtSeriesStoreQwtIntervalSample /NoDefaultCtors/
+    , QwtSeriesStoreQwtIntervalSample // /NoDefaultCtors/
 {
 %TypeHeaderCode
 #include <qwt_plot_histogram.h>
 typedef QwtSeriesStore<QwtIntervalSample> QwtSeriesStoreQwtIntervalSample;
+typedef QwtSeriesData<QwtIntervalSample> QwtSeriesDataQwtIntervalSample;
 %End
   public:
     enum HistogramStyle
@@ -116,7 +117,7 @@ typedef QwtSeriesStore<QwtIntervalSample> QwtSeriesStoreQwtIntervalSample;
     const QBrush& brush() const;
 
     void setSamples( const QVector< QwtIntervalSample >& );
-    //void setSamples( QwtSeriesData< QwtIntervalSample >* );
+    void setSamples( QwtSeriesDataQwtIntervalSample* );
 
     void setBaseline( double );
     double baseline() const;
@@ -154,5 +155,8 @@ typedef QwtSeriesStore<QwtIntervalSample> QwtSeriesStoreQwtIntervalSample;
     void drawLines( QPainter*,
         const QwtScaleMap& xMap, const QwtScaleMap& yMap,
         int from, int to ) const;
+private:
+    QwtPlotHistogram(const QwtPlotHistogram&);
+    QwtPlotHistogram& operator=(const QwtPlotHistogram&);
 };
 %End // (Qwt_6_2_0 -)

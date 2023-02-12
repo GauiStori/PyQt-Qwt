@@ -37,7 +37,7 @@ protected:
 %End // (- Qwt_6_1_6)
 
 %If(Qwt_6_2_0 -)
-class QwtPlotSeriesItem : QwtPlotItem, QwtAbstractSeriesStore /NoDefaultCtors/
+class QwtPlotSeriesItem : QwtPlotItem, QwtAbstractSeriesStore
 {
 %TypeHeaderCode
 #include <qwt_plot_seriesitem.h>
@@ -65,5 +65,8 @@ class QwtPlotSeriesItem : QwtPlotItem, QwtAbstractSeriesStore /NoDefaultCtors/
 
   protected:
     virtual void dataChanged();// QWT_OVERRIDE;
+private:
+    QwtPlotSeriesItem(const QwtPlotSeriesItem&);
+    QwtPlotSeriesItem& operator=(const QwtPlotSeriesItem&);
 };
 %End // (- Qwt_6_2_0)
