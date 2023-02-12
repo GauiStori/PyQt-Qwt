@@ -46,13 +46,13 @@ class TVPlot( Qwt.QwtPlot):
         self.setAxisTitle( Qwt.QwtPlot.yLeft, "Number of People" )
         self.setAxisTitle( Qwt.QwtPlot.xBottom, "Number of Hours" )
 
-        legend = Qwt.QwtLegend()
-        legend.setDefaultItemMode( Qwt.QwtLegendData.Checkable )
-        self.insertLegend( legend, Qwt.QwtPlot.RightLegend )
+        self.legend = Qwt.QwtLegend()
+        self.legend.setDefaultItemMode( Qwt.QwtLegendData.Checkable )
+        self.insertLegend( self.legend, Qwt.QwtPlot.RightLegend )
         self.populate()
 
         #connect( legend, SIGNAL( checked( const QVariant &, bool, int ) ), SLOT( showItem( const QVariant &, bool ) ) );
-        legend.checked['QVariant','bool','int'].connect(self.showItem )
+        self.legend.checked['QVariant','bool','int'].connect(self.showItem )
 
         self.replot() # creating the legend items
         self.items = self.itemList( Qwt.QwtPlotItem.Rtti_PlotHistogram )
@@ -61,7 +61,7 @@ class TVPlot( Qwt.QwtPlot):
                 #const QVariant 
                 itemInfo = self.itemToInfo( self.items[i] )
                 #QwtLegendLabel *
-                legendLabel = legend.legendWidget( itemInfo )
+                legendLabel = self.legend.legendWidget( itemInfo )
                 if ( legendLabel ):
                     legendLabel.setChecked( True )
                 self.items[i].setVisible( True )
@@ -70,13 +70,13 @@ class TVPlot( Qwt.QwtPlot):
         self.setAutoReplot( True )
 
     def populate(self):
-        grid = Qwt.QwtPlotGrid()
-        grid.enableX( False )
-        grid.enableY( True )
-        grid.enableXMin( False )
-        grid.enableYMin( False )
-        grid.setMajorPen( Qt.black, 0, Qt.DotLine )
-        grid.attach( self )
+        self.grid = Qwt.QwtPlotGrid()
+        self.grid.enableX( False )
+        self.grid.enableY( True )
+        self.grid.enableXMin( False )
+        self.grid.enableYMin( False )
+        self.grid.setMajorPen( Qt.black, 0, Qt.DotLine )
+        self.grid.attach( self )
         juneValues = [ 7.0, 19.0, 24.0, 32.0, 10.0, 5.0, 3.0 ]
         novemberValues = [ 4.0, 15.0, 22.0, 34.0, 13.0, 8.0, 4.0 ]
 
