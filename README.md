@@ -168,5 +168,12 @@ but it needs sed and grep to be installed on your computer.
   * Compiles with Qwt >= 6.1.4. Tested for version 6.1.4 -- 6.1.5
   * All examples available in C++ will be converted to python
 
+2023-02-14 Version 2.0.0~beta0
+  * Works with qwt <= 6.1.6 and 6.2.0
+  * Many more sip files added, see changelog
+
+Known Bugs:
+  * YearScaleDraw() in friedberg.py crashes.
+
 
 
