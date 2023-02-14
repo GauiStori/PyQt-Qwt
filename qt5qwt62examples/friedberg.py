@@ -6,10 +6,9 @@
 import sys
 #import Qwt
 from PyQt5 import Qwt
-import numpy as np
-from PyQt5.QtCore import Qt,  QSize,  QTime,  QObject, QPointF
-from PyQt5.QtGui import QBrush, QPen, QColor, QPalette
-from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QComboBox, QSizePolicy, QToolButton, QToolBar
+from PyQt5.QtCore import Qt,  QPointF,QLocale
+from PyQt5.QtGui import QBrush, QColor, QPalette
+from PyQt5.QtWidgets import QApplication, QMainWindow, QComboBox, QSizePolicy, QToolButton, QToolBar
 
 class Temperature:
     def __init__(self, minValue, maxValue, averageValue):
@@ -398,34 +397,37 @@ friedberg2007 = [
 
 class Grid(Qwt.QwtPlotGrid):
     def __init__(self):
-        enableXMin( True )
-        setMajorPen( Qt.white, 0, Qt.DotLine )
-        setMinorPen( Qt.gray, 0, Qt.DotLine )
+        super().__init__()
+        self.enableXMin( True )
+        self.setMajorPen( Qt.white, 0, Qt.DotLine )
+        self.setMinorPen( Qt.gray, 0, Qt.DotLine )
 
-    def updateScaleDiv( xScaleDiv, yScaleDiv ):
-        scaleDiv = QwtScaleDiv( xScaleDiv.lowerBound(),
+    """def updateScaleDiv(self,  xScaleDiv, yScaleDiv ):
+        scaleDiv = Qwt.QwtScaleDiv( xScaleDiv.lowerBound(),
             xScaleDiv.upperBound() )
 
-        scaleDiv.setTicks( QwtScaleDiv.MinorTick,
-            xScaleDiv.ticks( QwtScaleDiv.MinorTick ) )
+        scaleDiv.setTicks( Qwt.QwtScaleDiv.MinorTick,
+            xScaleDiv.ticks( Qwt.QwtScaleDiv.MinorTick ) )
 
-        scaleDiv.setTicks( QwtScaleDiv.MajorTick,
-                xScaleDiv.ticks( QwtScaleDiv.MediumTick ) )
+        scaleDiv.setTicks( Qwt.QwtScaleDiv.MajorTick,
+                xScaleDiv.ticks( Qwt.QwtScaleDiv.MediumTick ) )
 
         Qwt.QwtPlotGrid.updateScaleDiv( scaleDiv, yScaleDiv )
+    """
 
 class YearScaleDraw(Qwt.QwtScaleDraw):
     def __init__(self):
-        setTickLength( QwtScaleDiv.MajorTick, 0 )
-        setTickLength( QwtScaleDiv.MinorTick, 0 )
-        setTickLength( QwtScaleDiv.MediumTick, 6 )
+        super().__init__()
+        self.setTickLength( Qwt.QwtScaleDiv.MajorTick, 0 )
+        self.setTickLength( Qwt.QwtScaleDiv.MinorTick, 0 )
+        self.setTickLength( Qwt.QwtScaleDiv.MediumTick, 6 )
 
-        setLabelRotation( -60.0 )
-        setLabelAlignment( Qt.AlignLeft | Qt.AlignVCenter )
+        self.setLabelRotation( -60.0 )
+        self.setLabelAlignment( Qt.AlignLeft | Qt.AlignVCenter )
 
-        setSpacing( 15 )
+        self.setSpacing( 15 )
 
-    def label( value ):
+    def label(self, value ):
         month = int( value / 30 ) + 1
         return QLocale.system().monthName( month, QLocale.LongFormat )
 
@@ -436,8 +438,8 @@ class Plot( Qwt.QwtPlot ):
         self.setTitle( "Temperature of Friedberg/Germany" )
 
         self.setAxisTitle( Qwt.QwtPlot.xBottom, "2007" )
-        #self.setAxisScaleDiv( Qwt.QwtPlot.xBottom, yearScaleDiv() )
-        #self.setAxisScaleDraw( Qwt.QwtPlot.xBottom, YearScaleDraw() )
+        self.setAxisScaleDiv( Qwt.QwtPlot.xBottom, self.yearScaleDiv() )
+        #self.setAxisScaleDraw( Qwt.QwtPlot.xBottom, YearScaleDraw() ) FIXME Crashes on label
         self.setAxisTitle( Qwt.QwtPlot.yLeft, "Temperature [%1C]"  )
 
         canvas = Qwt.QwtPlotCanvas()
@@ -447,7 +449,7 @@ class Plot( Qwt.QwtPlot ):
         self.setCanvas( canvas )
 
         # grid
-        self.grid = Qwt.QwtPlotGrid()
+        self.grid = Grid()
         self.grid.attach( self )
         self.legend = Qwt.QwtLegend()
         self.insertLegend( self.legend, Qwt.QwtPlot.RightLegend )
@@ -495,7 +497,7 @@ class Plot( Qwt.QwtPlot ):
         for i in range(12):
             majorTicks.append(i * 30 + 15)
 
-        scaleDiv= QwtScaleDiv( mediumTicks[0], mediumTicks[-1] + 1,
+        scaleDiv= Qwt.QwtScaleDiv( mediumTicks[0], mediumTicks[-1] + 1,
             minorTicks, mediumTicks, majorTicks )
         return scaleDiv
 
@@ -543,7 +545,7 @@ class Plot( Qwt.QwtPlot ):
             self.m_intervalCurve.setRenderHint( Qwt.QwtPlotItem.RenderAntialiased, False )
         self.replot()
 
-    def exportPlot():
+    def exportPlot(self):
         renderer = Qwt.QwtPlotRenderer()
         renderer.exportTo( self, "friedberg.pdf" )
 
@@ -563,7 +565,7 @@ class MainWindow(QMainWindow):
         btnExport = QToolButton()
         btnExport.setText( "Export" )
         btnExport.setToolButtonStyle( Qt.ToolButtonTextUnderIcon )
-        #connect( btnExport, SIGNAL(clicked()), plot, SLOT(exportPlot()) )
+        #btnExport.clicked.connect( self.plot.exportPlot())
 
         toolBar = QToolBar()
         toolBar.addWidget( self.typeBox )
