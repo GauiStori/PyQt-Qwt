@@ -1,0 +1,2 @@
+version=4
+https://github.com/GauiStori/PyQt-Qwt/tags .*/?(\d\.\d{2}.\d{2})\.tar\.gz
