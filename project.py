@@ -4,7 +4,7 @@ import os
 from os.path import abspath, join
 from sipbuild import Option
 from pyqtbuild import PyQtBindings, PyQtProject
-import PyQt5
+#import PyQt6
 
 def read_define(filename, define):
     """ Read the value of a #define from a file.  filename is the name of the
@@ -34,42 +34,31 @@ class QwtProject(PyQtProject):
         super().__init__()
         self.bindings_factories = [QwtBindings]
 
-    def update(self, tool):
-        """Allows SIP to find PyQt5 .sip files."""
-        super().update(tool)
-        self.sip_include_dirs.append(join(PyQt5.__path__[0], 'bindings'))
+    #def update(self, tool):
+    #    """Allows SIP to find PyQt6 .sip files."""
+    #    super().update(tool)
+    #    self.sip_include_dirs.append(join(PyQt6.__path__[0], 'bindings'))
+
+    def apply_user_defaults(self, tool):
+        """ Set default values for user options that haven't been set yet. """
+
+        super().apply_user_defaults(tool)
 
 
 class QwtBindings(PyQtBindings):
     """The Qwt Bindings class."""
 
     def __init__(self, project):
-        super().__init__(project, name='Qwt',
-                         sip_file='Qwt_Qt5.sip',
-                         qmake_QT=['widgets','opengl','svg'])
-
-    def get_options(self):
-        """Our custom options that a user can pass to sip-build."""
-        options = super().get_options()
-        options += [
-            Option('qwt_incdir',
-                   help='the directory containing the Qwt header file',
-                   metavar='DIR'),
-            Option('qwt_featuresdir',
-                   help='the directory containing the qwt.prf features file',
-                   metavar='DIR'),
-            Option('qwt_libdir',
-                   help='the directory containing the Qwt library',
-                   metavar='DIR'),
-            Option('qwt_lib',
-                   help='the Qwt library',
-                   metavar='LIB',
-                   default='qwt'),
-        ]
-        return options
+        super().__init__(project, 'Qwt')
 
     def apply_user_defaults(self, tool):
         """Apply values from user-configurable options."""
+        project = self.project
+        qt6 = (project.builder.qt_version >= 0x060000)
+
+        # Set the name of the .sip file now that we know the Qt version number.
+        self.sip_file = 'Qwt_Qt6.sip' if qt6 else 'Qwt_Qt5.sip'
+
         if self.qwt_incdir is not None:
             self.include_dirs.append(self.qwt_incdir)
         if self.qwt_featuresdir is not None:
@@ -87,5 +76,28 @@ class QwtBindings(PyQtBindings):
                   "reading %s." % qwtglobal)
         tag = "Qwt_"+qwt_version.replace('.','_')
         self.tags.append(tag)
+        print("Tag = ")
         print(tag)
         super().apply_user_defaults(tool)
+
+    def get_options(self):
+        """Our custom options that a user can pass to sip-build."""
+        options = super().get_options()
+        options.append(
+            Option('qwt_incdir',
+                   help='the directory containing the Qwt header file',
+                   metavar='DIR'))
+        options.append(
+            Option('qwt_featuresdir',
+                   help='the directory containing the qwt.prf features file',
+                   metavar='DIR'))
+        options.append(
+            Option('qwt_libdir',
+                   help='the directory containing the Qwt library',
+                   metavar='DIR'))
+        options.append(
+            Option('qwt_lib',
+                   help='the Qwt library',
+                   metavar='LIB',
+                   default='qwt'))
+        return options
