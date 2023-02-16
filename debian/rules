@@ -4,7 +4,7 @@ export QT_SELECT = qt5
 export PYBUILD_NAME = pyqt5.qwt
 export PYBUILD_SYSTEM = custom
 export PYBUILD_CONFIGURE_ARGS = {interpreter} /usr/bin/sip-build --verbose --no-make \
-	--build-dir {build_dir} --qwt-lib=qwt-qt6 --qwt-incdir=/usr/include/qwt \
+	--build-dir {build_dir} --qwt-lib=qwt-qt5 --qwt-incdir=/usr/include/qwt \
 	--qmake-setting 'QMAKE_CXXFLAGS += "$(shell dpkg-buildflags --get CXXFLAGS) $(shell dpkg-buildflags --get CPPFLAGS)"' \
 	--qmake-setting 'QMAKE_LFLAGS += "$(shell dpkg-buildflags --get LDFLAGS)"'
 export PYBUILD_BUILD_ARGS = $(MAKE) -C {build_dir}
@@ -12,38 +12,6 @@ export PYBUILD_INSTALL_ARGS = $(MAKE) -C {build_dir} install INSTALL_ROOT={destd
 
 %:
 	dh $@ --with python3 --buildsystem=pybuild
-
-configure-stamp:
-	dh_testdir
-	cp -f pyproject-qt5.toml pyproject.toml
-	python3.11 /usr/bin/sip-build \
-		--verbose --no-make \
-		--build-dir build-qt5 \
-		--qmake-setting 'QMAKE_CXXFLAGS += "$(CXXFLAGS) $(CPPFLAGS)"' \
-		--qmake-setting 'QMAKE_LFLAGS += "$(LDFLAGS)"' \
-		--target-dir /usr/lib/python3/dist-packages \
-		--qwt-lib=qwt-qt5 \
-		--qwt-incdir=/usr/include/qwt
-		#\
-		#--qmake-setting 'QMAKE_CXXFLAGS += "$(shell dpkg-buildflags --get CXXFLAGS) $(shell dpkg-buildflags --get CPPFLAGS)"' \
-		#--qmake-setting 'QMAKE_LFLAGS += "$(shell dpkg-buildflags --get LDFLAGS)"
-	cp -f pyproject-qt6.toml pyproject.toml
-	python3.11 /usr/bin/sip-build \
-		--verbose --no-make --pep484-pyi \
-		--qmake /usr/bin/qmake6 \
-		--qmake-setting 'QMAKE_CXXFLAGS += "$(CXXFLAGS) $(CPPFLAGS)"' \
-		--qmake-setting 'QMAKE_LFLAGS += "$(LDFLAGS)"' \
-		--target-dir /usr/lib/python3/dist-packages \
-		--build-dir build-qt6 \
-		--qwt-lib=qwt-qt6 \
-		--qwt-incdir=/usr/include/qwt \
-		--api-dir /usr/share/qt6/api/python3
-		#\
-		#--qmake-setting 'QMAKE_CXXFLAGS += "$(shell dpkg-buildflags --get CXXFLAGS) $(shell dpkg-buildflags --get CPPFLAGS)"' \
-		#--qmake-setting 'QMAKE_LFLAGS += "$(shell dpkg-buildflags --get LDFLAGS)"
-	touch $@
-
-override_dh_auto_configure: configure-stamp
 
 override_dh_compress-indep:
 	dh_compress --exclude=.py
