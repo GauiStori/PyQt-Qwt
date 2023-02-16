@@ -58,9 +58,9 @@ private:
     PrivateData *d_data;
     */
 };
-%If(Qwt_6_2_0 -)
-
 %End // (- Qwt_6_1_6)
+
+%If(Qwt_6_2_0 -)
 class QwtPlotZoneItem :
     public QwtPlotItem /NoDefaultCtors/
 {

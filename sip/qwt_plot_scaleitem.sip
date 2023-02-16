@@ -88,10 +88,9 @@ public:
     PrivateData *d_data;
     */
 };
+%End // (- Qwt_6_1_6)
 
 %If(Qwt_6_2_0 -)
-
-%End // (- Qwt_6_1_6)
 class QwtPlotScaleItem : QwtPlotItem
 {
 %TypeHeaderCode
@@ -120,7 +119,7 @@ class QwtPlotScaleItem : QwtPlotItem
 
     void setScaleDraw( QwtScaleDraw* );
 
-    const QwtScaleDraw* scaleDraw() const;
+    //const QwtScaleDraw* scaleDraw() const;
     QwtScaleDraw* scaleDraw();
 
     void setPosition( double pos );
