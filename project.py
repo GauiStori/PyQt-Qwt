@@ -43,8 +43,7 @@ class QwtBindings(PyQtBindings):
     """The Qwt Bindings class."""
 
     def __init__(self, project):
-        super().__init__(project, name='Qwt',
-                         qmake_QT=['widgets','opengl','svg'])
+        super().__init__(project, name='Qwt')
 
     def get_options(self):
         """Our custom options that a user can pass to sip-build."""
@@ -72,8 +71,17 @@ class QwtBindings(PyQtBindings):
         qt6 = (project.builder.qt_version >= 0x060000)
 
         # Set the name of the .sip file now that we know the Qt version number.
-        self.sip_file = 'Qwt_Qt6.sip' if qt6 else 'Qwt_Qt5.sip'
-
+        if qt6:
+            self.sip_file = 'Qwt_Qt6.sip'
+            self.builder_settings.append('QT += widgets')
+            self.builder_settings.append('QT += openglwidgets')
+            self.builder_settings.append('QT += svg')
+            print("Qt6")
+        else:
+            self.sip_file = 'Qwt_Qt5.sip'
+            self.builder_settings.append('QT += widgets')
+            self.builder_settings.append('QT += opengl')
+            self.builder_settings.append('QT += svg')
         if self.qwt_incdir is not None:
             self.include_dirs.append(self.qwt_incdir)
         if self.qwt_featuresdir is not None:
@@ -90,6 +98,7 @@ class QwtBindings(PyQtBindings):
             print("The Qwt version number could not be determined by "
                   "reading %s." % qwtglobal)
         tag = "Qwt_"+qwt_version.replace('.','_')
+        #tag = "Qwt_6_1_5"
         self.tags.append(tag)
         print(tag)
         super().apply_user_defaults(tool)
