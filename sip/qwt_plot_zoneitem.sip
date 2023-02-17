@@ -61,9 +61,11 @@ private:
 %End // (- Qwt_6_1_6)
 
 %If(Qwt_6_2_0 -)
-class QwtPlotZoneItem :
-    public QwtPlotItem /NoDefaultCtors/
+class QwtPlotZoneItem : QwtPlotItem /NoDefaultCtors/
 {
+%TypeHeaderCode
+#include <qwt_plot_zoneitem.h>
+%End
   public:
     explicit QwtPlotZoneItem();
     virtual ~QwtPlotZoneItem();

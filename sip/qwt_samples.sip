@@ -35,7 +35,7 @@ class QwtSetSample
 %End
 public:
     QwtSetSample();
-    QwtSetSample( double, const QVector<double> & = QVector<double>() );
+    //QwtSetSample( double, const QVector<double> & = QVector<double>() )[( double v, const double *s, size_t size )]; FIXME
 
     bool operator==( const QwtSetSample &other ) const;
     bool operator!=( const QwtSetSample &other ) const;
