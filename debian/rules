@@ -1,5 +1,6 @@
 #!/usr/bin/make -f
 
+#--qmake /usr/bin/qmake6
 export QT_SELECT = qt5
 export PYBUILD_NAME = pyqt5.qwt
 export PYBUILD_SYSTEM = custom
