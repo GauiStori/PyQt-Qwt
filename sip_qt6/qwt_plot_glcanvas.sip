@@ -116,7 +116,7 @@ private:
 %End // (- Qwt_6_1_6)
 
 %If(Qwt_6_2_0 -)
-class QwtPlotGLCanvas : public QGLWidget //, public QwtPlotAbstractGLCanvas
+class QwtPlotGLCanvas //: public QGLWidget //, public QwtPlotAbstractGLCanvas
 {
 %TypeHeaderCode
 #include <qwt_plot_glcanvas.h>
@@ -133,8 +133,8 @@ class QwtPlotGLCanvas : public QGLWidget //, public QwtPlotAbstractGLCanvas
     Q_PROPERTY( double borderRadius READ borderRadius WRITE setBorderRadius )
 */
   public:
-    explicit QwtPlotGLCanvas( QwtPlot* = NULL );
-    explicit QwtPlotGLCanvas( const QGLFormat&, QwtPlot* = NULL );
+    //FIXME explicit QwtPlotGLCanvas( QwtPlot* = NULL );
+    //FIXME explicit QwtPlotGLCanvas( const QGLFormat&, QwtPlot* = NULL );
     virtual ~QwtPlotGLCanvas();
 
     virtual void invalidateBackingStore(); // QWT_OVERRIDE;
