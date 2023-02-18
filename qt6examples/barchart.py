@@ -17,16 +17,18 @@ class BarChart( Qwt.QwtPlot ):
     def __init__(self, parent):
         Qwt.QwtPlot.__init__(self, parent)
         self.setAutoFillBackground( True )
-        self.setPalette( QPalette(Qt.white) )
+        self.setPalette( QPalette(Qt.GlobalColor.white) )
         self.canvas().setPalette( QPalette( colours["LemonChiffon"]))
 
         self.setTitle( "Bar Chart" )
 
-        self.setAxisTitle( Qwt.QwtPlot.yLeft, "Whatever" )
-        self.setAxisTitle( Qwt.QwtPlot.xBottom, "Whatever" )
+        self.setAxisTitle( Qwt.QwtPlot.Axis.yLeft, "Whatever" )
+        self.setAxisTitle( Qwt.QwtPlot.Axis.xBottom, "Whatever" )
+        #self.setAxisTitle( 0, "Whatever" )
+        #self.setAxisTitle( 2, "Whatever" )
 
         self.d_barChartItem = Qwt.QwtPlotMultiBarChart( "Bar Chart" )
-        self.d_barChartItem.setLayoutPolicy( Qwt.QwtPlotMultiBarChart.AutoAdjustSamples )
+        self.d_barChartItem.setLayoutPolicy( Qwt.QwtPlotBarChart.LayoutPolicy.AutoAdjustSamples )
         self.d_barChartItem.setSpacing( 20 )
         self.d_barChartItem.setMargin( 3 )
 
@@ -35,7 +37,7 @@ class BarChart( Qwt.QwtPlot ):
         self.insertLegend( Qwt.QwtLegend() )
 
         self.populate()
-        self.setOrientation( 0 )
+        #self.setOrientation( 0 )
 
         self.setAutoReplot( True )
 
@@ -53,9 +55,9 @@ class BarChart( Qwt.QwtPlot ):
         self.d_barChartItem.setLegendIconSize( QSize( 10, 14 ) )
 
         for i in range(numBars):
-            symbol = Qwt.QwtColumnSymbol( Qwt.QwtColumnSymbol.Box )
+            symbol = Qwt.QwtColumnSymbol( Qwt.QwtColumnSymbol.Style.Box )
             symbol.setLineWidth( 2 )
-            symbol.setFrameStyle( Qwt.QwtColumnSymbol.Raised )
+            symbol.setFrameStyle( Qwt.QwtColumnSymbol.FrameStyle.Raised )
             symbol.setPalette( QPalette( colors[i] ) ) 
             self.d_barChartItem.setSymbol( i, symbol )
         
@@ -70,35 +72,35 @@ class BarChart( Qwt.QwtPlot ):
 
     def setMode( self, mode ):
         if ( mode == 0 ):
-            self.d_barChartItem.setStyle( Qwt.QwtPlotMultiBarChart.Grouped )
+            self.d_barChartItem.setStyle( Qwt.QwtPlotMultiBarChart.ChartStyle.Grouped )
         else:
-            self.d_barChartItem.setStyle( Qwt.QwtPlotMultiBarChart.Stacked )
+            self.d_barChartItem.setStyle( Qwt.QwtPlotMultiBarChart.ChartStyle.Stacked )
 
     def setOrientation( self, orientation ):
-        axis1 = Qwt.QwtPlot.Axis()
-        axis2 = Qwt.QwtPlot.Axis()
+        axis1 = None # Qwt.QwtPlot.Axis()
+        axis2 = None # Qwt.QwtPlot.Axis()
         if ( orientation == 0 ):
-            axis1 = Qwt.QwtPlot.xBottom
-            axis2 = Qwt.QwtPlot.yLeft
-            self.d_barChartItem.setOrientation( Qt.Vertical )
+            axis1 = Qwt.QwtPlot.Axis.xBottom
+            axis2 = Qwt.QwtPlot.Axis.yLeft
+            self.d_barChartItem.setOrientation( Qt.Orientation.Vertical )
         else:
-            axis1 = Qwt.QwtPlot.yLeft
-            axis2 = Qwt.QwtPlot.xBottom
-            self.d_barChartItem.setOrientation( Qt.Horizontal )
+            axis1 = Qwt.QwtPlot.Axis.yLeft
+            axis2 = Qwt.QwtPlot.Axis.xBottom
+            self.d_barChartItem.setOrientation( Qt.Orientation.Horizontal )
 
-        self.setAxisScale( axis1, 0, len(self.series) -1, 1.0 )
-        self.setAxisAutoScale( axis2 )
+        #self.setAxisScale( axis1, 0, len(self.series) -1, 1.0 )
+        #self.setAxisAutoScale( axis2 )
 
         self.scaleDraw1 = self.axisScaleDraw( axis1 )
-        self.scaleDraw1.enableComponent( Qwt.QwtScaleDraw.Backbone, False )
-        self.scaleDraw1.enableComponent( Qwt.QwtScaleDraw.Ticks, False )
+        self.scaleDraw1.enableComponent( Qwt.QwtScaleDraw.ScaleComponent.Backbone, False )
+        self.scaleDraw1.enableComponent( Qwt.QwtScaleDraw.ScaleComponent.Ticks, False )
 
         self.scaleDraw2 = self.axisScaleDraw( axis2 )
-        self.scaleDraw2.enableComponent( Qwt.QwtScaleDraw.Backbone, True )
-        self.scaleDraw2.enableComponent( Qwt.QwtScaleDraw.Ticks, True )
+        self.scaleDraw2.enableComponent( Qwt.QwtScaleDraw.ScaleComponent.Backbone, True )
+        self.scaleDraw2.enableComponent( Qwt.QwtScaleDraw.ScaleComponent.Ticks, True )
 
-        self.plotLayout().setAlignCanvasToScale( axis1, True )
-        self.plotLayout().setAlignCanvasToScale( axis2, False )
+        #self.plotLayout().setAlignCanvasToScale( axis1, True )
+        #self.plotLayout().setAlignCanvasToScale( axis2, False )
 
         self.plotLayout().setCanvasMargin( 0 )
         self.updateCanvasMargins()
@@ -119,16 +121,16 @@ class MainWindow(QMainWindow):
         self.typeBox = QComboBox( self.toolBar )
         self.typeBox.addItem( "Grouped" )
         self.typeBox.addItem( "Stacked" )
-        self.typeBox.setSizePolicy( QSizePolicy.Fixed, QSizePolicy.Fixed )
+        self.typeBox.setSizePolicy( QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed )
 
         self.orientationBox = QComboBox( self.toolBar )
         self.orientationBox.addItem( "Vertical" )
         self.orientationBox.addItem( "Horizontal" )
-        self.orientationBox.setSizePolicy( QSizePolicy.Fixed, QSizePolicy.Fixed )
+        self.orientationBox.setSizePolicy( QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed )
 
         self.btnExport = QToolButton(self.toolBar )
         self.btnExport.setText( "Export" )
-        self.btnExport.setToolButtonStyle( Qt.ToolButtonTextUnderIcon )
+        self.btnExport.setToolButtonStyle( Qt.ToolButtonStyle.ToolButtonTextUnderIcon )
         self.btnExport.clicked.connect(self.d_chart.exportChart)
 
         self.toolBar.addWidget( self.typeBox )
@@ -145,5 +147,5 @@ a = QApplication(sys.argv)
 m = MainWindow()
 m.resize( 600, 400 )
 m.show()
-sys.exit(a.exec_())
+sys.exit(a.exec())
 
