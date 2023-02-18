@@ -12,7 +12,7 @@
 class QwtPlot: QFrame , QwtPlotDict
 {
 %TypeHeaderCode
-#include <qwt_plot_item.h>
+#include <qwt_plot.h>
 %End
 public:
     //! \brief Axis index
@@ -238,6 +238,9 @@ private slots:
 %If(Qwt_6_2_0 -)
 class QwtPlot : QFrame, QwtPlotDict
 {
+%TypeHeaderCode
+#include <qwt_plot.h>
+%End
     //Q_OBJECT
 
     /*Q_PROPERTY( QBrush canvasBackground
