@@ -249,6 +249,21 @@ class QwtPlot : QFrame, QwtPlotDict
     Q_PROPERTY( bool autoReplot READ autoReplot WRITE setAutoReplot )*/
 
   public:
+//#if QWT_AXIS_COMPAT
+    enum Axis
+    {
+        yLeft   = QwtAxis::YLeft,
+        yRight  = QwtAxis::YRight,
+        xBottom = QwtAxis::XBottom,
+        xTop    = QwtAxis::XTop,
+
+        axisCnt = QwtAxis::AxisPositions
+    };
+
+    void enableAxis( int q, bool on = true );
+
+    bool axisEnabled( int axisId ) const;
+//#endif
     enum LegendPosition
     {
         LeftLegend,
@@ -330,26 +345,26 @@ class QwtPlot : QFrame, QwtPlotDict
 
     double axisStepSize( int ) const;
     QwtInterval axisInterval( int ) const;
-    const QwtScaleDiv& axisScaleDiv( int ) const;
+    const QwtScaleDiv& axisScaleDiv( Axis ) const;
 
     //const QwtScaleDraw* axisScaleDraw( int ) const;
-    QwtScaleDraw* axisScaleDraw( int );
+    QwtScaleDraw* axisScaleDraw( Axis );
 
     //const QwtScaleWidget* axisWidget( int ) const;
-    QwtScaleWidget* axisWidget( int );
+    QwtScaleWidget* axisWidget( Axis );
 
-    void setAxisLabelAlignment( int, Qt::Alignment );
-    void setAxisLabelRotation( int, double rotation );
+    void setAxisLabelAlignment( Axis, Qt::Alignment );
+    void setAxisLabelRotation( Axis, double rotation );
 
-    void setAxisTitle( int, const QString& );
-    void setAxisTitle( int, const QwtText& );
-    QwtText axisTitle( int ) const;
+    void setAxisTitle( Axis, const QString& );
+    void setAxisTitle( Axis, const QwtText& );
+    QwtText axisTitle( Axis ) const;
 
-    void setAxisMaxMinor( int, int maxMinor );
-    int axisMaxMinor( int ) const;
+    void setAxisMaxMinor( Axis, int maxMinor );
+    int axisMaxMinor( Axis ) const;
 
-    void setAxisMaxMajor( int, int maxMajor );
-    int axisMaxMajor( int ) const;
+    void setAxisMaxMajor( Axis, int maxMajor );
+    int axisMaxMajor( Axis ) const;
 
     // Legend
 
@@ -386,21 +401,6 @@ class QwtPlot : QFrame, QwtPlotDict
     virtual QVariant itemToInfo( QwtPlotItem* ) const;
     virtual QwtPlotItem* infoToItem( const QVariant& ) const;
 
-//#if QWT_AXIS_COMPAT
-    enum Axis
-    {
-        yLeft   = QwtAxis::YLeft,
-        yRight  = QwtAxis::YRight,
-        xBottom = QwtAxis::XBottom,
-        xTop    = QwtAxis::XTop,
-
-        axisCnt = QwtAxis::AxisPositions
-    };
-
-    void enableAxis( int axisId, bool on = true );
-
-    bool axisEnabled( int axisId ) const;
-//#endif
   Q_SIGNALS:
     void itemAttached( QwtPlotItem* plotItem, bool on );
     void legendDataChanged( const QVariant& itemInfo,
