@@ -16,11 +16,20 @@ Build-Depends: debhelper-compat (= 11),
                libqt5svg5-dev,
                qtbase5-dev,
                libqt5opengl5-dev
-Standards-Version: 4.5.1
+Standards-Version: 4.6.2
 Homepage: https://github.com/GauiStori/PyQt-Qwt
 #Testsuite: autopkgtest-pkg-python
 Vcs-Browser: https://salsa.debian.org/python-team/packages/pyqt-qwt
 Vcs-Git: https://salsa.debian.org/python-team/packages/pyqt-qwt.git
+
+Package: pyqt5.qwt-dev
+Architecture: all
+Depends: pyqt5-dev,
+         ${misc:Depends}
+Description: Development files for the Qwt6 technical widget library (Python3)
+ This package contains the source SIP files from which the Python bindings for
+ Qwt6 (Qt5) are created. They are needed for building PyQt5 bindindgs
+ for Qwt6. The PyQt-Qwt.api is included as well.
 
 Package: python3-pyqt5.qwt
 Architecture: any
@@ -37,6 +46,15 @@ Description: Python version of the Qwt6 technical widget library (Python3)
  widgets to display and control bounded or unbounded floating point values.
  .
  This version is compiled against Qt5.
+
+Package: pyqt6.qwt-dev
+Architecture: all
+Depends: pyqt6-dev,
+         ${misc:Depends}
+Description: Development files for the Qwt6 technical widget library (Python3)
+ This package contains the source SIP files from which the Python bindings for
+ Qwt6 (Qt6) are created. They are needed for building PyQt6 bindindgs
+ for Qwt6. The PyQt-Qwt.api is included as well.
 
 Package: python3-pyqt6.qwt
 Architecture: any
