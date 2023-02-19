@@ -33,11 +33,11 @@
 
 
 %If(- Qwt_6_1_6)
-class QwtPlotLegendItem: public QwtPlotItem
+class QwtPlotLegendItem: QwtPlotItem
 {
 %TypeHeaderCode
 #include <qwt_plot_legenditem.h>
-typedef QList<const QwtPlotItem *> QwtPlotItemList;
+//typedef QList<const QwtPlotItem *> QwtConstPlotItemList;
 %End
 	
 public:
@@ -108,7 +108,7 @@ public:
     virtual QSize minimumSize( const QwtLegendData & ) const;
     virtual int heightForWidth( const QwtLegendData &, int width ) const;
 
-    QwtPlotItemList plotItems() const;
+    //FIXME QList<const QwtPlotItem *> plotItems() const;
     
     QList< QRect > legendGeometries( const QwtPlotItem * ) const;
 

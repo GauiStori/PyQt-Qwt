@@ -1,0 +1,47 @@
+/* 
+ * python-qwt. Python wrapper for the Qwt Widget Library
+ * Copyright (C) 1997   Josef Wilgen
+ * Copyright (C) 2002   Uwe Rathmann
+ * Copyright (C) 2015   Gudjon I. Gudjonsson
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the Qwt License, Version 1.0
+ *****************************************************************************/
+
+class QwtAbstractLegend : QFrame
+{
+%TypeHeaderCode
+#include <qwt_abstract_legend.h>
+%End
+public:
+    explicit QwtAbstractLegend( QWidget *parent = NULL );
+    virtual ~QwtAbstractLegend();
+
+    /*!
+      Render the legend into a given rectangle.
+
+      \param painter Painter
+      \param rect Bounding rectangle
+      \param fillBackground When true, fill rect with the widget background 
+
+      \sa renderLegend() is used by QwtPlotRenderer
+    */
+    virtual void renderLegend( QPainter *painter, 
+        const QRectF &rect, bool fillBackground ) const = 0;
+
+    //! \return True, when no plot item is inserted
+    virtual bool isEmpty() const = 0;
+
+    virtual int scrollExtent( Qt::Orientation ) const;
+
+public slots:
+
+    /*!
+      \brief Update the entries for a plot item
+
+      \param itemInfo Info about an item
+      \param data List of legend entry attributes for the  item
+     */
+    virtual void updateLegend( const QVariant &itemInfo, 
+        const QList<QwtLegendData> &data ) = 0;
+};
