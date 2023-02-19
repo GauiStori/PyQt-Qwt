@@ -30,25 +30,25 @@ class SliderBox(QWidget):
         self.d_slider = self.createSlider( sliderType )
         self.alignment = None #QFlags(Qt.AlignmentFlag)
 
-        if self.d_slider.orientation() == Qt.Horizontal:
-            if self.d_slider.scalePosition() == Qwt.QwtSlider.TrailingScale:
-                self.alignment = Qt.AlignBottom
+        if self.d_slider.orientation() == Qt.Orientation.Horizontal:
+            if self.d_slider.scalePosition() == Qwt.QwtSlider.ScalePosition.TrailingScale:
+                self.alignment = Qt.AlignmentFlag.AlignBottom
             else:
-                self.alignment = Qt.AlignTop
-            self.alignment |= Qt.AlignHCenter
+                self.alignment = Qt.AlignmentFlag.AlignTop
+            self.alignment |= Qt.AlignmentFlag.AlignHCenter
         else:
-            if self.d_slider.scalePosition() == Qwt.QwtSlider.TrailingScale:
-                self.alignment = Qt.AlignRight
+            if self.d_slider.scalePosition() == Qwt.QwtSlider.ScalePosition.TrailingScale:
+                self.alignment = Qt.AlignmentFlag.AlignRight
             else:
-                self.alignment = Qt.AlignLeft
-            self.alignment |= Qt.AlignVCenter
+                self.alignment = Qt.AlignmentFlag.AlignLeft
+            self.alignment |= Qt.AlignmentFlag.AlignVCenter
         self.d_label = QLabel( self )
         self.d_label.setAlignment( self.alignment )
-        self.d_label.setFixedWidth( self.d_label.fontMetrics().width( "10000.9" ) )
+        # FIXME self.d_label.setFixedWidth( self.d_label.fontMetrics().width( "10000.9" ) )
         self.d_slider.valueChanged['double'].connect(self.setNum)
 
         layout = None #QBoxLayout()
-        if self.d_slider.orientation() == Qt.Horizontal:
+        if self.d_slider.orientation() == Qt.Orientation.Horizontal:
             layout = QHBoxLayout( self )
         else:
             layout = QVBoxLayout( self )
@@ -60,8 +60,8 @@ class SliderBox(QWidget):
     def createSlider(self, sliderType ):
         slider = Qwt.QwtSlider()
         if sliderType == 0:
-            slider.setOrientation( Qt.Horizontal )
-            slider.setScalePosition( Qwt.QwtSlider.TrailingScale )
+            slider.setOrientation( Qt.Orientation.Horizontal )
+            slider.setScalePosition( Qwt.QwtSlider.ScalePosition.TrailingScale )
             slider.setTrough( True )
             slider.setGroove( False )
             slider.setSpacing( 0 )
@@ -72,8 +72,8 @@ class SliderBox(QWidget):
             slider.setPageSteps( 1 ) 
             slider.setWrapping( True )
         elif sliderType == 1:
-            slider.setOrientation( Qt.Horizontal )
-            slider.setScalePosition( Qwt.QwtSlider.NoScale )
+            slider.setOrientation( Qt.Orientation.Horizontal )
+            slider.setScalePosition( Qwt.QwtSlider.ScalePosition.NoScale )
             slider.setTrough( True )
             slider.setGroove( True )
             slider.setScale( 0.0, 1.0 )
@@ -81,8 +81,8 @@ class SliderBox(QWidget):
             slider.setSingleSteps( 1 )
             slider.setPageSteps( 5 )
         elif sliderType == 2:
-            slider.setOrientation( Qt.Horizontal )
-            slider.setScalePosition( Qwt.QwtSlider.LeadingScale )
+            slider.setOrientation( Qt.Orientation.Horizontal )
+            slider.setScalePosition( Qwt.QwtSlider.ScalePosition.LeadingScale )
             slider.setTrough( False )
             slider.setGroove( True )
             slider.setHandleSize( QSize( 12, 25 ) )
@@ -91,8 +91,8 @@ class SliderBox(QWidget):
             slider.setSingleSteps( 2 )
             slider.setPageSteps( 10 )
         elif sliderType == 3:
-            slider.setOrientation( Qt.Horizontal )
-            slider.setScalePosition( Qwt.QwtSlider.TrailingScale )
+            slider.setOrientation( Qt.Orientation.Horizontal )
+            slider.setScalePosition( Qwt.QwtSlider.ScalePosition.TrailingScale )
             slider.setTrough( True )
             slider.setGroove( True )
             scaleEngine = Qwt.QwtLinearScaleEngine( 2 )
@@ -104,8 +104,8 @@ class SliderBox(QWidget):
             slider.setSingleSteps( 1 )
             slider.setPageSteps( 5 )
         elif sliderType == 4:
-            slider.setOrientation( Qt.Vertical )
-            slider.setScalePosition( Qwt.QwtSlider.TrailingScale )
+            slider.setOrientation( Qt.Orientation.Vertical )
+            slider.setScalePosition( Qwt.QwtSlider.ScalePosition.TrailingScale )
             slider.setTrough( False )
             slider.setGroove( True )
             slider.setScale( 100.0, 0.0 )
@@ -114,16 +114,16 @@ class SliderBox(QWidget):
             slider.setPageSteps( 5 )
             slider.setScaleMaxMinor( 5 )
         elif sliderType == 5:
-            slider.setOrientation( Qt.Vertical )
-            slider.setScalePosition( Qwt.QwtSlider.NoScale )
+            slider.setOrientation( Qt.Orientation.Vertical )
+            slider.setScalePosition( Qwt.QwtSlider.ScalePosition.NoScale )
             slider.setTrough( True )
             slider.setGroove( False )
             slider.setScale( 0.0, 100.0 )
             slider.setTotalSteps( 100 )
             slider.setPageSteps( 10 )
         elif sliderType == 6:
-            slider.setOrientation( Qt.Vertical )
-            slider.setScalePosition( Qwt.QwtSlider.LeadingScale )
+            slider.setOrientation( Qt.Orientation.Vertical )
+            slider.setScalePosition( Qwt.QwtSlider.ScalePosition.LeadingScale )
             slider.setTrough( True )
             slider.setGroove( True )
             slider.setScaleEngine( Qwt.QwtLogScaleEngine() )
@@ -144,21 +144,21 @@ class SliderBox(QWidget):
 class SliderTab( QWidget ):
     def __init__(self,parent=None):
         QWidget.__init__(self, parent)
-        self.hLayout = self.createLayout( Qt.Vertical,  self )
+        self.hLayout = self.createLayout( Qt.Orientation.Vertical,  self )
         for i in range(4):
             self.hLayout.addWidget( SliderBox( i ) )
         self.hLayout.addStretch()
-        self.vLayout = self.createLayout( Qt.Horizontal,  self )
+        self.vLayout = self.createLayout( Qt.Orientation.Horizontal,  self )
         for i in range(7):
             self.vLayout.addWidget( SliderBox( i) )
-        self.mainLayout = self.createLayout( Qt.Horizontal, self )
+        self.mainLayout = self.createLayout( Qt.Orientation.Horizontal, self )
         self.mainLayout.addLayout( self.vLayout )
         self.mainLayout.addLayout( self.hLayout, 10 )
 
     def createLayout(self, orientation, widget ):
-        layout = QBoxLayout( QBoxLayout.LeftToRight, widget )
-        if ( orientation == Qt.Vertical ):
-            layout.setDirection( QBoxLayout.TopToBottom )
+        layout = QBoxLayout( QBoxLayout.Direction.LeftToRight, widget )
+        if ( orientation == Qt.Orientation.Vertical ):
+            layout.setDirection( QBoxLayout.Direction.TopToBottom )
         layout.setSpacing( 20 )
         layout.setContentsMargins( 0,  0,  0,  0)
         return layout
@@ -168,7 +168,7 @@ class WheelBox( QWidget ):
         QWidget.__init__(self, parent)
         box = self.createBox( orientation, typ )
         self.d_label = QLabel( self )
-        self.d_label.setAlignment( Qt.AlignHCenter | Qt.AlignTop )
+        self.d_label.setAlignment( Qt.AlignmentFlag.AlignHCenter | Qt.AlignmentFlag.AlignTop )
 
         layout = QVBoxLayout( self )
         layout.addWidget( box )
@@ -186,19 +186,19 @@ class WheelBox( QWidget ):
         self.d_thermo = Qwt.QwtThermo()
         self.d_thermo.setOrientation( orientation )
 
-        if ( orientation == Qt.Horizontal ):
-            self.d_thermo.setScalePosition( Qwt.QwtThermo.LeadingScale )
-            self.d_wheel.setOrientation( Qt.Vertical )
+        if ( orientation == Qt.Orientation.Horizontal ):
+            self.d_thermo.setScalePosition( Qwt.QwtThermo.ScalePosition.LeadingScale )
+            self.d_wheel.setOrientation( Qt.Orientation.Vertical )
         else:
-            self.d_thermo.setScalePosition( Qwt.QwtThermo.TrailingScale )
-            self.d_wheel.setOrientation( Qt.Horizontal )
+            self.d_thermo.setScalePosition( Qwt.QwtThermo.ScalePosition.TrailingScale )
+            self.d_wheel.setOrientation( Qt.Orientation.Horizontal )
         if typ == 0:
             colorMap = Qwt.QwtLinearColorMap() 
-            colorMap.setColorInterval( Qt.blue, Qt.red )
+            colorMap.setColorInterval( Qt.GlobalColor.blue, Qt.GlobalColor.red )
             self.d_thermo.setColorMap( colorMap )
         elif typ == 1:
             colorMap = Qwt.QwtLinearColorMap()
-            colorMap.setMode( Qwt.QwtLinearColorMap.FixedColors )
+            colorMap.setMode( Qwt.QwtLinearColorMap.Mode.FixedColors )
             idx = 4
             colorMap.setColorInterval( Qt.GlobalColor( idx ),
                 Qt.GlobalColor( idx + 10 ) )
@@ -210,8 +210,8 @@ class WheelBox( QWidget ):
             self.d_wheel.setSingleStep( 1.0 )
             #self.d_thermo.setScaleEngine( Qwt.QwtLogScaleEngine )
             self.d_thermo.setScaleMaxMinor( 10 )
-            self.d_thermo.setFillBrush( Qt.darkCyan )
-            self.d_thermo.setAlarmBrush( Qt.magenta )
+            self.d_thermo.setFillBrush( Qt.GlobalColor.darkCyan )
+            self.d_thermo.setAlarmBrush( Qt.GlobalColor.magenta )
             self.d_thermo.setAlarmLevel( 500.0 )
             self.d_wheel.setValue( 800 )
         elif typ == 3:
@@ -226,7 +226,7 @@ class WheelBox( QWidget ):
             #self.d_thermo.setScaleEngine( scaleEngine )
 
             pal = QPalette()
-            pal.setColor( QPalette.Base, Qt.darkGray )
+            pal.setColor( QPalette.ColorRole.Base, Qt.GlobalColor.darkGray )
             #pal.setColor( QPalette.ButtonText, QColor( "darkKhaki" ) )
 
             self.d_thermo.setPalette( pal )
@@ -235,24 +235,24 @@ class WheelBox( QWidget ):
             self.d_wheel.setInverted( True )
 
             colorMap = Qwt.QwtLinearColorMap() 
-            colorMap.setColorInterval( Qt.darkCyan, Qt.yellow )
+            colorMap.setColorInterval( Qt.GlobalColor.darkCyan, Qt.GlobalColor.yellow )
             self.d_thermo.setColorMap( colorMap )
 
             self.d_wheel.setValue( 243 )
         elif typ == 5:
-            self.d_thermo.setFillBrush( Qt.darkCyan )
-            self.d_thermo.setAlarmBrush( Qt.magenta )
+            self.d_thermo.setFillBrush( Qt.GlobalColor.darkCyan )
+            self.d_thermo.setAlarmBrush( Qt.GlobalColor.magenta )
             self.d_thermo.setAlarmLevel( 60.0 )
         elif typ == 6:
-            self.d_thermo.setOriginMode( Qwt.QwtThermo.OriginMinimum )
+            self.d_thermo.setOriginMode( Qwt.QwtThermo.OriginMode.OriginMinimum )
             #self.d_thermo.setFillBrush( QBrush( "DarkSlateBlue" ) )
             #self.d_thermo.setAlarmBrush( QBrush( "DarkOrange" ) )
             self.d_thermo.setAlarmLevel( 60.0 )
         elif typ == 7:
             self.d_wheel.setRange( -100, 100 )
-            self.d_thermo.setOriginMode( Qwt.QwtThermo.OriginCustom )
+            self.d_thermo.setOriginMode( Qwt.QwtThermo.OriginMode.OriginCustom )
             self.d_thermo.setOrigin( 0.0 )
-            self.d_thermo.setFillBrush( Qt.darkBlue )
+            self.d_thermo.setFillBrush( Qt.GlobalColor.darkBlue )
 
         dmin = self.d_wheel.minimum()
         dmax = self.d_wheel.maximum()
@@ -270,11 +270,11 @@ class WheelBox( QWidget ):
 
         layout = None
 
-        if ( orientation == Qt.Horizontal ):
+        if ( orientation == Qt.Orientation.Horizontal ):
             layout = QHBoxLayout( box )
         else:
             layout = QVBoxLayout( box )
-        layout.addWidget( self.d_thermo, Qt.AlignCenter )
+        layout.addWidget( self.d_thermo, Qt.AlignmentFlag.AlignCenter )
         layout.addWidget( self.d_wheel )
         return box
 
@@ -287,12 +287,12 @@ class WheelTab( QWidget ):
         numBoxes = 4
         layout1 = QGridLayout()
         for i in range(numBoxes):
-            box = WheelBox( Qt.Vertical, i )
+            box = WheelBox( Qt.Orientation.Vertical, i )
             layout1.addWidget( box, i // 2, i % 2 )
 
         layout2 = QGridLayout()
         for i in range( numBoxes ):
-            box = WheelBox( Qt.Horizontal, i + numBoxes )
+            box = WheelBox( Qt.Orientation.Horizontal, i + numBoxes )
             layout2.addWidget( box, i // 2, i % 2 )
 
         layout = QHBoxLayout( self )
@@ -306,7 +306,7 @@ class KnobBox( QWidget ):
         self.d_knob = self.createKnob( knobType )
         self.d_knob.setKnobWidth( 100 )
         self.d_label = QLabel( self )
-        self.d_label.setAlignment( Qt.AlignCenter )
+        self.d_label.setAlignment( Qt.AlignmentFlag.AlignCenter )
 
         layout = QVBoxLayout( self )
         layout.setSpacing( 0 )
@@ -320,19 +320,19 @@ class KnobBox( QWidget ):
         knob = Qwt.QwtKnob()
         knob.setTracking( True )
         if knobType == 0:
-            knob.setKnobStyle( Qwt.QwtKnob.Sunken )
-            knob.setMarkerStyle( Qwt.QwtKnob.Nub )
+            knob.setKnobStyle( Qwt.QwtKnob.KnobStyle.Sunken )
+            knob.setMarkerStyle( Qwt.QwtKnob.MarkerStyle.Nub )
             knob.setWrapping( True )
             knob.setNumTurns( 4 )
             knob.setScaleStepSize( 10.0 )
             knob.setScale( 0, 400 )
             knob.setTotalSteps( 400 )
         elif knobType == 1:
-            knob.setKnobStyle( Qwt.QwtKnob.Sunken )
-            knob.setMarkerStyle( Qwt.QwtKnob.Dot )
+            knob.setKnobStyle( Qwt.QwtKnob.KnobStyle.Sunken )
+            knob.setMarkerStyle( Qwt.QwtKnob.MarkerStyle.Dot )
         elif knobType == 2:
-            knob.setKnobStyle( Qwt.QwtKnob.Sunken )
-            knob.setMarkerStyle( Qwt.QwtKnob.Tick )
+            knob.setKnobStyle( Qwt.QwtKnob.KnobStyle.Sunken )
+            knob.setMarkerStyle( Qwt.QwtKnob.MarkerStyle.Tick )
             #QwtLinearScaleEngine *scaleEngine = new QwtLinearScaleEngine( 2 )
             #scaleEngine.setTransformation( new QwtPowerTransform( 2 ) )
             #knob.setScaleEngine( scaleEngine )
@@ -353,19 +353,19 @@ class KnobBox( QWidget ):
             knob.setSingleSteps( 1 )
             knob.setPageSteps( 5 )
         elif knobType == 3:
-            knob.setKnobStyle( Qwt.QwtKnob.Flat )
-            knob.setMarkerStyle( Qwt.QwtKnob.Notch )
+            knob.setKnobStyle( Qwt.QwtKnob.KnobStyle.Flat )
+            knob.setMarkerStyle( Qwt.QwtKnob.MarkerStyle.Notch )
             knob.setScaleEngine( Qwt.QwtLogScaleEngine() )
             knob.setScaleStepSize( 1.0 )
             knob.setScale( 0.1, 1000.0 )
             knob.setScaleMaxMinor( 10 )
         elif knobType == 4:
-            knob.setKnobStyle( Qwt.QwtKnob.Raised )
-            knob.setMarkerStyle( Qwt.QwtKnob.Dot )
+            knob.setKnobStyle( Qwt.QwtKnob.KnobStyle.Raised )
+            knob.setMarkerStyle( Qwt.QwtKnob.MarkerStyle.Dot )
             knob.setWrapping( True )
         elif knobType == 5:
-            knob.setKnobStyle( Qwt.QwtKnob.Styled )
-            knob.setMarkerStyle( Qwt.QwtKnob.Triangle )
+            knob.setKnobStyle( Qwt.QwtKnob.KnobStyle.Styled )
+            knob.setMarkerStyle( Qwt.QwtKnob.MarkerStyle.Triangle )
             knob.setTotalAngle( 180.0 )
             knob.setScale( 100, -100 )
         return knob
@@ -408,7 +408,7 @@ tabWidget.addTab( knobTab, "Knob" )
 
 tabWidget.resize( 800, 600 )
 tabWidget.show()
-sys.exit(a.exec_())
+sys.exit(a.exec())
 
 
 

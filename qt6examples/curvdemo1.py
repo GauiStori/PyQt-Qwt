@@ -23,7 +23,7 @@ class MainWin(QFrame):
         xMap.setScaleInterval( -0.5, 10.5 )
         yMap.setScaleInterval( -1.1, 1.1 )
         # Frame style FIXME This doesn't seem to work properly
-        self.setFrameStyle( QFrame.Box | QFrame.Raised )
+        # FIXME self.setFrameStyle( QFrame.Shape.Box | QFrame.Shape.Raised )
         self.setLineWidth( 2 )
         self.setMidLineWidth( 3 )
         # Calculate values
@@ -33,35 +33,35 @@ class MainWin(QFrame):
         #  define curve styles
         i = 0
         self.d_curves[i] = Qwt.QwtPlotCurve()
-        self.d_curves[i].setSymbol( Qwt.QwtSymbol( Qwt.QwtSymbol.Cross, QBrush(Qt.NoBrush),
-                                    QPen( Qt.black ), QSize( 5, 5 ) ) )
-        self.d_curves[i].setPen( Qt.darkGreen )
-        self.d_curves[i].setStyle( Qwt.QwtPlotCurve.Lines )
-        self.d_curves[i].setCurveAttribute( Qwt.QwtPlotCurve.Fitted )
+        self.d_curves[i].setSymbol( Qwt.QwtSymbol( Qwt.QwtSymbol.Style.Cross, QBrush(Qt.BrushStyle.NoBrush),
+                                    QPen( Qt.GlobalColor.black ), QSize( 5, 5 ) ) )
+        self.d_curves[i].setPen( Qt.GlobalColor.darkGreen )
+        self.d_curves[i].setStyle( Qwt.QwtPlotCurve.CurveStyle.Lines )
+        self.d_curves[i].setCurveAttribute( Qwt.QwtPlotCurve.CurveAttribute.Fitted )
         i += 1
         self.d_curves[i] = Qwt.QwtPlotCurve()
-        self.d_curves[i].setSymbol( Qwt.QwtSymbol( Qwt.QwtSymbol.Ellipse, Qt.yellow,
-                                    QPen( Qt.blue ), QSize( 5, 5 ) ) )
-        self.d_curves[i].setPen( Qt.red )
-        self.d_curves[i].setStyle( Qwt.QwtPlotCurve.Sticks )
+        self.d_curves[i].setSymbol( Qwt.QwtSymbol( Qwt.QwtSymbol.Style.Ellipse, Qt.GlobalColor.yellow,
+                                    QPen( Qt.GlobalColor.blue ), QSize( 5, 5 ) ) )
+        self.d_curves[i].setPen( Qt.GlobalColor.red )
+        self.d_curves[i].setStyle( Qwt.QwtPlotCurve.CurveStyle.Sticks )
         i += 1
         self.d_curves[i] = Qwt.QwtPlotCurve()
-        self.d_curves[i].setPen( Qt.darkBlue )
-        self.d_curves[i].setStyle( Qwt.QwtPlotCurve.Lines )
+        self.d_curves[i].setPen( Qt.GlobalColor.darkBlue )
+        self.d_curves[i].setStyle( Qwt.QwtPlotCurve.CurveStyle.Lines )
         i += 1
         self.d_curves[i] = Qwt.QwtPlotCurve()
-        self.d_curves[i].setPen( Qt.darkBlue )
-        self.d_curves[i].setStyle( Qwt.QwtPlotCurve.Lines )
-        self.d_curves[i].setRenderHint( Qwt.QwtPlotItem.RenderAntialiased )
+        self.d_curves[i].setPen( Qt.GlobalColor.darkBlue )
+        self.d_curves[i].setStyle( Qwt.QwtPlotCurve.CurveStyle.Lines )
+        self.d_curves[i].setRenderHint( Qwt.QwtPlotItem.RenderHint.RenderAntialiased )
         i += 1
         self.d_curves[i] = Qwt.QwtPlotCurve()
-        self.d_curves[i].setPen( Qt.darkCyan )
-        self.d_curves[i].setStyle( Qwt.QwtPlotCurve.Steps )
+        self.d_curves[i].setPen( Qt.GlobalColor.darkCyan )
+        self.d_curves[i].setStyle( Qwt.QwtPlotCurve.CurveStyle.Steps )
         i += 1
         self.d_curves[i] = Qwt.QwtPlotCurve()
-        self.d_curves[i].setSymbol( Qwt.QwtSymbol( Qwt.QwtSymbol.XCross, QBrush(Qt.NoBrush),
-                                    QPen( Qt.darkMagenta ), QSize( 5, 5 ) ) )
-        self.d_curves[i].setStyle( Qwt.QwtPlotCurve.NoCurve )
+        self.d_curves[i].setSymbol( Qwt.QwtSymbol( Qwt.QwtSymbol.Style.XCross, QBrush(Qt.BrushStyle.NoBrush),
+                                    QPen( Qt.GlobalColor.darkMagenta ), QSize( 5, 5 ) ) )
+        self.d_curves[i].setStyle( Qwt.QwtPlotCurve.CurveStyle.NoCurve )
         # attach data
         for i in range(CurvCnt):
             self.d_curves[i].setSamples( xval, yval )
@@ -84,16 +84,16 @@ class MainWin(QFrame):
         for i in range( CurvCnt ):
             xMap.setPaintInterval( r.left(), r.right() )
             yMap.setPaintInterval( r.top(), r.bottom() )
-            painter.setRenderHint( QPainter.Antialiasing,
-                self.d_curves[i].testRenderHint( Qwt.QwtPlotItem.RenderAntialiased ) )
+            painter.setRenderHint( QPainter.RenderHint.Antialiasing,
+                self.d_curves[i].testRenderHint( Qwt.QwtPlotItem.RenderHint.RenderAntialiased ) )
             self.d_curves[i].draw( painter, xMap, yMap, QRectF(r) )
             self.shiftDown( r, deltay )
 
         # draw titles
         r = self.contentsRect()     # reset r
         painter.setFont( QFont( "Helvetica", 8 ) )
-        alignment = Qt.AlignTop | Qt.AlignHCenter
-        painter.setPen( Qt.black )
+        alignment = Qt.AlignmentFlag.AlignTop | Qt.AlignmentFlag.AlignHCenter
+        painter.setPen( Qt.GlobalColor.black )
         painter.drawText( 0, r.top(), r.width(), painter.fontMetrics().height(),
             alignment, "Style: Line/Fitted, Symbol: Cross" )
         self.shiftDown( r, deltay )
@@ -119,4 +119,4 @@ if __name__ == '__main__':
     w = MainWin()
     w.resize( 300, 600 )
     w.show()
-    sys.exit(a.exec_())
+    sys.exit(a.exec())

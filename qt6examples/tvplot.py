@@ -132,7 +132,7 @@ class MainWindow(QMainWindow):
         self.typeBox.setSizePolicy( QSizePolicy.Fixed, QSizePolicy.Fixed )
         self.btnExport = QToolButton( self.toolBar )
         self.btnExport.setText( "Export" )
-        self.btnExport.setToolButtonStyle( Qt.ToolButtonTextUnderIcon )
+        self.btnExport.setToolButtonStyle( Qt.ToolButtonStyle.ToolButtonTextUnderIcon )
         #connect( btnExport, SIGNAL( clicked() ), d_plot, SLOT( exportPlot() ) )
         self.btnExport.clicked.connect(self.d_plot.exportPlot)
         self.toolBar.addWidget( self.typeBox )
