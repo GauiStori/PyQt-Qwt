@@ -399,8 +399,8 @@ class Grid(Qwt.QwtPlotGrid):
     def __init__(self):
         super().__init__()
         self.enableXMin( True )
-        self.setMajorPen( Qt.white, 0, Qt.DotLine )
-        self.setMinorPen( Qt.gray, 0, Qt.DotLine )
+        self.setMajorPen( Qt.GlobalColor.white, 0, Qt.PenStyle.DotLine )
+        self.setMinorPen( Qt.GlobalColor.gray, 0, Qt.PenStyle.DotLine )
 
     """def updateScaleDiv(self,  xScaleDiv, yScaleDiv ):
         scaleDiv = Qwt.QwtScaleDiv( xScaleDiv.lowerBound(),
@@ -437,13 +437,13 @@ class Plot( Qwt.QwtPlot ):
         self.setObjectName( "FriedbergPlot" )
         self.setTitle( "Temperature of Friedberg/Germany" )
 
-        self.setAxisTitle( Qwt.QwtPlot.xBottom, "2007" )
-        self.setAxisScaleDiv( Qwt.QwtPlot.xBottom, self.yearScaleDiv() )
+        self.setAxisTitle( Qwt.QwtPlot.Axis.xBottom, "2007" )
+        self.setAxisScaleDiv( Qwt.QwtPlot.Axis.xBottom, self.yearScaleDiv() )
         #self.setAxisScaleDraw( Qwt.QwtPlot.xBottom, YearScaleDraw() ) FIXME Crashes on label
-        self.setAxisTitle( Qwt.QwtPlot.yLeft, "Temperature [%1C]"  )
+        self.setAxisTitle( Qwt.QwtPlot.Axis.yLeft, "Temperature [%1C]"  )
 
         canvas = Qwt.QwtPlotCanvas()
-        canvas.setPalette( QPalette( QColor( Qt.darkGray ) ) )
+        canvas.setPalette( QPalette( QColor( Qt.GlobalColor.darkGray ) ) )
         canvas.setBorderRadius( 10 )
 
         self.setCanvas( canvas )
@@ -452,7 +452,7 @@ class Plot( Qwt.QwtPlot ):
         self.grid = Grid()
         self.grid.attach( self )
         self.legend = Qwt.QwtLegend()
-        self.insertLegend( self.legend, Qwt.QwtPlot.RightLegend )
+        self.insertLegend( self.legend, Qwt.QwtPlot.LegendPosition.RightLegend )
 
         numDays = 365
         averageData = []
@@ -464,8 +464,8 @@ class Plot( Qwt.QwtPlot ):
             averageData.append(QPointF( float( i ), t.averageValue ))
             rangeData.append(Qwt.QwtIntervalSample( float( i ),Qwt.QwtInterval( t.minValue, t.maxValue ) ))
 
-        self.insertCurve( "Average", averageData, Qt.black )
-        self.insertErrorBars( "Range", rangeData, Qt.blue )
+        self.insertCurve( "Average", averageData, Qt.GlobalColor.black )
+        self.insertErrorBars( "Range", rangeData, Qt.GlobalColor.blue )
         """
             LeftButton for the zooming
             MidButton for the panning
@@ -473,15 +473,15 @@ class Plot( Qwt.QwtPlot ):
             Ctrl+RighButton: zoom out to full size
         """
         self.zoomer = Qwt.QwtPlotZoomer( canvas )
-        self.zoomer.setRubberBandPen( QColor( Qt.black ) )
-        self.zoomer.setTrackerPen( QColor( Qt.black ) )
-        self.zoomer.setMousePattern( Qwt.QwtEventPattern.MouseSelect2,
-            Qt.RightButton, Qt.ControlModifier )
-        self.zoomer.setMousePattern( Qwt.QwtEventPattern.MouseSelect3,
-            Qt.RightButton )
+        self.zoomer.setRubberBandPen( QColor( Qt.GlobalColor.black ) )
+        self.zoomer.setTrackerPen( QColor( Qt.GlobalColor.black ) )
+        self.zoomer.setMousePattern( Qwt.QwtEventPattern.MousePatternCode.MouseSelect2,
+            Qt.MouseButton.RightButton, Qt.KeyboardModifier.ControlModifier )
+        self.zoomer.setMousePattern( Qwt.QwtEventPattern.MousePatternCode.MouseSelect3,
+            Qt.MouseButton.RightButton )
 
         self.panner = Qwt.QwtPlotPanner( canvas )
-        self.panner.setMouseButton( Qt.MiddleButton )
+        self.panner.setMouseButton( Qt.MouseButton.MiddleButton )
 
     def yearScaleDiv(self):
         days = [ 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 ]
@@ -503,11 +503,11 @@ class Plot( Qwt.QwtPlot ):
 
     def insertCurve(self, title, samples, color ):
         self.m_curve = Qwt.QwtPlotCurve( title )
-        self.m_curve.setRenderHint( Qwt.QwtPlotItem.RenderAntialiased )
-        self.m_curve.setStyle( Qwt.QwtPlotCurve.NoCurve )
-        self.m_curve.setLegendAttribute( Qwt.QwtPlotCurve.LegendShowSymbol )
+        self.m_curve.setRenderHint( Qwt.QwtPlotItem.RenderHint.RenderAntialiased )
+        self.m_curve.setStyle( Qwt.QwtPlotCurve.CurveStyle.NoCurve )
+        self.m_curve.setLegendAttribute( Qwt.QwtPlotCurve.LegendAttribute.LegendShowSymbol )
 
-        self.symbol = Qwt.QwtSymbol( Qwt.QwtSymbol.XCross )
+        self.symbol = Qwt.QwtSymbol( Qwt.QwtSymbol.Style.XCross )
         self.symbol.setSize( 4 )
         self.symbol.setPen( color )
         self.m_curve.setSymbol( self.symbol )
@@ -516,24 +516,24 @@ class Plot( Qwt.QwtPlot ):
 
     def insertErrorBars(self, title, samples, color ):
         self.m_intervalCurve = Qwt.QwtPlotIntervalCurve( title )
-        self.m_intervalCurve.setRenderHint( Qwt.QwtPlotItem.RenderAntialiased )
-        self.m_intervalCurve.setPen( Qt.white )
+        self.m_intervalCurve.setRenderHint( Qwt.QwtPlotItem.RenderHint.RenderAntialiased )
+        self.m_intervalCurve.setPen( Qt.GlobalColor.white )
 
         bg = QColor( color )
         bg.setAlpha( 150 )
         self.m_intervalCurve.setBrush( QBrush( bg ) )
-        self.m_intervalCurve.setStyle( Qwt.QwtPlotIntervalCurve.Tube )
+        self.m_intervalCurve.setStyle( Qwt.QwtPlotIntervalCurve.CurveStyle.Tube )
 
         self.m_intervalCurve.setSamples( samples )
         self.m_intervalCurve.attach( self )
 
     def setMode( self, style ):
         if ( style == 1 ): #Tube
-            self.m_intervalCurve.setStyle( Qwt.QwtPlotIntervalCurve.Tube )
+            self.m_intervalCurve.setStyle( Qwt.QwtPlotIntervalCurve.CurveStyle.Tube )
             #self.m_intervalCurve.setSymbol( 0 )
-            self.m_intervalCurve.setRenderHint( Qwt.QwtPlotItem.RenderAntialiased, True )
+            self.m_intervalCurve.setRenderHint( Qwt.QwtPlotItem.RenderHint.RenderAntialiased, True )
         else:
-            self.m_intervalCurve.setStyle( Qwt.QwtPlotIntervalCurve.NoCurve )
+            self.m_intervalCurve.setStyle( Qwt.QwtPlotCurve.CurveStyle.NoCurve )
 
             c = QColor( self.m_intervalCurve.brush().color().rgb() ) # skip alpha
 
@@ -542,7 +542,7 @@ class Plot( Qwt.QwtPlot ):
             self.errorBar.setPen( c )
 
             self.m_intervalCurve.setSymbol( self.errorBar )
-            self.m_intervalCurve.setRenderHint( Qwt.QwtPlotItem.RenderAntialiased, False )
+            self.m_intervalCurve.setRenderHint( Qwt.QwtPlotItem.RenderHint.RenderAntialiased, False )
         self.replot()
 
     def exportPlot(self):
@@ -560,11 +560,11 @@ class MainWindow(QMainWindow):
         self.typeBox.addItem( "Bars" )
         self.typeBox.addItem( "Tube" )
         self.typeBox.setCurrentIndex( 1 )
-        self.typeBox.setSizePolicy( QSizePolicy.Fixed, QSizePolicy.Fixed )
+        self.typeBox.setSizePolicy( QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed )
 
         btnExport = QToolButton()
         btnExport.setText( "Export" )
-        btnExport.setToolButtonStyle( Qt.ToolButtonTextUnderIcon )
+        btnExport.setToolButtonStyle( Qt.ToolButtonStyle.ToolButtonTextUnderIcon )
         #btnExport.clicked.connect( self.plot.exportPlot())
 
         toolBar = QToolBar()
@@ -582,4 +582,4 @@ if __name__=="__main__":
     window.setObjectName( "MainWindow" )
     window.resize( 600, 400 )
     window.show()
-    sys.exit(app.exec_())
+    sys.exit(app.exec())
