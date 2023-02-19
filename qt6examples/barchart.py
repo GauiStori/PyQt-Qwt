@@ -17,22 +17,11 @@ class BarChart( Qwt.QwtPlot ):
     def __init__(self, parent):
         Qwt.QwtPlot.__init__(self, parent)
         self.setAutoFillBackground( True )
-<<<<<<< HEAD
-        self.setPalette( QPalette(Qt.white) )
-=======
         self.setPalette( QPalette(Qt.GlobalColor.white) )
->>>>>>> test
         self.canvas().setPalette( QPalette( colours["LemonChiffon"]))
 
         self.setTitle( "Bar Chart" )
 
-<<<<<<< HEAD
-        self.setAxisTitle( Qwt.QwtPlot.yLeft, "Whatever" )
-        self.setAxisTitle( Qwt.QwtPlot.xBottom, "Whatever" )
-
-        self.d_barChartItem = Qwt.QwtPlotMultiBarChart( "Bar Chart" )
-        self.d_barChartItem.setLayoutPolicy( Qwt.QwtPlotMultiBarChart.AutoAdjustSamples )
-=======
         self.setAxisTitle( Qwt.QwtPlot.Axis.yLeft, "Whatever" )
         self.setAxisTitle( Qwt.QwtPlot.Axis.xBottom, "Whatever" )
         #self.setAxisTitle( 0, "Whatever" )
@@ -40,7 +29,6 @@ class BarChart( Qwt.QwtPlot ):
 
         self.d_barChartItem = Qwt.QwtPlotMultiBarChart( "Bar Chart" )
         self.d_barChartItem.setLayoutPolicy( Qwt.QwtPlotBarChart.LayoutPolicy.AutoAdjustSamples )
->>>>>>> test
         self.d_barChartItem.setSpacing( 20 )
         self.d_barChartItem.setMargin( 3 )
 
@@ -49,11 +37,7 @@ class BarChart( Qwt.QwtPlot ):
         self.insertLegend( Qwt.QwtLegend() )
 
         self.populate()
-<<<<<<< HEAD
-        self.setOrientation( 0 )
-=======
-        #self.setOrientation( 0 )
->>>>>>> test
+        #FIXME self.setOrientation( 0 )
 
         self.setAutoReplot( True )
 
