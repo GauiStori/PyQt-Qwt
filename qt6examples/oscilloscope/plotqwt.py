@@ -86,7 +86,7 @@ class Plot(Qwt.QwtPlot):
         self.__d_curve = Qwt.QwtPlotCurve()
         self.__d_curve.setStyle( Qwt.QwtPlotCurve.Lines )
         self.__d_curve.setPen( self.canvas().palette().color( QPalette.WindowText ) )
-        self.__d_curve.setRenderHint( Qwt.QwtPlotItem.RenderAntialiased, True )
+        self.__d_curve.setRenderHint( Qwt.QwtPlotItem.RenderHint.RenderAntialiased, True )
         self.__d_curve.setPaintAttribute( Qwt.QwtPlotCurve.ClipPolygons, False )
         self.__cdata = CurveData()
         self.__d_curve.setData( self.__cdata )
