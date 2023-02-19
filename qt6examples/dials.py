@@ -16,7 +16,7 @@ class CompassGrid( QWidget ): #QFrame( parent )
     def __init__(self, parent=None):
         QWidget.__init__(self,  parent)
         p = QPalette()
-        p.setColor( self.backgroundRole(), Qt.gray )
+        p.setColor( self.backgroundRole(), Qt.GlobalColor.gray )
         self.setPalette( p )
         self.setAutoFillBackground( True )
         layout = QGridLayout( self )
@@ -31,13 +31,13 @@ class CompassGrid( QWidget ): #QFrame( parent )
 
     def createCompass( self, pos ):
         palette0 = QPalette()
-        for c in range(QPalette.NColorRoles):
-            colorRole = QPalette.ColorRole( c )
+        for c in range(QPalette.ColorRole.NColorRoles):
+            colorRole = QPalette.ColorRole.ColorRole( c )
             palette0.setColor( colorRole, QColor() )
 
-        #palette0.setColor( QPalette.Base, palette().color( QPalette.backgroundRole() ).light( 120 ) )
+        #palette0.setColor( QPalette.ColorRole.Base, palette().color( QPalette.ColorRole.backgroundRole() ).light( 120 ) )
         palette0.setColor( QPalette.WindowText,
-            palette0.color( QPalette.Base ) )
+            palette0.color( QPalette.ColorRole.Base ) )
 
         compass = Qwt.QwtCompass( self )
         compass.setLineWidth( 4 )
@@ -71,7 +71,7 @@ class CompassGrid( QWidget ): #QFrame( parent )
             #A compass with a rotating needle in darkBlue. Shows
             #a ticks for each degree.
 
-            palette0.setColor( QPalette.Base, Qt.darkBlue )
+            palette0.setColor( QPalette.ColorRole.Base, Qt.GlobalColor.darkBlue )
             palette0.setColor( QPalette.WindowText, QColor( Qt.darkBlue ))#.dark( 120 ) )
             palette0.setColor( QPalette.Text, Qt.white )
 
@@ -93,8 +93,8 @@ class CompassGrid( QWidget ): #QFrame( parent )
         elif pos == 3:
             #A compass without a frame, showing numbers as tick labels.
             #The origin is at 220.0
-            palette0.setColor( QPalette.Base, self.palette().color( self.backgroundRole() ) )
-            palette0.setColor( QPalette.WindowText, Qt.blue )
+            palette0.setColor( QPalette.ColorRole.Base, self.palette().color( self.backgroundRole() ) )
+            palette0.setColor( QPalette.WindowText, Qt.GlobalColor.blue )
             compass.setLineWidth( 0 )
             map = {}
             for  d in range(0,360,60):
@@ -110,7 +110,7 @@ class CompassGrid( QWidget ): #QFrame( parent )
             compass.setScaleDraw( scaleDraw )
             compass.setScaleMaxMajor( 36 )
             compass.setScaleMaxMinor( 5 )
-            compass.setNeedle( Qwt.QwtDialSimpleNeedle( Qwt.QwtDialSimpleNeedle.Ray, True, Qt.white ) )
+            compass.setNeedle( Qwt.QwtDialSimpleNeedle( Qwt.QwtDialSimpleNeedle.Ray, True, Qt.GlobalColor.white ) )
             compass.setOrigin( 220.0 )
             compass.setValue( 20.0 )
         elif pos == 4:
@@ -123,31 +123,31 @@ class CompassGrid( QWidget ): #QFrame( parent )
             scaleDraw.setTickLength( Qwt.QwtScaleDiv.MediumTick, 0 )
             scaleDraw.setTickLength( Qwt.QwtScaleDiv.MajorTick, 3 )
             compass.setScaleDraw( scaleDraw )
-            compass.setNeedle( Qwt.QwtCompassMagnetNeedle( Qwt.QwtCompassMagnetNeedle.TriangleStyle, Qt.white, Qt.red ) )
+            compass.setNeedle( Qwt.QwtCompassMagnetNeedle( Qwt.QwtCompassMagnetNeedle.TriangleStyle, Qt.GlobalColor.white, Qt.GlobalColor.red ) )
             compass.setValue( 220.0 )
         elif pos == 5:
             #A compass with a yellow on black ray
-            palette0.setColor( QPalette.WindowText, Qt.black )
-            compass.setNeedle( Qwt.QwtDialSimpleNeedle( Qwt.QwtDialSimpleNeedle.Ray, False, Qt.yellow ) )
+            palette0.setColor( QPalette.WindowText, Qt.GlobalColor.black )
+            compass.setNeedle( Qwt.QwtDialSimpleNeedle( Qwt.QwtDialSimpleNeedle.Ray, False, Qt.GlobalColor.yellow ) )
             compass.setValue( 315.0 )
 
         newPalette = compass.palette()
-        for c in range(QPalette.NColorRoles):
+        for c in range(QPalette.ColorRole.NColorRoles):
             colorRole = QPalette.ColorRole( c )
             if ( palette0.color( colorRole ).isValid() ):
                 newPalette.setColor( colorRole, palette0.color( colorRole ) )
 
         for i in range(QPalette.NColorGroups):
             colorGroup = QPalette.ColorGroup( i )
-            light = newPalette.color( colorGroup, QPalette.Base )#.light( 170 )
-            dark = newPalette.color( colorGroup, QPalette.Base )#.dark( 170 )
+            light = newPalette.color( colorGroup, QPalette.ColorRole.Base )#.light( 170 )
+            dark = newPalette.color( colorGroup, QPalette.ColorRole.Base )#.dark( 170 )
             #mid = compass.frameShadow() == QwtDial.Raised
-            #    ? newPalette.color( colorGroup, QPalette.Base ).dark( 110 )
-            #    : newPalette.color( colorGroup, QPalette.Base ).light( 110 )
-            mid = newPalette.color( colorGroup, QPalette.Base )#.dark( 110 )
+            #    ? newPalette.color( colorGroup, QPalette.ColorRole.Base ).dark( 110 )
+            #    : newPalette.color( colorGroup, QPalette.ColorRole.Base ).light( 110 )
+            mid = newPalette.color( colorGroup, QPalette.ColorRole.Base )#.dark( 110 )
             newPalette.setColor( colorGroup, QPalette.Dark, dark )
-            newPalette.setColor( colorGroup, QPalette.Mid, mid )
-            newPalette.setColor( colorGroup, QPalette.Light, light )
+            newPalette.setColor( colorGroup, QPalette.ColorRole.Mid, mid )
+            newPalette.setColor( colorGroup, QPalette.ColorRole.Light, light )
         compass.setPalette( newPalette )
         return compass
 
@@ -349,11 +349,11 @@ class CockpitGrid( QWidget ):
 
     def colorTheme( self, base ):
         palette = QPalette
-        palette.setColor( QPalette.Base, base )
-        palette.setColor( QPalette.Window, base.dark( 150 ) )
-        palette.setColor( QPalette.Mid, base.dark( 110 ) )
-        palette.setColor( QPalette.Light, base.light( 170 ) )
-        palette.setColor( QPalette.Dark, base.dark( 170 ) )
+        palette.setColor( QPalette.ColorRole.Base, base )
+        palette.setColor( QPalette.ColorRole.Window, base.dark( 150 ) )
+        palette.setColor( QPalette.ColorRole.Mid, base.dark( 110 ) )
+        palette.setColor( QPalette.ColorRole.Light, base.light( 170 ) )
+        palette.setColor( QPalette.ColorRole.Dark, base.dark( 170 ) )
         palette.setColor( QPalette.Text, base.dark( 200 ).light( 800 ) )
         palette.setColor( QPalette.WindowText, base.dark( 200 ) )
         return palette
@@ -397,4 +397,4 @@ tabWidget.addTab(CompassGrid(),"Compass")
 tabWidget.addTab(CockpitGrid(),"Cockpit")
 tabWidget.show()
 
-sys.exit(a.exec_())
+sys.exit(a.exec())

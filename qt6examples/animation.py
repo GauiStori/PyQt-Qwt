@@ -143,7 +143,7 @@ class Plot( Qwt.QwtPlot):
         self.setTitle( "Animated Curves" )
 
         # hide all axes
-        for axis in range(Qwt.QwtPlot.axisCnt):
+        for axis in range(3): #Qwt.QwtPlot.Axis.axisCnt):
             self.enableAxis( axis, False )
 
         #self.plotLayout.setCanvasMargin( 10 )
@@ -190,4 +190,4 @@ if __name__ == '__main__':
     plot.resize( 400, 400 )
     plot.show()
 
-    sys.exit(a.exec_())
+    sys.exit(a.exec())
