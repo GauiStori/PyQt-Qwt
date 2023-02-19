@@ -33,7 +33,7 @@ public:
     QList<QwtText> barTitles() const;
 
     //void setSamples( const QList<QwtSetSample> & ); //FIXME. Don't know if this is needed.
-    //FIXME void setSamples( const QList< QList<double> > & );
+    void setSamples( const QList< QList<double> > & );
     void setSamples( QwtSeriesDataQwtSetSample * /Transfer/);
 
     void setStyle( ChartStyle style );
@@ -113,7 +113,7 @@ typedef QwtSeriesStore<QwtSetSample> QwtSeriesStoreQwtSetSample;
     QList< QwtText > barTitles() const;
 
     //void setSamples( const QList< QwtSetSample >& );
-    //FIXME void setSamples( const QList< QList< double > >& );
+    void setSamples( const QList< QList< double > >& );
     void setSamples( QwtSeriesDataQwtSetSample*  /Transfer/);
 
     void setStyle( ChartStyle style );

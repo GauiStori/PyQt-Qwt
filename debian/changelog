@@ -1,0 +1,103 @@
+pyqt-qwt (2.0.0-1) UNRELEASED; urgency=medium
+
+  * New upstream prerelease
+
+ -- Gudjon I. Gudjonsson <gudjon@gudjon.org>  Fri, 30 Dec 2022 18:17:05 +0000
+
+pyqt-qwt (1.02.02-2) unstable; urgency=medium
+
+  [ Gudjon I. Gudjonsson ]
+  * Change sip5-tools dependency to sip-tools (Closes: #980221)
+
+  [ Dmitry Shachnev ]
+  * Add Debian Python team to Uploaders.
+
+ -- Gudjon I. Gudjonsson <gudjon@gudjon.org>  Mon, 18 Jan 2021 07:42:37 +0100
+
+pyqt-qwt (1.02.02-1) unstable; urgency=medium
+
+  * New upstream release (Closes: #964128)
+  * Removing all patches, implemented in upstream
+  * Add sip5 dependency
+  * Bump standards version to 4.5.1. No changes needed
+  * Change Debian build system to using sip-build
+  * Remove .install file. Fixed with dh_installdocs
+  * Change to dh_installexamples for qt5examples
+
+ -- Gudjon I. Gudjonsson <gudjon@gudjon.org>  Sun, 27 Dec 2020 11:12:14 +0100
+
+pyqt-qwt (1.02.00-3) unstable; urgency=medium
+
+  [ Stefano Rivera ]
+  * Team upload.
+  * Add pyqt-sipdir parameter to configure. Has changed in pyqt5-dev since
+    5.15.0+dfsg-2. (Closes: #971226)
+  * Add version dependency to pyqt5-dev. Needed for the pyqt-sipdir parameter.
+  * Explicitly disable installation of sip files. Previously they weren't
+    installed because they weren't within the Python module.
+
+  [ Ondřej Nový ]
+  * d/control: Update Vcs-* fields with new Debian Python Team Salsa
+    layout.
+
+ -- Stefano Rivera <stefanor@debian.org>  Fri, 16 Oct 2020 21:16:21 -0700
+
+pyqt-qwt (1.02.00-2) unstable; urgency=medium
+
+  [ Ondřej Nový ]
+  * Use debhelper-compat instead of debian/compat.
+
+  [ Gudjon I. Gudjonsson ]
+  * Add a private assignment operator (Closes: #963298)
+  * Add patch to avoid calling sip5
+  * Bump standards version to 4.5.0
+  * Minor fixes to patches headers
+
+ -- Gudjon I. Gudjonsson <gudjon@gudjon.org>  Fri, 24 Jul 2020 11:42:48 +0200
+
+pyqt-qwt (1.02.00-1) unstable; urgency=medium
+
+  * New upstream release
+  * Bump standards version to 4.3.0.2, no changes needed
+  * Add patch fix_ftbs. Needed for new sip version
+
+ -- Gudjon I. Gudjonsson <gudjon@gudjon.org>  Sat, 23 Feb 2019 14:10:11 +0100
+
+pyqt-qwt (1.01.00-3) unstable; urgency=medium
+
+  * Future proof python3 installs. Thanks to Mattia Rizzolo (Closes: #910080)
+
+ -- Gudjon I. Gudjonsson <gudjon@gudjon.org>  Sun, 07 Oct 2018 09:07:48 +0200
+
+pyqt-qwt (1.01.00-2) unstable; urgency=medium
+
+  * Fix typo in doc package description
+  * Fix compilation for all supported python3 versions (Closes: #909732)
+
+ -- Gudjon I. Gudjonsson <gudjon@gudjon.org>  Sun, 30 Sep 2018 16:02:18 +0200
+
+pyqt-qwt (1.01.00-1) unstable; urgency=medium
+
+  [ Ondřej Nový ]
+  * d/control: Remove ancient X-Python3-Version field
+
+  [ Gudjon I. Gudjonsson ]
+  * New upstream release
+  * Bump sip build-dependencies to 4.19.11, following configure.py.
+  * Configure with --no-dist-info for now, mk_distinfo.py does not work
+    well with DESTDIR yet.
+  * Update debhelper compat level to 11.
+  * Bump Standards-Version to 4.2.1, no changes needed.
+
+ -- Gudjon I. Gudjonsson <gudjon@gudjon.org>  Sat, 01 Sep 2018 13:32:30 +0200
+
+pyqt-qwt (1.00.00-1) unstable; urgency=medium
+
+  [ Ondřej Nový ]
+  * d/control: Remove trailing whitespaces
+  * d/control: Add Vcs-* field
+
+  [ Gudjon I. Gudjonsson ]
+  * Initial release (Closes: #891707)
+
+ -- Gudjon I. Gudjonsson <gudjon@gudjon.org>  Wed, 25 Apr 2018 11:56:49 +0200

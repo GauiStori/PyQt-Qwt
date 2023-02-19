@@ -121,7 +121,7 @@
 %Include qwt_system_clock.sip
 %Include qwt_date.sip
 %Include qwt_dyngrid_layout.sip
-%Include qwt_plot_glcanvas.sip
+//FIXME %Include qwt_plot_glcanvas.sip
 %Include qwt_plot_rescaler.sip
 %Include qwt_widget_overlay.sip
 %Include qwt_plot_shapeitem.sip

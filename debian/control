@@ -1,0 +1,85 @@
+Source: pyqt-qwt
+Section: python
+Priority: optional
+Maintainer: Gudjon I. Gudjonsson <gudjon@gudjon.org>
+Uploaders: Debian Python Team <team+python@tracker.debian.org>
+Build-Depends: debhelper-compat (= 11),
+               dh-python,
+               python3-all-dev,
+               python3-pyqt5 (>= 5.15.0),
+               python3-pyqtbuild,
+               libqwt-qt5-dev (>= 6.1.3),
+               sip-tools,
+               pyqt5-dev,
+               qt5-qmake,
+               qtchooser,
+               libqt5svg5-dev,
+               qtbase5-dev,
+               libqt5opengl5-dev
+Standards-Version: 4.6.2
+Homepage: https://github.com/GauiStori/PyQt-Qwt
+#Testsuite: autopkgtest-pkg-python
+Vcs-Browser: https://salsa.debian.org/python-team/packages/pyqt-qwt
+Vcs-Git: https://salsa.debian.org/python-team/packages/pyqt-qwt.git
+
+Package: pyqt5.qwt-dev
+Architecture: all
+Depends: pyqt5-dev,
+         ${misc:Depends}
+Description: Development files for the Qwt6 technical widget library (Python3)
+ This package contains the source SIP files from which the Python bindings for
+ Qwt6 (Qt5) are created. They are needed for building PyQt5 bindindgs
+ for Qwt6. The PyQt-Qwt.api is included as well.
+
+Package: python3-pyqt5.qwt
+Architecture: any
+Depends: ${shlibs:Depends},
+         ${misc:Depends},
+         ${python3:Depends},
+         python3-pyqt5,
+         libqwt-qt5-6.2 (>= 6.2.0)
+Suggests: python-pyqt5.qwt-doc
+Description: Python version of the Qwt6 technical widget library (Python3)
+ PyQt-Qwt is a set of Python bindings for the Qwt C++ class library which
+ extends the Qt framework with widgets for scientific and engineering
+ applications. It provides a widget to plot 2-dimensional data and various
+ widgets to display and control bounded or unbounded floating point values.
+ .
+ This version is compiled against Qt5.
+
+Package: pyqt6.qwt-dev
+Architecture: all
+Depends: pyqt6-dev,
+         ${misc:Depends}
+Description: Development files for the Qwt6 technical widget library (Python3)
+ This package contains the source SIP files from which the Python bindings for
+ Qwt6 (Qt6) are created. They are needed for building PyQt6 bindindgs
+ for Qwt6. The PyQt-Qwt.api is included as well.
+
+Package: python3-pyqt6.qwt
+Architecture: any
+Depends: ${shlibs:Depends},
+         ${misc:Depends},
+         ${python3:Depends},
+         python3-pyqt6,
+         libqwt-qt6-6.2 (>= 6.2.0)
+Suggests: python-pyqt5.qwt-doc
+Description: Python version of the Qwt6 technical widget library (Python3)
+ PyQt-Qwt is a set of Python bindings for the Qwt C++ class library which
+ extends the Qt framework with widgets for scientific and engineering
+ applications. It provides a widget to plot 2-dimensional data and various
+ widgets to display and control bounded or unbounded floating point values.
+ .
+ This version is compiled against Qt6.
+
+Package: python-pyqt5.qwt-doc
+Architecture: all
+Section: doc
+Depends: ${misc:Depends}
+Description: Python Qwt6 technical widget library, documentation and examples
+ PyQt-Qwt is a set of Python bindings for the Qwt C++ class library which
+ extends the Qt framework with widgets for scientific and engineering
+ applications. It provides a widget to plot 2-dimensional data and various
+ widgets to display and control bounded or unbounded floating point values.
+ .
+ This is the common documentation package.

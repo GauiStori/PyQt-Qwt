@@ -1,0 +1,86 @@
+#!/usr/bin/make -f
+
+#--qmake /usr/bin/qmake6
+#export QT_SELECT = qt5
+#export PYBUILD_NAME = pyqt5.qwt
+#export PYBUILD_SYSTEM = custom
+#export PYBUILD_CONFIGURE_ARGS = {interpreter} /usr/bin/sip-build --verbose --no-make \
+#	--build-dir {build_dir} --qwt-lib=qwt-qt5 --qwt-incdir=/usr/include/qwt \
+#	--qmake-setting 'QMAKE_CXXFLAGS += "$(shell dpkg-buildflags --get CXXFLAGS) $(shell dpkg-buildflags --get CPPFLAGS)"' \
+#	--qmake-setting 'QMAKE_LFLAGS += "$(shell dpkg-buildflags --get LDFLAGS)"'
+#export PYBUILD_BUILD_ARGS = $(MAKE) -C {build_dir}
+#export PYBUILD_INSTALL_ARGS = $(MAKE) -C {build_dir} install INSTALL_ROOT={destdir}
+
+include /usr/share/dpkg/default.mk
+
+PYTHON3S := $(shell py3versions -vr debian/control)
+PYTHONS := $(PYTHON3S)
+
+%:
+	dh $@ --with python3 #--buildsystem=pybuild
+
+build_qt5/build-%/configure-stamp:
+	dh_testdir
+	mkdir -p build_qt5
+	cp -af sip_qt5 build_qt5/sip
+	cp -f pyproject-qt5.toml build_qt5/pyproject.toml
+	cp -f project.py build_qt5/project.py
+	cd build_qt5 && python$* /usr/bin/sip-build \
+		--verbose --no-make \
+		--qmake /usr/bin/qmake \
+		--qmake-setting 'QMAKE_CXXFLAGS += "$(shell dpkg-buildflags --get CXXFLAGS) $(shell dpkg-buildflags --get CPPFLAGS)"' \
+		--qmake-setting 'QMAKE_LFLAGS += "$(shell dpkg-buildflags --get LDFLAGS)"' \
+		--target-dir /usr/lib/python3/dist-packages \
+		--build-dir build-$* \
+		--api-dir /usr/share/qt5/api/python3 \
+		--qwt-lib=qwt-qt5 \
+		--qwt-incdir=/usr/include/qwt
+	touch $@
+
+build_qt6/build-%/configure-stamp:
+	mkdir -p build_qt6
+	cp -af sip_qt6 build_qt6/sip
+	cp -f pyproject-qt6.toml build_qt6/pyproject.toml
+	cp -f project.py build_qt6/project.py
+	cd build_qt6 && python$* /usr/bin/sip-build \
+		--verbose --no-make --pep484-pyi \
+		--qmake /usr/bin/qmake6 \
+		--qmake-setting 'QMAKE_CXXFLAGS += "$(shell dpkg-buildflags --get CXXFLAGS) $(shell dpkg-buildflags --get CPPFLAGS)"' \
+		--qmake-setting 'QMAKE_LFLAGS += "$(shell dpkg-buildflags --get LDFLAGS)"' \
+		--target-dir /usr/lib/python3/dist-packages \
+		--build-dir build-$* \
+		--api-dir /usr/share/qt6/api/python3 \
+		--qwt-lib=qwt-qt6 \
+		--qwt-incdir=/usr/include/qwt
+	touch $@
+
+override_dh_auto_configure: $(PYTHONS:%=build_qt5/build-%/configure-stamp) $(PYTHONS:%=build_qt6/build-%/configure-stamp)
+
+build_qt5/build-%/build-stamp: $(PYTHONS:%=build_qt5/build-%/configure-stamp)
+	dh_testdir
+	$(MAKE) -C build_qt5/build-$*
+	touch $@
+
+build_qt6/build-%/build-stamp: $(PYTHONS:%=build_qt6/build-%/configure-stamp)
+	dh_testdir
+	$(MAKE) -C build_qt6/build-$*
+	touch $@
+
+override_dh_auto_build: $(PYTHONS:%=build_qt5/build-%/build-stamp) $(PYTHONS:%=build_qt6/build-%/build-stamp)
+
+override_dh_auto_install:
+	cp README.md build_qt5
+	set -ex; for p in $(PYTHONS); do \
+		$(MAKE) -C build_qt5/build-$$p install INSTALL_ROOT=$(CURDIR)/debian/tmp; \
+	done
+	cp README.md build_qt6
+	set -ex; for p in $(PYTHONS); do \
+		$(MAKE) -C build_qt6/build-$$p install INSTALL_ROOT=$(CURDIR)/debian/tmp; \
+	done
+
+override_dh_compress-indep:
+	dh_compress --exclude=.py
+
+override_dh_installexamples:
+	dh_installexamples -ppython-pyqt5.qwt-doc --doc-main-package=python3-pyqt5.qwt qt5examples/*
+	dh_installexamples --remaining-packages
