@@ -260,9 +260,9 @@ class QwtPlot : QFrame, QwtPlotDict
         axisCnt = QwtAxis::AxisPositions
     };
 
-    void enableAxis( int q, bool on = true );
+    void enableAxis( Axis q, bool on = true );
 
-    bool axisEnabled( int axisId ) const;
+    bool axisEnabled( Axis axisId ) const;
 //#endif
     enum LegendPosition
     {
@@ -317,34 +317,34 @@ class QwtPlot : QFrame, QwtPlotDict
 
     virtual QwtScaleMap canvasMap( int ) const;
 
-    double invTransform( int, double pos ) const;
-    double transform( int, double value ) const;
+    double invTransform( Axis, double pos ) const;
+    double transform( Axis, double value ) const;
 
     // Axes
 
-    bool isAxisValid( int ) const;
+    bool isAxisValid( Axis ) const;
 
-    void setAxisVisible( int, bool on = true );
-    bool isAxisVisible( int ) const;
+    void setAxisVisible( Axis, bool on = true );
+    bool isAxisVisible( Axis ) const;
 
     // Axes data
 
-    QwtScaleEngine* axisScaleEngine( int );
+    QwtScaleEngine* axisScaleEngine( Axis );
     //const QwtScaleEngine* axisScaleEngine( int ) const;
-    void setAxisScaleEngine( int, QwtScaleEngine* /Transfer/);
+    void setAxisScaleEngine( Axis, QwtScaleEngine* /Transfer/);
 
-    void setAxisAutoScale( int, bool on = true );
-    bool axisAutoScale( int ) const;
+    void setAxisAutoScale( Axis, bool on = true );
+    bool axisAutoScale( Axis ) const;
 
-    void setAxisFont( int, const QFont& );
-    QFont axisFont( int ) const;
+    void setAxisFont( Axis, const QFont& );
+    QFont axisFont( Axis ) const;
 
-    void setAxisScale( int, double min, double max, double stepSize = 0 );
-    void setAxisScaleDiv( int, const QwtScaleDiv& );
-    void setAxisScaleDraw( int, QwtScaleDraw* /Transfer/);
+    void setAxisScale( Axis, double min, double max, double stepSize = 0 );
+    void setAxisScaleDiv( Axis, const QwtScaleDiv& );
+    void setAxisScaleDraw( Axis, QwtScaleDraw* /Transfer/);
 
-    double axisStepSize( int ) const;
-    QwtInterval axisInterval( int ) const;
+    double axisStepSize( Axis ) const;
+    QwtInterval axisInterval( Axis ) const;
     const QwtScaleDiv& axisScaleDiv( Axis ) const;
 
     //const QwtScaleDraw* axisScaleDraw( int ) const;
