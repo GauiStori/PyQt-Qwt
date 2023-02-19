@@ -127,53 +127,53 @@ class Plot( Qwt.QwtPlot):
         self.setCanvasBackground( QColor( "MidnightBlue" ) )
         # legend
         legend = Qwt.QwtLegend()
-        self.insertLegend( legend, Qwt.QwtPlot.BottomLegend )
+        self.insertLegend( legend, Qwt.QwtPlot.LegendPosition.BottomLegend )
 
         # grid
         self.grid = Qwt.QwtPlotGrid()
         self.grid.enableXMin( True )
-        self.grid.setMajorPen( Qt.white, 0, Qt.DotLine )
-        self.grid.setMinorPen( Qt.gray, 0 , Qt.DotLine )
+        self.grid.setMajorPen( Qt.GlobalColor.white, 0, Qt.PenStyle.DotLine )
+        self.grid.setMinorPen( Qt.GlobalColor.gray, 0 , Qt.PenStyle.DotLine )
         self.grid.attach( self )
 
         # axes
-        self.enableAxis( Qwt.QwtPlot.yRight )
-        self.setAxisTitle( Qwt.QwtPlot.xBottom, "Normalized Frequency" )
-        self.setAxisTitle( Qwt.QwtPlot.yLeft, "Amplitude [dB]" )
-        self.setAxisTitle( Qwt.QwtPlot.yRight, "Phase [deg]" )
+        self.enableAxis( Qwt.QwtPlot.Axis.yRight )
+        self.setAxisTitle( Qwt.QwtPlot.Axis.xBottom, "Normalized Frequency" )
+        self.setAxisTitle( Qwt.QwtPlot.Axis.yLeft, "Amplitude [dB]" )
+        self.setAxisTitle( Qwt.QwtPlot.Axis.yRight, "Phase [deg]" )
 
-        self.setAxisMaxMajor( Qwt.QwtPlot.xBottom, 6 )
-        self.setAxisMaxMinor( Qwt.QwtPlot.xBottom, 9 )
-        self.setAxisScaleEngine( Qwt.QwtPlot.xBottom, Qwt.QwtLogScaleEngine() )
+        self.setAxisMaxMajor( Qwt.QwtPlot.Axis.xBottom, 6 )
+        self.setAxisMaxMinor( Qwt.QwtPlot.Axis.xBottom, 9 )
+        self.setAxisScaleEngine( Qwt.QwtPlot.Axis.xBottom, Qwt.QwtLogScaleEngine() )
 
         # curves
         self.d_curve1 = Qwt.QwtPlotCurve( "Amplitude" )
-        self.d_curve1.setRenderHint( Qwt.QwtPlotItem.RenderAntialiased )
-        self.d_curve1.setPen( Qt.yellow )
-        self.d_curve1.setLegendAttribute( Qwt.QwtPlotCurve.LegendShowLine )
-        self.d_curve1.setYAxis( Qwt.QwtPlot.yLeft )
+        self.d_curve1.setRenderHint( Qwt.QwtPlotItem.RenderHint.RenderAntialiased )
+        self.d_curve1.setPen( Qt.GlobalColor.yellow )
+        self.d_curve1.setLegendAttribute( Qwt.QwtPlotCurve.LegendAttribute.LegendShowLine )
+        self.d_curve1.setYAxis( 0 ) #Qwt.QwtPlot.Axis.yLeft )
         self.d_curve1.attach( self )
 
         self.d_curve2 = Qwt.QwtPlotCurve( "Phase" )
-        self.d_curve2.setRenderHint( Qwt.QwtPlotItem.RenderAntialiased )
-        self.d_curve2.setPen( Qt.cyan )
-        self.d_curve2.setLegendAttribute( Qwt.QwtPlotCurve.LegendShowLine )
-        self.d_curve2.setYAxis( Qwt.QwtPlot.yRight )
+        self.d_curve2.setRenderHint( Qwt.QwtPlotItem.RenderHint.RenderAntialiased )
+        self.d_curve2.setPen( Qt.GlobalColor.cyan )
+        self.d_curve2.setLegendAttribute( Qwt.QwtPlotCurve.LegendAttribute.LegendShowLine )
+        self.d_curve2.setYAxis( 1 ) #Qwt.QwtPlot.Axis.yRight )
         self.d_curve2.attach( self )
 
         # marker
         self.d_marker1 = Qwt.QwtPlotMarker()
         self.d_marker1.setValue( 0.0, 0.0 )
-        self.d_marker1.setLineStyle( Qwt.QwtPlotMarker.VLine )
-        self.d_marker1.setLabelAlignment( Qt.AlignRight | Qt.AlignBottom )
-        self.d_marker1.setLinePen( Qt.green, 0, Qt.DashDotLine )
+        self.d_marker1.setLineStyle( Qwt.QwtPlotMarker.LineStyle.VLine )
+        self.d_marker1.setLabelAlignment( Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignBottom )
+        self.d_marker1.setLinePen( Qt.GlobalColor.green, 0, Qt.PenStyle.DashDotLine )
         self.d_marker1.attach( self )
 
         self.d_marker2 = Qwt.QwtPlotMarker()
-        self.d_marker2.setLineStyle( Qwt.QwtPlotMarker.HLine )
-        self.d_marker2.setLabelAlignment( Qt.AlignRight | Qt.AlignBottom )
-        self.d_marker2.setLinePen( QColor( 200, 150, 0 ), 0, Qt.DashDotLine )
-        self.d_marker2.setSymbol( Qwt.QwtSymbol( Qwt.QwtSymbol.Diamond,QColor( Qt.yellow ), QColor( Qt.green ), QSize( 8, 8 ) ) )
+        self.d_marker2.setLineStyle( Qwt.QwtPlotMarker.LineStyle.HLine )
+        self.d_marker2.setLabelAlignment( Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignBottom )
+        self.d_marker2.setLinePen( QColor( 200, 150, 0 ), 0, Qt.PenStyle.DashDotLine )
+        self.d_marker2.setSymbol( Qwt.QwtSymbol( Qwt.QwtSymbol.Style.Diamond,QColor( Qt.GlobalColor.yellow ), QColor( Qt.GlobalColor.green ), QSize( 8, 8 ) ) )
         self.d_marker2.attach( self )
 
         self.setDamp( 0 )
@@ -187,7 +187,7 @@ class Plot( Qwt.QwtPlot):
     def showPeak( self, freq, amplitude ):
         label = "Peak: %.3g dB"%amplitude
         text = Qwt.QwtText( label )
-        text.setFont( QFont( "Helvetica", 10, QFont.Bold ) )
+        text.setFont( QFont( "Helvetica", 10, QFont.Weight.Bold ) )
         text.setColor( QColor( 200, 150, 0 ) )
         self.d_marker2.setValue( freq, amplitude )
         self.d_marker2.setLabel( text )
@@ -195,8 +195,8 @@ class Plot( Qwt.QwtPlot):
     def show3dB( self, freq ):
         label = "-3 dB at f = %.3g"%freq
         text = Qwt.QwtText( label )
-        text.setFont( QFont( "Helvetica", 10, QFont.Bold ) )
-        text.setColor( Qt.green )
+        text.setFont( QFont( "Helvetica", 10, QFont.Weight.Bold ) )
+        text.setColor( Qt.GlobalColor.green )
         self.d_marker1.setValue( freq, 0.0 )
         self.d_marker1.setLabel( text )
 
@@ -234,12 +234,12 @@ class Plot( Qwt.QwtPlot):
 class Zoomer(Qwt.QwtPlotZoomer):
     def __init__(self, xAxis, yAxis, canvas ):
         Qwt.QwtPlotZoomer.__init__(self, xAxis, yAxis, canvas )
-        self.setTrackerMode( Qwt.QwtPicker.AlwaysOff )
-        self.setRubberBand( Qwt.QwtPicker.NoRubberBand )
+        self.setTrackerMode( Qwt.QwtPicker.DisplayMode.AlwaysOff )
+        self.setRubberBand( Qwt.QwtPicker.RubberBand.NoRubberBand )
         # RightButton: zoom out by 1
         # Ctrl+RightButton: zoom out to full size
-        self.setMousePattern( Qwt.QwtEventPattern.MouseSelect2, Qt.RightButton, Qt.ControlModifier )
-        self.setMousePattern( Qwt.QwtEventPattern.MouseSelect3, Qt.RightButton )
+        self.setMousePattern( Qwt.QwtEventPattern.MousePatternCode.MouseSelect2, Qt.MouseButton.RightButton, Qt.KeyboardModifier.ControlModifier )
+        self.setMousePattern( Qwt.QwtEventPattern.MousePatternCode.MouseSelect3, Qt.MouseButton.RightButton )
 
 class MainWindow( QMainWindow ):
     def __init__(self, *args):
@@ -248,25 +248,28 @@ class MainWindow( QMainWindow ):
         margin = 5;
         self.d_plot.setContentsMargins( margin, margin, margin, 0 )
 
-        self.setContextMenuPolicy( Qt.NoContextMenu )
+        self.setContextMenuPolicy( Qt.ContextMenuPolicy.NoContextMenu )
 
         self.d_zoomer=[None,None]
-        self.d_zoomer[0] = Zoomer( Qwt.QwtPlot.xBottom, Qwt.QwtPlot.yLeft, self.d_plot.canvas() )
-        self.d_zoomer[0].setRubberBand( Qwt.QwtPicker.RectRubberBand )
-        self.d_zoomer[0].setRubberBandPen( QColor( Qt.green ) )
-        self.d_zoomer[0].setTrackerMode( Qwt.QwtPicker.ActiveOnly )
-        self.d_zoomer[0].setTrackerPen( QColor( Qt.white ) )
+        #self.d_zoomer[0] = Zoomer( Qwt.QwtPlot.Axis.xBottom, Qwt.QwtPlot.Axis.yLeft, self.d_plot.canvas() )
+        self.d_zoomer[0] = Zoomer( 2,0, self.d_plot.canvas() )
+        self.d_zoomer[0].setRubberBand( Qwt.QwtPicker.RubberBand.RectRubberBand )
+        self.d_zoomer[0].setRubberBandPen( QColor( Qt.GlobalColor.green ) )
+        self.d_zoomer[0].setTrackerMode( Qwt.QwtPicker.DisplayMode.ActiveOnly )
+        self.d_zoomer[0].setTrackerPen( QColor( Qt.GlobalColor.white ) )
 
-        self.d_zoomer[1] = Zoomer( Qwt.QwtPlot.xTop, Qwt.QwtPlot.yRight, self.d_plot.canvas() )
+        #self.d_zoomer[1] = Zoomer( Qwt.QwtPlot.Axis.xTop, Qwt.QwtPlot.Axis.yRight, self.d_plot.canvas() )
+        self.d_zoomer[1] = Zoomer( 3, 1, self.d_plot.canvas() )
         self.d_panner = Qwt.QwtPlotPanner( self.d_plot.canvas() )
-        self.d_panner.setMouseButton( Qt.MidButton )
+        self.d_panner.setMouseButton( Qt.MouseButton.MiddleButton )
 
-        self.d_picker = Qwt.QwtPlotPicker( Qwt.QwtPlot.xBottom, Qwt.QwtPlot.yLeft,
-            Qwt.QwtPlotPicker.CrossRubberBand, Qwt.QwtPicker.AlwaysOn, self.d_plot.canvas() )
+        #self.d_picker = Qwt.QwtPlotPicker( Qwt.QwtPlot.Axis.xBottom, Qwt.QwtPlot.Axis.yLeft,
+        self.d_picker = Qwt.QwtPlotPicker( 2,0,
+            Qwt.QwtPlotPicker.RubberBand.CrossRubberBand, Qwt.QwtPicker.DisplayMode.AlwaysOn, self.d_plot.canvas() )
         self.d_picker.setStateMachine( Qwt.QwtPickerDragPointMachine() )
-        self.d_picker.setRubberBandPen( QColor( Qt.green ) )
-        self.d_picker.setRubberBand( Qwt.QwtPicker.CrossRubberBand )
-        self.d_picker.setTrackerPen( QColor( Qt.white ) )
+        self.d_picker.setRubberBandPen( QColor( Qt.GlobalColor.green ) )
+        self.d_picker.setRubberBand( Qwt.QwtPicker.RubberBand.CrossRubberBand )
+        self.d_picker.setTrackerPen( QColor( Qt.GlobalColor.white ) )
 
         self.setCentralWidget( self.d_plot )
 
@@ -276,21 +279,21 @@ class MainWindow( QMainWindow ):
         self.btnZoom.setText( "Zoom" )
         self.btnZoom.setIcon( QIcon(QPixmap( zoom_xpm ) ))
         self.btnZoom.setCheckable( True )
-        self.btnZoom.setToolButtonStyle( Qt.ToolButtonTextUnderIcon )
+        self.btnZoom.setToolButtonStyle( Qt.ToolButtonStyle.ToolButtonTextUnderIcon )
         self.toolBar.addWidget( self.btnZoom )
         self.btnZoom.toggled.connect(self.enableZoomMode)
 
         self.btnPrint = QToolButton( self.toolBar )
         self.btnPrint.setText( "Print" )
         self.btnPrint.setIcon( QIcon(QPixmap( print_xpm ) ) )
-        self.btnPrint.setToolButtonStyle( Qt.ToolButtonTextUnderIcon )
+        self.btnPrint.setToolButtonStyle( Qt.ToolButtonStyle.ToolButtonTextUnderIcon )
         self.toolBar.addWidget( self.btnPrint )        
         self.btnPrint.clicked.connect(self.mprint)
 
         self.btnExport = QToolButton( self.toolBar )
         self.btnExport.setText( "Export" )
         self.btnExport.setIcon( QIcon(QPixmap( print_xpm ) ) )
-        self.btnExport.setToolButtonStyle( Qt.ToolButtonTextUnderIcon )
+        self.btnExport.setToolButtonStyle( Qt.ToolButtonStyle.ToolButtonTextUnderIcon )
         self.toolBar.addWidget( self.btnExport )        
         self.btnExport.clicked.connect(self.exportDocument)
 
@@ -335,7 +338,7 @@ class MainWindow( QMainWindow ):
         printer.setOrientation( QPrinter.Landscape )
 
         dialog = QPrintDialog( printer )
-        if ( dialog.exec_() ):
+        if ( dialog.exec() ):
             renderer = Qwt.QwtPlotRenderer()
             if ( printer.colorMode() == QPrinter.GrayScale ):
                 renderer.setDiscardFlag( Qwt.QwtPlotRenderer.DiscardBackground )
@@ -368,9 +371,9 @@ class MainWindow( QMainWindow ):
 
     def moved( self, pos ):
         info = "Freq=%g, Ampl=%g, Phase=%g"%(
-                self.d_plot.invTransform( Qwt.QwtPlot.xBottom, pos.x() ),
-                self.d_plot.invTransform( Qwt.QwtPlot.yLeft, pos.y() ),
-                self.d_plot.invTransform( Qwt.QwtPlot.yRight, pos.y() ))
+                self.d_plot.invTransform( Qwt.QwtPlot.Axis.xBottom, pos.x() ),
+                self.d_plot.invTransform( Qwt.QwtPlot.Axis.yLeft, pos.y() ),
+                self.d_plot.invTransform( Qwt.QwtPlot.Axis.yRight, pos.y() ))
         self.showInfo( info )
 
     def selected(self):
@@ -382,4 +385,4 @@ m = MainWindow()
 m.resize( 540, 400 )
 m.show()
 
-sys.exit(a.exec_())
+sys.exit(a.exec())
