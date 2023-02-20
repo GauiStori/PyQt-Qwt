@@ -6,14 +6,14 @@
 import sys
 import math
 #import Qwt
-from PyQt5 import Qwt
+from PyQt6 import Qwt
 import numpy as np
 
-from PyQt5.QtCore import pyqtSignal, Qt,  QSize, QBasicTimer
-from PyQt5.QtGui import QColor,  QPixmap, QFont,  QIcon,  QPalette, QLinearGradient
-from PyQt5.QtWidgets import (QMainWindow,  QWidget,  QToolBar,  QToolButton,  QHBoxLayout,  QLabel,  QApplication,  QSizePolicy, 
+from PyQt6.QtCore import pyqtSignal, Qt,  QSize, QBasicTimer
+from PyQt6.QtGui import QColor,  QPixmap, QFont,  QIcon,  QPalette, QLinearGradient
+from PyQt6.QtWidgets import (QMainWindow,  QWidget,  QToolBar,  QToolButton,  QHBoxLayout,  QLabel,  QApplication,  QSizePolicy, 
     QVBoxLayout,  QFrame )
-#from PyQt5.QtPrintSupport import QPrintDialog, QPrinter
+#from PyQt6.QtPrintSupport import QPrintDialog, QPrinter
 
 M_PI = 3.14159
 
@@ -25,20 +25,20 @@ class Knob(QWidget):
         self.d_knob.setTotalSteps( 0 ) # disable
         self.d_knob.setScaleMaxMajor( 10 )
 
-        self.d_knob.setKnobStyle( Qwt.QwtKnob.Raised )
+        self.d_knob.setKnobStyle( Qwt.QwtKnob.KnobStyle.Raised )
         self.d_knob.setKnobWidth( 50 )
         self.d_knob.setBorderWidth( 2 )
-        self.d_knob.setMarkerStyle( Qwt.QwtKnob.Notch )
+        self.d_knob.setMarkerStyle( Qwt.QwtKnob.MarkerStyle.Notch )
         self.d_knob.setMarkerSize( 8 )
 
-        self.d_knob.scaleDraw().setTickLength( Qwt.QwtScaleDiv.MinorTick, 4 )
-        self.d_knob.scaleDraw().setTickLength( Qwt.QwtScaleDiv.MediumTick, 4 )
-        self.d_knob.scaleDraw().setTickLength( Qwt.QwtScaleDiv.MajorTick, 6 )
+        self.d_knob.scaleDraw().setTickLength( Qwt.QwtScaleDiv.TickType.MinorTick, 4 )
+        self.d_knob.scaleDraw().setTickLength( Qwt.QwtScaleDiv.TickType.MediumTick, 4 )
+        self.d_knob.scaleDraw().setTickLength( Qwt.QwtScaleDiv.TickType.MajorTick, 6 )
 
         self.d_label = QLabel( title, self )
-        self.d_label.setAlignment( Qt.AlignTop | Qt.AlignHCenter )
+        self.d_label.setAlignment( Qt.AlignmentFlag.AlignTop | Qt.AlignmentFlag.AlignHCenter )
 
-        self.setSizePolicy( QSizePolicy.MinimumExpanding, QSizePolicy.MinimumExpanding )
+        self.setSizePolicy( QSizePolicy.Policy.MinimumExpanding, QSizePolicy.Policy.MinimumExpanding )
 
     def sizeHint(self):
         sz1 = self.d_knob.sizeHint()
@@ -77,13 +77,13 @@ class Thermo(QWidget):
         self.d_thermo = Qwt.QwtThermo( self )
         self.d_thermo.setPipeWidth( 6 )
         self.d_thermo.setScale( -40, 10 )
-        self.d_thermo.setFillBrush( Qt.green )
-        self.d_thermo.setAlarmBrush( Qt.red )
+        self.d_thermo.setFillBrush( Qt.GlobalColor.green )
+        self.d_thermo.setAlarmBrush( Qt.GlobalColor.red )
         self.d_thermo.setAlarmLevel( 0.0 )
         self.d_thermo.setAlarmEnabled( True )
 
         label = QLabel( title, self )
-        label.setAlignment( Qt.AlignTop | Qt.AlignLeft )
+        label.setAlignment( Qt.AlignmentFlag.AlignTop | Qt.AlignmentFlag.AlignLeft )
 
         self.layout = QVBoxLayout( self )
         #self.layout.setMargin( 0 )
@@ -165,13 +165,13 @@ class TuningThermo(QWidget):
     def __init__(self, parent):
         QWidget.__init__( self,  parent )
         self.d_thermo = Qwt.QwtThermo( self )
-        self.d_thermo.setOrientation( Qt.Horizontal )
-        self.d_thermo.setScalePosition( Qwt.QwtThermo.NoScale )
+        self.d_thermo.setOrientation( Qt.Orientation.Horizontal )
+        self.d_thermo.setScalePosition( Qwt.QwtThermo.ScalePosition.NoScale )
         self.d_thermo.setScale( 0.0, 1.0 )
-        self.d_thermo.setFillBrush( Qt.green )
+        self.d_thermo.setFillBrush( Qt.GlobalColor.green )
 
         self.label = QLabel( "Tuning", self )
-        self.label.setAlignment( Qt.AlignCenter )
+        self.label.setAlignment( Qt.AlignmentFlag.AlignCenter )
 
         self.layout = QVBoxLayout( self )
         #self.layout.setMargin( 0 ) FIXME
@@ -191,8 +191,8 @@ class TunerFrame( QWidget ):
         self.freqMax = 108
 
         self.d_sliderFrequency = Qwt.QwtSlider( self )
-        self.d_sliderFrequency.setOrientation( Qt.Horizontal )
-        self.d_sliderFrequency.setScalePosition( Qwt.QwtSlider.TrailingScale )
+        self.d_sliderFrequency.setOrientation( Qt.Orientation.Horizontal )
+        self.d_sliderFrequency.setScalePosition( Qwt.QwtSlider.ScalePosition.TrailingScale )
         self.d_sliderFrequency.setScale( self.freqMin, self.freqMax )
         #self.d_sliderFrequency.setTotalSteps( math.round( ( self.freqMax - self.freqMin ) / 0.01 ) ) FIXME
         self.d_sliderFrequency.setTotalSteps( int(math.ceil( ( self.freqMax - self.freqMin ) / 0.01 ) ) )
@@ -248,10 +248,10 @@ class MainWindow(QWidget):
     def __init__(self):
         QWidget.__init__(self)
         self.frmTuner = TunerFrame( self )
-        #self.frmTuner.setFrameStyle( QFrame.Panel | QFrame.Raised )
+        #FIXME self.frmTuner.setFrameStyle( QFrame.Shape.Panel | QFrame.Shadow.Raised )
 
         self.frmAmp = AmpFrame( self )
-        self.frmAmp.setFrameStyle( QFrame.Panel | QFrame.Raised )
+        self.frmAmp.setFrameStyle( QFrame.Shape.Panel | QFrame.Shadow.Raised )
 
         self.layout = QVBoxLayout( self )
         #self.layout.setMargin( 0 )
@@ -273,8 +273,8 @@ class MainWindow(QWidget):
     def updateGradient(self):
         self.pal = QPalette()
 
-        self.buttonColor = self.pal.color( QPalette.Button )
-        self.midLightColor = self.pal.color( QPalette.Midlight )
+        self.buttonColor = self.pal.color( QPalette.ColorRole.Button )
+        self.midLightColor = self.pal.color( QPalette.ColorRole.Midlight )
 
         #self.gradient = QLinearGradient( rect().topLeft(), rect().topRight() ) FIXME
         self.gradient = QLinearGradient(  )
@@ -282,11 +282,11 @@ class MainWindow(QWidget):
         self.gradient.setColorAt( 0.7, self.buttonColor )
         self.gradient.setColorAt( 1.0, self.buttonColor )
 
-        self.pal.setBrush( QPalette.Window, self.gradient )
+        self.pal.setBrush( QPalette.ColorRole.Window, self.gradient )
         self.setPalette( self.pal )
 
 a = QApplication(sys.argv)
 m = MainWindow()
 m.show()
 
-sys.exit(a.exec_())
+sys.exit(a.exec())
