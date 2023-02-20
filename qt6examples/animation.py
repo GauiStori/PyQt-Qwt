@@ -4,7 +4,7 @@ import sys
 import math
 #import Qwt
 from PyQt6 import Qwt
-from PyQt6.QtCore import Qt, QTime,  QPointF,  QSize
+from PyQt6.QtCore import Qt, QElapsedTimer,  QPointF,  QSize
 from PyQt6.QtGui import QColor,  QTransform
 from PyQt6.QtWidgets import QApplication, QFrame
 from PyQt6.QtGui import QPolygonF
@@ -22,12 +22,12 @@ class Curve1(Curve):
     def __init__(self):
         Curve.__init__(self)
         self.setPen( QColor( 150, 150, 200 ), 2 )
-        self.setStyle( Qwt.QwtPlotCurve.Lines )
+        self.setStyle( Qwt.QwtPlotCurve.CurveStyle.Lines )
 
-        self.setCurveAttribute( Qwt.QwtPlotCurve.Fitted, True )
+        self.setCurveAttribute( Qwt.QwtPlotCurve.CurveAttribute.Fitted, True )
 
-        symbol = Qwt.QwtSymbol( Qwt.QwtSymbol.XCross )
-        symbol.setPen( Qt.yellow )
+        symbol = Qwt.QwtSymbol( Qwt.QwtSymbol.Style.XCross )
+        symbol.setPen( Qt.GlobalColor.yellow )
         symbol.setSize( 7 )
 
         self.setSymbol( symbol )
@@ -52,9 +52,9 @@ class Curve1(Curve):
 class Curve2(Curve):
     def __init__(self):
         Curve.__init__(self)
-        self.setStyle( Qwt.QwtPlotCurve.Sticks );
+        self.setStyle( Qwt.QwtPlotCurve.CurveStyle.Sticks );
         self.setPen( QColor( 200, 150, 50 ) );
-        self.setSymbol( Qwt.QwtSymbol( Qwt.QwtSymbol.Ellipse,QColor( Qt.gray ), QColor( Qt.yellow ), QSize( 5, 5 ) ) )
+        self.setSymbol( Qwt.QwtSymbol( Qwt.QwtSymbol.Style.Ellipse,QColor( Qt.GlobalColor.gray ), QColor( Qt.GlobalColor.yellow ), QSize( 5, 5 ) ) )
 
     def points(self, phase ):
         points = QPolygonF()
@@ -72,10 +72,10 @@ class Curve2(Curve):
 class Curve3(Curve):
     def __init__(self):
         Curve.__init__(self)
-        self.setStyle( Qwt.QwtPlotCurve.Lines )
+        self.setStyle( Qwt.QwtPlotCurve.CurveStyle.Lines )
         self.setPen( QColor( 100, 200, 150 ), 2 )
 
-        self.setCurveAttribute( Qwt.QwtPlotCurve.Fitted, True )
+        self.setCurveAttribute( Qwt.QwtPlotCurve.CurveAttribute.Fitted, True )
 
         # somewhere in the top right corner
         transform = QTransform()
@@ -99,8 +99,8 @@ class Curve4(Curve):
     def __init__(self):
         Curve.__init__(self)
         self.d_points = QPolygonF()
-        self.setStyle( Qwt.QwtPlotCurve.Lines )
-        self.setPen( Qt.red, 2 )
+        self.setStyle( Qwt.QwtPlotCurve.CurveStyle.Lines )
+        self.setPen( Qt.GlobalColor.red, 2 )
         self.initSamples()
         # somewhere in the center
         transform = QTransform()
@@ -137,13 +137,13 @@ class Curve4(Curve):
 class Plot( Qwt.QwtPlot):
     def __init__(self,parent=None):
         Qwt.QwtPlot.__init__(self, parent)
-        self.d_time = QTime()
+        self.d_time = QElapsedTimer()
         self.d_curves = []
         self.setAutoReplot( False )
         self.setTitle( "Animated Curves" )
 
         # hide all axes
-        for axis in range(3): #Qwt.QwtPlot.Axis.axisCnt):
+        for axis in [Qwt.QwtPlot.Axis.yLeft,Qwt.QwtPlot.Axis.yRight,Qwt.QwtPlot.Axis.xBottom,Qwt.QwtPlot.Axis.xTop]:
             self.enableAxis( axis, False )
 
         #self.plotLayout.setCanvasMargin( 10 )
@@ -180,8 +180,8 @@ if __name__ == '__main__':
     #canvas.setFrameStyle( Qwt.QwtPlotGLCanvas.NoFrame )
     #else
     canvas = Qwt.QwtPlotCanvas();
-    canvas.setFrameStyle( QFrame.NoFrame );
-    canvas.setPaintAttribute( Qwt.QwtPlotCanvas.BackingStore, False )
+    canvas.setFrameStyle( QFrame.Shape.NoFrame );
+    canvas.setPaintAttribute( Qwt.QwtPlotCanvas.PaintAttribute.BackingStore, False )
     #endif
 
     plot.setCanvas( canvas )
