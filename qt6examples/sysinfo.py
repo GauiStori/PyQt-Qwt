@@ -1,13 +1,13 @@
 #!/usr/bin/python
 
 import sys
-from PyQt5 import Qwt
+from PyQt6 import Qwt
 import math
 import numpy as np
 
-from PyQt5.QtCore import pyqtSignal, Qt,  QSize, QBasicTimer
-from PyQt5.QtGui import QColor,  QPixmap, QFont,  QIcon,  QPalette, QLinearGradient
-from PyQt5.QtWidgets import (QMainWindow,  QWidget,  QToolBar,  QToolButton,  QHBoxLayout,  QLabel,  QApplication,  QSizePolicy, 
+from PyQt6.QtCore import pyqtSignal, Qt,  QSize, QBasicTimer
+from PyQt6.QtGui import QColor,  QPixmap, QFont,  QIcon,  QPalette, QLinearGradient
+from PyQt6.QtWidgets import (QMainWindow,  QWidget,  QToolBar,  QToolButton,  QHBoxLayout,  QLabel,  QApplication,  QSizePolicy, 
     QVBoxLayout,  QFrame, QGroupBox, QVBoxLayout )
 
 class ValueBar(QWidget):
@@ -24,16 +24,16 @@ class ValueBar(QWidget):
         self.d_thermo.setPipeWidth( 6 )
         self.d_thermo.setScaleMaxMajor( 6 )
         self.d_thermo.setScaleMaxMinor( 5 )
-        self.d_thermo.setFillBrush( Qt.darkMagenta )
+        self.d_thermo.setFillBrush( Qt.GlobalColor.darkMagenta )
 
         #if 0
-        colorMap = Qwt.QwtLinearColorMap( Qt.blue, Qt.red )
+        colorMap = Qwt.QwtLinearColorMap( Qt.GlobalColor.blue, Qt.GlobalColor.red )
 
-        colorMap.addColorStop( 0.2, Qt.yellow )
-        colorMap.addColorStop( 0.3, Qt.cyan )
-        colorMap.addColorStop( 0.4, Qt.green )
-        colorMap.addColorStop( 0.5, Qt.magenta )
-        colorMap.setMode( Qwt.QwtLinearColorMap.FixedColors )
+        colorMap.addColorStop( 0.2, Qt.GlobalColor.yellow )
+        colorMap.addColorStop( 0.3, Qt.GlobalColor.cyan )
+        colorMap.addColorStop( 0.4, Qt.GlobalColor.green )
+        colorMap.addColorStop( 0.5, Qt.GlobalColor.magenta )
+        colorMap.setMode( Qwt.QwtLinearColorMap.Mode.FixedColors )
         self.d_thermo.setColorMap( colorMap )
         #endif"""
 
@@ -41,15 +41,15 @@ class ValueBar(QWidget):
         #self.layout.setCanvasMargin( 0 )
         self.layout.setSpacing( 0 )
 
-        if ( orientation == Qt.Horizontal ):
-            self.d_label.setAlignment( Qt.AlignCenter )
-            self.d_thermo.setScalePosition( Qwt.QwtThermo.LeadingScale )
+        if ( orientation == Qt.Orientation.Horizontal ):
+            self.d_label.setAlignment( Qt.AlignmentFlag.AlignCenter )
+            self.d_thermo.setScalePosition( Qwt.QwtThermo.ScalePosition.LeadingScale )
             self.layout.addWidget( self.d_label )
             self.layout.addWidget( self.d_thermo )
         else:
-            self.d_label.setAlignment( Qt.AlignRight )
-            self.d_thermo.setScalePosition( Qwt.QwtThermo.TrailingScale )
-            self.layout.addWidget( self.d_thermo, 10, Qt.AlignHCenter )
+            self.d_label.setAlignment( Qt.AlignmentFlag.AlignRight )
+            self.d_thermo.setScalePosition( Qwt.QwtThermo.ScalePosition.TrailingScale )
+            self.layout.addWidget( self.d_thermo, 10, Qt.AlignmentFlag.AlignHCenter )
             self.layout.addWidget( self.d_label, 0 )
 
     def setValue(self, value ):
@@ -65,7 +65,7 @@ class SysInfo(QFrame):
         #self.memLayout.setMargin( 15 )
         self.memLayout.setSpacing( 5 )
 
-        o = Qt.Horizontal
+        o = Qt.Orientation.Horizontal
         self.memLayout.addWidget( ValueBar( o, "Used", self.memBox, 57 ) )
         self.memLayout.addWidget( ValueBar( o, "Shared", self.memBox, 17 ) )
         self.memLayout.addWidget( ValueBar( o, "Cache", self.memBox, 30 ) )
@@ -80,7 +80,7 @@ class SysInfo(QFrame):
         self.cpuLayout.setContentsMargins( 15,15,15,15 )
         self.cpuLayout.setSpacing( 5 )
 
-        o = Qt.Vertical
+        o = Qt.Orientation.Vertical
         self.cpuLayout.addWidget( ValueBar( o, "User", self.cpuBox, 57 ) )
         self.cpuLayout.addWidget( ValueBar( o, "Total", self.cpuBox, 73 ) )
         self.cpuLayout.addWidget( ValueBar( o, "System", self.cpuBox, 16 ) )
@@ -97,4 +97,4 @@ info = SysInfo()
 info.resize( info.sizeHint().expandedTo( QSize( 600, 400 ) ) )
 info.show()
 
-sys.exit(a.exec_())
+sys.exit(a.exec())
