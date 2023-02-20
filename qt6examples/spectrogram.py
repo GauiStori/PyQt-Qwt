@@ -2,19 +2,19 @@
 
 import sys
 #import Qwt
-from PyQt5 import Qwt
-from PyQt5.QtCore import Qt,  qIsNaN,  qRound
-from PyQt5.QtGui import QColor, QPen, QBrush,  QFontMetrics
-from PyQt5.QtWidgets import QApplication,  QCheckBox,  QToolBar,  QToolButton,  QLabel,  QComboBox,  QSlider,  QSizePolicy, QMainWindow
-from PyQt5.QtPrintSupport import QPrintDialog, QPrinter
+from PyQt6 import Qwt
+from PyQt6.QtCore import Qt,  qIsNaN,  qRound
+from PyQt6.QtGui import QColor, QPen, QBrush,  QFontMetrics
+from PyQt6.QtWidgets import QApplication,  QCheckBox,  QToolBar,  QToolButton,  QLabel,  QComboBox,  QSlider,  QSizePolicy, QMainWindow
+from PyQt6.QtPrintSupport import QPrintDialog, QPrinter
 
 class MyZoomer(Qwt.QwtPlotZoomer):
     def __init__(self, canvas):
         Qwt.QwtPlotZoomer.__init__(self, canvas )
-        self.setTrackerMode( Qwt.QwtPicker.AlwaysOn )
+        self.setTrackerMode( Qwt.QwtPicker.DisplayMode.AlwaysOn )
 
     def trackerTextF( self, pos ):
-        bg = QColor( Qt.white )
+        bg = QColor( Qt.GlobalColor.white )
         bg.setAlpha( 200 )
         text = Qwt.QwtPlotZoomer.trackerTextF( pos )
         text.setBackgroundBrush( QBrush( bg ) )
@@ -24,9 +24,9 @@ class SpectrogramData(Qwt.QwtRasterData):
     def __init__(self):
         Qwt.QwtRasterData.__init__(self)
         self.m_intervals={}
-        self.m_intervals[Qt.XAxis] = Qwt.QwtInterval( -1.5, 1.5 )
-        self.m_intervals[Qt.YAxis] = Qwt.QwtInterval( -1.5, 1.5 )
-        self.m_intervals[Qt.ZAxis] = Qwt.QwtInterval( 0.0, 10.0 )
+        self.m_intervals[Qt.Axis.XAxis] = Qwt.QwtInterval( -1.5, 1.5 )
+        self.m_intervals[Qt.Axis.YAxis] = Qwt.QwtInterval( -1.5, 1.5 )
+        self.m_intervals[Qt.Axis.ZAxis] = Qwt.QwtInterval( 0.0, 10.0 )
         #self.setInterval( Qt.XAxis, Qwt.QwtInterval( -1.5, 1.5 ) )
         #self.setInterval( Qt.YAxis, Qwt.QwtInterval( -1.5, 1.5 ) )
         #self.setInterval( Qt.ZAxis, Qwt.QwtInterval( 0.0, 10.0 ) )
@@ -40,17 +40,17 @@ class SpectrogramData(Qwt.QwtRasterData):
 
 class LinearColorMapRGB(Qwt.QwtLinearColorMap):
     def __init__(self):
-        Qwt.QwtLinearColorMap.__init__(self, Qt.darkCyan, Qt.red, Qwt.QwtColorMap.RGB )
-        self.addColorStop( 0.1, Qt.cyan )
-        self.addColorStop( 0.6, Qt.green )
-        self.addColorStop( 0.95, Qt.yellow )
+        Qwt.QwtLinearColorMap.__init__(self, Qt.GlobalColor.darkCyan, Qt.GlobalColor.red, Qwt.QwtColorMap.Format.RGB )
+        self.addColorStop( 0.1, Qt.GlobalColor.cyan )
+        self.addColorStop( 0.6, Qt.GlobalColor.green )
+        self.addColorStop( 0.95, Qt.GlobalColor.yellow )
 
 class LinearColorMapIndexed(Qwt.QwtLinearColorMap):
     def __init__(self):
-        Qwt.QwtLinearColorMap.__init__( self, Qt.darkCyan, Qt.red, Qwt.QwtColorMap.Indexed )
-        self.addColorStop( 0.1, Qt.cyan )
-        self.addColorStop( 0.6, Qt.green )
-        self.addColorStop( 0.95, Qt.yellow )
+        Qwt.QwtLinearColorMap.__init__( self, Qt.GlobalColor.darkCyan, Qt.GlobalColor.red, Qwt.QwtColorMap.Format.Indexed )
+        self.addColorStop( 0.1, Qt.GlobalColor.cyan )
+        self.addColorStop( 0.6, Qt.GlobalColor.green )
+        self.addColorStop( 0.95, Qt.GlobalColor.yellow )
 
 class HueColorMap(Qwt.QwtColorMap):
     def __init__(self):
@@ -112,7 +112,7 @@ class Plot( Qwt.QwtPlot ):
         self.d_alpha = 255
         self.d_spectrogram = Qwt.QwtPlotSpectrogram()
         self.d_spectrogram.setRenderThreadCount( 0 ) # use system specific thread count
-        self.d_spectrogram.setCachePolicy( Qwt.QwtPlotRasterItem.PaintCache )
+        self.d_spectrogram.setCachePolicy( Qwt.QwtPlotRasterItem.CachePolicy.PaintCache )
 
         contourLevels=[]
         for level in range(1,20,2):
@@ -121,15 +121,15 @@ class Plot( Qwt.QwtPlot ):
         self.d_spectrogram.setData( SpectrogramData() )
         self.d_spectrogram.attach( self )
 
-        zInterval = self.d_spectrogram.data().interval( Qt.ZAxis )
+        zInterval = self.d_spectrogram.data().interval( Qt.Axis.ZAxis )
 
         # A color bar on the right axis
-        self.rightAxis = self.axisWidget( Qwt.QwtPlot.yRight )
+        self.rightAxis = self.axisWidget( Qwt.QwtPlot.Axis.yRight )
         self.rightAxis.setTitle( "Intensity" )
         self.rightAxis.setColorBarEnabled( True )
 
-        self.setAxisScale( Qwt.QwtPlot.yRight, zInterval.minValue(), zInterval.maxValue() )
-        self.enableAxis( Qwt.QwtPlot.yRight )
+        self.setAxisScale( Qwt.QwtPlot.Axis.yRight, zInterval.minValue(), zInterval.maxValue() )
+        self.enableAxis( Qwt.QwtPlot.Axis.yRight )
 
         self.plotLayout().setAlignCanvasToScales( True )
 
@@ -141,39 +141,39 @@ class Plot( Qwt.QwtPlot ):
         # Ctrl+RighButton: zoom out to full size
 
         self.zoomer = MyZoomer( self.canvas() )
-        self.zoomer.setMousePattern( Qwt.QwtEventPattern.MouseSelect2, Qt.RightButton, Qt.ControlModifier )
-        self.zoomer.setMousePattern( Qwt.QwtEventPattern.MouseSelect3, Qt.RightButton )
+        self.zoomer.setMousePattern( Qwt.QwtEventPattern.MousePatternCode.MouseSelect2, Qt.MouseButton.RightButton, Qt.KeyboardModifier.ControlModifier )
+        self.zoomer.setMousePattern( Qwt.QwtEventPattern.MousePatternCode.MouseSelect3, Qt.MouseButton.RightButton )
 
         self.panner = Qwt.QwtPlotPanner( self.canvas() )
-        self.panner.setAxisEnabled( Qwt.QwtPlot.yRight, False )
-        self.panner.setMouseButton( Qt.MidButton )
+        self.panner.setAxisEnabled( Qwt.QwtPlot.Axis.yRight.value, False )
+        self.panner.setMouseButton( Qt.MouseButton.MiddleButton )
 
         # Avoid jumping when labels with more/less digits
         # appear/disappear when scrolling vertically
 
-        fm = QFontMetrics ( self.axisWidget( Qwt.QwtPlot.yLeft ).font() )
-        sd = self.axisScaleDraw( Qwt.QwtPlot.yLeft )
-        sd.setMinimumExtent( fm.width( "100.00" ) )
+        fm = QFontMetrics ( self.axisWidget( Qwt.QwtPlot.Axis.yLeft ).font() )
+        sd = self.axisScaleDraw( Qwt.QwtPlot.Axis.yLeft )
+        #FIXME sd.setMinimumExtent( fm.width( "100.00" ) )
 
-        c = QColor( Qt.darkBlue )
+        c = QColor( Qt.GlobalColor.darkBlue )
         self.zoomer.setRubberBandPen( c )
         self.zoomer.setTrackerPen( c )
 
     def showContour( self, on ):
-        self.d_spectrogram.setDisplayMode( Qwt.QwtPlotSpectrogram.ContourMode, on )
+        self.d_spectrogram.setDisplayMode( Qwt.QwtPlotSpectrogram.DisplayMode.ContourMode, on )
         self.replot()
 
     def showSpectrogram( self, on ):
-        self.d_spectrogram.setDisplayMode( Qwt.QwtPlotSpectrogram.ImageMode, on )
+        self.d_spectrogram.setDisplayMode( Qwt.QwtPlotSpectrogram.DisplayMode.ImageMode, on )
         if (on):
-            self.d_spectrogram.setDefaultContourPen( QPen( Qt.black, 0 ) )
+            self.d_spectrogram.setDefaultContourPen( QPen( Qt.GlobalColor.black, 0 ) )
         else:
-            self.d_spectrogram.setDefaultContourPen( QPen( Qt.NoPen ) )
+            self.d_spectrogram.setDefaultContourPen( QPen( Qt.GlobalColor.NoPen ) )
         self.replot()
 
     def setColorMap( self,  type ):
-        self.axis = self.axisWidget( Qwt.QwtPlot.yRight )
-        zInterval = self.d_spectrogram.data().interval( Qt.ZAxis )
+        self.axis = self.axisWidget( Qwt.QwtPlot.Axis.yRight )
+        zInterval = self.d_spectrogram.data().interval( Qt.Axis.ZAxis )
         self.d_mapType = type
 
         alpha = self.d_alpha
@@ -227,7 +227,7 @@ class MainWindow( QMainWindow ):
         self.toolBar = QToolBar( self )
         self.btnPrint = QToolButton( self.toolBar )
         self.btnPrint.setText( "Print" )
-        self.btnPrint.setToolButtonStyle( Qt.ToolButtonTextUnderIcon )
+        self.btnPrint.setToolButtonStyle( Qt.ToolButtonStyle.ToolButtonTextUnderIcon )
         self.toolBar.addWidget( self.btnPrint )
         self.btnPrint.clicked.connect(self.d_plot.printPlot )
 
@@ -239,11 +239,11 @@ class MainWindow( QMainWindow ):
         self.mapBox.addItem( "Indexed Colors" )
         self.mapBox.addItem( "Hue" )
         self.mapBox.addItem( "Alpha" )
-        self.mapBox.setSizePolicy( QSizePolicy.Fixed, QSizePolicy.Fixed )
+        self.mapBox.setSizePolicy( QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed )
         self.toolBar.addWidget( self.mapBox )
         self.mapBox.currentIndexChanged['int'].connect(self.d_plot.setColorMap )
         self.toolBar.addWidget( QLabel( " Opacity " ) )
-        self.slider = QSlider( Qt.Horizontal )
+        self.slider = QSlider( Qt.Orientation.Horizontal )
         self.slider.setRange( 0, 255 )
         self.slider.setValue( 255 )
         self.slider.valueChanged['int'].connect(self.d_plot.setAlpha )
@@ -268,4 +268,4 @@ if __name__ == '__main__':
     mainWindow = MainWindow()
     mainWindow.resize( 600, 400 )
     mainWindow.show()
-    sys.exit(a.exec_())
+    sys.exit(a.exec())
