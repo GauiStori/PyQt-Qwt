@@ -7,7 +7,7 @@
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the Qwt License, Version 1.0
  *****************************************************************************/
-%If(- Qwt_6_1_6)
+%If(- Qwt_6_2_0)
 class QwtPlotSeriesItem: QwtPlotItem, QwtAbstractSeriesStore
 {
 %TypeHeaderCode
@@ -34,7 +34,7 @@ protected:
     class PrivateData;
     PrivateData *d_data;*/
 };
-%End // (- Qwt_6_1_6)
+%End // (- Qwt_6_2_0)
 
 %If(Qwt_6_2_0 -)
 class QwtPlotSeriesItem : QwtPlotItem, QwtAbstractSeriesStore

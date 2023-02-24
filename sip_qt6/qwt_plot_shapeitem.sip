@@ -22,7 +22,7 @@
 
   \sa QwtPlotZone
 */
-%If(- Qwt_6_1_6)
+%If(- Qwt_6_2_0)
 class QwtPlotShapeItem: public QwtPlotItem
 {
 %TypeHeaderCode
@@ -107,7 +107,7 @@ private:
     PrivateData *d_data;
     */
 };
-%End // (- Qwt_6_1_6)
+%End // (- Qwt_6_2_0)
 
 %If(Qwt_6_2_0 -)
 class QwtPlotShapeItem : QwtPlotItem /NoDefaultCtors/
