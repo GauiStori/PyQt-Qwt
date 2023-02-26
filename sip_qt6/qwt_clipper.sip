@@ -12,7 +12,7 @@
   \brief Some clipping algorithms
 */
 
-%If(- Qwt_6_1_6)
+%If(- Qwt_6_2_0)
 class QwtClipper
 {
 %TypeHeaderCode
@@ -31,7 +31,7 @@ public:
     static QList<QwtInterval> clipCircle(
         const QRectF &, const QPointF &, double radius );
 };
-%End // (- Qwt_6_1_6)
+%End // (- Qwt_6_2_0)
 
 %If(Qwt_6_2_0 -)
 namespace QwtClipper

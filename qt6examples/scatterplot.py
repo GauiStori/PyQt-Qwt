@@ -1,24 +1,24 @@
 #!/usr/bin/python3
 
 import sys
-import math
+import math, random
 #import Qwt
-from PyQt5 import Qwt
+from PyQt6 import Qwt
 import numpy as np
-from PyQt5.QtCore import Qt,  QSize, qrand, QPointF
-from PyQt5.QtGui import QColor,  QPixmap, QFont,  QIcon, QPen, QPolygonF
-from PyQt5.QtWidgets import QMainWindow,  QWidget,  QToolBar,  QToolButton,  QHBoxLayout,  QLabel,  QApplication
+from PyQt6.QtCore import Qt,  QSize, QPointF
+from PyQt6.QtGui import QColor,  QPixmap, QFont,  QIcon, QPen, QPolygonF
+from PyQt6.QtWidgets import QMainWindow,  QWidget,  QToolBar,  QToolButton,  QHBoxLayout,  QLabel,  QApplication
 
 def randomValue():
     #a number between [ 0.0, 1.0 ]
-    return ( qrand() % 100000 ) / 100000.0
+    return ( random.randrange( 100000 ) / 100000.0)
 
 class DistancePicker(Qwt.QwtPlotPicker):
     def __init__(self, canvas):
         Qwt.QwtPlotPicker.__init__(self, canvas)
-        self.setTrackerMode( Qwt.QwtPicker.ActiveOnly )
+        self.setTrackerMode( Qwt.QwtPicker.DisplayMode.ActiveOnly )
         self.setStateMachine( Qwt.QwtPickerDragLineMachine() )
-        self.setRubberBand( Qwt.QwtPlotPicker.PolygonRubberBand )
+        self.setRubberBand( Qwt.QwtPlotPicker.RubberBand.PolygonRubberBand )
 
     def trackerTextF(self, pos ):
         text = QwtText()
@@ -27,7 +27,7 @@ class DistancePicker(Qwt.QwtPlotPicker):
             #QString num
             #num.setNum( QLineF( pos, invTransform( points[0] ) ).length() )
             num = "123"
-            bg = QColor( Qt.white )
+            bg = QColor( Qt.GlobalColor.white )
             bg.setAlpha( 200 )
 
             text.setBackgroundBrush( QBrush( bg ) )
@@ -58,20 +58,20 @@ class Plot( Qwt.QwtPlot ):
        
         # distanve measurement with the right mouse button
         self.picker = DistancePicker( self.canvas() )
-        self.picker.setMousePattern( Qwt.QwtPlotPicker.MouseSelect1, Qt.RightButton )
-        self.picker.setRubberBandPen( QPen( Qt.blue ) )
+        self.picker.setMousePattern( Qwt.QwtPlotPicker.MousePatternCode.MouseSelect1, Qt.MouseButton.RightButton )
+        self.picker.setRubberBandPen( QPen( Qt.GlobalColor.blue ) )
         # zoom in/out with the wheel
         self.magnifier = Qwt.QwtPlotMagnifier( self.canvas() )
-        self.magnifier.setMouseButton( Qt.NoButton )
+        self.magnifier.setMouseButton( Qt.MouseButton.NoButton )
                
 
     def setSymbol( self, symbol ):
         self.d_curve.setSymbol( symbol )
         if ( symbol == None):
-            self.d_curve.setStyle( Qwt.QwtPlotCurve.Dots )
+            self.d_curve.setStyle( Qwt.QwtPlotCurve.CurveStyle.Dots )
 
     def setSamples(self, samples ):
-        self.d_curve.setPaintAttribute( Qwt.QwtPlotCurve.ImageBuffer, samples.size() > 1000 )
+        self.d_curve.setPaintAttribute( Qwt.QwtPlotCurve.PaintAttribute.ImageBuffer, samples.size() > 1000 )
         self.d_curve.setSamples( samples )
 
 class MainWindow(QMainWindow):
@@ -98,4 +98,4 @@ m = MainWindow()
 m.resize( 800, 600 )
 m.show()
 
-sys.exit(a.exec_())
+sys.exit(a.exec())

@@ -8,7 +8,7 @@
  * modify it under the terms of the Qwt License, Version 1.0
  *****************************************************************************/
 
-%If(- Qwt_6_1_6)
+%If(- Qwt_6_2_0)
 class QwtColorMap
 {
 %TypeHeaderCode
@@ -121,7 +121,7 @@ inline QwtColorMap::Format QwtColorMap::format() const
     return d_format;
 }*/
 
-%End // (- Qwt_6_1_6)
+%End // (- Qwt_6_2_0)
 
 %If(Qwt_6_2_0 -)
 class QwtColorMap /NoDefaultCtors/

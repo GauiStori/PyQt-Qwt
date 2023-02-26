@@ -20,14 +20,14 @@ class Knob(QWidget):
 
         scaleDiv = self.__d_knob.scaleEngine().divideScale( min, max, 5, 3 )
 
-        ticks = scaleDiv.ticks( Qwt.QwtScaleDiv.MajorTick )
+        ticks = scaleDiv.ticks( Qwt.QwtScaleDiv.TickType.MajorTick.value ) #FIXME int or enum
         if ( len(ticks) > 0 and ticks[0] > min ):
             if ( ticks[0] > min ):
                 ticks.insert(0, min )
             if ( ticks[-1] < max ):
                 ticks.append( max )
     
-        scaleDiv.setTicks( Qwt.QwtScaleDiv.MajorTick, ticks )
+        scaleDiv.setTicks( Qwt.QwtScaleDiv.TickType.MajorTick.value, ticks ) #FIXME int or enum
         self.__d_knob.setScale( scaleDiv )
 
         self.__d_knob.setKnobWidth( 50 )
@@ -35,9 +35,9 @@ class Knob(QWidget):
         font.setBold( True )
         self.__d_label = QLabel( title, self)
         self.__d_label.setFont( font )
-        self.__d_label.setAlignment( Qt.AlignTop | Qt.AlignHCenter )
+        self.__d_label.setAlignment( Qt.AlignmentFlag.AlignTop | Qt.AlignmentFlag.AlignHCenter )
 
-        self.setSizePolicy( QSizePolicy.MinimumExpanding, QSizePolicy.MinimumExpanding )
+        self.setSizePolicy( QSizePolicy.Policy.MinimumExpanding, QSizePolicy.Policy.MinimumExpanding )
         
         
         self.__d_knob.valueChanged.connect(self.valueChanged)
@@ -66,7 +66,7 @@ class Knob(QWidget):
     
     
     def theme(self):
-        return self.__d_knob.palette().color( QPalette.Window )
+        return self.__d_knob.palette().color( QPalette.ColorRole.Window )
     
     
     def setTheme( self, color ):
@@ -93,11 +93,12 @@ class Wheel(Qwt.QwtWheel):
         super().__init__(parent)
         Qwt.QwtWheel = parent
         self.__d_ignoreWheelEvent = False 
-        self.setFocusPolicy( Qt.WheelFocus )
+        self.setFocusPolicy( Qt.FocusPolicy.WheelFocus )
         parent.installEventFilter( self )
 
     def eventFilter( self, object, event ):
-        if ( event.type() == QEvent.Wheel and not self.__d_ignoreWheelEvent ):
+        # FIXME return Qwt.QwtWheel.eventFilter( object, event), RuntimeError: wrapped C/C++ object of type WheelBox has been deleted, Aborted (core dumped)
+        if ( event.type() == QEvent.Type.Wheel and not self.__d_ignoreWheelEvent ):
         
             we = QWheelEvent(event)
             
@@ -121,17 +122,17 @@ class WheelBox(QWidget):
         super().__init__(parent)
         
         self.__d_number = QLCDNumber( self )
-        self.__d_number.setSegmentStyle( QLCDNumber.Filled )
+        self.__d_number.setSegmentStyle( QLCDNumber.SegmentStyle.Filled )
         self.__d_number.setAutoFillBackground( True )
         self.__d_number.setFixedHeight( self.__d_number.sizeHint().height() * 2 )
-        self.__d_number.setFocusPolicy( Qt.WheelFocus )
+        self.__d_number.setFocusPolicy( Qt.FocusPolicy.WheelFocus )
 
-        pal = QPalette( Qt.black )
-        pal.setColor( QPalette.WindowText, Qt.green )
+        pal = QPalette( Qt.GlobalColor.black )
+        pal.setColor( QPalette.ColorRole.WindowText, Qt.GlobalColor.green )
         self.__d_number.setPalette( pal )
 
         self.__d_wheel = Wheel( self )
-        self.__d_wheel.setOrientation( Qt.Vertical )
+        self.__d_wheel.setOrientation( Qt.Orientation.Vertical )
         self.__d_wheel.setInverted( True )
         self.__d_wheel.setRange( min, max )
         self.__d_wheel.setSingleStep( stepSize )
@@ -154,7 +155,7 @@ class WheelBox(QWidget):
 
         vLayout = QVBoxLayout( self )
         vLayout.addLayout( hLayout, 10 )
-        vLayout.addWidget( self.__d_label, 0, Qt.AlignTop | Qt.AlignHCenter )
+        vLayout.addWidget( self.__d_label, 0, Qt.AlignmentFlag.AlignTop | Qt.AlignmentFlag.AlignHCenter )
                        
         self.__d_wheel.valueChanged.connect(self.display)
         
@@ -171,7 +172,7 @@ class WheelBox(QWidget):
  
        
     def theme(self):
-        return self.__d_wheel.palette().color( QPalette.Window )
+        return self.__d_wheel.palette().color( QPalette.ColorRole.Window )
     
     
     def setTheme( self, color ):

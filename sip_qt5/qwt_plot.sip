@@ -8,7 +8,7 @@
  * modify it under the terms of the Qwt License, Version 1.0
  *****************************************************************************/
 
-%If(- Qwt_6_1_6)
+%If(- Qwt_6_2_0)
 class QwtPlot: QFrame , QwtPlotDict
 {
 %TypeHeaderCode
@@ -233,7 +233,7 @@ private slots:
     class PrivateData;
     PrivateData *d_data;*/
 };
-%End // (- Qwt_6_1_6)
+%End // (- Qwt_6_2_0)
 
 %If(Qwt_6_2_0 -)
 class QwtPlot : QFrame, QwtPlotDict

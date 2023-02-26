@@ -34,7 +34,7 @@
       QwtAbstractScale::setScaleEngine()
 */
 
-%If(- Qwt_6_1_6)
+%If(- Qwt_6_2_0)
 class QwtDateScaleEngine: public QwtLinearScaleEngine
 {
 %TypeHeaderCode
@@ -78,7 +78,7 @@ private:
         int maxMajorSteps, int maxMinorSteps,
         QwtDate::IntervalType ) const;
 };
-%End // (- Qwt_6_1_6)
+%End // (- Qwt_6_2_0)
 
 %If(Qwt_6_2_0 -)
 class QwtDateScaleEngine : public QwtLinearScaleEngine /NoDefaultCtors/

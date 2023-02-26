@@ -31,22 +31,23 @@ class CompassGrid( QWidget ): #QFrame( parent )
 
     def createCompass( self, pos ):
         palette0 = QPalette()
-        for c in range(QPalette.ColorRole.NColorRoles):
-            colorRole = QPalette.ColorRole.ColorRole( c )
+        for c in range(QPalette.ColorRole.NColorRoles.value):
+            clr = list(QPalette.ColorRole)
+            colorRole = clr[c]
             palette0.setColor( colorRole, QColor() )
 
-        #palette0.setColor( QPalette.ColorRole.Base, palette().color( QPalette.ColorRole.backgroundRole() ).light( 120 ) )
-        palette0.setColor( QPalette.WindowText,
+        palette0.setColor( QPalette.ColorRole.Base, self.palette().color( self.backgroundRole() ).lighter( 120 ) )
+        palette0.setColor( QPalette.ColorRole.WindowText,
             palette0.color( QPalette.ColorRole.Base ) )
 
         compass = Qwt.QwtCompass( self )
         compass.setLineWidth( 4 )
-        compass.setFrameShadow(Qwt.QwtCompass.Sunken)
+        compass.setFrameShadow(Qwt.QwtCompass.Shadow.Sunken)
         #    pos <= 2 ? QwtCompass.Sunken : QwtCompass.Raised )
 
         if pos == 0:
             #A compass with a rose and no needle. Scale and rose are rotating.
-            compass.setMode( Qwt.QwtCompass.RotateScale )
+            compass.setMode( Qwt.QwtCompass.Mode.RotateScale )
 
             rose = Qwt.QwtSimpleCompassRose( 16, 2 )
             rose.setWidth( 0.15 )
@@ -65,87 +66,89 @@ class CompassGrid( QWidget ): #QFrame( parent )
             rose = Qwt.QwtSimpleCompassRose( 4, 1 )
             compass.setRose( rose )
 
-            compass.setNeedle( Qwt.QwtCompassWindArrow( Qwt.QwtCompassWindArrow.Style2 ) )
+            compass.setNeedle( Qwt.QwtCompassWindArrow( Qwt.QwtCompassWindArrow.Style.Style2 ) )
             compass.setValue( 60.0 )
         elif pos == 2:
             #A compass with a rotating needle in darkBlue. Shows
             #a ticks for each degree.
 
             palette0.setColor( QPalette.ColorRole.Base, Qt.GlobalColor.darkBlue )
-            palette0.setColor( QPalette.WindowText, QColor( Qt.darkBlue ))#.dark( 120 ) )
-            palette0.setColor( QPalette.Text, Qt.white )
+            palette0.setColor( QPalette.ColorRole.WindowText, QColor( Qt.GlobalColor.darkBlue ))#.dark( 120 ) )
+            palette0.setColor( QPalette.ColorRole.Text, Qt.GlobalColor.white )
 
             scaleDraw = Qwt.QwtCompassScaleDraw()
-            scaleDraw.enableComponent( Qwt.QwtAbstractScaleDraw.Ticks, True )
-            scaleDraw.enableComponent( Qwt.QwtAbstractScaleDraw.Labels, True )
-            scaleDraw.enableComponent( Qwt.QwtAbstractScaleDraw.Backbone, False )
-            scaleDraw.setTickLength( Qwt.QwtScaleDiv.MinorTick, 1 )
-            scaleDraw.setTickLength( Qwt.QwtScaleDiv.MediumTick, 1 )
-            scaleDraw.setTickLength( Qwt.QwtScaleDiv.MajorTick, 3 )
+            scaleDraw.enableComponent( Qwt.QwtAbstractScaleDraw.ScaleComponent.Ticks, True )
+            scaleDraw.enableComponent( Qwt.QwtAbstractScaleDraw.ScaleComponent.Labels, True )
+            scaleDraw.enableComponent( Qwt.QwtAbstractScaleDraw.ScaleComponent.Backbone, False )
+            scaleDraw.setTickLength( Qwt.QwtScaleDiv.TickType.MinorTick, 1 )
+            scaleDraw.setTickLength( Qwt.QwtScaleDiv.TickType.MediumTick, 1 )
+            scaleDraw.setTickLength( Qwt.QwtScaleDiv.TickType.MajorTick, 3 )
 
             compass.setScaleDraw( scaleDraw )
 
             compass.setScaleMaxMajor( 36 )
             compass.setScaleMaxMinor( 5 )
 
-            compass.setNeedle( Qwt.QwtCompassMagnetNeedle( Qwt.QwtCompassMagnetNeedle.ThinStyle ) )
+            compass.setNeedle( Qwt.QwtCompassMagnetNeedle( Qwt.QwtCompassMagnetNeedle.Style.ThinStyle ) )
             compass.setValue( 220.0 )
         elif pos == 3:
             #A compass without a frame, showing numbers as tick labels.
             #The origin is at 220.0
             palette0.setColor( QPalette.ColorRole.Base, self.palette().color( self.backgroundRole() ) )
-            palette0.setColor( QPalette.WindowText, Qt.GlobalColor.blue )
+            palette0.setColor( QPalette.ColorRole.WindowText, Qt.GlobalColor.blue )
             compass.setLineWidth( 0 )
             map = {}
             for  d in range(0,360,60):
                 map[d] = "%.0f"%(d*1.0) 
 
             scaleDraw = Qwt.QwtCompassScaleDraw( map )
-            scaleDraw.enableComponent( Qwt.QwtAbstractScaleDraw.Ticks, True )
-            scaleDraw.enableComponent( Qwt.QwtAbstractScaleDraw.Labels, True )
-            scaleDraw.enableComponent( Qwt.QwtAbstractScaleDraw.Backbone, True )
-            scaleDraw.setTickLength( Qwt.QwtScaleDiv.MinorTick, 0 )
-            scaleDraw.setTickLength( Qwt.QwtScaleDiv.MediumTick, 0 )
-            scaleDraw.setTickLength( Qwt.QwtScaleDiv.MajorTick, 3 )
+            scaleDraw.enableComponent( Qwt.QwtAbstractScaleDraw.ScaleComponent.Ticks, True )
+            scaleDraw.enableComponent( Qwt.QwtAbstractScaleDraw.ScaleComponent.Labels, True )
+            scaleDraw.enableComponent( Qwt.QwtAbstractScaleDraw.ScaleComponent.Backbone, True )
+            scaleDraw.setTickLength( Qwt.QwtScaleDiv.TickType.MinorTick, 0 )
+            scaleDraw.setTickLength( Qwt.QwtScaleDiv.TickType.MediumTick, 0 )
+            scaleDraw.setTickLength( Qwt.QwtScaleDiv.TickType.MajorTick, 3 )
             compass.setScaleDraw( scaleDraw )
             compass.setScaleMaxMajor( 36 )
             compass.setScaleMaxMinor( 5 )
-            compass.setNeedle( Qwt.QwtDialSimpleNeedle( Qwt.QwtDialSimpleNeedle.Ray, True, Qt.GlobalColor.white ) )
+            compass.setNeedle( Qwt.QwtDialSimpleNeedle( Qwt.QwtDialSimpleNeedle.Style.Ray, True, Qt.GlobalColor.white ) )
             compass.setOrigin( 220.0 )
             compass.setValue( 20.0 )
         elif pos == 4:
             #A compass showing another needle
             scaleDraw = Qwt.QwtCompassScaleDraw()
-            scaleDraw.enableComponent( Qwt.QwtAbstractScaleDraw.Ticks, True )
-            scaleDraw.enableComponent( Qwt.QwtAbstractScaleDraw.Labels, True )
-            scaleDraw.enableComponent( Qwt.QwtAbstractScaleDraw.Backbone, False )
-            scaleDraw.setTickLength( Qwt.QwtScaleDiv.MinorTick, 0 )
-            scaleDraw.setTickLength( Qwt.QwtScaleDiv.MediumTick, 0 )
-            scaleDraw.setTickLength( Qwt.QwtScaleDiv.MajorTick, 3 )
+            scaleDraw.enableComponent( Qwt.QwtAbstractScaleDraw.ScaleComponent.Ticks, True )
+            scaleDraw.enableComponent( Qwt.QwtAbstractScaleDraw.ScaleComponent.Labels, True )
+            scaleDraw.enableComponent( Qwt.QwtAbstractScaleDraw.ScaleComponent.Backbone, False )
+            scaleDraw.setTickLength( Qwt.QwtScaleDiv.TickType.MinorTick, 0 )
+            scaleDraw.setTickLength( Qwt.QwtScaleDiv.TickType.MediumTick, 0 )
+            scaleDraw.setTickLength( Qwt.QwtScaleDiv.TickType.MajorTick, 3 )
             compass.setScaleDraw( scaleDraw )
-            compass.setNeedle( Qwt.QwtCompassMagnetNeedle( Qwt.QwtCompassMagnetNeedle.TriangleStyle, Qt.GlobalColor.white, Qt.GlobalColor.red ) )
+            compass.setNeedle( Qwt.QwtCompassMagnetNeedle( Qwt.QwtCompassMagnetNeedle.Style.TriangleStyle, Qt.GlobalColor.white, Qt.GlobalColor.red ) )
             compass.setValue( 220.0 )
         elif pos == 5:
             #A compass with a yellow on black ray
-            palette0.setColor( QPalette.WindowText, Qt.GlobalColor.black )
-            compass.setNeedle( Qwt.QwtDialSimpleNeedle( Qwt.QwtDialSimpleNeedle.Ray, False, Qt.GlobalColor.yellow ) )
+            palette0.setColor( QPalette.ColorRole.WindowText, Qt.GlobalColor.black )
+            compass.setNeedle( Qwt.QwtDialSimpleNeedle( Qwt.QwtDialSimpleNeedle.Style.Ray, False, Qt.GlobalColor.yellow ) )
             compass.setValue( 315.0 )
 
         newPalette = compass.palette()
-        for c in range(QPalette.ColorRole.NColorRoles):
-            colorRole = QPalette.ColorRole( c )
+        for c in range(QPalette.ColorRole.NColorRoles.value):
+            clr = list(QPalette.ColorRole)
+            colorRole = clr[c]
             if ( palette0.color( colorRole ).isValid() ):
                 newPalette.setColor( colorRole, palette0.color( colorRole ) )
 
-        for i in range(QPalette.NColorGroups):
-            colorGroup = QPalette.ColorGroup( i )
-            light = newPalette.color( colorGroup, QPalette.ColorRole.Base )#.light( 170 )
-            dark = newPalette.color( colorGroup, QPalette.ColorRole.Base )#.dark( 170 )
-            #mid = compass.frameShadow() == QwtDial.Raised
-            #    ? newPalette.color( colorGroup, QPalette.ColorRole.Base ).dark( 110 )
-            #    : newPalette.color( colorGroup, QPalette.ColorRole.Base ).light( 110 )
-            mid = newPalette.color( colorGroup, QPalette.ColorRole.Base )#.dark( 110 )
-            newPalette.setColor( colorGroup, QPalette.Dark, dark )
+        for i in range(QPalette.ColorGroup.NColorGroups.value):
+            clg = list(QPalette.ColorGroup)
+            colorGroup = clg[i]
+            light = newPalette.color( colorGroup, QPalette.ColorRole.Base ).lighter( 170 )
+            dark = newPalette.color( colorGroup, QPalette.ColorRole.Base ).darker( 170 )
+            #FIXME mid = compass.frameShadow() == QwtDial.Raised
+            #    ? newPalette.color( colorGroup, QPalette.ColorRole.Base ).darker( 110 )
+            #    : newPalette.color( colorGroup, QPalette.ColorRole.Base ).lighter( 110 )
+            mid = newPalette.color( colorGroup, QPalette.ColorRole.Base ).darker( 110 )
+            newPalette.setColor( colorGroup, QPalette.ColorRole.Dark, dark )
             newPalette.setColor( colorGroup, QPalette.ColorRole.Mid, mid )
             newPalette.setColor( colorGroup, QPalette.ColorRole.Light, light )
         compass.setPalette( newPalette )
@@ -157,10 +160,10 @@ class SpeedoMeter( Qwt.QwtDial ): #QwtDial( parent ),
         self.d_label = "km/h"
         scaleDraw = Qwt.QwtRoundScaleDraw()
         scaleDraw.setSpacing( 8 )
-        scaleDraw.enableComponent( Qwt.QwtAbstractScaleDraw.Backbone, False )
-        scaleDraw.setTickLength( Qwt.QwtScaleDiv.MinorTick, 0 )
-        scaleDraw.setTickLength( Qwt.QwtScaleDiv.MediumTick, 4 )
-        scaleDraw.setTickLength( Qwt.QwtScaleDiv.MajorTick, 8 )
+        scaleDraw.enableComponent( Qwt.QwtAbstractScaleDraw.ScaleComponent.Backbone, False )
+        scaleDraw.setTickLength( Qwt.QwtScaleDiv.TickType.MinorTick, 0 )
+        scaleDraw.setTickLength( Qwt.QwtScaleDiv.TickType.MediumTick, 4 )
+        scaleDraw.setTickLength( Qwt.QwtScaleDiv.TickType.MajorTick, 8 )
         self. setScaleDraw( scaleDraw )
 
         self.setWrapping( False )
@@ -170,8 +173,8 @@ class SpeedoMeter( Qwt.QwtDial ): #QwtDial( parent ),
         self.setScaleArc( 0.0, 270.0 )
 
         needle = Qwt.QwtDialSimpleNeedle(
-            Qwt.QwtDialSimpleNeedle.Arrow, True, Qt.red,
-            QColor( Qt.gray ))#.light( 130 ) )
+            Qwt.QwtDialSimpleNeedle.Style.Arrow, True, Qt.GlobalColor.red,
+            QColor( Qt.GlobalColor.gray ))#.light( 130 ) )
         self.setNeedle( needle )
 
     def setLabel( self, label ):
@@ -184,16 +187,16 @@ class SpeedoMeter( Qwt.QwtDial ): #QwtDial( parent ),
     def drawScaleContents( self, painter, center, radius ):
         rect = QRectF( 0.0, 0.0, 2.0 * radius, 2.0 * radius - 10.0 )
         rect.moveCenter( center )
-        color = self.palette().color( QPalette.Text )
+        color = self.palette().color( QPalette.ColorRole.Text )
         painter.setPen( color )
-        flags = Qt.AlignBottom | Qt.AlignHCenter
+        flags = Qt.AlignmentFlag.AlignBottom | Qt.AlignmentFlag.AlignHCenter
         painter.drawText( rect, flags, self.d_label )
 
 class AttitudeIndicatorNeedle(Qwt.QwtDialNeedle):
     def __init__(self,  color=None):
         Qwt.QwtDialNeedle.__init__(self)
         palette = QPalette()
-        palette.setColor( QPalette.Text, color )
+        palette.setColor( QPalette.ColorRole.Text, color )
         #self.setPalette( palette )
 
     def rawNeedle( self,  painter, length, colorGroup ):
@@ -206,11 +209,11 @@ class AttitudeIndicatorNeedle(Qwt.QwtDialNeedle):
         path.lineTo( pos - 2 * triangleSize, -triangleSize )
         path.closeSubpath()
 
-        painter.setBrush( self.palette().brush( colorGroup, QPalette.Text ) )
+        painter.setBrush( self.palette().brush( colorGroup, QPalette.ColorRole.Text ) )
         painter.drawPath( path )
 
         l = length - 2
-        painter.setPen( QPen( self.palette().color( colorGroup, QPalette.Text ), 3 ) )
+        painter.setPen( QPen( self.palette().color( colorGroup, QPalette.ColorRole.Text ), 3 ) )
         painter.drawLine( QPointF( 0.0, -l ), QPointF( 0.0, l ) )
 
 
@@ -219,8 +222,8 @@ class AttitudeIndicator(Qwt.QwtDial):
         Qwt.QwtDial.__init__( self,  parent )
         self.d_gradient = 0.0
         scaleDraw = Qwt.QwtRoundScaleDraw()
-        scaleDraw.enableComponent( Qwt.QwtAbstractScaleDraw.Backbone, False )
-        scaleDraw.enableComponent( Qwt.QwtAbstractScaleDraw.Labels, False )
+        scaleDraw.enableComponent( Qwt.QwtAbstractScaleDraw.ScaleComponent.Backbone, False )
+        scaleDraw.enableComponent( Qwt.QwtAbstractScaleDraw.ScaleComponent.Labels, False )
         self.setScaleDraw( scaleDraw )
 
         #self.setMode( Qwt.RotateScale )
@@ -232,7 +235,7 @@ class AttitudeIndicator(Qwt.QwtDial):
         self.setScaleStepSize( 30.0 )
         self.setScale( 0.0, 360.0 )
 
-        color = self.palette().color( QPalette.Text )
+        color = self.palette().color( QPalette.ColorRole.Text )
         self.setNeedle( AttitudeIndicatorNeedle( color ) )
 
     def setGradient( self,  gradient ):
@@ -269,9 +272,9 @@ class AttitudeIndicator(Qwt.QwtDial):
 
     def keyPressEvent( self,  event ):
         k = event.key() 
-        if k == Qt.Key_Plus:
+        if k == Qt.Key.Key_Plus:
             self.setGradient( self.gradient() + 0.05 )
-        elif k == Qt.Key_Minus:
+        elif k == Qt.Key.Key_Minus:
             self.setGradient( self.gradient() - 0.05 )
         else:
             Qwt.QwtDial.keyPressEvent( event )
@@ -306,17 +309,18 @@ class CockpitGrid( QWidget ):
             self.d_clock = Qwt.QwtAnalogClock( )
             # disable minor ticks
             #d_clock.scaleDraw().setTickLength( QwtScaleDiv.MinorTick, 0 )
-            knobColor = QColor( Qt.gray ) # .light( 130 )
+            knobColor = QColor( Qt.GlobalColor.gray ) # .light( 130 )
 
-            for i in range(Qwt.QwtAnalogClock.NHands):
-                handColor = QColor( Qt.gray ) #.light( 150 )
+            for i in range(Qwt.QwtAnalogClock.Hand.NHands.value):
+                handColor = QColor( Qt.GlobalColor.gray ) #.light( 150 )
                 width = 8
-                if i == Qwt.QwtAnalogClock.SecondHand:
-                    handColor = Qt.gray
+                if i == Qwt.QwtAnalogClock.Hand.SecondHand.value:
+                    handColor = Qt.GlobalColor.gray
                     width = 5
-                hand = Qwt.QwtDialSimpleNeedle( Qwt.QwtDialSimpleNeedle.Arrow, True, handColor, knobColor )
+                hand = Qwt.QwtDialSimpleNeedle( Qwt.QwtDialSimpleNeedle.Style.Arrow, True, handColor, knobColor )
                 hand.setWidth( width )
-                self.d_clock.setHand( Qwt.QwtAnalogClock.Hand( i ), hand )
+                hnd = list(Qwt.QwtAnalogClock.Hand)
+                self.d_clock.setHand( hnd[i], hand )
             timer = QTimer( self.d_clock )
             timer.timeout.connect(self.d_clock.setCurrentTime)
             timer.start( 1000 )
@@ -344,7 +348,7 @@ class CockpitGrid( QWidget ):
         if ( dial ):
             dial.setReadOnly( True )
             dial.setLineWidth( 4 )
-            dial.setFrameShadow(Qwt.QwtDial.Sunken )
+            dial.setFrameShadow(Qwt.QwtDial.Shadow.Sunken )
         return dial
 
     def colorTheme( self, base ):
@@ -354,8 +358,8 @@ class CockpitGrid( QWidget ):
         palette.setColor( QPalette.ColorRole.Mid, base.dark( 110 ) )
         palette.setColor( QPalette.ColorRole.Light, base.light( 170 ) )
         palette.setColor( QPalette.ColorRole.Dark, base.dark( 170 ) )
-        palette.setColor( QPalette.Text, base.dark( 200 ).light( 800 ) )
-        palette.setColor( QPalette.WindowText, base.dark( 200 ) )
+        palette.setColor( QPalette.ColorRole.Text, base.dark( 200 ).light( 800 ) )
+        palette.setColor( QPalette.ColorRole.WindowText, base.dark( 200 ) )
         return palette
 
     def changeSpeed(self):

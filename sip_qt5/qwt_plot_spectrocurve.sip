@@ -12,7 +12,7 @@
     \brief Curve that displays 3D points as dots, where the z coordinate is
            mapped to a color.
 */
-%If(- Qwt_6_1_6)
+%If(- Qwt_6_2_0)
 class QwtPlotSpectroCurve: QwtPlotSeriesItem, QwtSeriesStoreQwtPoint3D
 {
 %TypeHeaderCode
@@ -71,7 +71,7 @@ private:
     PrivateData *d_data;
     */
 };
-%End // (- Qwt_6_1_6)
+%End // (- Qwt_6_2_0)
 
 %If(Qwt_6_2_0 -)
 class QwtPlotSpectroCurve

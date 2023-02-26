@@ -15,7 +15,7 @@
   SVG images are often used to display maps
 */
 
-%If(- Qwt_6_1_6)
+%If(- Qwt_6_2_0)
 class QwtPlotSvgItem: public QwtPlotItem
 {
 %TypeHeaderCode
@@ -47,7 +47,7 @@ protected:
     QRectF viewBox( const QRectF &rect ) const;
 
 };
-%End // (- Qwt_6_1_6)
+%End // (- Qwt_6_2_0)
 
 %If(Qwt_6_2_0 -)
 class QwtPlotSvgItem : QwtPlotGraphicItem /NoDefaultCtors/

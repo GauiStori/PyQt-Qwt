@@ -30,7 +30,7 @@
   the symbol is fixed.
 */
 
-%If(- Qwt_6_1_6)
+%If(- Qwt_6_2_0)
 class QwtPlotTradingCurve: public QwtPlotSeriesItem, public QwtSeriesStoreQwtOHLCSample
 {
 %TypeHeaderCode
@@ -164,7 +164,7 @@ protected:
         const QwtScaleMap &xMap, const QwtScaleMap &yMap,
         const QRectF &canvasRect ) const;
 };
-%End // (- Qwt_6_1_6)
+%End // (- Qwt_6_2_0)
 
 %If(Qwt_6_2_0 -)
 class QwtPlotTradingCurve

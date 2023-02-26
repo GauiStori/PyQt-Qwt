@@ -9,13 +9,13 @@ class Canvas(Qwt.QwtPlotCanvas):
     def __init__(self, plot=None):
         super().__init__(plot)
         QwtPlotCanvas = plot
-        self.setPaintAttribute( Qwt.QwtPlotCanvas.BackingStore, False )
+        self.setPaintAttribute( Qwt.QwtPlotCanvas.PaintAttribute.BackingStore, False )
         self.setBorderRadius( 10 )
         if ( Qwt.QwtPainter.isX11GraphicsSystem() ):
             #self.setAttribute( Qt.WA_PaintOutsidePaintEvent, True )
-            if ( self.testPaintAttribute( Qwt.QwtPlotCanvas.BackingStore ) ):
-                self.setAttribute( Qt.WA_PaintOnScreen, True )
-                self.setAttribute( Qt.WA_NoSystemBackground, True )
+            if ( self.testPaintAttribute( Qwt.QwtPlotCanvas.PaintAttribute.BackingStore ) ):
+                self.setAttribute( Qt.WidgetAttribute.WA_PaintOnScreen, True )
+                self.setAttribute( Qt.WidgetAttribute.WA_NoSystemBackground, True )
             
 
         self.__setupPalette()
@@ -24,13 +24,13 @@ class Canvas(Qwt.QwtPlotCanvas):
     def __setupPalette(self):
         pal = self.palette()
         gradient = QLinearGradient()
-        gradient.setCoordinateMode( QGradient.StretchToDeviceMode )
+        gradient.setCoordinateMode( QGradient.CoordinateMode.StretchToDeviceMode )
         gradient.setColorAt( 0.0, QColor( 0, 49, 110 ) )
         gradient.setColorAt( 1.0, QColor( 0, 87, 174 ) )
 
-        pal.setBrush( QPalette.Window, QBrush( gradient ) )
+        pal.setBrush( QPalette.ColorRole.Window, QBrush( gradient ) )
         #QPalette::WindowText is used for the curve color
-        pal.setColor( QPalette.WindowText, Qt.green )
+        pal.setColor( QPalette.ColorRole.WindowText, Qt.GlobalColor.green )
 
         self.setPalette( pal )
 
@@ -66,11 +66,11 @@ class Plot(Qwt.QwtPlot):
         self.setCanvas( Canvas() )
         self.plotLayout().setAlignCanvasToScales( True )
 
-        self.setAxisTitle( Qwt.QwtPlot.xBottom, "Time [s]" )
-        self.setAxisScale( Qwt.QwtPlot.xBottom, self.__d_interval.minValue(), self.__d_interval.maxValue() )
-        self.setAxisScale( Qwt.QwtPlot.yLeft, -200.0, 200.0 )
+        self.setAxisTitle( Qwt.QwtPlot.Axis.xBottom, "Time [s]" )
+        self.setAxisScale( Qwt.QwtPlot.Axis.xBottom, self.__d_interval.minValue(), self.__d_interval.maxValue() )
+        self.setAxisScale( Qwt.QwtPlot.Axis.yLeft, -200.0, 200.0 )
         self.grid = Qwt.QwtPlotGrid()
-        self.grid.setPen( Qt.gray, 0.0, Qt.DotLine )
+        self.grid.setPen( Qt.GlobalColor.gray, 0.0, Qt.PenStyle.DotLine )
         self.grid.enableX( True )
         self.grid.enableXMin( True )
         self.grid.enableY( True )
@@ -78,16 +78,16 @@ class Plot(Qwt.QwtPlot):
         self.grid.attach( self )
 
         self.__d_origin = Qwt.QwtPlotMarker()
-        self.__d_origin.setLineStyle( Qwt.QwtPlotMarker.Cross )
+        self.__d_origin.setLineStyle( Qwt.QwtPlotMarker.LineStyle.Cross )
         self.__d_origin.setValue( self.__d_interval.minValue() + self.__d_interval.width() / 2.0, 0.0 )
-        self.__d_origin.setLinePen( Qt.gray, 0.0, Qt.DashLine )
+        self.__d_origin.setLinePen( Qt.GlobalColor.gray, 0.0, Qt.PenStyle.DashLine )
         self.__d_origin.attach( self )
 
         self.__d_curve = Qwt.QwtPlotCurve()
-        self.__d_curve.setStyle( Qwt.QwtPlotCurve.Lines )
-        self.__d_curve.setPen( self.canvas().palette().color( QPalette.WindowText ) )
+        self.__d_curve.setStyle( Qwt.QwtPlotCurve.CurveStyle.Lines )
+        self.__d_curve.setPen( self.canvas().palette().color( QPalette.ColorRole.WindowText ) )
         self.__d_curve.setRenderHint( Qwt.QwtPlotItem.RenderHint.RenderAntialiased, True )
-        self.__d_curve.setPaintAttribute( Qwt.QwtPlotCurve.ClipPolygons, False )
+        self.__d_curve.setPaintAttribute( Qwt.QwtPlotCurve.PaintAttribute.ClipPolygons, False )
         self.__cdata = CurveData()
         self.__d_curve.setData( self.__cdata )
         self.__d_curve.attach( self )
@@ -110,7 +110,7 @@ class Plot(Qwt.QwtPlot):
     def setIntervalLength( self, interval ):
         if ( interval > 0.0 and interval != self.__d_interval.width() ):
             self.__d_interval.setMaxValue( self.__d_interval.minValue() + interval )
-            self.setAxisScale( Qwt.QwtPlot.xBottom,
+            self.setAxisScale( Qwt.QwtPlot.Axis.xBottom,
                 self.__d_interval.minValue(), self.__d_interval.maxValue() )
 
             self.replot()
@@ -121,7 +121,7 @@ class Plot(Qwt.QwtPlot):
 
         numPoints = curveData.size()
         if ( numPoints > self.__d_paintedPoints ):
-            doClip = not self.canvas().testAttribute( Qt.WA_PaintOnScreen )
+            doClip = not self.canvas().testAttribute( Qt.WidgetAttribute.WA_PaintOnScreen )
             if ( doClip ):
         
             
@@ -160,17 +160,17 @@ class Plot(Qwt.QwtPlot):
         #the autocalculation of the ticks and shift them
         #manually instead.
 
-        scaleDiv = self.axisScaleDiv( Qwt.QwtPlot.xBottom )
+        scaleDiv = self.axisScaleDiv( Qwt.QwtPlot.Axis.xBottom )
         scaleDiv.setInterval( self.__d_interval )
 
-        for i in range( 0, Qwt.QwtScaleDiv.NTickTypes):
-    
-            ticks = scaleDiv.ticks( i )
+        for i in range( 0, Qwt.QwtScaleDiv.TickType.NTickTypes.value):
+            t = list(Qwt.QwtScaleDiv.TickType)
+            ticks = scaleDiv.ticks( t[i].value ) #FIXME enum or int
             for j in range(0 , len(ticks)):
                 ticks[j] += self.__d_interval.width()
             scaleDiv.setTicks( i, ticks )
     
-        self.setAxisScaleDiv( Qwt.QwtPlot.xBottom, scaleDiv )
+        self.setAxisScaleDiv( Qwt.QwtPlot.Axis.xBottom, scaleDiv )
 
         self.__d_origin.setValue( self.__d_interval.minValue() + self.__d_interval.width() / 2.0, 0.0 )
 
@@ -203,8 +203,8 @@ class Plot(Qwt.QwtPlot):
 
     def eventFilter( self, object, event ):
 
-        if ( object == self.canvas() and event.type() == QEvent.PaletteChange ):   
-            self.__d_curve.setPen( self.canvas().palette().color( QPalette.WindowText ) )
+        if ( object == self.canvas() and event.type() == QEvent.Type.PaletteChange ):
+            self.__d_curve.setPen( self.canvas().palette().color( QPalette.ColorRole.WindowText ) )
     
         return Qwt.QwtPlot.eventFilter( self, object, event )
 
