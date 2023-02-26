@@ -13,8 +13,10 @@
 
 include /usr/share/dpkg/default.mk
 
-PYTHON3S := $(shell py3versions -vr debian/control)
+PYTHON3S := $(shell py3versions -vr debian/control 2>/dev/null)
 PYTHONS := $(PYTHON3S)
+
+qt6 := "yes"
 
 %:
 	dh $@ --with python3 #--buildsystem=pybuild
@@ -38,6 +40,7 @@ build_qt5/build-%/configure-stamp:
 	touch $@
 
 build_qt6/build-%/configure-stamp:
+ifeq ($(qt6), "yes")
 	mkdir -p build_qt6
 	cp -af sip_qt6 build_qt6/sip
 	cp -f pyproject-qt6.toml build_qt6/pyproject.toml
@@ -52,7 +55,8 @@ build_qt6/build-%/configure-stamp:
 		--api-dir /usr/share/qt6/api/python3 \
 		--qwt-lib=qwt-qt6 \
 		--qwt-incdir=/usr/include/qwt
-	touch $@
+endif
+		touch $@
 
 override_dh_auto_configure: $(PYTHONS:%=build_qt5/build-%/configure-stamp) $(PYTHONS:%=build_qt6/build-%/configure-stamp)
 
@@ -62,8 +66,10 @@ build_qt5/build-%/build-stamp: $(PYTHONS:%=build_qt5/build-%/configure-stamp)
 	touch $@
 
 build_qt6/build-%/build-stamp: $(PYTHONS:%=build_qt6/build-%/configure-stamp)
+ifeq ($(qt6), "yes")
 	dh_testdir
 	$(MAKE) -C build_qt6/build-$*
+endif
 	touch $@
 
 override_dh_auto_build: $(PYTHONS:%=build_qt5/build-%/build-stamp) $(PYTHONS:%=build_qt6/build-%/build-stamp)
@@ -73,10 +79,12 @@ override_dh_auto_install:
 	set -ex; for p in $(PYTHONS); do \
 		$(MAKE) -C build_qt5/build-$$p install INSTALL_ROOT=$(CURDIR)/debian/tmp; \
 	done
+ifeq ($(qt6), "yes")
 	cp README.md build_qt6
 	set -ex; for p in $(PYTHONS); do \
 		$(MAKE) -C build_qt6/build-$$p install INSTALL_ROOT=$(CURDIR)/debian/tmp; \
 	done
+endif
 
 override_dh_compress-indep:
 	dh_compress --exclude=.py
@@ -84,3 +92,4 @@ override_dh_compress-indep:
 override_dh_installexamples:
 	dh_installexamples -ppython-pyqt5.qwt-doc --doc-main-package=python3-pyqt5.qwt qt5examples/*
 	dh_installexamples --remaining-packages
+#
