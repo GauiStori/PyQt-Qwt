@@ -13,23 +13,19 @@ class MyZoomer(Qwt.QwtPlotZoomer):
         Qwt.QwtPlotZoomer.__init__(self, canvas )
         self.setTrackerMode( Qwt.QwtPicker.DisplayMode.AlwaysOn )
 
-    def trackerTextF( self, pos ):
-        bg = QColor( Qt.GlobalColor.white )
-        bg.setAlpha( 200 )
-        text = Qwt.QwtPlotZoomer.trackerTextF( pos )
-        text.setBackgroundBrush( QBrush( bg ) )
-        return text
+    #def trackerTextF( self, pos ):
+    #    bg = QColor( Qt.GlobalColor.white )
+    #    bg.setAlpha( 200 )
+    #    text = Qwt.QwtPlotZoomer.trackerTextF( pos )
+    #    text.setBackgroundBrush( QBrush( bg ) )
+    #    return text
 
-class SpectrogramData(Qwt.QwtRasterData):
+class SpectrogramData(Qwt.QwtMatrixRasterData):
     def __init__(self):
-        Qwt.QwtRasterData.__init__(self)
-        self.m_intervals={}
-        self.m_intervals[Qt.Axis.XAxis] = Qwt.QwtInterval( -1.5, 1.5 )
-        self.m_intervals[Qt.Axis.YAxis] = Qwt.QwtInterval( -1.5, 1.5 )
-        self.m_intervals[Qt.Axis.ZAxis] = Qwt.QwtInterval( 0.0, 10.0 )
-        #self.setInterval( Qt.XAxis, Qwt.QwtInterval( -1.5, 1.5 ) )
-        #self.setInterval( Qt.YAxis, Qwt.QwtInterval( -1.5, 1.5 ) )
-        #self.setInterval( Qt.ZAxis, Qwt.QwtInterval( 0.0, 10.0 ) )
+        super().__init__()
+        self.setInterval( Qt.Axis.XAxis, Qwt.QwtInterval( -1.5, 1.5 ) )
+        self.setInterval( Qt.Axis.YAxis, Qwt.QwtInterval( -1.5, 1.5 ) )
+        self.setInterval( Qt.Axis.ZAxis, Qwt.QwtInterval( 0.0, 10.0 ) )
 
     def value( self, x, y ):
         c = 0.842
@@ -168,7 +164,7 @@ class Plot( Qwt.QwtPlot ):
         if (on):
             self.d_spectrogram.setDefaultContourPen( QPen( Qt.GlobalColor.black, 0 ) )
         else:
-            self.d_spectrogram.setDefaultContourPen( QPen( Qt.GlobalColor.NoPen ) )
+            self.d_spectrogram.setDefaultContourPen( QPen( Qt.PenStyle.NoPen ) )
         self.replot()
 
     def setColorMap( self,  type ):
