@@ -13,23 +13,20 @@ class MyZoomer(Qwt.QwtPlotZoomer):
         Qwt.QwtPlotZoomer.__init__(self, canvas )
         self.setTrackerMode( Qwt.QwtPicker.AlwaysOn )
 
-    def trackerTextF( self, pos ):
-        bg = QColor( Qt.white )
-        bg.setAlpha( 200 )
-        text = Qwt.QwtPlotZoomer.trackerTextF( pos )
-        text.setBackgroundBrush( QBrush( bg ) )
-        return text
+    #def trackerTextF( self, pos ):
+    #    bg = QColor( Qt.white )
+    #    bg.setAlpha( 200 )
+    #    text = Qwt.QwtPlotPicker.trackerText( pos )
+    #    text.setBackgroundBrush( QBrush( bg ) )
+    #    return text
 
-class SpectrogramData(Qwt.QwtRasterData):
+class SpectrogramData(Qwt.QwtMatrixRasterData):
     def __init__(self):
-        Qwt.QwtRasterData.__init__(self)
-        self.m_intervals={}
-        self.m_intervals[Qt.XAxis] = Qwt.QwtInterval( -1.5, 1.5 )
-        self.m_intervals[Qt.YAxis] = Qwt.QwtInterval( -1.5, 1.5 )
-        self.m_intervals[Qt.ZAxis] = Qwt.QwtInterval( 0.0, 10.0 )
-        #self.setInterval( Qt.XAxis, Qwt.QwtInterval( -1.5, 1.5 ) )
-        #self.setInterval( Qt.YAxis, Qwt.QwtInterval( -1.5, 1.5 ) )
-        #self.setInterval( Qt.ZAxis, Qwt.QwtInterval( 0.0, 10.0 ) )
+        super().__init__()
+        #Qwt.QwtRasterData.__init__(self)
+        self.setInterval( Qt.XAxis, Qwt.QwtInterval( -1.5, 1.5 ) )
+        self.setInterval( Qt.YAxis, Qwt.QwtInterval( -1.5, 1.5 ) )
+        self.setInterval( Qt.ZAxis, Qwt.QwtInterval( 0.0, 10.0 ) )
 
     def value( self, x, y ):
         c = 0.842
