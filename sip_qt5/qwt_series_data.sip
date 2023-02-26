@@ -22,7 +22,7 @@ protected:
     mutable QRectF d_boundingRect;
 };*/
 
-%If(- Qwt_6_1_6)
+%If(- Qwt_6_2_0)
 class QwtSeriesDataQPointF
 {
 %TypeHeaderCode
@@ -359,7 +359,7 @@ QRectF qwtBoundingRect(const QwtSeriesDataQwtSetSample &, int from = 0, int to =
 
 QRectF qwtBoundingRect(const QwtSeriesDataQwtOHLCSample &, int from = 0, int to = -1 );
 
-%End // (- Qwt_6_1_6)
+%End // (- Qwt_6_2_0)
 
 %If(Qwt_6_2_0 -)
 class QwtSeriesDataQPointF

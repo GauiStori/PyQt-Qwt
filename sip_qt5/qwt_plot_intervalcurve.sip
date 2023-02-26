@@ -16,7 +16,7 @@
   that is displayed for each interval. QwtPlotIntervalCurve might be used
   to display error bars or the area between 2 curves.
 */
-%If(- Qwt_6_1_6)
+%If(- Qwt_6_2_0)
 class QwtPlotIntervalCurve: QwtPlotSeriesItem, QwtSeriesStoreQwtIntervalSample
 {
 %TypeHeaderCode
@@ -123,7 +123,7 @@ private:
     class PrivateData;
     PrivateData *d_data;*/
 };
-%End // (- Qwt_6_1_6)
+%End // (- Qwt_6_2_0)
 
 %If(Qwt_6_2_0 -)
 class QwtPlotIntervalCurve

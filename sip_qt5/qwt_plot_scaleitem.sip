@@ -36,7 +36,7 @@
   \endpar
 */
 
-%If(- Qwt_6_1_6)
+%If(- Qwt_6_2_0)
 class QwtPlotScaleItem: public QwtPlotItem
 {
 %TypeHeaderCode
@@ -88,7 +88,7 @@ public:
     PrivateData *d_data;
     */
 };
-%End // (- Qwt_6_1_6)
+%End // (- Qwt_6_2_0)
 
 %If(Qwt_6_2_0 -)
 class QwtPlotScaleItem : QwtPlotItem /NoDefaultCtors/

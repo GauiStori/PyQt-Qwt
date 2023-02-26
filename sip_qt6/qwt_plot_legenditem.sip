@@ -32,7 +32,7 @@
 */
 
 
-%If(- Qwt_6_1_6)
+%If(- Qwt_6_2_0)
 class QwtPlotLegendItem: QwtPlotItem
 {
 %TypeHeaderCode
@@ -118,7 +118,7 @@ protected:
 
     virtual void drawBackground( QPainter *, const QRectF &rect ) const;
 };
-%End // (- Qwt_6_1_6)
+%End // (- Qwt_6_2_0)
 
 %If(Qwt_6_2_0 -)
 class QwtPlotLegendItem : QwtPlotItem /NoDefaultCtors/

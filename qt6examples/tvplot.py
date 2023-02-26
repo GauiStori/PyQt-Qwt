@@ -1,16 +1,16 @@
 #!/usr/bin/python
 
 import sys
-from PyQt5 import Qwt
+from PyQt6 import Qwt
 import time
-from PyQt5.QtCore import Qt,  QSize
-from PyQt5.QtGui import QColor,  QPixmap, QFont, QBrush, QPalette, QPen
-from PyQt5.QtWidgets import (QMainWindow,  QWidget,  QToolBar,  QToolButton,  QHBoxLayout,  QLabel,  QApplication, QComboBox, QSizePolicy)
+from PyQt6.QtCore import Qt,  QSize
+from PyQt6.QtGui import QColor,  QPixmap, QFont, QBrush, QPalette, QPen
+from PyQt6.QtWidgets import (QMainWindow,  QWidget,  QToolBar,  QToolButton,  QHBoxLayout,  QLabel,  QApplication, QComboBox, QSizePolicy)
 
 class Histogram(Qwt.QwtPlotHistogram):
     def __init__(self,title, symbolColor ):
         Qwt.QwtPlotHistogram.__init__(self,title)
-        self.setStyle( Qwt.QwtPlotHistogram.Columns )
+        self.setStyle( Qwt.QwtPlotHistogram.HistogramStyle.Columns )
         self.setColor( symbolColor )
 
     def setValues(self, values ):
@@ -19,7 +19,7 @@ class Histogram(Qwt.QwtPlotHistogram):
         samples = []
         for i in range(numValues):
             interval = Qwt.QwtInterval( i , i + 1.0 )
-            interval.setBorderFlags( Qwt.QwtInterval.ExcludeMaximum )
+            interval.setBorderFlags( Qwt.QwtInterval.BorderFlag.ExcludeMaximum )
             a=Qwt.QwtIntervalSample( values[i], interval )
             samples.append(a)
         self.setSamples( samples )
@@ -37,25 +37,25 @@ class TVPlot( Qwt.QwtPlot):
         Qwt.QwtPlot.__init__(self, parent )
         self.setTitle( "Watching TV during a weekend" )
         canvas = Qwt.QwtPlotCanvas()
-        canvas.setPalette( QPalette(Qt.gray) )
+        canvas.setPalette( QPalette(Qt.GlobalColor.gray) )
         canvas.setBorderRadius( 10 )
         self.setCanvas( canvas )
 
         self.plotLayout().setAlignCanvasToScales( True )
 
-        self.setAxisTitle( Qwt.QwtPlot.yLeft, "Number of People" )
-        self.setAxisTitle( Qwt.QwtPlot.xBottom, "Number of Hours" )
+        self.setAxisTitle( Qwt.QwtPlot.Axis.yLeft, "Number of People" )
+        self.setAxisTitle( Qwt.QwtPlot.Axis.xBottom, "Number of Hours" )
 
         self.legend = Qwt.QwtLegend()
-        self.legend.setDefaultItemMode( Qwt.QwtLegendData.Checkable )
-        self.insertLegend( self.legend, Qwt.QwtPlot.RightLegend )
+        self.legend.setDefaultItemMode( Qwt.QwtLegendData.Mode.Checkable )
+        self.insertLegend( self.legend, Qwt.QwtPlot.LegendPosition.RightLegend )
         self.populate()
 
         #connect( legend, SIGNAL( checked( const QVariant &, bool, int ) ), SLOT( showItem( const QVariant &, bool ) ) );
         self.legend.checked['QVariant','bool','int'].connect(self.showItem )
 
         self.replot() # creating the legend items
-        self.items = self.itemList( Qwt.QwtPlotItem.Rtti_PlotHistogram )
+        self.items = self.itemList( Qwt.QwtPlotItem.RttiValues.Rtti_PlotHistogram.value )
         for i in range(len(self.items)):
             if ( i == 0 ):
                 #const QVariant 
@@ -75,16 +75,16 @@ class TVPlot( Qwt.QwtPlot):
         self.grid.enableY( True )
         self.grid.enableXMin( False )
         self.grid.enableYMin( False )
-        self.grid.setMajorPen( Qt.black, 0, Qt.DotLine )
+        self.grid.setMajorPen( Qt.GlobalColor.black, 0, Qt.PenStyle.DotLine )
         self.grid.attach( self )
         juneValues = [ 7.0, 19.0, 24.0, 32.0, 10.0, 5.0, 3.0 ]
         novemberValues = [ 4.0, 15.0, 22.0, 34.0, 13.0, 8.0, 4.0 ]
 
-        self.histogramJune = Histogram( "Summer", Qt.red )
+        self.histogramJune = Histogram( "Summer", Qt.GlobalColor.red )
         self.histogramJune.setValues( juneValues )
         self.histogramJune.attach( self )
 
-        self.histogramNovember = Histogram( "Winter", Qt.blue )
+        self.histogramNovember = Histogram( "Winter", Qt.GlobalColor.blue )
         self.histogramNovember.setValues( novemberValues )
         self.histogramNovember.attach( self )
 
@@ -96,20 +96,20 @@ class TVPlot( Qwt.QwtPlot):
     def setMode( self, mode):
         #QwtPlotItemList
         #print("Set mode %d"%mode)
-        items = self.itemList( Qwt.QwtPlotItem.Rtti_PlotHistogram )
+        items = self.itemList( Qwt.QwtPlotItem.RttiValues.Rtti_PlotHistogram.value )
         for i in range(len(items)):
             histogram = items[i]
             if ( mode < 3 ):
                 histogram.setStyle(mode)
                 histogram.setSymbol( None)
-                pen = QPen( Qt.black, 0 )
-                if ( mode == Qwt.QwtPlotHistogram.Lines ):
+                pen = QPen( Qt.GlobalColor.black, 0 )
+                if ( mode == Qwt.QwtPlotHistogram.HistogramStyle.Lines ):
                     pen.setBrush( histogram.brush() )
                 histogram.setPen( pen )
             else:
-                histogram.setStyle( Qwt.QwtPlotHistogram.Columns )
-                symbol = Qwt.QwtColumnSymbol( Qwt.QwtColumnSymbol.Box )
-                symbol.setFrameStyle( Qwt.QwtColumnSymbol.Raised )
+                histogram.setStyle( Qwt.QwtPlotHistogram.HistogramStyle.Columns )
+                symbol = Qwt.QwtColumnSymbol( Qwt.QwtColumnSymbol.Style.Box )
+                symbol.setFrameStyle( Qwt.QwtColumnSymbol.FrameStyle.Raised )
                 symbol.setLineWidth( 2 )
                 symbol.setPalette( QPalette( histogram.brush().color() ) )
                 histogram.setSymbol( symbol )
@@ -129,7 +129,7 @@ class MainWindow(QMainWindow):
         self.typeBox.addItem( "Lines" )
         self.typeBox.addItem( "Column Symbol" )
         self.typeBox.setCurrentIndex( self.typeBox.count() - 1 )
-        self.typeBox.setSizePolicy( QSizePolicy.Fixed, QSizePolicy.Fixed )
+        self.typeBox.setSizePolicy( QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed )
         self.btnExport = QToolButton( self.toolBar )
         self.btnExport.setText( "Export" )
         self.btnExport.setToolButtonStyle( Qt.ToolButtonStyle.ToolButtonTextUnderIcon )
@@ -145,4 +145,4 @@ a = QApplication(sys.argv)
 mainWindow = MainWindow()
 mainWindow.resize( 600, 400 )
 mainWindow.show()
-sys.exit(a.exec_())
+sys.exit(a.exec())

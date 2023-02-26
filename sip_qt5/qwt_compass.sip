@@ -22,7 +22,7 @@
 */
 
 
-%If(- Qwt_6_1_6)
+%If(- Qwt_6_2_0)
 class QwtCompassScaleDraw: QwtRoundScaleDraw
 {
 %TypeHeaderCode
@@ -78,7 +78,7 @@ protected:
 //    class PrivateData;
 //    PrivateData *d_data;
 };
-%End // (- Qwt_6_1_6)
+%End // (- Qwt_6_2_0)
 
 %If(Qwt_6_2_0 -)
 class QwtCompassScaleDraw : QwtRoundScaleDraw

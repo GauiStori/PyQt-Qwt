@@ -17,7 +17,7 @@
   values for positions, that or not on the value matrix.
 */
 
-%If(- Qwt_6_1_6)
+%If(- Qwt_6_2_0)
 class QwtMatrixRasterData: public QwtRasterData
 {
 %TypeHeaderCode
@@ -51,7 +51,7 @@ public:
     virtual double value( double x, double y ) const;
 
 };
-%End // (- Qwt_6_1_6)
+%End // (- Qwt_6_2_0)
 
 %If(Qwt_6_2_0 -)
 class QwtMatrixRasterData : QwtRasterData /NoDefaultCtors/

@@ -16,7 +16,7 @@
   \sa QwtGraphic::commands()
  */
 
-%If(- Qwt_6_1_6)
+%If(- Qwt_6_2_0)
 class QwtPainterCommand
 {
 %TypeHeaderCode
@@ -135,7 +135,7 @@ private:
     };
     */
 };
-%End // (- Qwt_6_1_6)
+%End // (- Qwt_6_2_0)
 
 %If(Qwt_6_2_0 -)
 class QwtPainterCommand

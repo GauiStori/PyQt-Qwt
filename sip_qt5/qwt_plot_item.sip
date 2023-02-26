@@ -8,7 +8,7 @@
  *****************************************************************************/
 
 
-%If(- Qwt_6_1_6)
+%If(- Qwt_6_2_0)
 class QwtPlotItem
 {
 %TypeHeaderCode
@@ -245,7 +245,7 @@ private:
     QwtPlotItem( const QwtPlotItem & );
     QwtPlotItem &operator=( const QwtPlotItem & );
 };
-%End // (- Qwt_6_1_6)
+%End // (- Qwt_6_2_0)
 
 %If(Qwt_6_2_0 -)
 class QwtPlotItem  /NoDefaultCtors/
